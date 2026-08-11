@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "root": {
+      "title": "Maison Rocheval",
+      "description": "Maison Rocheval."
+    }
+  },
+  "common": {
+    "siteName": "Maison Rocheval",
+    "language": {
+      "en": "English",
+      "fr": "Français"
+    }
+  },
+  "header": {
+    "nav": {
+      "home": "Accueil"
+    },
+    "menuLabel": "Menu",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. Tous droits réservés."
+  },
+  "home": {
+    "hero": {
+      "title": "Maison Rocheval",
+      "description": "Texte de remplacement — à remplacer par le contenu réel."
+    }
+  }
+}
