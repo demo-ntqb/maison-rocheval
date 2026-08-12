@@ -1,56 +1,56 @@
-import * as React from "react";
-import { useTranslations } from "next-intl";
-import { MichelinRating } from "@/shared/components/ui/michelin-rating";
+import { getTranslations } from "next-intl/server";
 
-export function HomeHeroSection() {
-  const t = useTranslations("home.hero");
+import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
+import { MichelinRating } from "@/shared/components/ui/michelin-rating";
+import { HomePicture } from "../components/home-picture";
+
+export async function HomeHeroSection() {
+  const t = await getTranslations("home.hero");
 
   return (
     <section
+      aria-labelledby="home-title"
       data-slot="home-hero-section"
-      className="relative -mt-20 flex h-[800px] w-full flex-col items-center justify-between bg-black overflow-hidden"
+      data-plumb-id="frame-2085667109"
+      data-plumb-asset="085abeb6efd175dc24d63837b2ba7c11e815ccab"
+      className="relative -mt-20 flex h-screen w-full flex-col items-center justify-between overflow-hidden bg-ink"
     >
-      {/* Background Media with Radial Gradient Overlay */}
-      <div className="absolute inset-0 z-0">
-        <picture>
-          <source srcSet="/images/home/hero.webp" type="image/webp" />
-          <img
-            src="/images/home/hero.jpg"
-            alt="Maison Rocheval Luxury Caviar Presentation"
-            className="h-full w-full object-cover opacity-80"
-          />
-        </picture>
-        {/* Radial Gradient overlay from Figma: #77848f00 to #071b26 (deep navy) */}
-        <div className="absolute inset-0 bg-radial-gradient from-transparent to-[#071b26]/90 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#071b26] via-transparent to-black/40" />
+      <div className="absolute inset-0">
+        <HomePicture
+          basePath="/images/home/hero-caviar-pearls"
+          fallbackExtension="jpg"
+          alt={t("imageAlt")}
+          priority
+          width={2800}
+          height={1600}
+          sizes="100vw"
+          pictureClassName="block size-full"
+          className="size-full object-cover"
+          data-plumb-asset="085abeb6efd175dc24d63837b2ba7c11e815ccab"
+        />
+        <div className="home-hero-overlay absolute inset-0" aria-hidden="true" />
       </div>
 
-      {/* Spacing for Header overlap */}
-      <div className="h-20 w-full" />
-
-      {/* Center Column: Logo & Tagline */}
-      <div className="relative z-10 flex flex-col items-center text-center px-4 animate-fade-in">
-        <div className="flex flex-col items-center gap-6">
-          <div className="flex flex-col items-center">
-            {/* Huge Decorative Brand Name */}
-            <h1 className="font-display text-[64px] sm:text-[84px] font-medium tracking-[0.25em] text-white leading-none">
-              MAISON ROCHEVAL
-            </h1>
-            <span className="mt-2 text-xs sm:text-sm font-light tracking-[0.5em] text-white/60 uppercase">
-              {t("subtitle")}
-            </span>
-          </div>
-          <p className="max-w-[450px] font-sans text-sm sm:text-base font-light tracking-wide text-white/80 leading-relaxed">
-            {t("description")}
-          </p>
-        </div>
+      <div
+        className="absolute inset-x-0 top-24 z-10 flex h-[254px] flex-col items-center justify-center"
+        data-plumb-id="frame"
+      >
+        <h1 id="home-title" className="sr-only">
+          {t("title")}
+        </h1>
+        <IconMaisonRochevalLogo
+          className="h-auto w-[min(317px,78vw)] text-canvas"
+          aria-hidden="true"
+          focusable="false"
+          data-plumb-id="group-9"
+        />
       </div>
 
-      {/* Bottom Column: Michelin Rating Stars rating (h: 140px) */}
-      <div className="relative z-10 flex h-[140px] w-full items-center justify-center pb-8 animate-slide-up">
-        <div className="flex flex-col items-center gap-2">
-          <MichelinRating count={3} starClassName="size-[30px] text-white" />
-        </div>
+      <div
+        className="absolute inset-x-0 bottom-0 z-10 flex h-[140px] items-end justify-center p-[54px]"
+        data-plumb-id="frame-2085667092"
+      >
+        <MichelinRating count={3} className="gap-[15.5px]" starClassName="h-8 w-[30px] text-canvas" data-plumb-id="frame-2085667021" />
       </div>
     </section>
   );

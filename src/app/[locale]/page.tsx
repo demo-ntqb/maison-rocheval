@@ -4,7 +4,6 @@ import {
   HomeIntroSection,
   HomeAboutSection,
   HomeProductsSection,
-  HomeFaqSection,
 } from "@/screens/home";
 
 export default async function Home({
@@ -16,12 +15,11 @@ export default async function Home({
   setRequestLocale(locale);
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col" data-screen="home">
       <HomeHeroSection />
       <HomeIntroSection />
       <HomeAboutSection />
       <HomeProductsSection />
-      <HomeFaqSection />
     </div>
   );
 }
