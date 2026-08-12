@@ -60,7 +60,12 @@
     "filter": "Filtrer",
     "sort": "Trier par",
     "announcement": "Livraison offerte dès 150€ d'achat en France métropolitaine",
-    "featured": { "title": "En savoir plus sur notre caviar", "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.", "link": "La collection", "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table" }
+    "featured": {
+      "title": "En savoir plus sur notre caviar",
+      "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
+      "link": "La collection",
+      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
+    }
   },
   "products": {
     "hero": {
@@ -123,11 +128,26 @@
       "viewAll": "Tout voir",
       "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
       "items": [
-        { "question": "Quel caviar choisir ?", "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil." },
-        { "question": "Pourquoi la maturité est-elle importante ?", "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain." },
-        { "question": "Comment le caviar est-il salé ?", "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte." },
-        { "question": "Les esturgeons sont-ils élevés de façon responsable ?", "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison." },
-        { "question": "Combien de temps conserver une boîte ouverte ?", "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C." }
+        {
+          "question": "Quel caviar choisir ?",
+          "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil."
+        },
+        {
+          "question": "Pourquoi la maturité est-elle importante ?",
+          "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain."
+        },
+        {
+          "question": "Comment le caviar est-il salé ?",
+          "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte."
+        },
+        {
+          "question": "Les esturgeons sont-ils élevés de façon responsable ?",
+          "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison."
+        },
+        {
+          "question": "Combien de temps conserver une boîte ouverte ?",
+          "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C."
+        }
       ]
     }
   },
@@ -265,40 +285,184 @@
       "viewAll": "Tout voir",
       "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
       "items": [
-        { "question": "Comment conserver le caviar ?", "answer": "Conservez-le entre 0°C et 4°C et dégustez-le rapidement après ouverture." },
-        { "question": "Quelle quantité servir par personne ?", "answer": "Prévoyez environ 20 à 30 grammes par convive pour une dégustation." },
-        { "question": "Quelle est la meilleure façon de servir le caviar ?", "answer": "Servez-le bien frais avec une cuillère en nacre afin de préserver son caractère." },
-        { "question": "Qu’est-ce qui distingue chaque expression ?", "answer": "L’espèce, l’eau, l’alimentation, la maturité et l’affinage façonnent le grain, la texture et la saveur." },
-        { "question": "D’où vient le caviar Maison Rocheval ?", "answer": "Nous travaillons avec des producteurs sélectionnés dont les standards d’élevage et de récolte répondent à ceux de la Maison." }
+        {
+          "question": "Comment conserver le caviar ?",
+          "answer": "Conservez-le entre 0°C et 4°C et dégustez-le rapidement après ouverture."
+        },
+        {
+          "question": "Quelle quantité servir par personne ?",
+          "answer": "Prévoyez environ 20 à 30 grammes par convive pour une dégustation."
+        },
+        {
+          "question": "Quelle est la meilleure façon de servir le caviar ?",
+          "answer": "Servez-le bien frais avec une cuillère en nacre afin de préserver son caractère."
+        },
+        {
+          "question": "Qu’est-ce qui distingue chaque expression ?",
+          "answer": "L’espèce, l’eau, l’alimentation, la maturité et l’affinage façonnent le grain, la texture et la saveur."
+        },
+        {
+          "question": "D’où vient le caviar Maison Rocheval ?",
+          "answer": "Nous travaillons avec des producteurs sélectionnés dont les standards d’élevage et de récolte répondent à ceux de la Maison."
+        }
       ]
     }
   },
   "aboutProduct": {
-    "hero": { "title": "NOTRE COLLECTION", "statement": "L’esturgeon est un symbole de force, de résilience et de longévité.", "description": "Chaque caviar commence avec une espèce ancienne et un voyage patient façonné par l’eau, le temps et un soin exigeant.", "imageAlt": "Boîtes de caviar Maison Rocheval présentées sur glace pilée" },
-    "history": { "title": "L’Esturgeon : le goût d’un voyage de 200 millions d’années", "description": "Plus ancien que les dinosaures et affiné par des siècles de savoir-faire, l’esturgeon porte une histoire rare que Maison Rocheval respecte dans chaque sélection.", "imageAlt": "Esturgeons nageant dans une eau sombre et pure" },
+    "hero": {
+      "title": "NOTRE COLLECTION",
+      "statement": "L’esturgeon est un symbole de force, de résilience et de longévité.",
+      "description": "Chaque caviar commence avec une espèce ancienne et un voyage patient façonné par l’eau, le temps et un soin exigeant.",
+      "imageAlt": "Boîtes de caviar Maison Rocheval présentées sur glace pilée"
+    },
+    "history": {
+      "title": "L’Esturgeon : le goût d’un voyage de 200 millions d’années",
+      "description": "Plus ancien que les dinosaures et affiné par des siècles de savoir-faire, l’esturgeon porte une histoire rare que Maison Rocheval respecte dans chaque sélection.",
+      "imageAlt": "Esturgeons nageant dans une eau sombre et pure"
+    },
     "cultivation": {
       "title": "20 ANS D’ÉLEVAGE",
-      "early": { "title": "Années 0 - 12", "description": "Les premières années établissent la santé et le caractère du poisson. L’eau, l’alimentation et l’espace sont observés avec patience.", "imageAlt": "Éleveur prenant soin d’un jeune esturgeon" },
-      "mature": { "title": "Années 12 - 20", "description": "À mesure que l’esturgeon mûrit, son développement est suivi avec précision. Rien n’est précipité.", "imageAlt": "Esturgeons arrivant à maturité dans une eau claire" },
-      "harvest": { "title": "Année 20", "description": "La récolte n’est envisagée qu’à pleine maturité. Le moment choisi décide de la texture et de l’expression de chaque grain.", "imageAlt": "Spécialistes inspectant une récolte arrivée à maturité" }
+      "early": {
+        "title": "Années 0 - 12",
+        "description": "Les premières années établissent la santé et le caractère du poisson. L’eau, l’alimentation et l’espace sont observés avec patience.",
+        "imageAlt": "Éleveur prenant soin d’un jeune esturgeon"
+      },
+      "mature": {
+        "title": "Années 12 - 20",
+        "description": "À mesure que l’esturgeon mûrit, son développement est suivi avec précision. Rien n’est précipité.",
+        "imageAlt": "Esturgeons arrivant à maturité dans une eau claire"
+      },
+      "harvest": {
+        "title": "Année 20",
+        "description": "La récolte n’est envisagée qu’à pleine maturité. Le moment choisi décide de la texture et de l’expression de chaque grain.",
+        "imageAlt": "Spécialistes inspectant une récolte arrivée à maturité"
+      }
     },
     "understand": {
-      "title": "Comprendre le produit", "description": "Cinq espèces, chacune avec son grain, sa texture et sa finale. Découvrez le profil qui correspond à votre table.", "select": "Choisir l’espèce",
-      "kaluga": { "name": "Kaluga", "imageAlt": "Boîte de caviar Kaluga" }, "russian": { "name": "Esturgeon russe", "imageAlt": "Boîte de caviar d’esturgeon russe" }, "hybrid": { "name": "Kaluga hybride", "imageAlt": "Boîte de caviar Kaluga hybride" }, "amur": { "name": "Amour", "imageAlt": "Boîte de caviar Amour" }, "baerii": { "name": "Baerii", "imageAlt": "Boîte de caviar Baerii" },
-      "featuredTinAlt": "Boîte ouverte de caviar Maison Rocheval Amour", "featuredSturgeonAlt": "Esturgeon Amour nageant dans une eau sombre", "featuredTitle": "Amour", "featuredDescription": "Nommé deux fois — pour l’esturgeon Amour et pour l’amour. Une expression généreuse et crémeuse à la finale nette.",
-      "facts": { "species": { "label": "Espèce", "value": "Acipenser schrenckii" }, "grain": { "label": "Grain", "value": "Large, ferme" }, "colour": { "label": "Couleur", "value": "Ambre à olive" }, "taste": { "label": "Goût", "value": "Riche · Crémeux · Fromager" } }
+      "title": "Comprendre le produit",
+      "description": "Cinq espèces, chacune avec son grain, sa texture et sa finale. Découvrez le profil qui correspond à votre table.",
+      "select": "Choisir l’espèce",
+      "kaluga": {
+        "name": "Kaluga",
+        "imageAlt": "Boîte de caviar Kaluga"
+      },
+      "russian": {
+        "name": "Esturgeon russe",
+        "imageAlt": "Boîte de caviar d’esturgeon russe"
+      },
+      "hybrid": {
+        "name": "Kaluga hybride",
+        "imageAlt": "Boîte de caviar Kaluga hybride"
+      },
+      "amur": {
+        "name": "Amour",
+        "imageAlt": "Boîte de caviar Amour"
+      },
+      "baerii": {
+        "name": "Baerii",
+        "imageAlt": "Boîte de caviar Baerii"
+      },
+      "featuredTinAlt": "Boîte ouverte de caviar Maison Rocheval Amour",
+      "featuredSturgeonAlt": "Esturgeon Amour nageant dans une eau sombre",
+      "featuredTitle": "Amour",
+      "featuredDescription": "Nommé deux fois — pour l’esturgeon Amour et pour l’amour. Une expression généreuse et crémeuse à la finale nette.",
+      "facts": {
+        "species": {
+          "label": "Espèce",
+          "value": "Acipenser schrenckii"
+        },
+        "grain": {
+          "label": "Grain",
+          "value": "Large, ferme"
+        },
+        "colour": {
+          "label": "Couleur",
+          "value": "Ambre à olive"
+        },
+        "taste": {
+          "label": "Goût",
+          "value": "Riche · Crémeux · Fromager"
+        }
+      }
     },
     "quality": {
-      "title": "LA QUALITÉ NE SE PRÉCIPITE JAMAIS", "description": "De la sélection au salage, chaque geste protège le grain et préserve le caractère de la récolte.",
-      "consideration": { "title": "Une attention minutieuse", "description": "Chaque récolte se lit comme un tout. Couleur, fermeté, humidité, arôme et finale doivent s’accorder.", "imageAlt": "Spécialiste manipulant délicatement du caviar frais" },
-      "salting": { "title": "Le salage", "description": "Le sel est appliqué avec retenue pour révéler la profondeur et préserver le grain sans masquer son expression naturelle.", "imageAlt": "Grains de caviar frais mélangés au sel" }
+      "title": "LA QUALITÉ NE SE PRÉCIPITE JAMAIS",
+      "description": "De la sélection au salage, chaque geste protège le grain et préserve le caractère de la récolte.",
+      "consideration": {
+        "title": "Une attention minutieuse",
+        "description": "Chaque récolte se lit comme un tout. Couleur, fermeté, humidité, arôme et finale doivent s’accorder.",
+        "imageAlt": "Spécialiste manipulant délicatement du caviar frais"
+      },
+      "salting": {
+        "title": "Le salage",
+        "description": "Le sel est appliqué avec retenue pour révéler la profondeur et préserver le grain sans masquer son expression naturelle.",
+        "imageAlt": "Grains de caviar frais mélangés au sel"
+      }
     },
-    "faq": { "title": "Questions Fréquentes", "viewAll": "Tout voir", "imageAlt": "Boîte ouverte de caviar Maison Rocheval", "items": [
-      { "question": "Quel caviar choisir ?", "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil." },
-      { "question": "Pourquoi la maturité est-elle importante ?", "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain." },
-      { "question": "Comment le caviar est-il salé ?", "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte." },
-      { "question": "Les esturgeons sont-ils élevés de façon responsable ?", "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison." },
-      { "question": "Combien de temps conserver une boîte ouverte ?", "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C." }
-    ] }
+    "faq": {
+      "title": "Questions Fréquentes",
+      "viewAll": "Tout voir",
+      "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
+      "items": [
+        {
+          "question": "Quel caviar choisir ?",
+          "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil."
+        },
+        {
+          "question": "Pourquoi la maturité est-elle importante ?",
+          "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain."
+        },
+        {
+          "question": "Comment le caviar est-il salé ?",
+          "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte."
+        },
+        {
+          "question": "Les esturgeons sont-ils élevés de façon responsable ?",
+          "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison."
+        },
+        {
+          "question": "Combien de temps conserver une boîte ouverte ?",
+          "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C."
+        }
+      ]
+    }
+  },
+  "productDetail": {
+    "sizeLabel": "TAILLE",
+    "packagingLabel": "EMBALLAGE",
+    "perBoxLabel": "PAR BOÎTE",
+    "summaryLabel": "RÉSUMÉ",
+    "addToCart": "Ajouter au panier",
+    "decreaseQty": "Réduire la quantité",
+    "increaseQty": "Augmenter la quantité",
+    "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
+    "specs": {
+      "specificationTitle": "Spécifications",
+      "pearlSize": "Taille des grains",
+      "salt": "Salinité",
+      "color": "Couleur",
+      "tastingNotes": "Notes de dégustation",
+      "ingredients": "Ingrédients",
+      "nutritionalData": "Valeurs nutritionnelles pour 100g",
+      "servingTitle": "Service & Dégustation",
+      "shelfLife": "Conservation",
+      "recommendation": "Conseils de service",
+      "deliveryTitle": "Livraison",
+      "shipping": "Expédition",
+      "deliveryTime": "Délai de livraison",
+      "giftingTitle": "Offrir",
+      "giftWrapping": "Emballage cadeau",
+      "messageCard": "Message personnalisé"
+    },
+    "assistance": {
+      "title": "Besoin de conseils ?",
+      "description": "Nos spécialistes du caviar sont à votre disposition pour vous guider dans le choix, les quantités et les cadeaux.",
+      "cta": "Nous contacter",
+      "imageAlt": "Paysage d’élevage d’esturgeons Maison Rocheval"
+    },
+    "related": {
+      "title": "Vous aimerez aussi",
+      "cta": "Découvrir la boutique"
+    }
   }
 }

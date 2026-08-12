@@ -6,6 +6,8 @@
 @theme inline {
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
 
   @keyframes accordion-down {
     from {
@@ -22,6 +24,26 @@
     }
     to {
       height: 0;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }
@@ -175,27 +197,6 @@ body {
   color: var(--background);
 }
 
-/* Animations */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -209,53 +210,3 @@ body {
   }
 }
 
-/* Maison Rocheval UI Component Overrides */
-
-/* Button custom typography & radius */
-[data-slot="button"] {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  border-radius: var(--radius) !important;
-}
-
-/* Accordion semantic style overrides */
-[data-slot="accordion"] {
-  border-bottom: 0.5px solid var(--palette-gray-light);
-}
-
-[data-slot="accordion-item"] {
-  border-top: 0.5px solid var(--palette-gray-light);
-  border-bottom: none !important;
-}
-
-[data-slot="accordion-trigger"] {
-  font-family: var(--font-display);
-  font-size: 20px !important;
-  font-weight: 400 !important;
-  line-height: 1.4 !important;
-  color: var(--palette-black);
-  padding-top: 40px !important;
-  padding-bottom: 40px !important;
-  text-decoration: none !important;
-  transition: opacity 0.2s ease;
-}
-
-[data-slot="accordion-trigger"]:hover {
-  text-decoration: none !important;
-  opacity: 0.7;
-}
-
-[data-slot="accordion-trigger-icon"] {
-  color: var(--palette-black) !important;
-  width: 16px !important;
-  height: 16px !important;
-}
-
-[data-slot="accordion-content"] {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.43;
-  color: var(--palette-gray-dark);
-  padding-bottom: 40px !important;
-}

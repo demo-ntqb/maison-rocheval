@@ -60,7 +60,12 @@
     "filter": "Filter",
     "sort": "Sort by",
     "announcement": "Free shipping on orders over €150 in Metropolitan France",
-    "featured": { "title": "Learn more about our caviar", "description": "From species and cultivation to selection and service, discover the journey held inside every tin.", "link": "About collection", "imageAlt": "Maison Rocheval caviar collection arranged on a dining table" }
+    "featured": {
+      "title": "Learn more about our caviar",
+      "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
+      "link": "About collection",
+      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
+    }
   },
   "products": {
     "hero": {
@@ -123,11 +128,26 @@
       "viewAll": "View all",
       "imageAlt": "Open Maison Rocheval caviar tin",
       "items": [
-        { "question": "Which caviar should I choose?", "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile." },
-        { "question": "Why does sturgeon maturity matter?", "answer": "Maturity shapes the size, integrity and aromatic depth of the grain." },
-        { "question": "How is caviar salted?", "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression." },
-        { "question": "Are the sturgeon responsibly raised?", "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison." },
-        { "question": "How long does caviar keep after opening?", "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C." }
+        {
+          "question": "Which caviar should I choose?",
+          "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile."
+        },
+        {
+          "question": "Why does sturgeon maturity matter?",
+          "answer": "Maturity shapes the size, integrity and aromatic depth of the grain."
+        },
+        {
+          "question": "How is caviar salted?",
+          "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression."
+        },
+        {
+          "question": "Are the sturgeon responsibly raised?",
+          "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison."
+        },
+        {
+          "question": "How long does caviar keep after opening?",
+          "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C."
+        }
       ]
     }
   },
@@ -265,40 +285,184 @@
       "viewAll": "View all",
       "imageAlt": "Open Maison Rocheval caviar tin",
       "items": [
-        { "question": "How should caviar be stored?", "answer": "Keep caviar refrigerated between 0°C and 4°C and enjoy it promptly after opening." },
-        { "question": "How much caviar should I serve per person?", "answer": "Allow around 20 to 30 grams per guest for a tasting, or more when caviar is the centrepiece." },
-        { "question": "What is the best way to serve caviar?", "answer": "Serve it well chilled with a mother-of-pearl spoon so its character remains pure." },
-        { "question": "What makes each caviar expression different?", "answer": "Species, water, feed, maturity and maturation all shape the grain, texture and flavour." },
-        { "question": "Where does Maison Rocheval source its caviar?", "answer": "We work closely with selected producers whose husbandry and harvesting standards meet those of the Maison." }
+        {
+          "question": "How should caviar be stored?",
+          "answer": "Keep caviar refrigerated between 0°C and 4°C and enjoy it promptly after opening."
+        },
+        {
+          "question": "How much caviar should I serve per person?",
+          "answer": "Allow around 20 to 30 grams per guest for a tasting, or more when caviar is the centrepiece."
+        },
+        {
+          "question": "What is the best way to serve caviar?",
+          "answer": "Serve it well chilled with a mother-of-pearl spoon so its character remains pure."
+        },
+        {
+          "question": "What makes each caviar expression different?",
+          "answer": "Species, water, feed, maturity and maturation all shape the grain, texture and flavour."
+        },
+        {
+          "question": "Where does Maison Rocheval source its caviar?",
+          "answer": "We work closely with selected producers whose husbandry and harvesting standards meet those of the Maison."
+        }
       ]
     }
   },
   "aboutProduct": {
-    "hero": { "title": "OUR COLLECTION", "statement": "The sturgeon is a true symbol of strength, resilience and longevity.", "description": "Each caviar begins with an ancient species and a patient journey shaped by water, time and exacting care.", "imageAlt": "Maison Rocheval caviar tins presented on crushed ice" },
-    "history": { "title": "The Sturgeon: The taste of a 200-million-year journey", "description": "Older than the dinosaurs and refined through centuries of craft, sturgeon carries a rare history. Maison Rocheval respects that long journey in every selection.", "imageAlt": "Sturgeon swimming through dark pristine water" },
+    "hero": {
+      "title": "OUR COLLECTION",
+      "statement": "The sturgeon is a true symbol of strength, resilience and longevity.",
+      "description": "Each caviar begins with an ancient species and a patient journey shaped by water, time and exacting care.",
+      "imageAlt": "Maison Rocheval caviar tins presented on crushed ice"
+    },
+    "history": {
+      "title": "The Sturgeon: The taste of a 200-million-year journey",
+      "description": "Older than the dinosaurs and refined through centuries of craft, sturgeon carries a rare history. Maison Rocheval respects that long journey in every selection.",
+      "imageAlt": "Sturgeon swimming through dark pristine water"
+    },
     "cultivation": {
       "title": "20 YEARS OF CULTIVATION",
-      "early": { "title": "Year 0 - 12", "description": "The first years establish the health and character of the fish. Water quality, feed and space are observed with patience and precision.", "imageAlt": "Sturgeon farmer caring for a young fish" },
-      "mature": { "title": "Year 12 - 20", "description": "As the sturgeon matures, its development is monitored closely. Nothing is hurried; each species follows its own rhythm.", "imageAlt": "Sturgeon maturing in clear aquaculture water" },
-      "harvest": { "title": "Year 20", "description": "Only at full maturity can the harvest be considered. The timing decides the integrity, texture and expression of every pearl.", "imageAlt": "Caviar specialists inspecting a mature harvest" }
+      "early": {
+        "title": "Year 0 - 12",
+        "description": "The first years establish the health and character of the fish. Water quality, feed and space are observed with patience and precision.",
+        "imageAlt": "Sturgeon farmer caring for a young fish"
+      },
+      "mature": {
+        "title": "Year 12 - 20",
+        "description": "As the sturgeon matures, its development is monitored closely. Nothing is hurried; each species follows its own rhythm.",
+        "imageAlt": "Sturgeon maturing in clear aquaculture water"
+      },
+      "harvest": {
+        "title": "Year 20",
+        "description": "Only at full maturity can the harvest be considered. The timing decides the integrity, texture and expression of every pearl.",
+        "imageAlt": "Caviar specialists inspecting a mature harvest"
+      }
     },
     "understand": {
-      "title": "Understand the product", "description": "Five species, each with a distinct grain, texture and finish. Discover the profile that speaks most clearly to your table.", "select": "Select species",
-      "kaluga": { "name": "Kaluga", "imageAlt": "Kaluga caviar tin" }, "russian": { "name": "Russian sturgeon", "imageAlt": "Russian sturgeon caviar tin" }, "hybrid": { "name": "Kaluga hybrid", "imageAlt": "Kaluga hybrid caviar tin" }, "amur": { "name": "Amur", "imageAlt": "Amur caviar tin" }, "baerii": { "name": "Baerii", "imageAlt": "Baerii caviar tin" },
-      "featuredTinAlt": "Open tin of Maison Rocheval Amour caviar", "featuredSturgeonAlt": "Amur sturgeon swimming in dark water", "featuredTitle": "Amour", "featuredDescription": "Named twice over — for the Amur sturgeon and for love. A generous, creamy expression with a clean, lingering finish.",
-      "facts": { "species": { "label": "Species", "value": "Acipenser schrenckii" }, "grain": { "label": "Grain", "value": "Large, firm" }, "colour": { "label": "Colour", "value": "Amber to olive" }, "taste": { "label": "Taste", "value": "Rich · Creamy · Cheese" } }
+      "title": "Understand the product",
+      "description": "Five species, each with a distinct grain, texture and finish. Discover the profile that speaks most clearly to your table.",
+      "select": "Select species",
+      "kaluga": {
+        "name": "Kaluga",
+        "imageAlt": "Kaluga caviar tin"
+      },
+      "russian": {
+        "name": "Russian sturgeon",
+        "imageAlt": "Russian sturgeon caviar tin"
+      },
+      "hybrid": {
+        "name": "Kaluga hybrid",
+        "imageAlt": "Kaluga hybrid caviar tin"
+      },
+      "amur": {
+        "name": "Amur",
+        "imageAlt": "Amur caviar tin"
+      },
+      "baerii": {
+        "name": "Baerii",
+        "imageAlt": "Baerii caviar tin"
+      },
+      "featuredTinAlt": "Open tin of Maison Rocheval Amour caviar",
+      "featuredSturgeonAlt": "Amur sturgeon swimming in dark water",
+      "featuredTitle": "Amour",
+      "featuredDescription": "Named twice over — for the Amur sturgeon and for love. A generous, creamy expression with a clean, lingering finish.",
+      "facts": {
+        "species": {
+          "label": "Species",
+          "value": "Acipenser schrenckii"
+        },
+        "grain": {
+          "label": "Grain",
+          "value": "Large, firm"
+        },
+        "colour": {
+          "label": "Colour",
+          "value": "Amber to olive"
+        },
+        "taste": {
+          "label": "Taste",
+          "value": "Rich · Creamy · Cheese"
+        }
+      }
     },
     "quality": {
-      "title": "QUALITY CAN NEVER BE RUSHED", "description": "From careful consideration to salting, every gesture protects the grain and preserves the character of the harvest.",
-      "consideration": { "title": "Careful consideration", "description": "Each harvest is read as a whole. Colour, firmness, moisture, aroma and finish must align before the Maison makes its selection.", "imageAlt": "Specialist gently handling fresh caviar during selection" },
-      "salting": { "title": "Salting process", "description": "Salt is applied with restraint. Enough to reveal depth and preserve the grain, never enough to conceal the caviar’s natural expression.", "imageAlt": "Fresh caviar pearls being combined with salt" }
+      "title": "QUALITY CAN NEVER BE RUSHED",
+      "description": "From careful consideration to salting, every gesture protects the grain and preserves the character of the harvest.",
+      "consideration": {
+        "title": "Careful consideration",
+        "description": "Each harvest is read as a whole. Colour, firmness, moisture, aroma and finish must align before the Maison makes its selection.",
+        "imageAlt": "Specialist gently handling fresh caviar during selection"
+      },
+      "salting": {
+        "title": "Salting process",
+        "description": "Salt is applied with restraint. Enough to reveal depth and preserve the grain, never enough to conceal the caviar’s natural expression.",
+        "imageAlt": "Fresh caviar pearls being combined with salt"
+      }
     },
-    "faq": { "title": "Frequently Asked Questions", "viewAll": "View all", "imageAlt": "Open Maison Rocheval caviar tin", "items": [
-      { "question": "Which caviar should I choose?", "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile." },
-      { "question": "Why does sturgeon maturity matter?", "answer": "Maturity shapes the size, integrity and aromatic depth of the grain." },
-      { "question": "How is caviar salted?", "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression." },
-      { "question": "Are the sturgeon responsibly raised?", "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison." },
-      { "question": "How long does caviar keep after opening?", "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C." }
-    ] }
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "viewAll": "View all",
+      "imageAlt": "Open Maison Rocheval caviar tin",
+      "items": [
+        {
+          "question": "Which caviar should I choose?",
+          "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile."
+        },
+        {
+          "question": "Why does sturgeon maturity matter?",
+          "answer": "Maturity shapes the size, integrity and aromatic depth of the grain."
+        },
+        {
+          "question": "How is caviar salted?",
+          "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression."
+        },
+        {
+          "question": "Are the sturgeon responsibly raised?",
+          "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison."
+        },
+        {
+          "question": "How long does caviar keep after opening?",
+          "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C."
+        }
+      ]
+    }
+  },
+  "productDetail": {
+    "sizeLabel": "SIZE",
+    "packagingLabel": "PACKAGING",
+    "perBoxLabel": "PER BOX",
+    "summaryLabel": "SUMMARY",
+    "addToCart": "Add to cart",
+    "decreaseQty": "Decrease quantity",
+    "increaseQty": "Increase quantity",
+    "deliveryNote": "We offer variety of delivery options in check-out",
+    "specs": {
+      "specificationTitle": "Specification",
+      "pearlSize": "Pearl Size",
+      "salt": "Salt",
+      "color": "Color",
+      "tastingNotes": "Tasting Notes",
+      "ingredients": "Ingredients",
+      "nutritionalData": "Nutritional Data per 100g",
+      "servingTitle": "Serving Info",
+      "shelfLife": "Shelf Life",
+      "recommendation": "Serving Recommendation",
+      "deliveryTitle": "Delivery Info",
+      "shipping": "Shipping",
+      "deliveryTime": "Delivery Time",
+      "giftingTitle": "Gifting",
+      "giftWrapping": "Gift Wrapping",
+      "messageCard": "Personal Message"
+    },
+    "assistance": {
+      "title": "Require more assistance?",
+      "description": "Our caviar specialists can help with selection, quantities and gifting.",
+      "cta": "Contact Us",
+      "imageAlt": "Maison Rocheval sturgeon sourcing landscape"
+    },
+    "related": {
+      "title": "You may also like",
+      "cta": "Go to shop"
+    }
   }
 }
