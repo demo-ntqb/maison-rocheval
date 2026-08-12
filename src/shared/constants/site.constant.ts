@@ -17,8 +17,29 @@ export const businessInfo = {
 // Navigation. Labels are translated (see `header.nav` / `footer.nav` in
 // messages/*.json) and looked up by `id` — this only holds hrefs + ids.
 export const navigation = {
-  main: [{ id: "home", href: "/" }],
-  footer: [] as Array<{ id: string; href: string }>,
+  main: [
+    { id: "about", href: "/about" },
+    { id: "collection", href: "/collection" },
+    { id: "shop", href: "/shop" },
+  ],
+  footer: {
+    caviar: [
+      { id: "amour", href: "/shop?category=amour" },
+      { id: "lexpression", href: "/shop?category=lexpression" },
+      { id: "harmonie", href: "/shop?category=harmonie" },
+      { id: "oscietra", href: "/shop?category=oscietra" },
+      { id: "kaluga", href: "/shop?category=kaluga" },
+      { id: "collection", href: "/shop" },
+    ],
+    brand: [
+      { id: "about", href: "/about" },
+      { id: "collection", href: "/shop" },
+    ],
+    care: [
+      { id: "faq", href: "/faq" },
+      { id: "contact", href: "/contact" },
+    ],
+  },
 };
 
 // Social Media. `ariaLabel` is translated — see `footer.social` in messages/*.json.
