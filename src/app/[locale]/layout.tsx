@@ -1,13 +1,13 @@
+import { routing } from "@/i18n/routing";
+import { Footer } from "@/shared/components/layout/footer";
+import { Header } from "@/shared/components/layout/header";
+import { generateRootMetadata } from "@/shared/lib/metadata";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { hasLocale } from "next-intl";
-import { NextIntlClientProvider } from "next-intl";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
-import { Header, Footer } from "@/shared/components/layout";
-import { generateRootMetadata } from "@/shared/lib/metadata";
-import { routing } from "@/i18n/routing";
+import { notFound } from "next/navigation";
 import "../globals.css";
 
 const optima = localFont({
