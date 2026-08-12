@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import { Header, Footer } from "@/shared/components/layout";
@@ -72,16 +72,28 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
+  const messages = await getMessages();
 
   return (
     <html
       lang={locale}
       className={`${optima.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
+      <head>
+        <meta name="theme-color" content="#16222e" />
+      </head>
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
-        <NextIntlClientProvider>
+        <a
+          href="#main-content"
+          className="sr-only z-[100] rounded-brand bg-canvas px-4 py-3 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Skip to content
+        </a>
+        <NextIntlClientProvider messages={{ header: messages.header }}>
           <Header />
-          <main className="flex-1">{children}</main>
+        </NextIntlClientProvider>
+        <NextIntlClientProvider messages={null}>
+          <main id="main-content" className="flex-1">{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>

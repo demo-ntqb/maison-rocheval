@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* TODO: Update to match Maison Rocheval's design system */
-
 /* shadcn/ui runtime primitives (from shadcn/dist/tailwind.css, inlined
    because Turbopack doesn't resolve that bare-specifier @import inside the
    Tailwind CSS pipeline). Only what shared/components/ui actually uses. */
@@ -54,6 +52,13 @@
   --palette-gray-light: #bcbcbc;
   --palette-gray-dark: #636363;
   --palette-navy-dark: #16222e;
+  --palette-hero-depth: #071b26;
+  --palette-hero-haze: #77848f;
+
+  /* Layout scale extracted from the 1400px Figma canvas. */
+  --layout-content: 62.5rem;
+  --space-section: 12.5rem;
+  --space-editorial: 9.375rem;
 
   /* shadcn/ui custom variable mappings */
   --radius: 2px;
@@ -87,6 +92,17 @@
   --color-gray-light: var(--palette-gray-light);
   --color-gray-dark: var(--palette-gray-dark);
   --color-navy-dark: var(--palette-navy-dark);
+  --color-canvas: var(--palette-white);
+  --color-ink: var(--palette-black);
+  --color-warm: var(--palette-beige);
+  --color-line: var(--palette-gray-light);
+  --color-muted-ink: var(--palette-gray-dark);
+  --color-hero-depth: var(--palette-hero-depth);
+
+  /* Layout */
+  --container-content: var(--layout-content);
+  --spacing-section: var(--space-section);
+  --spacing-editorial: var(--space-editorial);
 
   /* shadcn semantic map in Tailwind v4 */
   --color-primary: var(--primary);
@@ -106,16 +122,36 @@
   --font-sans: var(--font-sans), Arial, Helvetica, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 
+  /* Type scale */
+  --text-section-title: 2rem;
+  --text-section-title--line-height: 1;
+  --text-display-statement: 5.25rem;
+  --text-display-statement--line-height: 1.07;
+
   /* Border Radii */
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 1px);
   --radius-sm: calc(var(--radius) - 2px);
+  --radius-brand: var(--radius);
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+}
+
+.home-hero-overlay {
+  background:
+    radial-gradient(circle at 50% 59%, transparent 0 59%, var(--palette-hero-depth) 100%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--palette-black) 18%, transparent), transparent 38%);
+  pointer-events: none;
 }
 
 ::selection {
@@ -207,4 +243,3 @@ body {
   color: var(--palette-gray-dark);
   padding-bottom: 40px !important;
 }
-
