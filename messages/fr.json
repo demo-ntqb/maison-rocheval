@@ -3,6 +3,10 @@
     "root": {
       "title": "Maison Rocheval — Caviar & Gastronomie",
       "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
+    },
+    "products": {
+      "title": "La Collection de Caviar",
+      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
     }
   },
   "common": {
@@ -22,6 +26,8 @@
     "menuLabel": "Menu",
     "openMenu": "Ouvrir le menu de navigation",
     "closeMenu": "Fermer le menu de navigation",
+    "announcement": "Nous livrons actuellement uniquement en France et aux États-Unis.",
+    "dismissAnnouncement": "Fermer l’annonce de livraison",
     "cart": "PANIER"
   },
   "footer": {
@@ -55,6 +61,75 @@
     "sort": "Trier par",
     "announcement": "Livraison offerte dès 150€ d'achat en France métropolitaine",
     "featured": { "title": "En savoir plus sur notre caviar", "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.", "link": "La collection", "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table" }
+  },
+  "products": {
+    "hero": {
+      "title": "Notre Collection"
+    },
+    "catalog": {
+      "title": "Nos caviars",
+      "itemCount": "{count} produits",
+      "cards": {
+        "amur": {
+          "eyebrow": "Patrimoine",
+          "title": "Caviar Amour",
+          "species": "Huso Dauricus",
+          "profile": "Riche · Crémeux · Finale longue",
+          "description": "Des grains sombres et généreux, à la texture ample et à la finale nette et persistante.",
+          "imageAlt": "Boîte ouverte de caviar Amour Maison Rocheval"
+        },
+        "kaluga": {
+          "eyebrow": "Patrimoine",
+          "title": "Caviar Kaluga",
+          "species": "Huso Dauricus",
+          "profile": "Riche · Crémeux · Finale longue",
+          "description": "De grands grains souples aux reflets bronze, profonds et portés par une finale marine arrondie.",
+          "imageAlt": "Boîte ouverte de caviar Kaluga Maison Rocheval"
+        },
+        "russianHybrid": {
+          "eyebrow": "Patrimoine",
+          "title": "Caviar Russian Hybrid",
+          "species": "Acipenser Gueldenstaedtii",
+          "profile": "Soyeux · Net · Frais",
+          "description": "Une expression raffinée aux grains olive, à la salinité précise et à la finale vive et persistante.",
+          "imageAlt": "Boîte ouverte de caviar Russian Hybrid Maison Rocheval"
+        },
+        "expression": {
+          "eyebrow": "Réserve",
+          "title": "L’Expression",
+          "species": "Kaluga Hybride",
+          "profile": "Rond · Précis · Noisetté",
+          "description": "La signature de la Maison, sélectionnée pour son équilibre et sa finale d’une grande netteté.",
+          "imageAlt": "Boîte ouverte de caviar L’Expression Maison Rocheval"
+        },
+        "harmonie": {
+          "eyebrow": "Assemblage",
+          "title": "Harmonie",
+          "species": "Russian Hybrid",
+          "profile": "Soyeux · Doux · Fruité",
+          "description": "Nommé pour son équilibre et défini par le fruit, avec un grain souple et une persistance délicate.",
+          "imageAlt": "Boîte ouverte de caviar Harmonie Maison Rocheval"
+        }
+      }
+    },
+    "editorial": {
+      "title": "En savoir plus sur notre caviar",
+      "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
+      "link": "La collection",
+      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
+    },
+    "faq": {
+      "title": "Questions Fréquentes",
+      "viewAll": "Tout voir",
+      "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
+      "items": [
+        { "question": "Quel caviar choisir ?", "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil." },
+        { "question": "Pourquoi la maturité est-elle importante ?", "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain." },
+        { "question": "Comment le caviar est-il salé ?", "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte." },
+        { "question": "Les esturgeons sont-ils élevés de façon responsable ?", "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison." },
+        { "question": "Combien de temps conserver une boîte ouverte ?", "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C." }
+      ]
+    }
   },
   "home": {
     "hero": {

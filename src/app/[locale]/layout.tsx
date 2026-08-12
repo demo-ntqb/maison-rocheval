@@ -35,6 +35,7 @@ const optima = localFont({
   ],
   variable: "--font-display",
   display: "swap",
+  preload: false,
 });
 
 const spaceGrotesk = Space_Grotesk({
@@ -77,12 +78,16 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
+      data-scroll-behavior="smooth"
       className={`${optima.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <head>
         <meta name="theme-color" content="#16222e" />
       </head>
-      <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
+      <body
+        data-plumb-id="shop"
+        className="flex min-h-full flex-col items-center overflow-x-hidden bg-canvas font-sans"
+      >
         <a
           href="#main-content"
           className="sr-only z-[100] rounded-brand bg-canvas px-4 py-3 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
@@ -93,7 +98,7 @@ export default async function LocaleLayout({
           <Header />
         </NextIntlClientProvider>
         <NextIntlClientProvider messages={null}>
-          <main id="main-content" className="flex-1">{children}</main>
+          <main id="main-content" className="w-full flex-1">{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>

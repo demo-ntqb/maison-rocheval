@@ -8,7 +8,7 @@ export async function Footer() {
   const t = await getTranslations("footer");
 
   return (
-    <footer className="flex w-full flex-col items-center gap-16 bg-warm px-4 py-24 text-ink sm:px-6 lg:px-0 lg:py-[100px]" data-plumb-id="component-6-5">
+    <footer className="flex w-full flex-col items-center gap-16 bg-warm px-4 py-24 text-ink sm:px-6 lg:px-0 lg:py-[100px]" data-plumb-id="component-6-2">
         <div className="flex w-full max-w-content flex-col justify-between gap-16 lg:h-[300px] lg:flex-row" data-plumb-id="frame-2085667113">
           <div className="flex w-full max-w-[280px] flex-col" data-plumb-id="frame-2085666973">
             <div className="flex flex-col gap-8" data-plumb-id="frame-2085667166">
@@ -16,7 +16,7 @@ export async function Footer() {
                 <strong className="font-display text-sm font-bold leading-[17px]" data-plumb-id="contact">
                   {t("contact")}
                 </strong>
-                <div className="flex h-[51px] flex-col font-sans text-xs leading-[15px]" data-plumb-id="frame-2085667148">
+                <div className="flex h-[51px] flex-col font-sans text-sm leading-[18px]" data-plumb-id="frame-2085667148">
                   <span className="flex h-[51px] flex-col justify-between" data-plumb-id="email-support-maisonrocheval-com">
                     <span>{t("emailLabel")}</span>
                     <span>{t("respondNote")}</span>

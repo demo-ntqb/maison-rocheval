@@ -114,7 +114,7 @@ export function FaqSection({
         <div className="pt-4">
           <Link
             href={buttonLink}
-            className="font-sans text-xs font-light tracking-widest text-black hover:text-gray-dark uppercase underline underline-offset-4 decoration-gray-light"
+            className="-my-3 inline-flex min-h-11 items-center font-sans text-xs font-light tracking-widest text-black uppercase underline decoration-gray-light underline-offset-4 hover:text-gray-dark focus-visible:outline-2 focus-visible:outline-offset-4"
           >
             {buttonText}
           </Link>

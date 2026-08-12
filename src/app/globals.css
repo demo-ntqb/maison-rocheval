@@ -147,6 +147,22 @@ body {
   overflow-x: clip;
 }
 
+/* Skip below-the-fold layout and paint work until content nears the viewport. */
+.products-card-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 540px;
+}
+
+.products-editorial-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 908px;
+}
+
+.products-faq-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 832px;
+}
+
 .home-hero-overlay {
   background:
     radial-gradient(circle at 50% 59%, transparent 0 59%, var(--palette-hero-depth) 100%),

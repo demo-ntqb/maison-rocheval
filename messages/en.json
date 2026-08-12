@@ -3,6 +3,10 @@
     "root": {
       "title": "Maison Rocheval — Caviar & Fine Food",
       "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
+    },
+    "products": {
+      "title": "The Caviar Collection",
+      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
     }
   },
   "common": {
@@ -15,13 +19,15 @@
   "header": {
     "nav": {
       "home": "Home",
-      "about": "About Maison Rocheval",
+      "about": "Our brand",
       "collection": "Our collection",
       "shop": "Shop"
     },
     "menuLabel": "Menu",
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
+    "announcement": "We currently only deliver to France and United States.",
+    "dismissAnnouncement": "Dismiss delivery announcement",
     "cart": "CART"
   },
   "footer": {
@@ -55,6 +61,75 @@
     "sort": "Sort by",
     "announcement": "Free shipping on orders over €150 in Metropolitan France",
     "featured": { "title": "Learn more about our caviar", "description": "From species and cultivation to selection and service, discover the journey held inside every tin.", "link": "About collection", "imageAlt": "Maison Rocheval caviar collection arranged on a dining table" }
+  },
+  "products": {
+    "hero": {
+      "title": "Our Collection"
+    },
+    "catalog": {
+      "title": "Our caviar",
+      "itemCount": "{count} items",
+      "cards": {
+        "amur": {
+          "eyebrow": "Patrimoine",
+          "title": "Amur Caviar",
+          "species": "Huso Dauricus",
+          "profile": "Rich · Creamy · Long finish",
+          "description": "Exceptional dark pearls with a generous texture and a clean, lingering finish.",
+          "imageAlt": "Open Maison Rocheval Amur caviar tin"
+        },
+        "kaluga": {
+          "eyebrow": "Patrimoine",
+          "title": "Kaluga Caviar",
+          "species": "Huso Dauricus",
+          "profile": "Rich · Creamy · Long finish",
+          "description": "Large, supple pearls with warm bronze reflections, depth and a rounded marine finish.",
+          "imageAlt": "Open Maison Rocheval Kaluga caviar tin"
+        },
+        "russianHybrid": {
+          "eyebrow": "Patrimoine",
+          "title": "Russian Hybrid Caviar",
+          "species": "Acipenser Gueldenstaedtii",
+          "profile": "Silky · Clean · Fresh",
+          "description": "A refined expression with olive pearls, precise salinity and a bright, persistent finish.",
+          "imageAlt": "Open Maison Rocheval Russian Hybrid caviar tin"
+        },
+        "expression": {
+          "eyebrow": "Réserve",
+          "title": "L’Expression",
+          "species": "Kaluga Hybrid",
+          "profile": "Rounded · Precise · Nutty",
+          "description": "The signature expression of the Maison, selected for balance and an exceptionally clean finish.",
+          "imageAlt": "Open Maison Rocheval L’Expression caviar tin"
+        },
+        "harmonie": {
+          "eyebrow": "Assemblage",
+          "title": "Harmonie",
+          "species": "Russian Hybrid",
+          "profile": "Silky · Soft · Fruity",
+          "description": "Named for balance and defined by fruit, with a supple grain and delicate persistence.",
+          "imageAlt": "Open Maison Rocheval Harmonie caviar tin"
+        }
+      }
+    },
+    "editorial": {
+      "title": "Learn more about our caviar",
+      "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
+      "link": "About collection",
+      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "viewAll": "View all",
+      "imageAlt": "Open Maison Rocheval caviar tin",
+      "items": [
+        { "question": "Which caviar should I choose?", "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile." },
+        { "question": "Why does sturgeon maturity matter?", "answer": "Maturity shapes the size, integrity and aromatic depth of the grain." },
+        { "question": "How is caviar salted?", "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression." },
+        { "question": "Are the sturgeon responsibly raised?", "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison." },
+        { "question": "How long does caviar keep after opening?", "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C." }
+      ]
+    }
   },
   "home": {
     "hero": {

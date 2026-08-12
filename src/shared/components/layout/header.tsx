@@ -1,22 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { useTranslations, useLocale } from "next-intl";
 import { Menu, ShoppingCart } from "lucide-react";
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/shared/components/ui/sheet";
 import { navigation } from "@/shared/constants/site.constant";
 import { cn } from "@/shared/lib/utils";
 import { AnnouncementBar } from "./announcement-bar";
+
+const MobileMenu = dynamic(
+  () => import("./mobile-menu").then((module) => module.MobileMenu),
+  { ssr: false },
+);
 
 export interface HeaderProps {
   initialVariant?: "transparent" | "solid";
@@ -82,25 +80,31 @@ export function Header({ initialVariant }: HeaderProps) {
 
   const textMutedColorClass = isTransparentMode || resolvedVariant === "transparent"
     ? "text-white/80 hover:text-white"
-    : "text-gray-dark hover:text-black";
+    : "text-black hover:text-gray-dark";
 
   const textLabelMutedClass = isTransparentMode || resolvedVariant === "transparent"
     ? "text-white/60"
-    : "text-gray-dark";
+    : "text-black";
 
   return (
-    <div className="sticky top-0 z-50 flex w-full flex-col" data-plumb-id="component-6">
+    <div className="sticky top-0 z-50 flex w-full flex-col">
       {/* Announcement Bar at the top (only on Shop routes) */}
-      {showAnnouncement && <AnnouncementBar />}
+      {showAnnouncement && (
+        <AnnouncementBar
+          message={t("announcement")}
+          dismissLabel={t("dismissAnnouncement")}
+        />
+      )}
 
       <header
+        data-plumb-id="component-7"
         className={cn(
-          "w-full transition-colors duration-300",
+          "flex w-full flex-row justify-between px-4 py-5 transition-colors duration-300 sm:px-6 lg:px-8",
           headerBgClass
         )}
       >
-        <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
-          <div className="relative flex h-20 items-center justify-between" data-plumb-id="frame-2085667020">
+        <div className="mx-auto w-full max-w-[1336px]">
+          <div className="relative flex h-10 items-center justify-between" data-plumb-id="frame-2085667020">
             {/* Left Column: Navigation Links (Desktop) */}
             <nav aria-label="Main navigation" className="hidden flex-1 items-center gap-8 lg:flex" data-plumb-id="frame-2085667019">
               {navigation.main.map((item) => {
@@ -113,7 +117,7 @@ export function Header({ initialVariant }: HeaderProps) {
                       textMutedColorClass
                     )}
                   >
-                    <span data-plumb-id={item.id === "about" ? "our-brand" : item.id === "collection" ? "our-collection" : "shop"}>
+                    <span data-plumb-id={item.id === "about" ? "our-brand" : item.id === "collection" ? "our-collection" : undefined}>
                       {t(`nav.${item.id}`)}
                     </span>
                   </Link>
@@ -123,40 +127,28 @@ export function Header({ initialVariant }: HeaderProps) {
 
             {/* Left Column: Hamburger Button (Mobile) */}
             <div className="flex flex-1 lg:hidden">
-              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <button
-                    type="button"
-                    className={cn(
-                      "inline-flex size-12 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2",
-                      textColorClass,
-                    )}
-                    aria-label={t("openMenu")}
-                  >
-                    <Menu className="size-6" aria-hidden="true" />
-                  </button>
-                </SheetTrigger>
-                <SheetContent
-                  side="left"
-                  className="w-[min(88vw,360px)] border-r border-canvas/10 bg-navy-dark p-0 text-canvas"
-                >
-                  <SheetHeader className="border-b border-canvas/10 p-6">
-                    <SheetTitle className="font-display text-xl text-canvas">Maison Rocheval</SheetTitle>
-                  </SheetHeader>
-                  <nav aria-label={t("menuLabel")} className="flex flex-col px-6 py-4">
-                    {navigation.main.map((item) => (
-                      <SheetClose key={item.id} asChild>
-                        <Link
-                          href={item.href}
-                          className="flex min-h-12 items-center border-b border-canvas/10 font-sans text-base text-canvas"
-                        >
-                          {t(`nav.${item.id}`)}
-                        </Link>
-                      </SheetClose>
-                    ))}
-                  </nav>
-                </SheetContent>
-              </Sheet>
+              <button
+                type="button"
+                className={cn(
+                  "inline-flex size-12 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2",
+                  textColorClass,
+                )}
+                aria-label={t("openMenu")}
+                onClick={() => setIsMobileMenuOpen(true)}
+              >
+                <Menu className="size-6" aria-hidden="true" />
+              </button>
+              {isMobileMenuOpen ? (
+                <MobileMenu
+                  open={isMobileMenuOpen}
+                  onOpenChange={setIsMobileMenuOpen}
+                  menuLabel={t("menuLabel")}
+                  links={navigation.main.map((item) => ({
+                    ...item,
+                    label: t(`nav.${item.id}`),
+                  }))}
+                />
+              ) : null}
             </div>
 
             {/* Center Column: Logo */}
@@ -194,6 +186,7 @@ export function Header({ initialVariant }: HeaderProps) {
               {/* Cart Button */}
               <Link
                 href="/cart"
+                prefetch={false}
                 className={cn(
                   "flex min-h-12 min-w-12 items-center justify-center gap-2 px-2 font-sans text-sm font-normal transition-colors",
                   textMutedColorClass
