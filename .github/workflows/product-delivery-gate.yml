@@ -1,0 +1,17 @@
+name: Product delivery gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  delivery:
+    uses: leky90/product-delivery-harness/.github/workflows/delivery-gate.yml@v0.2.0
+    with:
+      node-version: "22"
+

@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:cicd": "node --test tests/bdd/vercel-github-actions-cicd.test.mjs",
     "shopify:check": "node scripts/check-shopify-connection.mjs",
     "typecheck": "tsc --noEmit && node scripts/validate-shopify-graphql.mjs"
   },
