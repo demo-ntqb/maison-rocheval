@@ -69,6 +69,6 @@ GitHub Actions là deployment authority của repository:
 
 5. Trong Vercel Project Settings, thêm app environment variables từ `.env.example` theo từng Preview/Production environment. Ít nhất Production nên có `SITE_ORIGIN` là canonical production URL; Shopify credentials có thể để trống khi còn dùng `mock.shop`.
 6. Nếu project đã nối Git integration và đang auto-deploy, tắt automatic Git deployments để tránh một commit tạo hai deployment; pipeline `.github/workflows/ci-cd.yml` chịu trách nhiệm deploy.
-7. Bật branch protection cho `main` và require hai checks: **Quality gate** và **Product delivery gate** trước merge.
+7. Bật branch protection cho `main` và require check **Quality gate** trước merge.
 
 GitHub environment `production` có thể được cấu hình required reviewers nếu cần bước duyệt thủ công trước khi Production job nhận secrets và deploy.

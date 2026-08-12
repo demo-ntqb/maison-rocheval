@@ -27,3 +27,7 @@ Tính năng: CI/CD GitHub Actions deploy Vercel
     Và workflow chỉ có quyền đọc contents
     Và deployment URL được ghi vào job summary
 
+  Kịch bản: CI/CD không phụ thuộc Product Delivery Harness
+    Khi GitHub đọc các workflow trong repository
+    Thì repository không khai báo Product delivery gate
+    Và Branch Protection chỉ cần Quality gate của Vercel CI/CD

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 const workflowUrl = new URL("../../.github/workflows/ci-cd.yml", import.meta.url);
@@ -63,3 +63,14 @@ test("workflow pin CLI, giới hạn quyền và chỉ đọc Vercel credentials
   assert.match(workflow, /cancel-in-progress: true/);
 });
 
+test("repository không phụ thuộc Product Delivery Harness GitHub gate", async () => {
+  const productDeliveryGateUrl = new URL(
+    "../../.github/workflows/product-delivery-gate.yml",
+    import.meta.url,
+  );
+  const readme = await readFile(new URL("../../README.md", import.meta.url), "utf8");
+
+  await assert.rejects(access(productDeliveryGateUrl), { code: "ENOENT" });
+  assert.doesNotMatch(readme, /Product delivery gate/);
+  assert.match(readme, /require check \*\*Quality gate\*\*/);
+});
