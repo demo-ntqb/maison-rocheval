@@ -1,5 +1,11 @@
 import { setRequestLocale } from "next-intl/server";
-import { HomeHeroSection } from "@/screens/home";
+import {
+  HomeHeroSection,
+  HomeIntroSection,
+  HomeAboutSection,
+  HomeProductsSection,
+  HomeFaqSection,
+} from "@/screens/home";
 
 export default async function Home({
   params,
@@ -9,5 +15,13 @@ export default async function Home({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <HomeHeroSection />;
+  return (
+    <div className="flex flex-col w-full">
+      <HomeHeroSection />
+      <HomeIntroSection />
+      <HomeAboutSection />
+      <HomeProductsSection />
+      <HomeFaqSection />
+    </div>
+  );
 }

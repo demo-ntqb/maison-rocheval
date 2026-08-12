@@ -1,8 +1,8 @@
 {
   "metadata": {
     "root": {
-      "title": "Maison Rocheval",
-      "description": "Maison Rocheval."
+      "title": "Maison Rocheval — Caviar & Fine Food",
+      "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
     }
   },
   "common": {
@@ -14,19 +14,87 @@
   },
   "header": {
     "nav": {
-      "home": "Home"
+      "home": "Home",
+      "about": "About Maison Rocheval",
+      "collection": "Our Collection",
+      "shop": "Shop"
     },
     "menuLabel": "Menu",
     "openMenu": "Open navigation menu",
-    "closeMenu": "Close navigation menu"
+    "closeMenu": "Close navigation menu",
+    "cart": "CART"
   },
   "footer": {
-    "copyright": "© {year} {name}. All rights reserved."
+    "copyright": "© {year} {name}. All rights reserved.",
+    "contact": "Contact",
+    "emailLabel": "Email: support@maisonrocheval.com",
+    "respondNote": "We will respond within 24 hrs.",
+    "enquireButton": "Enquire more",
+    "menu": {
+      "caviar": "Caviar",
+      "brand": "Maison Rocheval",
+      "care": "Customer Care"
+    },
+    "nav": {
+      "amour": "Amour",
+      "lexpression": "L’Expression",
+      "harmonie": "Harmonie",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "collection": "Our Collection",
+      "about": "About Maison Rocheval",
+      "faq": "FAQ",
+      "contact": "Contact"
+    }
+  },
+  "shop": {
+    "title": "Our Collection",
+    "subtitle": "Premium Caviar Selection",
+    "addToBag": "Add to bag",
+    "filter": "Filter",
+    "sort": "Sort by",
+    "announcement": "Free shipping on orders over €150 in Metropolitan France"
   },
   "home": {
     "hero": {
       "title": "Maison Rocheval",
-      "description": "Placeholder copy — replace with real content."
+      "subtitle": "Caviar & Fine Food",
+      "description": "Crafted by heritage. Judged by experts. Served for the extraordinary."
+    },
+    "intro": {
+      "title": "A Legacy of Perfection",
+      "description": "Each pearl of Maison Rocheval caviar is selected by hand, following ancestral methods. The size, texture, and flavor profile are strictly evaluated to meet Michelin-starred standards.",
+      "learnMore": "Discover our heritage"
+    },
+    "about": {
+      "highlight": "The Caviar",
+      "title": "The Art of Maturation",
+      "description": "From our pure waters to your table, our caviar undergoes a rigorous aging process. Time and temperature are balanced perfectly to release layers of walnut, seaweed, and butter notes.",
+      "explore": "Explore the collection"
+    },
+    "products": {
+      "title": "Selected Varieties",
+      "subtitle": "Expertly Curated"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Learn more about caviar",
+      "moreQuestions": "Have more questions? Contact our experts"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Our Heritage",
+      "description": "The pursuit of the perfect pearl. An uncompromising journey of taste."
+    },
+    "history": {
+      "title": "Born from Pure Waters",
+      "description": "Our sturgeons are raised in clean, sustainable environments. We believe that exceptional caviar starts with absolute respect for nature and species."
+    },
+    "selection": {
+      "highlight": "Selection Standards",
+      "title": "The Nine Criteria",
+      "description": "Colour, grain, texture, firmness and moisture are judged alongside salinity, aroma, maturation and the integrity of each pearl to ensure an unforgettable tasting experience."
     }
   }
 }

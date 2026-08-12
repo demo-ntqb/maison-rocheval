@@ -43,23 +43,73 @@
 }
 
 :root {
-  /* Placeholder design tokens — swap for Maison Rocheval's real palette. */
+  /* Maison Rocheval Design Tokens */
+  --background: #ffffff;
+  --foreground: #000000;
+
+  --palette-white: #ffffff;
+  --palette-offwhite: #f8f8f8;
+  --palette-black: #000000;
+  --palette-beige: #f6f1eb;
+  --palette-gray-light: #bcbcbc;
+  --palette-gray-dark: #636363;
+  --palette-navy-dark: #16222e;
+
+  /* shadcn/ui custom variable mappings */
+  --radius: 2px;
   
+  --primary: var(--palette-black);
+  --primary-foreground: var(--palette-white);
+  
+  --secondary: var(--palette-navy-dark);
+  --secondary-foreground: var(--palette-white);
+  
+  --accent: var(--palette-beige);
+  --accent-foreground: var(--palette-black);
+  
+  --muted: var(--palette-offwhite);
+  --muted-foreground: var(--palette-gray-dark);
+  
+  --border: var(--palette-gray-light);
+  --input: var(--palette-gray-light);
+  --ring: var(--palette-navy-dark);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-cream: var(--palette-cream);
-  --color-stone: var(--palette-stone);
-  --color-umber: var(--palette-umber);
-  --color-ink: var(--palette-ink);
+
+  /* Brand Colors */
+  --color-white: var(--palette-white);
+  --color-offwhite: var(--palette-offwhite);
+  --color-black: var(--palette-black);
+  --color-beige: var(--palette-beige);
+  --color-gray-light: var(--palette-gray-light);
+  --color-gray-dark: var(--palette-gray-dark);
+  --color-navy-dark: var(--palette-navy-dark);
+
+  /* shadcn semantic map in Tailwind v4 */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-accent: var(--accent);
-  --color-accent-deep: var(--accent-deep);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-display: var(--font-display), Georgia, serif;
+
+  /* Font Families */
+  --font-display: var(--font-display), "Optima", Georgia, serif;
   --font-sans: var(--font-sans), Arial, Helvetica, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  /* Border Radii */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 1px);
+  --radius-sm: calc(var(--radius) - 2px);
 }
 
 body {
@@ -106,3 +156,55 @@ body {
     transition-delay: 0.01ms !important;
   }
 }
+
+/* Maison Rocheval UI Component Overrides */
+
+/* Button custom typography & radius */
+[data-slot="button"] {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-radius: var(--radius) !important;
+}
+
+/* Accordion semantic style overrides */
+[data-slot="accordion"] {
+  border-bottom: 0.5px solid var(--palette-gray-light);
+}
+
+[data-slot="accordion-item"] {
+  border-top: 0.5px solid var(--palette-gray-light);
+  border-bottom: none !important;
+}
+
+[data-slot="accordion-trigger"] {
+  font-family: var(--font-display);
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  color: var(--palette-black);
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+  text-decoration: none !important;
+  transition: opacity 0.2s ease;
+}
+
+[data-slot="accordion-trigger"]:hover {
+  text-decoration: none !important;
+  opacity: 0.7;
+}
+
+[data-slot="accordion-trigger-icon"] {
+  color: var(--palette-black) !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+[data-slot="accordion-content"] {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.43;
+  color: var(--palette-gray-dark);
+  padding-bottom: 40px !important;
+}
+

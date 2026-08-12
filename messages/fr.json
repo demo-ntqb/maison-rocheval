@@ -1,8 +1,8 @@
 {
   "metadata": {
     "root": {
-      "title": "Maison Rocheval",
-      "description": "Maison Rocheval."
+      "title": "Maison Rocheval — Caviar & Gastronomie",
+      "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
     }
   },
   "common": {
@@ -14,19 +14,87 @@
   },
   "header": {
     "nav": {
-      "home": "Accueil"
+      "home": "Accueil",
+      "about": "À propos de Maison Rocheval",
+      "collection": "Notre Collection",
+      "shop": "Boutique"
     },
     "menuLabel": "Menu",
     "openMenu": "Ouvrir le menu de navigation",
-    "closeMenu": "Fermer le menu de navigation"
+    "closeMenu": "Fermer le menu de navigation",
+    "cart": "PANIER"
   },
   "footer": {
-    "copyright": "© {year} {name}. Tous droits réservés."
+    "copyright": "© {year} {name}. Tous droits réservés.",
+    "contact": "Contact",
+    "emailLabel": "E-mail: support@maisonrocheval.com",
+    "respondNote": "Nous répondrons dans les 24 heures.",
+    "enquireButton": "En savoir plus",
+    "menu": {
+      "caviar": "Caviar",
+      "brand": "Maison Rocheval",
+      "care": "Service Client"
+    },
+    "nav": {
+      "amour": "Amour",
+      "lexpression": "L’Expression",
+      "harmonie": "Harmonie",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "collection": "Notre Collection",
+      "about": "À propos de Maison Rocheval",
+      "faq": "FAQ",
+      "contact": "Contact"
+    }
+  },
+  "shop": {
+    "title": "Notre Collection",
+    "subtitle": "Sélection de Caviar d'Exception",
+    "addToBag": "Ajouter au panier",
+    "filter": "Filtrer",
+    "sort": "Trier par",
+    "announcement": "Livraison offerte dès 150€ d'achat en France métropolitaine"
   },
   "home": {
     "hero": {
       "title": "Maison Rocheval",
-      "description": "Texte de remplacement — à remplacer par le contenu réel."
+      "subtitle": "Caviar & Gastronomie",
+      "description": "Façonné par l'héritage. Jugé par les experts. Servi pour l'extraordinaire."
+    },
+    "intro": {
+      "title": "Un Héritage de Perfection",
+      "description": "Chaque grain de caviar Maison Rocheval est sélectionné à la main, selon des méthodes ancestrales. La taille, la texture et le profil aromatique sont rigoureusement évalués pour répondre aux standards des tables étoilées.",
+      "learnMore": "Découvrir notre histoire"
+    },
+    "about": {
+      "highlight": "Le Caviar",
+      "title": "L'Art de la Maturation",
+      "description": "De nos eaux pures à votre table, notre caviar suit un processus d'affinage rigoureux. Le temps et la température s'équilibrent parfaitement để révéler des notes de noix, d'algues et de beurre.",
+      "explore": "Explorer la collection"
+    },
+    "products": {
+      "title": "Variétés Sélectionnées",
+      "subtitle": "Sélection d'Experts"
+    },
+    "faq": {
+      "title": "Questions Fréquentes",
+      "subtitle": "En savoir plus sur le caviar",
+      "moreQuestions": "Vous avez d'autres questions? Contactez nos experts"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Notre Héritage",
+      "description": "La quête du grain parfait. Un voyage gustatif sans compromis."
+    },
+    "history": {
+      "title": "Né d'Eaux Pures",
+      "description": "Nos esturgeons sont élevés dans des environnements préservés et durables. Nous croyons qu'un caviar exceptionnel commence par un respect absolu de la nature et de l'espèce."
+    },
+    "selection": {
+      "highlight": "Standards de Sélection",
+      "title": "Les Neuf Critères",
+      "description": "La couleur, le grain, la texture, la fermeté et l'humidité sont évalués aux côtés de la salinité, de l'arôme, de la maturation et de l'intégrité de chaque grain pour garantir une expérience de dégustation inoubliable."
     }
   }
 }

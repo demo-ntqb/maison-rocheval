@@ -3,23 +3,44 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { Header, Footer } from "@/shared/components/layout";
 import { generateRootMetadata } from "@/shared/lib/metadata";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
-const playfairDisplay = Playfair_Display({
+const optima = localFont({
+  src: [
+    {
+      path: "../../../public/fonts/OPTIMA.woff",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../../public/fonts/Optima_Italic.woff",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../../../public/fonts/Optima Medium.woff",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../../public/fonts/OPTIMA_B.woff",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "600"],
   display: "swap",
 });
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "700"],
   display: "swap",
 });
 
@@ -55,7 +76,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${playfairDisplay.variable} ${inter.variable} h-full antialiased`}
+      className={`${optima.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans overflow-x-hidden">
         <NextIntlClientProvider>
