@@ -2,7 +2,9 @@ import {
   AboutFaqSection,
   AboutHeroSection,
   AboutHistorySection,
+  AboutRitualSection,
   AboutSelectionSection,
+  AboutVenuesSection,
 } from "@/screens/about-the-brand";
 import { setRequestLocale } from "next-intl/server";
 
@@ -18,7 +20,9 @@ export default async function AboutPage({
     <div className="flex flex-col w-full">
       <AboutHeroSection />
       <AboutHistorySection />
+      <AboutVenuesSection />
       <AboutSelectionSection />
+      <AboutRitualSection />
       <AboutFaqSection />
     </div>
   );

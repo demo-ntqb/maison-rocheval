@@ -1,35 +1,22 @@
-import * as React from "react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export function AboutHeroSection() {
-  const t = useTranslations("about.hero");
+import { MichelinRating } from "@/shared/components/ui/michelin-rating";
+import { Picture } from "@/shared/components/ui/picture";
+
+export async function AboutHeroSection() {
+  const t = await getTranslations("aboutProduct.hero");
 
   return (
-    <section
-      data-slot="about-hero-section"
-      className="relative -mt-20 flex h-[600px] w-full flex-col items-center justify-center bg-black overflow-hidden"
-    >
-      {/* Background Media */}
-      <div className="absolute inset-0 z-0">
-        <picture>
-          <source srcSet="/images/about/hero.webp" type="image/webp" />
-          <img
-            src="/images/about/hero.jpg"
-            alt="Maison Rocheval Caviar Craftsmanship"
-            className="h-full w-full object-cover opacity-75"
-          />
-        </picture>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-[600px] animate-fade-in">
-        <h1 className="font-display text-[48px] sm:text-[64px] font-medium tracking-[0.2em] text-white uppercase">
-          {t("title")}
-        </h1>
-        <p className="mt-4 font-sans text-sm sm:text-base font-light tracking-wide text-white/80 leading-relaxed">
-          {t("description")}
-        </p>
+    <section data-slot="about-product-hero" data-plumb-id="frame-2085667110" aria-labelledby="about-product-title" className="relative -mt-20 flex h-screen flex-col items-center justify-between overflow-hidden bg-ink text-canvas">
+      <Picture basePath="/images/about-product/hero-caviar-collection" fallbackExtension="jpg" alt={t("imageAlt")} priority width={2800} height={1600} sizes="100vw" pictureClassName="absolute inset-0 block size-full" className="size-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/70" aria-hidden="true" />
+      <h1 id="about-product-title" data-plumb-id="our-collection-2" className="relative z-10 mt-[104px] text-center font-display text-[clamp(2.75rem,4.6vw,4rem)] uppercase leading-none">{t("title")}</h1>
+      <div className="relative z-10 grid w-full max-w-[1400px] items-end gap-8 px-6 pb-[54px] md:grid-cols-[1fr_532px] lg:px-[54px]">
+        <MichelinRating count={3} className="gap-4" starClassName="size-8 text-canvas" />
+        <div className="grid gap-8 sm:grid-cols-[250px_250px]">
+          <h2 className="font-display text-2xl leading-[1.33]">{t("statement")}</h2>
+          <p className="font-sans text-sm leading-[1.43]">{t("description")}</p>
+        </div>
       </div>
     </section>
   );
