@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
-import { HomePicture } from "../components/home-picture";
+import { Picture } from "@/shared/components/ui/picture";
 
 export async function HomeIntroSection() {
   const t = await getTranslations("home.intro");
@@ -26,7 +26,7 @@ export async function HomeIntroSection() {
               </div>
             </div>
           </div>
-          <HomePicture
+          <Picture
             basePath="/images/home/source-ritual-table"
             fallbackExtension="png"
             alt={t("tableImageAlt")}
@@ -34,7 +34,6 @@ export async function HomeIntroSection() {
             height={1400}
             sizes="(max-width: 1023px) calc(100vw - 32px), 1000px"
             pictureClassName="block w-full overflow-hidden rounded-brand"
-            picturePlumbId="group-1000005128"
             className="aspect-[10/7] w-full rounded-brand object-cover"
             data-plumb-id="rectangle-4878"
             data-plumb-asset="50b64eb13a2a29b737042e921b49ccda9b8771c7"
@@ -60,7 +59,7 @@ export async function HomeIntroSection() {
           </div>
 
           <div className="grid w-full gap-8 sm:grid-cols-2" data-plumb-id="frame-2085667098">
-            <HomePicture
+            <Picture
               basePath="/images/home/source-chefs"
               fallbackExtension="png"
               alt={t("chefsImageAlt")}
@@ -72,7 +71,7 @@ export async function HomeIntroSection() {
               data-plumb-id="image-20"
               data-plumb-asset="3741b23bd4160b01e6b81f329dcac3be628f9a36"
             />
-            <HomePicture
+            <Picture
               basePath="/images/home/source-caviar-tasting"
               fallbackExtension="png"
               alt={t("tastingImageAlt")}

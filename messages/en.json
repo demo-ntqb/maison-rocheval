@@ -164,6 +164,7 @@
       "next": "View next caviar",
       "cards": {
         "amour": {
+          "eyebrow": "Patrimoine",
           "title": "Amour",
           "species": "Ascipenser schrenckii",
           "profile": "Rich - Creamy - Cheese",
@@ -171,6 +172,7 @@
           "imageAlt": "Open tin of Maison Rocheval Amour caviar"
         },
         "expression": {
+          "eyebrow": "Réserve",
           "title": "L’Expression",
           "species": "Huso dauricus x Acipenser schrenckii",
           "profile": "Rounded - Precise - Nutty",
@@ -178,6 +180,7 @@
           "imageAlt": "Open tin of Maison Rocheval L’Expression caviar"
         },
         "harmonie": {
+          "eyebrow": "Assemblage",
           "title": "Harmonie",
           "species": "Acipenser gueldenstardtii x Acipenser baerii",
           "profile": "Silky - Soft - Fruity",

@@ -2,8 +2,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
-import { HomePicture } from "../components/home-picture";
-import { HomeProductCarousel } from "../components/home-product-carousel";
+import { HomeProductList } from "../components/home-product-list";
+import { Picture } from "@/shared/components/ui/picture";
 
 export async function HomeProductsSection() {
   const [messages, t] = await Promise.all([
@@ -18,7 +18,7 @@ export async function HomeProductsSection() {
       data-plumb-id="frame-2085667107"
     >
       <div className="flex w-full max-w-content flex-col items-center gap-16" data-plumb-id="frame-2085667108">
-        <HomePicture
+        <Picture
           basePath="/images/home/presented-sturgeon-illustration"
           fallbackExtension="png"
           alt=""
@@ -52,7 +52,7 @@ export async function HomeProductsSection() {
         </div>
 
         <NextIntlClientProvider messages={{ home: { products: messages.home.products } }}>
-          <HomeProductCarousel />
+          <HomeProductList />
         </NextIntlClientProvider>
       </div>
     </section>

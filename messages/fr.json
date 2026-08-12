@@ -164,6 +164,7 @@
       "next": "Voir le caviar suivant",
       "cards": {
         "amour": {
+          "eyebrow": "Patrimoine",
           "title": "Amour",
           "species": "Ascipenser schrenckii",
           "profile": "Riche - Crémeux - Fromager",
@@ -171,6 +172,7 @@
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
         },
         "expression": {
+          "eyebrow": "Réserve",
           "title": "L’Expression",
           "species": "Huso dauricus x Acipenser schrenckii",
           "profile": "Rond - Précis - Noisetté",
@@ -178,6 +180,7 @@
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval L’Expression"
         },
         "harmonie": {
+          "eyebrow": "Assemblage",
           "title": "Harmonie",
           "species": "Acipenser gueldenstardtii x Acipenser baerii",
           "profile": "Soyeux - Doux - Fruité",

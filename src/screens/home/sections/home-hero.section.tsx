@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
 import { MichelinRating } from "@/shared/components/ui/michelin-rating";
-import { HomePicture } from "../components/home-picture";
+import { Picture } from "@/shared/components/ui/picture";
 
 export async function HomeHeroSection() {
   const t = await getTranslations("home.hero");
@@ -16,7 +16,7 @@ export async function HomeHeroSection() {
       className="relative -mt-20 flex h-screen w-full flex-col items-center justify-between overflow-hidden bg-ink"
     >
       <div className="absolute inset-0">
-        <HomePicture
+        <Picture
           basePath="/images/home/hero-caviar-pearls"
           fallbackExtension="jpg"
           alt={t("imageAlt")}

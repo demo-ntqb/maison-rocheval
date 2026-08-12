@@ -10,7 +10,7 @@ export interface Product {
   title: string;
   imageBasePath: string;
   imageAlt: string;
-  eyebrow: string;
+  eyebrow?: string;
   species: string;
   profile: string;
   description: string;
@@ -28,7 +28,7 @@ export function ProductCard({ product, priority = false, size = "md", className,
       <Link href={`/products/${product.handle}`} className="block aspect-square w-full">
         <Picture basePath={product.imageBasePath} fallbackExtension="png" alt={product.imageAlt} priority={priority} width={600} height={600} sizes="(max-width: 639px) 80vw, 312px" pictureClassName="block size-full" className="size-full object-contain" />
       </Link>
-      <p className="mt-5 font-sans text-xs">{product.eyebrow}</p>
+      {!!product.eyebrow && <p className="mt-5 font-sans text-xs">{product.eyebrow}</p>}
       <Link href={`/products/${product.handle}`} className="mt-2 min-h-11"><h3 className="font-display text-xl font-bold">{product.title}</h3></Link>
       <p className="font-display text-sm">{product.species}</p>
       <div className="my-5 border-t border-line" />

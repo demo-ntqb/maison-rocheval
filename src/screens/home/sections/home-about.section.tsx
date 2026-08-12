@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
-import { HomePicture } from "../components/home-picture";
+import { Picture } from "@/shared/components/ui/picture";
 
 export async function HomeAboutSection() {
   const t = await getTranslations("home.about");
@@ -23,7 +23,7 @@ export async function HomeAboutSection() {
               {t("highlight")}
             </h2>
           </div>
-          <HomePicture
+          <Picture
             basePath="/images/home/selection-sturgeon"
             fallbackExtension="png"
             alt={t("sturgeonImageAlt")}
@@ -38,7 +38,7 @@ export async function HomeAboutSection() {
         </div>
 
         <div className="mt-16 flex flex-col items-center lg:-mt-[50px] lg:h-[700px] lg:flex-row" data-plumb-id="component-6-3">
-          <HomePicture
+          <Picture
             basePath="/images/home/selection-caviar-pearls"
             fallbackExtension="png"
             alt={t("caviarImageAlt")}
