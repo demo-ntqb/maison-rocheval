@@ -1,6 +1,5 @@
-import * as React from "react";
-import { getTranslations } from "next-intl/server";
 import { FaqSection } from "@/shared/components/composite/faq-section";
+import { getTranslations } from "next-intl/server";
 
 export async function AboutFaqSection() {
   const t = await getTranslations("aboutBrand.faq");
@@ -11,9 +10,8 @@ export async function AboutFaqSection() {
   }));
 
   return (
-    <section data-plumb-id="frame-2085667040" className="flex min-h-[1232px] w-full flex-col items-center justify-center bg-white py-24 lg:py-[200px]">
+    <section data-plumb-id="frame-2085667040" className="flex w-full flex-col items-center justify-center bg-white py-24 lg:py-[200px]">
       <FaqSection
-        className="min-h-[832px]"
         title={t("title")}
         items={items}
         buttonText={t("viewAll")}
