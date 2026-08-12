@@ -62,12 +62,12 @@ export function ProductGrid({
           ref={scrollContainerRef}
           className="scrollbar-none flex w-full gap-8 overflow-x-auto scroll-smooth pb-4 snap-x snap-mandatory"
         >
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div
               key={product.id}
               className="snap-start shrink-0 w-[284px]"
             >
-              <ProductCard product={product} size="sm" />
+              <ProductCard product={product} priority={index === 0} size="sm" />
             </div>
           ))}
         </div>
@@ -85,8 +85,8 @@ export function ProductGrid({
       )}
       {...props}
     >
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} size="md" className="justify-self-center" />
+      {products.map((product, index) => (
+        <ProductCard key={product.id} product={product} priority={index === 0} size="md" className="justify-self-center" />
       ))}
     </div>
   );

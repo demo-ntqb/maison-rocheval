@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/shared/lib/utils";
+import { Picture } from "@/shared/components/ui/picture";
 import {
   Accordion,
   AccordionContent,
@@ -19,6 +20,8 @@ export interface FaqSectionProps extends React.ComponentProps<"section"> {
   subtitle?: string;
   items: FaqItem[];
   logoUrl?: string; // Tùy chọn logo thương hiệu nhỏ đè lên đầu section
+  logoBasePath?: string;
+  logoFallbackExtension?: "jpg" | "jpeg" | "png";
   logoAlt?: string;
   buttonText?: string;
   buttonLink?: string;
@@ -29,6 +32,8 @@ export function FaqSection({
   subtitle,
   items,
   logoUrl,
+  logoBasePath,
+  logoFallbackExtension = "png",
   logoAlt = "Maison Rocheval Badge",
   buttonText,
   buttonLink,
@@ -46,18 +51,34 @@ export function FaqSection({
     >
       {/* Top Badge/Logo & Titles */}
       <div className="flex flex-col items-center gap-4 px-4">
-        {logoUrl && (
+        {logoBasePath ? (
+          <Picture
+            basePath={logoBasePath}
+            fallbackExtension={logoFallbackExtension}
+            alt={logoAlt}
+            width={262}
+            height={160}
+            sizes="131px"
+            pictureClassName="block h-20 w-[131px] overflow-hidden"
+            className="size-full object-contain"
+          />
+        ) : logoUrl ? (
           <div className="relative h-20 w-[131px] overflow-hidden bg-transparent">
             <picture>
               <source srcSet={logoUrl} type="image/webp" />
               <img
                 src={logoUrl}
                 alt={logoAlt}
+                width={262}
+                height={160}
+                sizes="131px"
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-contain"
               />
             </picture>
           </div>
-        )}
+        ) : null}
 
         {subtitle && (
           <span className="font-sans text-[11px] font-light tracking-widest text-gray-dark uppercase">

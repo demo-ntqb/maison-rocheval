@@ -18,22 +18,22 @@ export const businessInfo = {
 // messages/*.json) and looked up by `id` — this only holds hrefs + ids.
 export const navigation = {
   main: [
-    { id: "about", href: "/about" },
-    { id: "collection", href: "/collection" },
-    { id: "shop", href: "/shop" },
+    { id: "about", href: "/about-the-brand" },
+    { id: "collection", href: "/about-the-product" },
+    { id: "shop", href: "/products" },
   ],
   footer: {
     caviar: [
-      { id: "amour", href: "/shop?category=amour" },
-      { id: "lexpression", href: "/shop?category=lexpression" },
-      { id: "harmonie", href: "/shop?category=harmonie" },
-      { id: "oscietra", href: "/shop?category=oscietra" },
-      { id: "kaluga", href: "/shop?category=kaluga" },
-      { id: "collection", href: "/shop" },
+      { id: "amour", href: "/products/amour" },
+      { id: "lexpression", href: "/products/lexpression" },
+      { id: "harmonie", href: "/products/harmonie" },
+      { id: "oscietra", href: "/products/oscietra" },
+      { id: "kaluga", href: "/products/kaluga" },
+      { id: "collection", href: "/products" },
     ],
     brand: [
-      { id: "about", href: "/about" },
-      { id: "collection", href: "/shop" },
+      { id: "about", href: "/about-the-brand" },
+      { id: "collection", href: "/about-the-product" },
     ],
     care: [
       { id: "faq", href: "/faq" },

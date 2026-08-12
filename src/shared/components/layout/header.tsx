@@ -1,10 +1,20 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
+import { Menu, ShoppingCart } from "lucide-react";
+
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/shared/components/ui/sheet";
 import { navigation } from "@/shared/constants/site.constant";
-import { Menu, X, ShoppingBag, Globe } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { AnnouncementBar } from "./announcement-bar";
 
@@ -21,15 +31,17 @@ export function Header({ initialVariant }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Tự động nhận diện variant dựa trên route hiện tại nếu không truyền prop cứng
-  const resolvedVariant = initialVariant || (pathname === "/" || pathname === "/about" ? "transparent" : "solid");
+  const resolvedVariant = initialVariant ||
+    (["/", "/about-the-brand", "/about-the-product"].includes(pathname)
+      ? "transparent"
+      : "solid");
 
   // Kiểm tra xem trang có hiển thị Announcement Bar không (chỉ trang Shop)
-  const showAnnouncement = pathname.includes("/shop");
+  const showAnnouncement = pathname.includes("/products");
 
   // Lắng nghe sự kiện scroll để đổi trạng thái nền của transparent header
   useEffect(() => {
     if (resolvedVariant !== "transparent") {
-      setIsScrolled(false);
       return;
     }
 
@@ -59,10 +71,10 @@ export function Header({ initialVariant }: HeaderProps) {
   const isTransparentMode = resolvedVariant === "transparent" && !isScrolled;
 
   const headerBgClass = isTransparentMode
-    ? "bg-transparent border-transparent"
+    ? "border-transparent bg-transparent"
     : resolvedVariant === "transparent"
-    ? "bg-black/90 border-white/10 backdrop-blur-md"
-    : "bg-white border-gray-light border-b-[0.5px] shadow-sm";
+    ? "border-b border-white/10 bg-black/90 backdrop-blur-md"
+    : "-mb-px border-b-[0.5px] border-gray-light bg-white shadow-sm";
 
   const textColorClass = isTransparentMode || resolvedVariant === "transparent"
     ? "text-white"
@@ -74,180 +86,128 @@ export function Header({ initialVariant }: HeaderProps) {
 
   const textLabelMutedClass = isTransparentMode || resolvedVariant === "transparent"
     ? "text-white/60"
-    : "text-gray-dark/70";
+    : "text-gray-dark";
 
   return (
-    <div className="sticky top-0 z-50 w-full flex flex-col">
+    <div className="sticky top-0 z-50 flex w-full flex-col" data-plumb-id="component-6">
       {/* Announcement Bar at the top (only on Shop routes) */}
       {showAnnouncement && <AnnouncementBar />}
 
       <header
         className={cn(
-          "w-full transition-all duration-300",
+          "w-full transition-colors duration-300",
           headerBgClass
         )}
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-20 items-center justify-between">
-            
+        <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8">
+          <div className="relative flex h-20 items-center justify-between" data-plumb-id="frame-2085667020">
             {/* Left Column: Navigation Links (Desktop) */}
-            <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-8">
+            <nav aria-label="Main navigation" className="hidden flex-1 items-center gap-8 lg:flex" data-plumb-id="frame-2085667019">
               {navigation.main.map((item) => {
-                const isShop = item.id === "shop";
-                if (isShop) {
-                  return (
-                    <Link
-                      key={item.id}
-                      href={item.href}
-                      className={cn(
-                        "inline-flex h-9 items-center justify-center rounded-sm px-5 text-xs font-semibold tracking-wider uppercase transition-all duration-200",
-                        isTransparentMode || resolvedVariant === "transparent"
-                          ? "bg-white text-black hover:bg-beige"
-                          : "bg-black text-white hover:bg-gray-dark"
-                      )}
-                      data-plumb-id={`header-nav-${item.id}`}
-                    >
-                      {t(`nav.${item.id}`)}
-                    </Link>
-                  );
-                }
                 return (
                   <Link
                     key={item.id}
                     href={item.href}
                     className={cn(
-                      "font-sans text-sm font-light uppercase tracking-wider transition-colors",
+                      "inline-flex min-h-11 items-center font-sans text-sm font-normal transition-colors",
                       textMutedColorClass
                     )}
-                    data-plumb-id={`header-nav-${item.id}`}
                   >
-                    {t(`nav.${item.id}`)}
+                    <span data-plumb-id={item.id === "about" ? "our-brand" : item.id === "collection" ? "our-collection" : "shop"}>
+                      {t(`nav.${item.id}`)}
+                    </span>
                   </Link>
                 );
               })}
             </nav>
 
             {/* Left Column: Hamburger Button (Mobile) */}
-            <div className="flex lg:hidden">
-              <button
-                type="button"
-                className={cn(
-                  "inline-flex items-center justify-center p-2 focus:outline-none min-h-[48px] min-w-[48px]",
-                  textColorClass
-                )}
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-expanded={isMobileMenuOpen}
-                aria-label={t(isMobileMenuOpen ? "closeMenu" : "openMenu")}
-              >
-                {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
-              </button>
+            <div className="flex flex-1 lg:hidden">
+              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <button
+                    type="button"
+                    className={cn(
+                      "inline-flex size-12 items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2",
+                      textColorClass,
+                    )}
+                    aria-label={t("openMenu")}
+                  >
+                    <Menu className="size-6" aria-hidden="true" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent
+                  side="left"
+                  className="w-[min(88vw,360px)] border-r border-canvas/10 bg-navy-dark p-0 text-canvas"
+                >
+                  <SheetHeader className="border-b border-canvas/10 p-6">
+                    <SheetTitle className="font-display text-xl text-canvas">Maison Rocheval</SheetTitle>
+                  </SheetHeader>
+                  <nav aria-label={t("menuLabel")} className="flex flex-col px-6 py-4">
+                    {navigation.main.map((item) => (
+                      <SheetClose key={item.id} asChild>
+                        <Link
+                          href={item.href}
+                          className="flex min-h-12 items-center border-b border-canvas/10 font-sans text-base text-canvas"
+                        >
+                          {t(`nav.${item.id}`)}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </nav>
+                </SheetContent>
+              </Sheet>
             </div>
 
             {/* Center Column: Logo */}
-            <div className="flex flex-1 justify-center lg:absolute lg:left-1/2 lg:-translate-x-1/2">
-              <Link href="/" className="flex flex-col items-center group">
-                <span
-                  className={cn(
-                    "font-display text-lg sm:text-xl font-medium tracking-[0.25em] transition-colors duration-300",
-                    textColorClass,
-                    (isTransparentMode || resolvedVariant === "transparent") && "group-hover:text-beige"
-                  )}
-                >
-                  MAISON ROCHEVAL
-                </span>
-                <span
-                  className={cn(
-                    "mt-0.5 text-[8px] font-light tracking-[0.4em] uppercase",
-                    isTransparentMode || resolvedVariant === "transparent"
-                      ? "text-white/40"
-                      : "text-gray-dark/50"
-                  )}
-                >
-                  Caviar & Fine Food
-                </span>
+            <div className="absolute left-1/2 flex -translate-x-1/2 justify-center">
+              <Link href="/" className={cn("flex size-12 items-center justify-center transition-opacity hover:opacity-70", textColorClass)}>
+                <IconMaisonRochevalLogo className="h-10 w-[84px] max-w-none shrink-0" aria-hidden="true" focusable="false" data-plumb-id="group" />
+                <span className="sr-only">Maison Rocheval</span>
               </Link>
             </div>
 
             {/* Right Column: Actions (Desktop/Mobile) */}
-            <div className="flex items-center gap-4 sm:gap-6">
+            <div className="flex flex-1 items-center justify-end gap-1 sm:gap-4 lg:gap-8" data-plumb-id="frame-2085667020-2">
               {/* Country Selector (Desktop) */}
               <span
                 className={cn(
-                  "hidden sm:inline-block font-sans text-[11px] font-light tracking-wider uppercase",
+                  "hidden min-h-11 items-center font-sans text-sm font-normal lg:inline-flex",
                   textLabelMutedClass
                 )}
               >
-                France - EUR €
+                <span data-plumb-id="france-uer">France - UER €</span>
               </span>
 
               {/* Language Switcher Button */}
               <button
                 onClick={toggleLanguage}
                 className={cn(
-                  "flex items-center gap-1.5 font-sans text-xs font-light tracking-widest uppercase transition-colors min-h-[48px] px-2",
+                  "hidden min-h-12 items-center px-2 font-sans text-sm font-normal transition-colors sm:flex",
                   textMutedColorClass
                 )}
-                aria-label="Switch Language"
+                aria-label={locale === "en" ? "FR / EN — Afficher le site en français" : "FR / EN — View the site in English"}
               >
-                <Globe className={cn("size-3.5", textLabelMutedClass)} />
-                <span>{locale === "en" ? "FR" : "EN"}</span>
+                <span data-plumb-id="fr-en">FR / EN</span>
               </button>
 
               {/* Cart Button */}
               <Link
                 href="/cart"
                 className={cn(
-                  "flex items-center gap-2 font-sans text-xs font-light tracking-widest uppercase transition-colors min-h-[48px] px-2",
+                  "flex min-h-12 min-w-12 items-center justify-center gap-2 px-2 font-sans text-sm font-normal transition-colors",
                   textMutedColorClass
                 )}
+                aria-label={t("cart")}
               >
-                <ShoppingBag className="size-4" />
-                <span className="hidden md:inline">{t("cart")}</span>
+                <span className="flex items-center gap-2" data-plumb-id="frame-2085667208">
+                  <ShoppingCart className="size-4" strokeWidth={1.25} aria-hidden="true" data-plumb-id="shoppingcartsimple" />
+                  <span className="hidden md:inline" data-plumb-id="cart">{t("cart")}</span>
+                </span>
               </Link>
             </div>
           </div>
         </div>
-
-        {/* Slide-down Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
-          <div
-            className={cn(
-              "lg:hidden border-t transition-all duration-300",
-              resolvedVariant === "transparent"
-                ? "bg-black/95 border-white/10"
-                : "bg-white border-gray-light"
-            )}
-          >
-            <div className="space-y-4 px-4 py-6">
-              {navigation.main.map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className={cn(
-                    "block font-sans text-sm uppercase tracking-widest py-2 border-b min-h-[48px] flex items-center",
-                    resolvedVariant === "transparent"
-                      ? "border-white/5 text-white/70 hover:text-white"
-                      : "border-gray-light/20 text-gray-dark hover:text-black",
-                    item.id === "shop" && (resolvedVariant === "transparent" ? "text-beige font-medium" : "text-black font-bold")
-                  )}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t(`nav.${item.id}`)}
-                </Link>
-              ))}
-              <div className="pt-4 flex flex-col gap-2">
-                <span
-                  className={cn(
-                    "font-sans text-[10px] tracking-widest uppercase",
-                    resolvedVariant === "transparent" ? "text-white/40" : "text-gray-dark/40"
-                  )}
-                >
-                  France - EUR €
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
       </header>
     </div>
   );

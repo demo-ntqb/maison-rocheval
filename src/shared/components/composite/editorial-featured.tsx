@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/shared/lib/utils";
-import { Button } from "@/shared/components/ui";
 
 export interface EditorialFeaturedProps extends React.ComponentProps<"section"> {
   title: string;

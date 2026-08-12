@@ -1,25 +1,15 @@
-import {
-	ShopFaqSection,
-	ShopFeaturedSection,
-	ShopHeroSection,
-	ShopProductsSection,
-} from "@/screens/shop";
 import { setRequestLocale } from "next-intl/server";
 
-export default async function CaviarPage({
-	params,
-}: {
-	params: Promise<{ locale: string }>;
-}) {
-	const { locale } = await params;
-	setRequestLocale(locale);
+import { ProductDetailMainSection } from "@/screens/product-detail";
 
-	return (
-		<div className="flex flex-col w-full bg-white">
-			<ShopHeroSection />
-			<ShopProductsSection />
-			<ShopFeaturedSection />
-			<ShopFaqSection />
-		</div>
-	);
+const productHandles = ["caviar-amur", "caviar-kaluga", "caviar-russian-hybrid", "amour", "expression", "harmonie"] as const;
+
+export function generateStaticParams() {
+  return productHandles.map((handle) => ({ handle }));
+}
+
+export default async function ProductPage({ params }: { params: Promise<{ locale: string; handle: string }> }) {
+  const { locale, handle } = await params;
+  setRequestLocale(locale);
+  return <ProductDetailMainSection handle={handle} />;
 }

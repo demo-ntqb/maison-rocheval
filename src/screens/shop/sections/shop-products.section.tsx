@@ -1,17 +1,22 @@
 import * as React from "react";
-import { useTranslations } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
 import { ProductGrid } from "@/shared/components/composite/product-grid";
 import { VARIETIES } from "@/shared/constants/shop.constant";
 
-export function ShopProductsSection() {
-  const t = useTranslations("shop");
+export async function ShopProductsSection() {
+  const [messages, t] = await Promise.all([
+    getMessages(),
+    getTranslations("shop"),
+  ]);
 
   return (
-    <section className="flex w-full flex-col items-center bg-white pb-[100px] pt-4">
+    <section className="flex h-[1200px] w-full flex-col items-center bg-white">
+      <h2 className="sr-only">Our caviar</h2>
       {/* Filters & Sorting Bar (w: 1000px) */}
-      <div className="mb-8 flex w-full max-w-[1000px] items-center justify-between border-b border-gray-light/20 pb-4 px-4 sm:px-6 lg:px-0">
+      <div className="mb-12 flex w-full max-w-[1000px] items-center justify-between px-4 sm:px-6 lg:px-0">
         <span className="font-sans text-xs font-light text-gray-dark uppercase">
-          {VARIETIES.length} {t("title").toLowerCase()}
+          {VARIETIES.length} items
         </span>
         
         <div className="flex items-center gap-6">
@@ -29,7 +34,9 @@ export function ShopProductsSection() {
 
       {/* Grid */}
       <div className="w-full max-w-[1000px] px-4 sm:px-6 lg:px-0">
-        <ProductGrid products={VARIETIES} layoutType="grid" />
+        <NextIntlClientProvider messages={{ shop: messages.shop }}>
+          <ProductGrid products={VARIETIES} layoutType="grid" />
+        </NextIntlClientProvider>
       </div>
     </section>
   );

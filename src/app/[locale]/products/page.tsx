@@ -17,9 +17,11 @@ export default async function ProductsPage({
   return (
     <div className="flex flex-col w-full bg-white">
       <ShopHeroSection />
-      <ShopProductsSection />
-      <ShopFeaturedSection />
-      <ShopFaqSection />
+      <div data-plumb-id="frame-2085667045" className="flex h-[3646px] flex-col items-center gap-[200px] pb-[200px] pt-[100px]">
+        <ShopProductsSection />
+        <ShopFeaturedSection />
+        <ShopFaqSection />
+      </div>
     </div>
   );
 }
