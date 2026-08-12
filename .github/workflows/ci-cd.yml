@@ -64,6 +64,11 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Configure Git Author for Vercel
+        run: |
+          git config --global user.email "[EMAIL_ADDRESS_VERCEL]"
+          git commit --amend --reset-author --no-edit
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -109,6 +114,12 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
+      - name: Configure Git Author for Vercel
+        run: |
+          git config --global user.name "Binh Nguyen"
+          git config --global user.email "ytbntq001@gmail.com"
+          git commit --amend --reset-author --no-edit
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
