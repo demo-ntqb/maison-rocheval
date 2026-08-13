@@ -22,6 +22,28 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
   const [selectedPerBox, setSelectedPerBox] = useState<number>(product.perBoxOptions[1] ?? 2);
   const [quantity, setQuantity] = useState<number>(2);
 
+  const handleSizeChange = (size: string) => {
+    setSelectedSize(size);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("product-variant-changed", {
+          detail: { size, packaging: selectedPackaging },
+        })
+      );
+    }
+  };
+
+  const handlePackagingChange = (packaging: string) => {
+    setSelectedPackaging(packaging);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("product-variant-changed", {
+          detail: { size: selectedSize, packaging },
+        })
+      );
+    }
+  };
+
   // Compute calculated price
   const basePrice = product.price;
   const sizeMultiplier =
@@ -80,7 +102,7 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
                 type="button"
                 role="radio"
                 aria-checked={isSelected}
-                onClick={() => setSelectedSize(size)}
+                onClick={() => handleSizeChange(size)}
                 className={cn(
                   "flex min-h-12 items-center justify-center rounded-sm border font-sans text-sm font-normal transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring",
                   isSelected
@@ -126,7 +148,7 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
                     name="packaging"
                     value={pkg.id}
                     checked={isSelected}
-                    onChange={() => setSelectedPackaging(pkg.id)}
+                    onChange={() => handlePackagingChange(pkg.id)}
                     className="size-4 accent-navy-dark"
                   />
                   <div className="flex flex-col">

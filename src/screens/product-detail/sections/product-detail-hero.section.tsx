@@ -31,7 +31,7 @@ export async function ProductDetailHeroSection({ handle }: ProductDetailHeroSect
 
       <NextIntlClientProvider messages={{ productDetail: messages.productDetail }}>
         {/* Main Product Layout (2 Columns) */}
-        <div className="mt-8 grid gap-[54px] lg:grid-cols-2">
+        <div className="mt-8 grid gap-[54px] lg:grid-cols-[546px_1fr]">
           {/* Left Column: Image Gallery */}
           <ProductDetailImageGallery
             images={product.galleryImages}
