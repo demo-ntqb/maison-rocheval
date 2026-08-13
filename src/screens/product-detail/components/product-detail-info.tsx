@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Info, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 import { Button } from "@/shared/components/ui/button";
-import { Picture } from "@/shared/components/ui/picture";
 import { cn } from "@/shared/lib/utils";
 import type { DetailedProduct } from "../types/product-detail.type";
 
@@ -20,7 +19,7 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
     product.packagingOptions[0]?.id ?? "standard",
   );
   const [selectedPerBox, setSelectedPerBox] = useState<number>(product.perBoxOptions[1] ?? 2);
-  const [quantity, setQuantity] = useState<number>(2);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const handleSizeChange = (size: string) => {
     setSelectedSize(size);
@@ -50,10 +49,10 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
     selectedSize === "50g"
       ? 1.5
       : selectedSize === "125g"
-      ? 3.2
-      : selectedSize === "250g"
-      ? 6.0
-      : 1.0;
+        ? 3.2
+        : selectedSize === "250g"
+          ? 6.0
+          : 1.0;
   const activePackaging = product.packagingOptions.find((p) => p.id === selectedPackaging);
   const packagingModifier = activePackaging?.priceModifier ?? 0;
 
@@ -136,9 +135,9 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
               <label
                 key={pkg.id}
                 className={cn(
-                  "flex min-h-[56px] cursor-pointer items-center justify-between rounded-sm border px-4 py-3 transition-all",
+                  "flex cursor-pointer items-center justify-between rounded-sm border p-3 transition-all",
                   isSelected
-                    ? "border-black bg-canvas ring-1 ring-black"
+                    ? "border-black bg-canvas ring-[0.5px] ring-black"
                     : "border-line bg-canvas hover:border-black/60",
                 )}
               >
@@ -149,20 +148,23 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
                     value={pkg.id}
                     checked={isSelected}
                     onChange={() => handlePackagingChange(pkg.id)}
-                    className="size-4 accent-navy-dark"
+                    className="sr-only"
                   />
-                  <div className="flex flex-col">
-                    <span className="font-sans text-sm font-medium text-black">{pkg.name}</span>
-                    {!!pkg.description && (
-                      <span className="font-sans text-xs text-muted-ink">{pkg.description}</span>
-                    )}
+                  <div className="size-13.5 shrink-0 overflow-hidden rounded-sm border border-line bg-warm">
+                    <PackagingThumbnail id={pkg.id} />
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="font-display text-sm font-bold uppercase tracking-wider text-black">
+                      {t(`packaging.${pkg.id}.name`, { default: pkg.name.toUpperCase() })}
+                    </span>
+                    <span className="font-sans text-xs font-light text-muted-ink">
+                      {t(`packaging.${pkg.id}.description`, { default: pkg.description || "" })}
+                    </span>
                   </div>
                 </div>
-                {pkg.priceModifier > 0 && (
-                  <span className="font-sans text-xs font-medium text-muted-ink">
-                    +€{pkg.priceModifier}
-                  </span>
-                )}
+                <span className="font-sans text-sm font-normal text-black pr-1">
+                  {pkg.priceModifier === 0 ? "FREE" : `+$${pkg.priceModifier}`}
+                </span>
               </label>
             );
           })}
@@ -214,26 +216,31 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
         </p>
 
         {/* Selected Summary Card */}
-        <div className="flex items-center gap-3 rounded-sm border border-line bg-warm/40 p-3">
-          <div className="size-12 shrink-0 overflow-hidden rounded-sm border border-line bg-warm p-1">
-            <Picture
-              basePath={product.imageBasePath}
-              fallbackExtension="png"
-              alt={product.imageAlt}
-              width={100}
-              height={100}
-              sizes="48px"
-              pictureClassName="block size-full"
-              className="size-full object-contain"
-            />
+        <div className="flex items-start gap-4 rounded-sm border border-line bg-warm/30 p-3">
+          <div className="size-13.5 shrink-0 overflow-hidden rounded-sm border border-line bg-warm">
+            <PackagingThumbnail id={selectedPackaging} />
           </div>
-          <div className="flex flex-col text-xs font-sans">
-            <span className="font-medium text-black">
-              {product.title} — {selectedSize}
+          <div className="flex flex-col gap-0.5 text-sm font-sans">
+            <span className="font-display text-sm font-bold uppercase tracking-wider text-black">
+              {t("boxOf", {
+                packaging: t(`packaging.${selectedPackaging}.name`, {
+                  default: activePackaging?.name.toUpperCase() || "STANDARD",
+                }),
+                perBox: selectedPerBox,
+              })}
             </span>
-            <span className="text-muted-ink">
-              {activePackaging?.name} packaging • {selectedPerBox} per box
+            <span className="font-sans text-sm font-light text-muted-ink">
+              {t("perBoxFormat", {
+                perBox: selectedPerBox,
+                size: selectedSize,
+                title: product.title,
+              })}
             </span>
+            {selectedPackaging !== "standard" && (
+              <span className="font-sans text-xs text-muted-ink/80 italic mt-0.5">
+                {t("personalizedMessage")}
+              </span>
+            )}
           </div>
         </div>
 
@@ -282,6 +289,50 @@ export function ProductDetailInfo({ product }: ProductDetailInfoProps) {
           <span>{t("deliveryNote")}</span>
         </div>
       </div>
+    </div>
+  );
+}
+
+function PackagingThumbnail({ id, className }: { id: string; className?: string }) {
+  const images = {
+    standard: {
+      avif: "/images/product-detail/packaging-standard.avif",
+      webp: "/images/product-detail/packaging-standard.webp",
+      png: "/images/product-detail/packaging-standard.png",
+      alt: "Standard packaging",
+    },
+    premium: {
+      avif: "/images/product-detail/packaging-premium.avif",
+      webp: "/images/product-detail/packaging-premium.webp",
+      png: "/images/product-detail/packaging-premium.png",
+      alt: "Premium packaging",
+    },
+    luxury: {
+      avif: "/images/product-detail/packaging-luxury.avif",
+      webp: "/images/product-detail/packaging-luxury.webp",
+      png: "/images/product-detail/packaging-luxury.png",
+      alt: "Luxury packaging",
+    },
+  };
+
+  const imgData = images[id as keyof typeof images];
+  if (!imgData) return null;
+
+  return (
+    <div className={cn("size-full flex items-center justify-center rounded-sm overflow-hidden", className)}>
+      <picture className="size-full">
+        <source srcSet={imgData.avif} type="image/avif" />
+        <source srcSet={imgData.webp} type="image/webp" />
+        <img
+          src={imgData.png}
+          alt={imgData.alt}
+          width={54}
+          height={54}
+          loading="lazy"
+          decoding="async"
+          className="size-full object-cover"
+        />
+      </picture>
     </div>
   );
 }

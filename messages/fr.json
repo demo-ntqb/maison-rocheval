@@ -436,6 +436,23 @@
     "decreaseQty": "Réduire la quantité",
     "increaseQty": "Augmenter la quantité",
     "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
+    "personalizedMessage": "Message personnalisé inclus",
+    "boxOf": "COFFRET {packaging} DE {perBox}",
+    "perBoxFormat": "{perBox} X {size} {title} par boîte",
+    "packaging": {
+      "standard": {
+        "name": "STANDARD",
+        "description": "Sac en papier avec glace"
+      },
+      "premium": {
+        "name": "PREMIUM",
+        "description": "Boîte en carton de chất lượng avec ruban Bolduc."
+      },
+      "luxury": {
+        "name": "LUXE",
+        "description": "Boîte en bois de qualité supérieure avec ruban Bolduc."
+      }
+    },
     "specs": {
       "specificationTitle": "Spécifications",
       "pearlSize": "Taille des grains",

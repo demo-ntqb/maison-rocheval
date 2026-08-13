@@ -5,20 +5,20 @@ export const PACKAGING_OPTIONS: PackagingOption[] = [
   {
     id: "standard",
     name: "Standard",
-    description: "Vacuum sealed tin in insulated gift box",
+    description: "Paper bag with ice",
     priceModifier: 0,
   },
   {
     id: "premium",
     name: "Premium",
-    description: "Tin lined with mother of pearl",
-    priceModifier: 30,
+    description: "Quality cardboard box with Bolduc ribbon.",
+    priceModifier: 32,
   },
   {
     id: "luxury",
     name: "Luxury",
-    description: "Wooden box, mother of pearl spoon",
-    priceModifier: 75,
+    description: "Premium wooden box with Bolduc ribbon.",
+    priceModifier: 74,
   },
 ];
 

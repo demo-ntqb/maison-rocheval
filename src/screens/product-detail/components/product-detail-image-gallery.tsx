@@ -106,28 +106,6 @@ export function ProductDetailImageGallery({
     });
   }, [api]);
 
-  // Sync variant selections
-  useEffect(() => {
-    if (!api) return;
-
-    const handleVariantChange = (e: Event) => {
-      const customEvent = e as CustomEvent;
-      const { size, packaging } = customEvent.detail;
-      let targetIndex = 0;
-      if (packaging === "premium" || size === "125g") {
-        targetIndex = Math.min(1, images.length - 1);
-      } else if (packaging === "luxury" || size === "250g") {
-        targetIndex = Math.min(2, images.length - 1);
-      }
-      api.scrollTo(targetIndex);
-    };
-
-    window.addEventListener("product-variant-changed", handleVariantChange);
-    return () => {
-      window.removeEventListener("product-variant-changed", handleVariantChange);
-    };
-  }, [api, images.length]);
-
   // Zoom handling in Fullscreen Dialog
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -153,6 +131,7 @@ export function ProductDetailImageGallery({
             Best Seller
           </span>
         )}
+
 
         <CarouselContent>
           {images.map((imagePath, index) => (

@@ -436,6 +436,23 @@
     "decreaseQty": "Decrease quantity",
     "increaseQty": "Increase quantity",
     "deliveryNote": "We offer variety of delivery options in check-out",
+    "personalizedMessage": "Personalized message included",
+    "boxOf": "{packaging} BOX OF {perBox}",
+    "perBoxFormat": "{perBox} X {size} {title} per box",
+    "packaging": {
+      "standard": {
+        "name": "STANDARD",
+        "description": "Paper bag with ice"
+      },
+      "premium": {
+        "name": "PREMIUM",
+        "description": "Quality cardboard box with Bolduc ribbon."
+      },
+      "luxury": {
+        "name": "LUXURY",
+        "description": "Premium wooden box with Bolduc ribbon."
+      }
+    },
     "specs": {
       "specificationTitle": "Specification",
       "pearlSize": "Pearl Size",
