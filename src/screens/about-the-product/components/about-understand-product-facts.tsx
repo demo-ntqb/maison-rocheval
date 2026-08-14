@@ -10,7 +10,7 @@ export function AboutUnderstandProductFacts({
   return (
     <dl
       data-plumb-id="frame-2085667060"
-      className="flex min-h-[450px] flex-col justify-center p-8 font-sans text-sm"
+      className="flex flex-col gap-4 p-8 font-sans text-sm"
     >
       {facts.map(({ rowPlumbId, labelPlumbId, valuePlumbId, label, value }) => (
         <div

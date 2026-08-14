@@ -79,6 +79,7 @@ const mockProduct: CatalogProductDetail = {
   shelfLife: "Four weeks refrigerated",
   species: "Huso dauricus",
   speciesDescription: "Kaluga-Huso is the rising star of the caviar world.",
+  speciesImage: null,
   specs: {
     color: "Golden",
     ingredients: "STURGEON ROE (Acipenser Dauricus), salt, E285",
@@ -105,7 +106,7 @@ describe("ProductDetailSpecs", () => {
     expect(screen.getByRole("button", { name: /Gifting/i })).toBeInTheDocument();
 
     // Specification is open by default
-    expect(screen.getByText("Kaluga-Huso is the rising star of the caviar world.")).toBeVisible();
+    expect(screen.getByText("Kaluga hybrid caviar")).toBeVisible();
     expect(screen.getByText("3.2mm - 3.8mm")).toBeVisible();
     expect(screen.getByText("3.0% - 3.5%")).toBeVisible();
     expect(screen.getByText("Golden")).toBeVisible();
@@ -126,5 +127,70 @@ describe("ProductDetailSpecs", () => {
     const customerServiceLink = screen.getByRole("link", { name: "Customer Service" });
     expect(customerServiceLink).toBeInTheDocument();
     expect(customerServiceLink).toHaveAttribute("href", "/contact");
+  });
+
+  it("hides accordion items when their data is empty", () => {
+    const productWithPartialSpecs: CatalogProductDetail = {
+      ...mockProduct,
+      delivery: { duration: "", shipping: "" },
+      gifting: { addOns: "", box: "", message: "" },
+    };
+
+    render(<ProductDetailSpecs product={productWithPartialSpecs} />);
+
+    expect(screen.getByRole("button", { name: /Specification/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Serving Info/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Delivery Info/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Gifting/i })).not.toBeInTheDocument();
+  });
+
+  it("renders rich text AST in description", () => {
+    const productWithRichSpecs: CatalogProductDetail = {
+      ...mockProduct,
+      description: JSON.stringify({
+        children: [
+          {
+            children: [
+              { type: "text", value: "Rich description with " },
+              { children: [{ type: "text", value: "learn more" }], type: "link", url: "/about" },
+            ],
+            type: "paragraph",
+          },
+        ],
+        type: "root",
+      }),
+    };
+
+    render(<ProductDetailSpecs product={productWithRichSpecs} />);
+
+    expect(screen.getByText("Rich description with")).toBeInTheDocument();
+    const link = screen.getByRole("link", { name: "learn more" });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/about");
+  });
+
+  it("renders nothing when all accordion item data is empty", () => {
+    const emptyProduct: CatalogProductDetail = {
+      ...mockProduct,
+      delivery: { duration: "", shipping: "" },
+      description: "",
+      descriptionHtml: "",
+      gifting: { addOns: "", box: "", message: "" },
+      serving: "",
+      shelfLife: "",
+      specs: {
+        color: "",
+        ingredients: "",
+        nutritionalData: "",
+        pearlSize: "",
+        salt: "",
+        tastingNotes: "",
+      },
+      specsDescription: "",
+      storage: "",
+    };
+
+    const { container } = render(<ProductDetailSpecs product={emptyProduct} />);
+    expect(container).toBeEmptyDOMElement();
   });
 });

@@ -54,6 +54,7 @@ function product(
     serving: `${title} serving suggestion`,
     species: `${title} species`,
     speciesDescription: `${title} species description`,
+    speciesImage: null,
     specs: {
       color: `${title} color`,
       pearlSize: `${title} pearl size`,
@@ -75,18 +76,18 @@ describe("AboutUnderstandProductTabs", () => {
     render(<AboutUnderstandProductTabs labels={labels} products={products} />);
 
     const tabList = screen.getByRole("tablist", { name: labels.selectorLabel });
-    const amourTab = screen.getByRole("tab", { name: "Amour" });
-    const kalugaTab = screen.getByRole("tab", { name: "Kaluga" });
+    const amourTab = screen.getByRole("tab", { name: "Amour Caviar" });
+    const kalugaTab = screen.getByRole("tab", { name: "Kaluga Caviar" });
 
     expect(tabList).toContainElement(amourTab);
     expect(amourTab).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("heading", { name: "Amour" })).toBeVisible();
-    expect(screen.queryByRole("heading", { name: "Kaluga" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Amour Caviar" })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "Kaluga Caviar" })).not.toBeInTheDocument();
 
     await user.click(kalugaTab);
 
     expect(kalugaTab).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("heading", { name: "Kaluga" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Kaluga Caviar" })).toBeVisible();
     expect(screen.getByRole("link", { name: labels.buyNow })).toHaveAttribute(
       "href",
       "/products/kaluga",
@@ -95,6 +96,6 @@ describe("AboutUnderstandProductTabs", () => {
     await user.keyboard("{ArrowLeft}");
 
     expect(amourTab).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("heading", { name: "Amour" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Amour Caviar" })).toBeVisible();
   });
 });

@@ -2,10 +2,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
+import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
 import { ProductDetailImageGallery } from "../components/product-detail-image-gallery";
 import { ProductDetailInfo } from "../components/product-detail-info";
 import { ProductDetailSpecs } from "../components/product-detail-specs";
-import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
 
 export interface ProductDetailHeroSectionProps {
   product: CatalogProductDetail;
@@ -38,12 +38,11 @@ export async function ProductDetailHeroSection({ product }: ProductDetailHeroSec
           />
 
           {/* Right Column: Product Info & Configurator */}
-          <ProductDetailInfo product={product} />
-        </div>
+          <div className="flex flex-col gap-16 sm:gap-24">
 
-        {/* Specification Accordion Section */}
-        <div className="mt-16 sm:mt-24">
-          <ProductDetailSpecs product={product} />
+            <ProductDetailInfo product={product} />
+            <ProductDetailSpecs product={product} />
+          </div>
         </div>
       </NextIntlClientProvider>
     </section>

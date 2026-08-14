@@ -29,6 +29,7 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
         { namespace: "rocheval", key: "tasting_notes" }
         { namespace: "rocheval", key: "species_scientific_name" }
         { namespace: "rocheval", key: "species_description" }
+        { namespace: "rocheval", key: "species_image" }
         { namespace: "rocheval", key: "pearl_size" }
         { namespace: "rocheval", key: "salt_content" }
         { namespace: "rocheval", key: "pearl_colour" }
@@ -50,6 +51,16 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
         references(first: 3) {
           nodes {
             ... on Product { ...CatalogProductCard }
+          }
+        }
+        reference {
+          ... on MediaImage {
+            image {
+              url
+              altText
+              width
+              height
+            }
           }
         }
       }

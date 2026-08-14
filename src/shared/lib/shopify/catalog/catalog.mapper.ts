@@ -3,7 +3,6 @@ import {
   metafieldsByKey,
   metaobjectFields,
   parseStringList,
-  richTextToPlainText,
   stripHtml,
 } from "./catalog-mapper.helper.ts";
 import type {
@@ -51,11 +50,17 @@ function mapGalleryImages(product: StorefrontProduct, fallback: CatalogImage | n
 function mapProductProfile(product: StorefrontProduct): CatalogProductProfile {
   const card = mapProductCard(product);
   const fields = metafieldsByKey(product);
+  const speciesImageField = fields.get("species_image");
+  const speciesImage = speciesImageField?.reference?.image
+    ? mapImage(speciesImageField.reference.image, product.title)
+    : null;
+
   return {
     ...card,
     galleryImages: mapGalleryImages(product, card.image),
-    serving: richTextToPlainText(fields.get("serving")?.value),
-    speciesDescription: richTextToPlainText(fields.get("species_description")?.value) || card.description,
+    serving: fields.get("serving")?.value || "",
+    speciesDescription: fields.get("species_description")?.value || card.description,
+    speciesImage,
     specs: {
       color: fields.get("pearl_colour")?.value || "",
       pearlSize: fields.get("pearl_size")?.value || "",

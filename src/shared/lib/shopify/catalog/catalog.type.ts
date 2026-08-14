@@ -27,6 +27,7 @@ export type CatalogProductProfile = CatalogProductCard & {
   galleryImages: CatalogImage[];
   serving: string;
   speciesDescription: string;
+  speciesImage: CatalogImage | null;
   specs: {
     color: string;
     pearlSize: string;
@@ -78,6 +79,14 @@ export type CatalogProductDetail = CatalogProductProfile & {
 
 export type StorefrontMetafield = {
   key: string;
+  reference?: {
+    image?: {
+      altText: string | null;
+      height: number | null;
+      url: string;
+      width: number | null;
+    } | null;
+  } | null;
   references?: { nodes: StorefrontProduct[] } | null;
   type: string;
   value: string;

@@ -20,6 +20,7 @@ const mockProduct: CatalogProductProfile = {
   serving: "Serve cold",
   species: "Acipenser Schrenckii",
   speciesDescription: "A fine sturgeon species",
+  speciesImage: null,
   specs: {
     color: "Golden",
     pearlSize: "3.2mm - 3.8mm",
@@ -30,9 +31,9 @@ const mockProduct: CatalogProductProfile = {
 };
 
 describe("about-the-product.utils", () => {
-  it("displayName loại bỏ tiền tố/hậu tố Caviar", () => {
-    expect(displayName("Caviar Amour")).toBe("Amour");
-    expect(displayName("Kaluga Caviar")).toBe("Kaluga");
+  it("displayName giữ nguyên title gốc", () => {
+    expect(displayName("Caviar Amour")).toBe("Caviar Amour");
+    expect(displayName("Kaluga Caviar")).toBe("Kaluga Caviar");
     expect(displayName("Special")).toBe("Special");
   });
 
@@ -46,8 +47,8 @@ describe("about-the-product.utils", () => {
     ).toBe("Butter");
   });
 
-  it("tastingProfile chuyển đổi tastingNotes sang dạng gạch nối chuẩn", () => {
-    expect(tastingProfile(mockProduct)).toBe("Rich - Creamy - Cheesy");
+  it("tastingProfile giữ nguyên tastingNotes gốc", () => {
+    expect(tastingProfile(mockProduct)).toBe("Rich · Creamy · Cheese");
   });
 
   it("createProductFacts tạo danh sách facts đầy đủ", () => {
@@ -62,6 +63,6 @@ describe("about-the-product.utils", () => {
     const facts = createProductFacts(labels, mockProduct);
     expect(facts).toHaveLength(6);
     expect(facts[0]?.value).toBe("Acipenser Schrenckii");
-    expect(facts[1]?.value).toBe("Amour");
+    expect(facts[1]?.value).toBe("Caviar Amour");
   });
 });

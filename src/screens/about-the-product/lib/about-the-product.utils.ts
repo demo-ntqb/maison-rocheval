@@ -5,7 +5,7 @@ import type {
 } from "../types/about-the-product.type";
 
 export function displayName(title: string): string {
-  return title.replace(/^Caviar\s+|\s+Caviar$/giu, "");
+  return title;
 }
 
 export function flavourCharacter(product: CatalogProductProfile): string {
@@ -14,10 +14,7 @@ export function flavourCharacter(product: CatalogProductProfile): string {
 }
 
 export function tastingProfile(product: CatalogProductProfile): string {
-  return product.specs.tastingNotes
-    .split(" · ")
-    .map((note) => (note === "Cheese" ? "Cheesy" : note))
-    .join(" - ");
+  return product.specs.tastingNotes;
 }
 
 const FACT_KEYS = [

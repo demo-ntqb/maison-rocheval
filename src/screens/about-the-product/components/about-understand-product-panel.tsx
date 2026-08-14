@@ -1,3 +1,5 @@
+import { RichText } from "@shopify/hydrogen-react";
+
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
@@ -7,11 +9,30 @@ import { displayName, tastingProfile } from "../lib/about-the-product.utils";
 import type { AboutUnderstandProductPanelProps } from "../types/about-the-product.type";
 import { AboutUnderstandProductFacts } from "./about-understand-product-facts";
 
+function isRichTextAst(data?: string): boolean {
+  if (!data) return false;
+  try {
+    const parsed: unknown = JSON.parse(data);
+    return Boolean(
+      parsed &&
+      typeof parsed === "object" &&
+      "type" in parsed &&
+      parsed.type === "root" &&
+      "children" in parsed &&
+      Array.isArray(parsed.children),
+    );
+  } catch {
+    return false;
+  }
+}
+
 function ProductVisualGrid({
   image,
+  speciesImage,
   sturgeonAlt,
 }: {
   image: CatalogProductProfile["image"];
+  speciesImage: CatalogProductProfile["speciesImage"];
   sturgeonAlt: string;
 }) {
   return (
@@ -34,18 +55,29 @@ function ProductVisualGrid({
           </span>
         ) : null}
       </div>
-      <Picture
-        basePath="/images/about-product/product-sturgeon"
-        fallbackExtension="png"
-        alt={sturgeonAlt}
-        width={1000}
-        height={1000}
-        sizes="(max-width: 767px) 100vw, 500px"
-        pictureClassName="block aspect-square"
-        className="size-full object-cover"
-        data-plumb-id="image-43"
-        data-plumb-asset="a647f61dfecaa558375d27cc4656976232562975"
-      />
+      {speciesImage ? (
+        <ShopifyImage
+          image={speciesImage}
+          sizes="(max-width: 767px) 100vw, 500px"
+          responsiveWidths={[320, 500, 800, 1000]}
+          className="size-full aspect-square object-cover"
+          data-plumb-id="image-43"
+          data-plumb-asset="a647f61dfecaa558375d27cc4656976232562975"
+        />
+      ) : (
+        <Picture
+          basePath="/images/about-product/product-sturgeon"
+          fallbackExtension="png"
+          alt={sturgeonAlt}
+          width={1000}
+          height={1000}
+          sizes="(max-width: 767px) 100vw, 500px"
+          pictureClassName="block aspect-square"
+          className="size-full object-cover"
+          data-plumb-id="image-43"
+          data-plumb-asset="a647f61dfecaa558375d27cc4656976232562975"
+        />
+      )}
     </div>
   );
 }
@@ -75,42 +107,75 @@ function ProductStoryHeader({ product }: { product: CatalogProductProfile }) {
   );
 }
 
-function ProductStoryBody({
-  atTable,
-  product,
-}: {
-  atTable: string;
-  product: CatalogProductProfile;
-}) {
+function ProductStoryBody({ product }: { product: CatalogProductProfile }) {
+  if (!product.speciesDescription) return null;
+
+  if (isRichTextAst(product.speciesDescription)) {
+    return (
+      <RichText
+        data={product.speciesDescription}
+        as="div"
+        data-plumb-id="amour-opens-with-cream-then-butter-follo"
+        className="flex flex-col gap-4 font-sans text-sm leading-relaxed text-ink"
+        components={{
+          root: ({ node }) => <>{node.children}</>,
+          link: ({ node }) => (
+            <Link
+              href={node.url}
+              className="text-palette-accent underline transition-opacity hover:opacity-80"
+            >
+              {node.children}
+            </Link>
+          ),
+          list: ({ node }) => <ul className="my-1 list-disc space-y-1 pl-4 leading-relaxed">{node.children}</ul>,
+          listItem: ({ node }) => <li className="leading-relaxed">{node.children}</li>,
+          paragraph: ({ node }) => <p className="leading-relaxed leading-none">{node.children}</p>,
+          heading: ({ node }) => (
+            <p className="leading-relaxed">
+              <strong className="font-bold">{node.children}</strong>
+            </p>
+          ),
+          text: ({ node }) => {
+            let content: React.ReactNode = node.value;
+            if (node.bold) content = <strong className="font-bold">{content}</strong>;
+            if (node.italic) content = <em className="italic">{content}</em>;
+            return content;
+          },
+        }}
+      />
+    );
+  }
+
+  const paragraphs =
+    typeof product.speciesDescription === "string"
+      ? product.speciesDescription.split(/\n\n+/u).filter(Boolean)
+      : [];
+
   return (
     <div
       data-plumb-id="amour-opens-with-cream-then-butter-follo"
-      className="flex flex-col gap-4 font-sans text-sm leading-5 text-ink"
+      className="flex flex-col gap-4 font-sans text-sm leading-relaxed text-ink"
     >
-      <p>{product.description}</p>
-      <p>{product.speciesDescription}</p>
-      <p>
-        <strong className="font-bold">{atTable}</strong>
-        <br />
-        {product.serving}
-      </p>
+      {paragraphs.map((paragraph, index) => (
+        <p key={index} className="leading-relaxed">
+          {paragraph}
+        </p>
+      ))}
     </div>
   );
 }
 
 function ProductStory({
-  atTable,
   buyNow,
   product,
 }: {
-  atTable: string;
   buyNow: string;
   product: CatalogProductProfile;
 }) {
   return (
     <div
       data-plumb-id="frame-2085667152"
-      className="flex min-h-[450px] flex-col items-center justify-center p-6 lg:p-8"
+      className="flex flex-col p-6 lg:p-8"
     >
       <div
         data-plumb-id="component-7-2"
@@ -118,7 +183,7 @@ function ProductStory({
       >
         <div data-plumb-id="frame-2085667121" className="flex flex-col gap-4">
           <ProductStoryHeader product={product} />
-          <ProductStoryBody atTable={atTable} product={product} />
+          <ProductStoryBody product={product} />
         </div>
 
         <Link
@@ -144,13 +209,16 @@ export function AboutUnderstandProductPanel({
       data-plumb-id="frame-2085667154"
       className="m-0 flex w-full flex-col gap-8 outline-none"
     >
-      <ProductVisualGrid image={product.image} sturgeonAlt={labels.sturgeonAlt} />
+      <ProductVisualGrid
+        image={product.image}
+        speciesImage={product.speciesImage}
+        sturgeonAlt={labels.sturgeonAlt}
+      />
       <div
         data-plumb-id="frame-2085667153"
-        className="grid w-full items-center justify-center md:grid-cols-2"
+        className="grid w-full md:grid-cols-2"
       >
         <ProductStory
-          atTable={labels.atTable}
           buyNow={labels.buyNow}
           product={product}
         />
