@@ -39,7 +39,7 @@ function ProductVisualGrid({
         fallbackExtension="png"
         alt={sturgeonAlt}
         width={1000}
-        height={1400}
+        height={1000}
         sizes="(max-width: 767px) 100vw, 500px"
         pictureClassName="block aspect-square"
         className="size-full object-cover"
