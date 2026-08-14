@@ -136,32 +136,3 @@ export function generateJsonLd(data: Record<string, unknown>): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
 
-/**
- * Generate Organization schema
- */
-export function generateOrganizationSchema() {
-  return generateJsonLd({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: businessInfo.name,
-    description: businessInfo.description,
-    url: SITE_URL,
-    logo: `${SITE_URL}/images/logo.png`,
-  });
-}
-
-/**
- * Generate BreadcrumbList schema
- */
-export function generateBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: string }>) {
-  return generateJsonLd({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: breadcrumbs.map((crumb, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: crumb.name,
-      item: `${SITE_URL}${crumb.url}`,
-    })),
-  });
-}

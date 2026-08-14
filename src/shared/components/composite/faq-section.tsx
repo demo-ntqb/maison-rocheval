@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
 
-export interface FaqItem {
+interface FaqItem {
   id: string;
   question: string;
   answer: string;
