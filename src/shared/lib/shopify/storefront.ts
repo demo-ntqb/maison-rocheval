@@ -1,9 +1,5 @@
 import "server-only";
 
-import { headers } from "next/headers";
-import { cache } from "react";
-
-import { getBuyerIp } from "./buyer-ip";
 import { getShopifyMarket } from "./config";
 import { resolveStorefrontConfig } from "./storefront-config";
 
@@ -19,11 +15,9 @@ type StorefrontClient = {
 };
 
 function createCatalogClient({
-  buyerIp,
   privateStorefrontToken,
   storeDomain,
 }: {
-  buyerIp?: string;
   privateStorefrontToken: string;
   storeDomain: string;
 }): StorefrontClient {
@@ -36,7 +30,6 @@ function createCatalogClient({
         headers: {
           "Content-Type": "application/json",
           "Shopify-Storefront-Private-Token": privateStorefrontToken,
-          ...(buyerIp ? { "Shopify-Storefront-Buyer-IP": buyerIp } : {}),
         },
         body: JSON.stringify({ query: document, variables: options.variables ?? {} }),
       });
@@ -70,11 +63,3 @@ export function getCatalogStorefrontClient(locale: string): StorefrontClient {
   return client;
 }
 
-/** Request-scoped client reserved for future cart/account requests. */
-export const getBuyerStorefrontClient = cache(async (): Promise<StorefrontClient> => {
-  const requestHeaders = await headers();
-  return createCatalogClient({
-    ...resolveStorefrontConfig(),
-    buyerIp: getBuyerIp(requestHeaders) ?? undefined,
-  });
-});

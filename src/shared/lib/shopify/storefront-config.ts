@@ -3,7 +3,7 @@ import "server-only";
 import { storefrontConfig } from "./config";
 import { getOptionalPrivateStorefrontToken } from "./env";
 
-export const MOCK_SHOP_DOMAIN = "mock.shop";
+const MOCK_SHOP_DOMAIN = "mock.shop";
 const MOCK_SHOP_PRIVATE_TOKEN = "mock-private-token";
 
 export type ResolvedStorefrontConfig = {

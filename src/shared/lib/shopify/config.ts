@@ -5,7 +5,7 @@ type I18nBase = {
   language: "EN" | "FR";
 };
 
-export type StorefrontLocale = (typeof routing.locales)[number];
+type StorefrontLocale = (typeof routing.locales)[number];
 
 type StorefrontConfig = {
   publicStorefrontToken: string;

@@ -1,4 +1,4 @@
-export type CatalogMoney = {
+type CatalogMoney = {
   amount: string;
   currencyCode: string;
 };
