@@ -31,6 +31,7 @@ export const DISCOVER_STATE_QUERY = `#graphql
         namespace
         key
         name
+        description
         pinnedPosition
         type { name }
         access { admin storefront }
@@ -215,6 +216,7 @@ export async function upsertMetafieldDefinition(client, definition, current) {
         namespace: definition.namespace,
         key: definition.key,
         name: definition.name,
+        ...(definition.description ? { description: definition.description } : {}),
         type: definition.type,
         pin: Boolean(definition.pin),
         access,
@@ -237,6 +239,7 @@ export async function upsertMetafieldDefinition(client, definition, current) {
       namespace: definition.namespace,
       key: definition.key,
       name: definition.name,
+      ...(definition.description ? { description: definition.description } : {}),
       access,
       validations,
     },
@@ -384,8 +387,12 @@ export function productTextMetafieldValues(product, locale) {
     ingredients: localized(details.ingredients, locale),
     nutrition: richTextValue(localized(details.nutrition, locale)),
     shelf_life: localized(details.shelfLife, locale),
-    storage: richTextValue(localized(details.storage, locale)),
     serving: richTextValue(localized(details.serving, locale)),
+    shipping: richTextValue(localized(details.shipping, locale)),
+    duration: richTextValue(localized(details.duration, locale)),
+    box: richTextValue(localized(details.box, locale)),
+    message: richTextValue(localized(details.message, locale)),
+    add_ons: richTextValue(localized(details.addOns, locale)),
   };
 }
 

@@ -57,6 +57,7 @@ function definitionMatches(desired, actual) {
 export function metafieldDefinitionMatches(desired, actual) {
   return Boolean(actual)
     && actual.name === desired.name
+    && (!desired.description || actual.description === desired.description)
     && actual.type?.name === desired.type
     && actual.access?.storefront === "PUBLIC_READ"
     && (!desired.pin || actual.pinnedPosition != null);
