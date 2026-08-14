@@ -1,8 +1,26 @@
 // Site-wide constants for Maison Rocheval
 // Business info, navigation, social links — shared across every page
 
-const SITE_DOMAIN = "maison-rocheval.com";
-export const SITE_URL = `https://${SITE_DOMAIN}`;
+const DEFAULT_SITE_URL = "https://maison-rocheval.com";
+
+const rawSiteOrigin =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.SITE_ORIGIN ||
+  DEFAULT_SITE_URL;
+
+export const SITE_URL = (
+  rawSiteOrigin.startsWith("http://") || rawSiteOrigin.startsWith("https://")
+    ? rawSiteOrigin
+    : `https://${rawSiteOrigin}`
+).replace(/\/+$/u, "");
+
+export const SITE_DOMAIN = (() => {
+  try {
+    return new URL(SITE_URL).hostname;
+  } catch {
+    return "maison-rocheval.com";
+  }
+})();
 
 export const businessInfo = {
   name: "Maison Rocheval",
