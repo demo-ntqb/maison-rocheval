@@ -19,7 +19,7 @@ export default async function Home({
       <HomeHeroSection />
       <HomeIntroSection />
       <HomeAboutSection />
-      <HomeProductsSection />
+      <HomeProductsSection locale={locale} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { ProductsProductCard } from "./products-product-card";
-import type { ProductsProductViewModel } from "../types/products.type";
+import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 
 interface ProductsProductGridProps {
-  products: readonly ProductsProductViewModel[];
+  products: readonly CatalogProductCard[];
 }
 
 export function ProductsProductGrid({ products }: ProductsProductGridProps) {

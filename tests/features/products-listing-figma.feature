@@ -12,7 +12,7 @@ Tính năng: Products listing khớp Figma 3:8034
 
   Kịch bản: Catalog phản ánh Figma listing
     Khi catalog được render
-    Thì catalog hiển thị 5 sản phẩm từ products constant
+    Thì catalog hiển thị các sản phẩm theo thứ tự collection `our-caviar` từ Shopify
     Và product list dùng semantic list
     Và desktop hiển thị ba cột card rộng 312px với khoảng cách theo Figma
     Và card đầu tiên dùng ảnh priority còn các card khác lazy-load

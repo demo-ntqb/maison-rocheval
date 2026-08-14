@@ -41,7 +41,7 @@ export default async function ProductsPage({
           data-plumb-id="frame-2085667111"
           className="flex w-full max-w-content flex-col items-center gap-24 lg:gap-[200px]"
         >
-          <ProductsCatalogSection />
+          <ProductsCatalogSection locale={locale} />
           <ProductsEditorialSection />
           <ProductsFaqSection />
         </div>

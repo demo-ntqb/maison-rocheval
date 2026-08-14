@@ -340,8 +340,20 @@
     },
     "understand": {
       "title": "Comprendre le produit",
-      "description": "Cinq espèces, chacune avec son grain, sa texture et sa finale. Découvrez le profil qui correspond à votre table.",
-      "select": "Choisir l’espèce",
+      "description": "Produit vivant, le caviar révèle à chaque sélection son grain, sa texture et sa saveur, sans jamais se réduire à un chiffre. Aucun nombre ne peut saisir ce qui évolue chaque semaine.",
+      "select": "DÉCOUVRIR LA BOUTIQUE",
+      "selectorLabel": "Choisir un caviar pour découvrir son profil",
+      "atTable": "À table",
+      "buyNow": "ACHETER",
+      "sturgeonAlt": "Esturgeon nageant dans une eau sombre",
+      "facts": {
+        "species": "ESPÈCE",
+        "commonName": "NOM COMMUN",
+        "pearlSize": "TAILLE DU GRAIN",
+        "salt": "SEL",
+        "color": "COULEUR",
+        "tastingNotes": "NOTES DE DÉGUSTATION"
+      },
       "kaluga": {
         "name": "Kaluga",
         "imageAlt": "Boîte de caviar Kaluga"
@@ -366,7 +378,7 @@
       "featuredSturgeonAlt": "Esturgeon Amour nageant dans une eau sombre",
       "featuredTitle": "Amour",
       "featuredDescription": "Nommé deux fois — pour l’esturgeon Amour et pour l’amour. Une expression généreuse et crémeuse à la finale nette.",
-      "facts": {
+      "legacyFacts": {
         "species": {
           "label": "Espèce",
           "value": "Acipenser schrenckii"
@@ -433,6 +445,8 @@
     "perBoxLabel": "PAR BOÎTE",
     "summaryLabel": "RÉSUMÉ",
     "addToCart": "Ajouter au panier",
+    "unavailable": "Indisponible",
+    "free": "OFFERT",
     "decreaseQty": "Réduire la quantité",
     "increaseQty": "Augmenter la quantité",
     "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
@@ -463,6 +477,7 @@
       "nutritionalData": "Valeurs nutritionnelles pour 100g",
       "servingTitle": "Service & Dégustation",
       "shelfLife": "Conservation",
+      "storage": "Stockage",
       "recommendation": "Conseils de service",
       "deliveryTitle": "Livraison",
       "shipping": "Expédition",

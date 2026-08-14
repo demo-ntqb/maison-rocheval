@@ -8,7 +8,7 @@ const OG_LOCALE: Record<string, string> = {
 };
 
 /** Prefixes a path with the locale segment, except for the default locale ("as-needed" mode). */
-function localizedPath(locale: string, path: string): string {
+export function localizedPath(locale: string, path: string): string {
   if (locale === routing.defaultLocale) return path;
   const suffix = path === "/" ? "" : path;
   return `/${locale}${suffix}`;

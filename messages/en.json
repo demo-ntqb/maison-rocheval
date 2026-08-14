@@ -340,8 +340,20 @@
     },
     "understand": {
       "title": "Understand the product",
-      "description": "Five species, each with a distinct grain, texture and finish. Discover the profile that speaks most clearly to your table.",
-      "select": "Select species",
+      "description": "As a living product, its grain, texture and flavor is read fresh with every selection rather than reduced to a number. A number cannot hold what changes by the week.",
+      "select": "GO TO SHOP",
+      "selectorLabel": "Select a caviar to understand its profile",
+      "atTable": "At the table",
+      "buyNow": "BUY NOW",
+      "sturgeonAlt": "Sturgeon swimming in dark water",
+      "facts": {
+        "species": "SPECIES",
+        "commonName": "COMMON NAME",
+        "pearlSize": "PEARL SIZE",
+        "salt": "SALT",
+        "color": "COLOR",
+        "tastingNotes": "TASTING NOTES"
+      },
       "kaluga": {
         "name": "Kaluga",
         "imageAlt": "Kaluga caviar tin"
@@ -366,7 +378,7 @@
       "featuredSturgeonAlt": "Amur sturgeon swimming in dark water",
       "featuredTitle": "Amour",
       "featuredDescription": "Named twice over — for the Amur sturgeon and for love. A generous, creamy expression with a clean, lingering finish.",
-      "facts": {
+      "legacyFacts": {
         "species": {
           "label": "Species",
           "value": "Acipenser schrenckii"
@@ -433,6 +445,8 @@
     "perBoxLabel": "PER BOX",
     "summaryLabel": "SUMMARY",
     "addToCart": "Add to cart",
+    "unavailable": "Unavailable",
+    "free": "FREE",
     "decreaseQty": "Decrease quantity",
     "increaseQty": "Increase quantity",
     "deliveryNote": "We offer variety of delivery options in check-out",
@@ -463,6 +477,7 @@
       "nutritionalData": "Nutritional Data per 100g",
       "servingTitle": "Serving Info",
       "shelfLife": "Shelf Life",
+      "storage": "Storage",
       "recommendation": "Serving Recommendation",
       "deliveryTitle": "Delivery Info",
       "shipping": "Shipping",

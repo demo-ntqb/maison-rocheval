@@ -35,7 +35,7 @@ test("Products route là thin localized composition và có metadata riêng", as
 
 test("Products screen tuân thủ ownership và barrel contract", async () => {
   const index = await source("src/screens/products/index.ts");
-  const constants = await source("src/screens/products/constants/products.constant.ts");
+  const catalog = await source("src/screens/products/sections/products-catalog.section.tsx");
   const grid = await source("src/screens/products/components/products-product-grid.tsx");
   const card = await source("src/screens/products/components/products-product-card.tsx");
 
@@ -45,8 +45,9 @@ test("Products screen tuân thủ ownership và barrel contract", async () => {
   assert.match(index, /products-faq\.section/);
   assert.doesNotMatch(index, /components|constants|types/);
 
-  assert.match(constants, /PRODUCTS/);
-  assert.match(constants, /length:\s*5|satisfies|product-/);
+  assert.match(catalog, /getCollectionProducts/);
+  assert.match(catalog, /our-caviar/);
+  assert.doesNotMatch(catalog, /PRODUCTS/);
   assert.match(grid, /<ul/);
   assert.match(grid, /grid-cols-1/);
   assert.match(grid, /sm:grid-cols-2/);
@@ -66,22 +67,20 @@ test("Products copy và metadata tồn tại đồng thời ở mọi locale", a
     assert.ok(messages.metadata?.products?.title);
     assert.ok(messages.metadata?.products?.description);
     assert.ok(messages.products?.catalog?.itemCount);
-    assert.equal(Object.keys(messages.products?.catalog?.cards ?? {}).length, 5);
     assert.ok(messages.products?.editorial?.title);
     assert.ok(messages.products?.faq?.title);
   }
 });
 
-test("Products image contract dùng Picture helper và shared accessible FAQ", async () => {
+test("Products image contract dùng ShopifyImage helper và shared accessible FAQ", async () => {
   const [card, editorial, faq] = await Promise.all([
     source("src/screens/products/components/products-product-card.tsx"),
     source("src/screens/products/sections/products-editorial.section.tsx"),
     source("src/screens/products/sections/products-faq.section.tsx"),
   ]);
 
-  assert.match(card, /<Picture/);
-  assert.match(card, /width=\{/);
-  assert.match(card, /height=\{/);
+  assert.match(card, /<ShopifyImage/);
+  assert.match(card, /image=\{/);
   assert.match(card, /sizes=/);
   assert.match(editorial, /<Picture/);
   assert.match(editorial, /@\/i18n\/navigation/);

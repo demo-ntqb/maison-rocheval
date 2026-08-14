@@ -28,7 +28,7 @@ test("Homepage render đúng composition và Plumb IDs của Figma", async () =>
   assert.ok(offsets.every((offset) => offset >= 0), "thiếu root data-plumb-id");
   assert.deepEqual(offsets, [...offsets].sort((a, b) => a - b), "sai thứ tự section");
   assert.ok(!html.includes('data-home-section="faq"'), "Homepage không có FAQ trong Figma");
-  assert.ok(html.indexOf('data-plumb-id="component-6-5"') > html.indexOf("</main>"));
+  assert.ok(html.indexOf("<footer") > html.indexOf("</main>"), "footer phải nằm sau main");
 });
 
 test("Homepage đáp ứng native image contract", async () => {

@@ -1,6 +1,7 @@
 import { routing } from "@/i18n/routing";
 import { Footer } from "@/shared/components/layout/footer";
 import { Header } from "@/shared/components/layout/header";
+import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
 import { generateRootMetadata } from "@/shared/lib/metadata";
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
@@ -83,6 +84,7 @@ export default async function LocaleLayout({
     >
       <head>
         <meta name="theme-color" content="#16222e" />
+        <ShopifyResourceHints />
       </head>
       <body
         data-plumb-id="shop"

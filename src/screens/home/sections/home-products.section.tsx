@@ -1,14 +1,14 @@
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { HomeProductList } from "../components/home-product-list";
 import { Picture } from "@/shared/components/ui/picture";
+import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 
-export async function HomeProductsSection() {
-  const [messages, t] = await Promise.all([
-    getMessages(),
-    getTranslations("home.products"),
+export async function HomeProductsSection({ locale }: { locale: string }) {
+  const [products, t] = await Promise.all([
+    getCollectionProducts(locale, "featured-caviar"),
+    getTranslations({ locale, namespace: "home.products" }),
   ]);
 
   return (
@@ -51,9 +51,7 @@ export async function HomeProductsSection() {
           </Link>
         </div>
 
-        <NextIntlClientProvider messages={{ home: { products: messages.home.products } }}>
-          <HomeProductList />
-        </NextIntlClientProvider>
+        <HomeProductList products={products} />
       </div>
     </section>
   );

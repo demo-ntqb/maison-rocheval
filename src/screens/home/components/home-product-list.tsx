@@ -1,36 +1,13 @@
-"use client";
-
-import { useTranslations } from "next-intl";
-
 import { ProductCard } from "@/shared/components/composite/product-card";
-import { HOME_PRODUCTS } from "../constants/home.constant";
+import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 
-export function HomeProductList() {
-  const t = useTranslations("home.products");
+export function HomeProductList({ products }: { products: CatalogProductCard[] }) {
 
   return (
     <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-3 justify-items-center" data-plumb-id="component-6-4">
-      {HOME_PRODUCTS.map((p) => {
-        const productData = {
-          id: p.id,
-          handle: p.handle,
-          title: t(`cards.${p.id}.title`),
-          imageBasePath: p.imagePath,
-          imageAlt: t(`cards.${p.id}.imageAlt`),
-          // eyebrow: t(`cards.${p.id}.eyebrow`),
-          species: t(`cards.${p.id}.species`),
-          profile: t(`cards.${p.id}.profile`),
-          description: t(`cards.${p.id}.description`),
-        };
-
-        return (
-          <ProductCard
-            key={p.id}
-            product={productData}
-            size="sm"
-          />
-        );
-      })}
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} size="sm" />
+      ))}
     </div>
   );
 }
