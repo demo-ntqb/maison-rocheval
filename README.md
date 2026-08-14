@@ -76,21 +76,7 @@ Luôn chạy `plan` trước `apply`. `plan` và `verify` dùng read-only client
 prices, variants và product options thuộc quyền merchant; provisioning chỉ cập nhật
 title, description, product type, vendor và status bằng `productUpdate`.
 
-Species data được lưu trực tiếp trong Product metafields `rocheval.species_scientific_name` và `rocheval.species_description`. Sau khi đã provision các fields mới, deploy storefront và xác minh EN/FR, có thể dọn definition legacy bằng workflow riêng:
-
-```bash
-yarn shopify:migrate:remove-caviar-species:plan
-# Sao chép exact confirmation token do plan in ra:
-yarn shopify:migrate:remove-caviar-species:apply \
-  --confirm="<store>:<definition-id>" \
-  --backup="./caviar-species-backup.json"
-```
-
-Command migration mặc định chỉ plan. Nó từ chối xóa nếu full definition schema hoặc
-exact 4 legacy entry handles không khớp, nếu 5 products chưa có đủ direct fields và
-EN/FR translations, hoặc nếu apply thiếu confirmation gắn với store + definition ID.
-Trước mutation, apply ghi một backup JSON mới và từ chối ghi đè file có sẵn. Command
-này không thuộc provisioning workflow thông thường.
+Species data được lưu trực tiếp trong Product metafields `rocheval.species_scientific_name` và `rocheval.species_description`.
 
 ## Vercel CI/CD
 
