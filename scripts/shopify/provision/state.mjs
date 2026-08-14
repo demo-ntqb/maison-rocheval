@@ -113,6 +113,14 @@ function productContentMatches(product, actual, baseLocale, registry) {
   if (product.kind === "caviar") {
     const desired = productMetafieldInputs(product, baseLocale, registry);
     if (!productMetafieldsMatch(actual.metafields.nodes, desired)) return false;
+    if (product.details?.speciesImage) {
+      const speciesFilename = product.details.speciesImage.path.split("/").at(-1);
+      const hasSpeciesImage = actual.media.nodes.some((media) => (
+        media.image?.url?.split("?")[0].endsWith(`/${speciesFilename}`)
+        || media.alt === product.details.speciesImage.alt.en
+      ));
+      if (!hasSpeciesImage) return false;
+    }
   }
   const filename = product.image.path.split("/").at(-1);
   return actual.media.nodes.some((media) => (

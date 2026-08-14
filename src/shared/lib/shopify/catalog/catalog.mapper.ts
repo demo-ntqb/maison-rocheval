@@ -55,7 +55,7 @@ function mapProductProfile(product: StorefrontProduct): CatalogProductProfile {
     ...card,
     galleryImages: mapGalleryImages(product, card.image),
     serving: richTextToPlainText(fields.get("serving")?.value),
-    speciesDescription: fields.get("species_description")?.value || card.description,
+    speciesDescription: richTextToPlainText(fields.get("species_description")?.value) || card.description,
     specs: {
       color: fields.get("pearl_colour")?.value || "",
       pearlSize: fields.get("pearl_size")?.value || "",

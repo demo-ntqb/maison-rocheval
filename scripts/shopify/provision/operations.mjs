@@ -197,11 +197,27 @@ export async function upsertMetaobjectDefinition(client, definition, current) {
   return mutationPayload(data, "metaobjectDefinitionUpdate", definition.type).metaobjectDefinition;
 }
 
+export async function deleteMetafieldDefinition(client, id) {
+  const data = await client.request(`#graphql
+    mutation DeleteMetafieldDefinition($id: ID!) {
+      metafieldDefinitionDelete(id: $id, deleteAllAssociatedMetafields: true) {
+        deletedDefinitionId
+        userErrors { field message code }
+      }
+    }
+  `, { id });
+  return mutationPayload(data, "metafieldDefinitionDelete", id);
+}
+
 export async function upsertMetafieldDefinition(client, definition, current) {
   const access = { storefront: "PUBLIC_READ" };
   const validations = definition.referenceType
     ? [{ name: "metaobject_definition_id", value: definition.referenceDefinitionId }]
     : [];
+  if (current && current.type?.name && current.type.name !== definition.type) {
+    await deleteMetafieldDefinition(client, current.id);
+    current = null;
+  }
   if (!current) {
     const data = await client.request(`#graphql
       mutation CreateMetafieldDefinition($definition: MetafieldDefinitionInput!) {
@@ -358,10 +374,26 @@ export function serializeFieldValue(value) {
   return value;
 }
 
-function richTextValue(value) {
+export function richTextValue(value) {
+  if (!value) return null;
+  const paragraphs = String(value)
+    .split(/\n\n+/u)
+    .map((block) => block.trim())
+    .filter(Boolean);
+
+  if (paragraphs.length === 0) {
+    return JSON.stringify({
+      type: "root",
+      children: [{ type: "paragraph", children: [{ type: "text", value: "" }] }],
+    });
+  }
+
   return JSON.stringify({
     type: "root",
-    children: [{ type: "paragraph", children: [{ type: "text", value }] }],
+    children: paragraphs.map((para) => ({
+      type: "paragraph",
+      children: [{ type: "text", value: para }],
+    })),
   });
 }
 
@@ -379,7 +411,7 @@ export function productTextMetafieldValues(product, locale) {
     short_description: localized(details.shortDescription, locale),
     collection_line: localized(details.collectionLine, locale),
     species_scientific_name: localized(details.speciesScientificName, locale),
-    species_description: localized(details.speciesDescription, locale),
+    species_description: richTextValue(localized(details.speciesDescription, locale)),
     pearl_size: localized(details.pearlSize, locale),
     pearl_colour: localized(details.pearlColour, locale),
     salt_content: localized(details.saltContent, locale),
@@ -398,15 +430,29 @@ export function productTextMetafieldValues(product, locale) {
 
 export function productMetafieldInputs(product, baseLocale, registry) {
   if (product.kind !== "caviar") return [];
+  const currentProduct = registry.products?.get(product.handle);
+  const mediaNodes = currentProduct?.media?.nodes ?? [];
+  const speciesImagePath = product.details?.speciesImage?.path;
+  const speciesImageFilename = speciesImagePath ? speciesImagePath.split("/").at(-1) : null;
+  const speciesMedia = speciesImagePath
+    ? mediaNodes.find((m) => (
+      m.image?.url?.split("?")[0].endsWith(`/${speciesImageFilename}`)
+      || m.alt === product.details.speciesImage.alt.en
+    ))
+    : null;
+
   const values = {
     ...productTextMetafieldValues(product, baseLocale),
+    ...(speciesMedia?.id ? { species_image: speciesMedia.id } : {}),
     related_products: JSON.stringify(product.relatedProducts.map((handle) => {
       const related = registry.products.get(handle);
       if (!related) throw new Error(`Related product ${handle} has not been provisioned.`);
       return related.id;
     })),
   };
-  const types = new Map(registry.metafieldDefinitions.map((item) => [item.key, item.type.name]));
+  const types = new Map(registry.metafieldDefinitions.map((item) => (
+    [item.key, item.type?.name ?? item.type]
+  )));
   return Object.entries(values).map(([key, value]) => {
     if (value === undefined) throw new Error(`Missing value for rocheval.${key} on ${product.handle}.`);
     return {
@@ -435,25 +481,72 @@ export async function setProductMetafields(client, product, baseLocale, registry
 
 export async function addProductMedia(client, product, registry, uploadLocalImage) {
   const current = registry.products.get(product.handle);
-  const filename = product.image.path.split("/").at(-1);
-  const hasImage = current.media?.nodes?.some((media) => (
-    media.image?.url?.split("?")[0].endsWith(`/${filename}`) || media.alt === product.image.alt.en
-  ));
-  if (hasImage) return;
+  const mediaNodes = [...(current.media?.nodes ?? [])];
+  const itemsToUpload = [];
 
-  const source = await uploadLocalImage(product.image.path);
+  const primaryFilename = product.image.path.split("/").at(-1);
+  const hasPrimary = mediaNodes.some((media) => (
+    media.image?.url?.split("?")[0].endsWith(`/${primaryFilename}`) || media.alt === product.image.alt.en
+  ));
+  if (!hasPrimary) {
+    itemsToUpload.push({
+      path: product.image.path,
+      alt: product.image.alt.en,
+    });
+  }
+
+  if (product.kind === "caviar" && product.details?.speciesImage) {
+    const speciesImage = product.details.speciesImage;
+    const speciesFilename = speciesImage.path.split("/").at(-1);
+    const hasSpecies = mediaNodes.some((media) => (
+      media.image?.url?.split("?")[0].endsWith(`/${speciesFilename}`) || media.alt === speciesImage.alt.en
+    ));
+    if (!hasSpecies) {
+      itemsToUpload.push({
+        path: speciesImage.path,
+        alt: speciesImage.alt.en,
+      });
+    }
+  }
+
+  if (itemsToUpload.length === 0) return;
+
+  const uploadedMedia = [];
+  for (const item of itemsToUpload) {
+    const source = await uploadLocalImage(item.path);
+    uploadedMedia.push({
+      mediaContentType: "IMAGE",
+      originalSource: source,
+      alt: item.alt,
+    });
+  }
+
   const data = await client.request(`#graphql
     mutation AddManagedProductMedia($product: ProductUpdateInput!, $media: [CreateMediaInput!]) {
       productUpdate(product: $product, media: $media) {
-        product { id handle }
+        product {
+          id
+          handle
+          media(first: 50) {
+            nodes {
+              id
+              alt
+              mediaContentType
+              ... on MediaImage { image { url } }
+            }
+          }
+        }
         userErrors { field message }
       }
     }
   `, {
     product: { id: current.id },
-    media: [{ mediaContentType: "IMAGE", originalSource: source, alt: product.image.alt.en }],
+    media: uploadedMedia,
   });
-  mutationPayload(data, "productUpdate", `${product.handle}:media`);
+  const updatedProduct = mutationPayload(data, "productUpdate", `${product.handle}:media`).product;
+  if (updatedProduct?.media?.nodes) {
+    current.media = updatedProduct.media;
+  }
 }
 
 export async function upsertCollection(client, collection, baseLocale, current, productIds) {

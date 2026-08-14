@@ -71,11 +71,6 @@ async function applyDefinitions(client, manifest, registry, plan, write) {
     }
     const desired = { ...definition, referenceDefinitionId };
     const current = registry.metafieldDefinitions.get(`${definition.namespace}.${definition.key}`);
-    if (current && current.type.name !== definition.type) {
-      throw new Error(
-        `Cannot change type of existing ${definition.namespace}.${definition.key} from ${current.type.name} to ${definition.type}.`,
-      );
-    }
     const result = await upsertMetafieldDefinition(client, desired, current);
     registry.metafieldDefinitions.set(`${definition.namespace}.${definition.key}`, {
       ...current,
@@ -129,6 +124,7 @@ async function applyProductContent(client, manifest, registry, plan, uploadLocal
     const key = `product-content:${product.handle}`;
     if (!keys.has(key)) continue;
     write(`Applying ${key}\n`);
+    await addProductMedia(client, product, registry, uploadLocalImage);
     const metafields = await setProductMetafields(client, product, registry.baseLocale, {
       products: registry.products,
       metaobjects: registry.metaobjects,
@@ -137,7 +133,6 @@ async function applyProductContent(client, manifest, registry, plan, uploadLocal
     if (metafields.length > 0) {
       mergeProduct(registry, product.handle, { metafields: { nodes: metafields } });
     }
-    await addProductMedia(client, product, registry, uploadLocalImage);
   }
 }
 

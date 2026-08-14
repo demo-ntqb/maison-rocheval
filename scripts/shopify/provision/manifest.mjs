@@ -233,7 +233,7 @@ export const SHOPIFY_PROVISIONING_MANIFEST = Object.freeze({
     { namespace: "rocheval", key: "short_description", name: "Short description", description: "Short summary for product cards and previews", type: "multi_line_text_field", pin: true },
     { namespace: "rocheval", key: "collection_line", name: "Collection line", description: "Collection line classification (e.g. Prestige, Signature, Assemblage)", type: "single_line_text_field", pin: true },
     { namespace: "rocheval", key: "species_scientific_name", name: "Species scientific name", description: "Latin/scientific species name (e.g. Acipenser gueldenstaedtii)", type: "single_line_text_field", pin: true },
-    { namespace: "rocheval", key: "species_description", name: "Species description", description: "Detailed background story and characteristics of the sturgeon species", type: "multi_line_text_field", pin: true },
+    { namespace: "rocheval", key: "species_description", name: "Species description", description: "Detailed background story and characteristics of the sturgeon species", type: "rich_text_field", pin: true },
     { namespace: "rocheval", key: "species_image", name: "Species image", description: "Illustration image of the sturgeon species", type: "file_reference", pin: true },
     { namespace: "rocheval", key: "pearl_size", name: "Pearl size", description: "Size of caviar pearls (e.g. 2.8 - 3.0mm)", type: "single_line_text_field", pin: true },
     { namespace: "rocheval", key: "pearl_colour", name: "Pearl colour", description: "Colour nuances of the caviar pearls", type: "single_line_text_field", pin: true },
