@@ -1,0 +1,26 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": [
+    "src/app/**/*.{ts,tsx}",
+    "scripts/**/*.{js,mjs,ts}",
+    "tests/**/*.{js,mjs,ts,tsx}"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx}",
+    "scripts/**/*.{js,mjs,ts}",
+    "tests/**/*.{js,mjs,ts,tsx}"
+  ],
+  "ignore": [
+    "src/shared/components/ui/**"
+  ],
+  "ignoreDependencies": [
+    "@next/env",
+    "tailwindcss",
+    "sharp",
+    "shadcn"
+  ],
+  "ignoreExportsUsedInFile": {
+    "interface": true,
+    "type": true
+  }
+}
