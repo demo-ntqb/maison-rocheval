@@ -1,4 +1,3 @@
-import * as React from "react";
 import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
@@ -7,7 +6,7 @@ export async function AboutSelectionSection() {
   const t = await getTranslations("aboutBrand.selection");
 
   return (
-    <section data-plumb-id="frame-2085667080" aria-labelledby="about-brand-selection-title" className="flex min-h-[1392px] flex-col items-center justify-center bg-canvas py-24 lg:py-[200px]">
+    <section data-plumb-id="frame-2085667080" aria-labelledby="about-brand-selection-title" className="flex flex-col items-center justify-center bg-canvas py-24 lg:py-[200px]">
       <div className="mx-auto w-full max-w-[1000px] px-6 md:px-0">
         <div className="mx-auto max-w-[760px] text-center">
           <h2 data-plumb-id="lorem-ipsum-dolor-10" id="about-brand-selection-title" className="font-display text-[32px] leading-none">{t("title")}</h2>

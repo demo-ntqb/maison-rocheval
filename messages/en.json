@@ -402,11 +402,14 @@
       "description": "From careful consideration to salting, every gesture protects the grain and preserves the character of the harvest.",
       "consideration": {
         "title": "Careful consideration",
+        "subtitle": "Purity, no additives",
         "description": "Each harvest is read as a whole. Colour, firmness, moisture, aroma and finish must align before the Maison makes its selection.",
-        "imageAlt": "Specialist gently handling fresh caviar during selection"
+        "imageAlt": "Specialist gently handling fresh caviar during selection",
+        "illustrationAlt": "Sturgeon watercolor illustration"
       },
       "salting": {
         "title": "Salting process",
+        "subtitle": "Significant lower salting",
         "description": "Salt is applied with restraint. Enough to reveal depth and preserve the grain, never enough to conceal the caviar’s natural expression.",
         "imageAlt": "Fresh caviar pearls being combined with salt"
       }

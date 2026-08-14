@@ -402,11 +402,14 @@
       "description": "De la sélection au salage, chaque geste protège le grain et préserve le caractère de la récolte.",
       "consideration": {
         "title": "Une attention minutieuse",
+        "subtitle": "Pureté, sans additifs",
         "description": "Chaque récolte se lit comme un tout. Couleur, fermeté, humidité, arôme et finale doivent s’accorder.",
-        "imageAlt": "Spécialiste manipulant délicatement du caviar frais"
+        "imageAlt": "Spécialiste manipulant délicatement du caviar frais",
+        "illustrationAlt": "Illustration à l'aquarelle d'un esturgeon"
       },
       "salting": {
         "title": "Le salage",
+        "subtitle": "Taux de sel nettement inférieur",
         "description": "Le sel est appliqué avec retenue pour révéler la profondeur et préserver le grain sans masquer son expression naturelle.",
         "imageAlt": "Grains de caviar frais mélangés au sel"
       }

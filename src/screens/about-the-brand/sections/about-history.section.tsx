@@ -1,4 +1,3 @@
-import * as React from "react";
 import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
