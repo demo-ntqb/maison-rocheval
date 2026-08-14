@@ -2,19 +2,16 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/shared/components/composite/product-card";
-import { VARIETIES } from "@/shared/constants/shop.constant";
+import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 
 export interface ProductDetailRelatedSectionProps {
-  currentHandle: string;
+  products: CatalogProductCard[];
 }
 
 export async function ProductDetailRelatedSection({
-  currentHandle,
+  products,
 }: ProductDetailRelatedSectionProps) {
   const t = await getTranslations("productDetail.related");
-
-  // Get up to 3 products excluding current product
-  const relatedProducts = VARIETIES.filter((item) => item.handle !== currentHandle).slice(0, 3);
 
   return (
     <section className="flex w-full max-w-[1000px] flex-col items-center px-6 text-center lg:px-0">
@@ -23,7 +20,7 @@ export async function ProductDetailRelatedSection({
       </h2>
 
       <div className="mt-10 grid w-full gap-8 sm:grid-cols-2 md:grid-cols-3">
-        {relatedProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

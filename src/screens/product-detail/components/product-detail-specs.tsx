@@ -8,111 +8,55 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
-import type { DetailedProduct, ProductAccordionItem } from "../types/product-detail.type";
+import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
 
-export interface ProductDetailSpecsProps {
-  product: DetailedProduct;
-  items?: ProductAccordionItem[];
+function SpecRow({ label, value }: { label: string; value: string }) {
+  if (!value) return null;
+  return (
+    <div className="flex items-start justify-between gap-6 border-b border-line/60 pb-4 last:border-0">
+      <dt className="font-display text-xs font-bold uppercase">{label}</dt>
+      <dd className="max-w-[60%] text-right font-sans text-xs">{value}</dd>
+    </div>
+  );
 }
 
-export function ProductDetailSpecs({ product, items }: ProductDetailSpecsProps) {
-  const t = useTranslations("productDetail");
-
-  const fallbackItems: ProductAccordionItem[] = [
-    {
-      id: "specification",
-      title: t("specs.specificationTitle"),
-      content: `<p class="mb-6 text-sm leading-relaxed">${product.specsDescription}</p>
-<div class="flex flex-col gap-4">
-  <div class="flex items-center justify-between gap-4 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.pearlSize")}</span>
-    <span class="font-sans text-xs text-black">${product.specs.pearlSize}</span>
-  </div>
-  <div class="flex items-center justify-between gap-4 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.salt")}</span>
-    <span class="font-sans text-xs text-black">${product.specs.salt}</span>
-  </div>
-  <div class="flex items-center justify-between gap-4 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.color")}</span>
-    <span class="font-sans text-xs text-black">${product.specs.color}</span>
-  </div>
-  <div class="flex items-center justify-between gap-4 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.tastingNotes")}</span>
-    <span class="font-sans text-xs text-black">${product.specs.tastingNotes}</span>
-  </div>
-  <div class="flex flex-col gap-1 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.ingredients")}</span>
-    <span class="font-sans text-xs text-black">${product.specs.ingredients}</span>
-  </div>
-  <div class="flex flex-col gap-1">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.nutritionalData")}</span>
-    <span class="font-sans text-xs text-black">${product.specs.nutritionalData}</span>
-  </div>
-</div>`,
-    },
-    {
-      id: "serving",
-      title: t("specs.servingTitle"),
-      content: `<div class="flex flex-col gap-4">
-  <div class="flex flex-col gap-1 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.shelfLife")}</span>
-    <span class="font-sans text-xs text-black">${product.servingInfo.shelfLife}</span>
-  </div>
-  <div class="flex flex-col gap-1">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.recommendation")}</span>
-    <p class="whitespace-pre-line font-sans text-xs text-black">${product.servingInfo.recommendation}</p>
-  </div>
-</div>`,
-    },
-    {
-      id: "delivery",
-      title: t("specs.deliveryTitle"),
-      content: `<div class="flex flex-col gap-4">
-  <div class="flex flex-col gap-1 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.shipping")}</span>
-    <span class="font-sans text-xs text-black">${product.deliveryInfo.shipping}</span>
-  </div>
-  <div class="flex flex-col gap-1">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.deliveryTime")}</span>
-    <span class="font-sans text-xs text-black">${product.deliveryInfo.deliveryTime}</span>
-  </div>
-</div>`,
-    },
-    {
-      id: "gifting",
-      title: t("specs.giftingTitle"),
-      content: `<div class="flex flex-col gap-4">
-  <div class="flex flex-col gap-1 pb-4">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.giftWrapping")}</span>
-    <span class="font-sans text-xs text-black">${product.giftingInfo.wrapping}</span>
-  </div>
-  <div class="flex flex-col gap-1">
-    <span class="font-display text-xs font-bold uppercase text-black">${t("specs.messageCard")}</span>
-    <span class="font-sans text-xs text-black">${product.giftingInfo.message}</span>
-  </div>
-</div>`,
-    },
-  ];
-
-  const accordionList = items ?? product.accordionItems ?? fallbackItems;
-  const defaultValues = accordionList.length > 0 ? [accordionList[0].id] : ["specification"];
+export function ProductDetailSpecs({ product }: { product: CatalogProductDetail }) {
+  const t = useTranslations("productDetail.specs");
 
   return (
     <div className="ml-auto w-full max-w-[500px]">
-      <Accordion type="multiple" defaultValue={defaultValues} className="w-full gap-4">
-        {accordionList.map((item) => (
-          <AccordionItem key={item.id} value={item.id}>
-            <AccordionTrigger className="font-display text-base font-bold uppercase tracking-wider text-black pt-0 pb-4">
-              {item.title}
-            </AccordionTrigger>
-            <AccordionContent className="font-sans text-sm leading-relaxed text-black py-4">
-              <div
-                className="rich-text-content space-y-4 text-sm leading-relaxed text-black [&_a]:underline [&_a]:hover:text-black/70 [&_strong]:font-semibold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
-                dangerouslySetInnerHTML={{ __html: item.content }}
-              />
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+      <Accordion type="multiple" defaultValue={["specification"]} className="w-full gap-4">
+        <AccordionItem value="specification">
+          <AccordionTrigger className="pb-4 pt-0 font-display text-base font-bold uppercase tracking-wider">
+            {t("specificationTitle")}
+          </AccordionTrigger>
+          <AccordionContent className="space-y-6 py-4">
+            {product.specsDescription ? (
+              <p className="font-sans text-sm leading-relaxed">{product.specsDescription}</p>
+            ) : null}
+            <dl className="flex flex-col gap-4">
+              <SpecRow label={t("pearlSize")} value={product.specs.pearlSize} />
+              <SpecRow label={t("salt")} value={product.specs.salt} />
+              <SpecRow label={t("color")} value={product.specs.color} />
+              <SpecRow label={t("tastingNotes")} value={product.specs.tastingNotes} />
+              <SpecRow label={t("ingredients")} value={product.specs.ingredients} />
+              <SpecRow label={t("nutritionalData")} value={product.specs.nutritionalData} />
+            </dl>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="serving">
+          <AccordionTrigger className="pb-4 pt-0 font-display text-base font-bold uppercase tracking-wider">
+            {t("servingTitle")}
+          </AccordionTrigger>
+          <AccordionContent className="py-4">
+            <dl className="flex flex-col gap-4">
+              <SpecRow label={t("shelfLife")} value={product.shelfLife} />
+              <SpecRow label={t("storage")} value={product.storage} />
+              <SpecRow label={t("recommendation")} value={product.serving} />
+            </dl>
+          </AccordionContent>
+        </AccordionItem>
       </Accordion>
     </div>
   );

@@ -5,14 +5,13 @@ import { Link } from "@/i18n/navigation";
 import { ProductDetailImageGallery } from "../components/product-detail-image-gallery";
 import { ProductDetailInfo } from "../components/product-detail-info";
 import { ProductDetailSpecs } from "../components/product-detail-specs";
-import { getProductDetail } from "../constants/product-detail.constant";
+import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
 
 export interface ProductDetailHeroSectionProps {
-  handle: string;
+  product: CatalogProductDetail;
 }
 
-export async function ProductDetailHeroSection({ handle }: ProductDetailHeroSectionProps) {
-  const product = getProductDetail(handle);
+export async function ProductDetailHeroSection({ product }: ProductDetailHeroSectionProps) {
   const messages = (await getMessages()) as Record<string, unknown>;
 
   return (
@@ -36,7 +35,6 @@ export async function ProductDetailHeroSection({ handle }: ProductDetailHeroSect
           <ProductDetailImageGallery
             images={product.galleryImages}
             title={product.title}
-            bestSeller={product.bestSeller}
           />
 
           {/* Right Column: Product Info & Configurator */}

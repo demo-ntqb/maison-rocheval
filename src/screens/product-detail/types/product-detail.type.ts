@@ -1,53 +1,46 @@
-import type { Product } from "@/shared/components/composite/product-card";
+import type {
+  CatalogPackagingOption,
+  CatalogVariant,
+} from "@/shared/lib/shopify/catalog-mapper";
 
-export interface PackagingOption {
-  id: string;
-  name: string;
-  description?: string;
-  priceModifier: number;
-}
+export type ProductPerBoxOption = 1 | 2 | 3 | 4;
 
-export interface SpecRow {
-  label: string;
-  value: string;
-}
+export type ProductSelection = Readonly<{
+  packagingId: string;
+  perBox: ProductPerBoxOption;
+  quantity: number;
+  size: string;
+}>;
 
-export interface ProductSpecs {
-  pearlSize: string;
-  salt: string;
-  color: string;
-  tastingNotes: string;
-  ingredients: string;
-  nutritionalData: string;
-}
+export type ProductSelectionAction =
+  | { packagingId: string; type: "select-packaging" }
+  | { perBox: ProductPerBoxOption; type: "select-per-box" }
+  | { quantity: number; type: "set-quantity" }
+  | { size: string; type: "select-size" };
 
-export interface ProductAccordionItem {
-  id: string;
-  title: string;
-  content: string;
-}
+export type ProductSelectionView = Readonly<{
+  activePackaging: CatalogPackagingOption | undefined;
+  activeVariant: CatalogVariant | undefined;
+  currencyCode: string;
+  totalPrice: number;
+}>;
 
-export interface DetailedProduct extends Product {
-  price: number;
-  bestSeller?: boolean;
-  galleryImages: string[];
-  sizes: string[];
-  packagingOptions: PackagingOption[];
-  perBoxOptions: number[];
-  specsDescription: string;
-  specs: ProductSpecs;
-  servingInfo: {
-    shelfLife: string;
-    recommendation: string;
-  };
-  deliveryInfo: {
-    shipping: string;
-    deliveryTime: string;
-  };
-  giftingInfo: {
-    wrapping: string;
-    message: string;
-  };
-  accordionItems?: ProductAccordionItem[];
-}
+export type ProductDetailTranslationKey =
+  | "addToCart"
+  | "boxOf"
+  | "decreaseQty"
+  | "deliveryNote"
+  | "free"
+  | "increaseQty"
+  | "packagingLabel"
+  | "perBoxFormat"
+  | "perBoxLabel"
+  | "personalizedMessage"
+  | "sizeLabel"
+  | "summaryLabel"
+  | "unavailable";
 
+export type ProductDetailTranslator = (
+  key: ProductDetailTranslationKey,
+  values?: Record<string, number | string>,
+) => string;
