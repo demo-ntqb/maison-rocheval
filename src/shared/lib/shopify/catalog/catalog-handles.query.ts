@@ -1,0 +1,12 @@
+export const CATALOG_HANDLES_QUERY = `#graphql
+  query CatalogHandles(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    collection(handle: "our-caviar") {
+      products(first: 50) {
+        nodes { handle }
+      }
+    }
+  }
+` as const;

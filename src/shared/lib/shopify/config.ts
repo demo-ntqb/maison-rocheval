@@ -1,5 +1,9 @@
-import type { I18nBase } from "@shopify/hydrogen";
 import { routing } from "@/i18n/routing";
+
+type I18nBase = {
+  country: "FR";
+  language: "EN" | "FR";
+};
 
 export type StorefrontLocale = (typeof routing.locales)[number];
 
