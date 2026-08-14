@@ -37,6 +37,11 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
         { namespace: "rocheval", key: "storage" }
         { namespace: "rocheval", key: "serving" }
         { namespace: "rocheval", key: "shelf_life" }
+        { namespace: "rocheval", key: "shipping" }
+        { namespace: "rocheval", key: "duration" }
+        { namespace: "rocheval", key: "box" }
+        { namespace: "rocheval", key: "message" }
+        { namespace: "rocheval", key: "add_ons" }
         { namespace: "rocheval", key: "related_products" }
       ]) {
         key

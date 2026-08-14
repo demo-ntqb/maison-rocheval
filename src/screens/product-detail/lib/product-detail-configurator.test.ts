@@ -10,10 +10,19 @@ import {
 
 const product: CatalogProductDetail = {
   availableForSale: true,
+  delivery: {
+    duration: "Overnight delivery",
+    shipping: "FedEx Priority Overnight",
+  },
   description: "Kaluga description",
   descriptionHtml: "<p>Kaluga description</p>",
   eyebrow: "Patrimoine",
   galleryImages: [],
+  gifting: {
+    addOns: "Mother of pearl spoon",
+    box: "Bolduc ribbon box",
+    message: "Personalized card",
+  },
   handle: "kaluga",
   id: "gid://shopify/Product/kaluga",
   image: null,

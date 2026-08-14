@@ -125,16 +125,25 @@ export function mapProductDetail(
   const fields = metafieldsByKey(product);
   return {
     ...profile,
+    delivery: {
+      duration: fields.get("duration")?.value || "",
+      shipping: fields.get("shipping")?.value || "",
+    },
     descriptionHtml: product.descriptionHtml,
+    gifting: {
+      addOns: fields.get("add_ons")?.value || "",
+      box: fields.get("box")?.value || "",
+      message: fields.get("message")?.value || "",
+    },
     packagingOptions: mapPackagingOptions(presentationOptions, presentationBox),
     relatedProducts: mapCollectionProducts(fields.get("related_products")?.references?.nodes ?? []),
     specs: {
       ...profile.specs,
       ingredients: fields.get("ingredients")?.value || "",
-      nutritionalData: richTextToPlainText(fields.get("nutrition")?.value),
+      nutritionalData: fields.get("nutrition")?.value || "",
     },
     specsDescription: profile.speciesDescription,
-    storage: richTextToPlainText(fields.get("storage")?.value),
+    storage: fields.get("storage")?.value || "",
     shelfLife: fields.get("shelf_life")?.value || "",
     variants: mapVariants(product),
   };

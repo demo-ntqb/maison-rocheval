@@ -1635,7 +1635,7 @@
   resolved "https://registry.yarnpkg.com/@shopify/graphql-client/-/graphql-client-1.4.1.tgz#794d9964bbacabc4a15573c0aaf7c56e7a9a3534"
   integrity sha512-/w4Uchx8ueI8gwmJd1ZbbIGndsjfMEFlzmay3P7rya5zj7K308xne/ggIvWDweueIut2qf1A8lI58xQl9Pu22w==
 
-"@shopify/hydrogen-react@2026.4.3":
+"@shopify/hydrogen-react@2026.4.3", "@shopify/hydrogen-react@^2026.4.3":
   version "2026.4.3"
   resolved "https://registry.yarnpkg.com/@shopify/hydrogen-react/-/hydrogen-react-2026.4.3.tgz#e79adb9fc8baf3c0c295ce9f33b10ac29c872dc3"
   integrity sha512-mUVgcj25Fq4rk7zXDjHzE+G5+IMc31fJDv229ENhoiy9MXOquCVXIHQiywF9mrzQ5Chl8bGjmRIS7D7pZHPjnA==

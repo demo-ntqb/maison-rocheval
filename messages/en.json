@@ -481,10 +481,12 @@
       "recommendation": "Serving Recommendation",
       "deliveryTitle": "Delivery Info",
       "shipping": "Shipping",
-      "deliveryTime": "Delivery Time",
+      "duration": "Duration",
       "giftingTitle": "Gifting",
-      "giftWrapping": "Gift Wrapping",
-      "messageCard": "Personal Message"
+      "box": "Box",
+      "message": "Message",
+      "addOns": "Add Ons",
+      "customerService": "Customer Service"
     },
     "assistance": {
       "title": "Require more assistance?",

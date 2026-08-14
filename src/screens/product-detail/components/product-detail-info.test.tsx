@@ -33,10 +33,19 @@ vi.mock("next-intl", () => ({
 const money = (amount: string) => ({ amount, currencyCode: "EUR" });
 const product = {
   availableForSale: true,
+  delivery: {
+    duration: "Overnight delivery",
+    shipping: "FedEx Priority Overnight",
+  },
   description: "Large pearls",
   descriptionHtml: "<p>Large pearls</p>",
   eyebrow: "Patrimoine",
   galleryImages: [],
+  gifting: {
+    addOns: "Mother of pearl spoon",
+    box: "Bolduc ribbon box",
+    message: "Personalized card",
+  },
   handle: "kaluga",
   id: "kaluga",
   image: null,

@@ -475,16 +475,18 @@
       "tastingNotes": "Notes de dégustation",
       "ingredients": "Ingrédients",
       "nutritionalData": "Valeurs nutritionnelles pour 100g",
-      "servingTitle": "Service & Dégustation",
+      "servingTitle": "Conseils de service",
       "shelfLife": "Conservation",
       "storage": "Stockage",
-      "recommendation": "Conseils de service",
+      "recommendation": "Conseils de dégustation",
       "deliveryTitle": "Livraison",
       "shipping": "Expédition",
-      "deliveryTime": "Délai de livraison",
+      "duration": "Délai",
       "giftingTitle": "Offrir",
-      "giftWrapping": "Emballage cadeau",
-      "messageCard": "Message personnalisé"
+      "box": "Coffret & Emballage",
+      "message": "Message",
+      "addOns": "Accessoires",
+      "customerService": "Service Client"
     },
     "assistance": {
       "title": "Besoin de conseils ?",

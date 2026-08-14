@@ -43,6 +43,8 @@ export function richTextToPlainText(value?: string): string {
   }
 }
 
+
+
 export function stripHtml(value: string): string {
   return value.replace(/<[^>]*>/gu, " ").replace(/\s+/gu, " ").trim();
 }

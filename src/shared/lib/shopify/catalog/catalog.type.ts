@@ -54,7 +54,16 @@ export type CatalogPackagingOption = {
 };
 
 export type CatalogProductDetail = CatalogProductProfile & {
+  delivery: {
+    duration: string;
+    shipping: string;
+  };
   descriptionHtml: string;
+  gifting: {
+    addOns: string;
+    box: string;
+    message: string;
+  };
   packagingOptions: CatalogPackagingOption[];
   relatedProducts: CatalogProductCard[];
   specs: CatalogProductProfile["specs"] & {
