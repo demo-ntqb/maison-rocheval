@@ -12,6 +12,7 @@
     "test:unit": "vitest run",
     "test:cicd": "node --test tests/bdd/products-listing-figma.test.mjs tests/bdd/vercel-github-actions-cicd.test.mjs tests/bdd/shopify-catalog-provisioning.test.mjs tests/bdd/shopify-headless-catalog.test.mjs tests/unit/image-sources.test.mjs tests/unit/products-catalog.test.mjs tests/unit/shopify-headless-catalog.test.mjs tests/unit/shopify-provisioning.test.mjs tests/unit/remove-caviar-species-migration.test.mjs && vitest run",
     "test:provisioning": "node --test tests/unit/shopify-provisioning.test.mjs tests/unit/remove-caviar-species-migration.test.mjs tests/bdd/shopify-catalog-provisioning.test.mjs",
+    "cache:purge": "node scripts/revalidate-cache.mjs",
     "shopify:check": "node scripts/check-shopify-connection.mjs",
     "shopify:provision:plan": "node scripts/shopify/provision/index.mjs plan",
     "shopify:provision:apply": "node scripts/shopify/provision/index.mjs apply",
