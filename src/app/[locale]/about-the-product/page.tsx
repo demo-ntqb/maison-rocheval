@@ -21,7 +21,7 @@ export default async function AboutPage({
       <AboutHeroSection />
       <AboutHistorySection />
       <AboutCultivationSection />
-      <AboutUnderstandSection />
+      <AboutUnderstandSection locale={locale} />
       <AboutSelectionSection />
       <AboutFaqSection />
     </div>
