@@ -94,17 +94,31 @@ export async function getProductDetail(
   return mapProductDetail(result.product, result.presentationOptions.nodes, result.presentationBox);
 }
 
+const DEFAULT_CATALOG_HANDLES = [
+  "amour",
+  "kaluga",
+  "russian-hybrid",
+  "lexpression",
+  "harmonie",
+];
+
 export async function getCatalogHandles(): Promise<string[]> {
   "use cache";
   cacheLife("hours");
   cacheTag("shopify-products", "shopify-collections", "shopify-collection-our-caviar");
   const locale = "en";
   const market = getShopifyMarket(locale);
-  const result = await getCatalogStorefrontClient(locale).query<CatalogHandlesQuery>(
-    CATALOG_HANDLES_QUERY,
-    { variables: { country: market.country, language: market.language } },
-  );
-  assertSuccessful(result, "CatalogHandles");
-  const handles = result.collection?.products.nodes.map(({ handle }) => handle) ?? [];
-  return handles.length > 0 ? handles : ["amour", "kaluga", "russian-hybrid", "lexpression", "harmonie"];
+  try {
+    const result = await getCatalogStorefrontClient(locale).query<CatalogHandlesQuery>(
+      CATALOG_HANDLES_QUERY,
+      { variables: { country: market.country, language: market.language } },
+    );
+    assertSuccessful(result, "CatalogHandles");
+    const handles = result.collection?.products.nodes.map(({ handle }) => handle) ?? [];
+    return handles.length > 0 ? handles : DEFAULT_CATALOG_HANDLES;
+  } catch (error) {
+    console.warn("[shopify] Failed to fetch catalog handles, using fallback:", error);
+    return DEFAULT_CATALOG_HANDLES;
+  }
 }
+
