@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
+import { cn } from "@/shared/lib/utils";
 import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
 
 function SpecRow({ label, value }: { label: string; value?: string }) {
@@ -40,43 +41,59 @@ function isRichTextAst(data?: string): boolean {
   }
 }
 
+function isHtml(data: string): boolean {
+  return /<[a-z][\s\S]*>/i.test(data);
+}
+
 function SpecRichText({ data, className }: { data: string; className?: string }) {
   if (!data) return null;
-  if (!isRichTextAst(data)) {
-    return <span className={className || "whitespace-pre-line"}>{data}</span>;
+  if (isRichTextAst(data)) {
+    return (
+      <RichText
+        data={data}
+        as="div"
+        className={className}
+        components={{
+          link: ({ node }) => (
+            <Link
+              href={node.url}
+              className="text-palette-accent underline transition-opacity hover:opacity-80"
+            >
+              {node.children}
+            </Link>
+          ),
+          list: ({ node }) => <ul className="my-1 list-disc space-y-1 pl-4">{node.children}</ul>,
+          listItem: ({ node }) => <li className="leading-relaxed">{node.children}</li>,
+          paragraph: ({ node }) => <p className="mb-2 leading-relaxed">{node.children}</p>,
+          heading: ({ node }) => (
+            <p className="mb-2 leading-relaxed">
+              <strong className="font-medium text-black">{node.children}</strong>
+            </p>
+          ),
+          text: ({ node }) => {
+            let content: React.ReactNode = node.value;
+            if (node.bold) content = <strong className="font-medium text-black">{content}</strong>;
+            if (node.italic) content = <em className="italic">{content}</em>;
+            return content;
+          },
+        }}
+      />
+    );
   }
 
-  return (
-    <RichText
-      data={data}
-      as="div"
-      className={className}
-      components={{
-        link: ({ node }) => (
-          <Link
-            href={node.url}
-            className="text-palette-accent underline transition-opacity hover:opacity-80"
-          >
-            {node.children}
-          </Link>
-        ),
-        list: ({ node }) => <ul className="my-1 list-disc space-y-1 pl-4">{node.children}</ul>,
-        listItem: ({ node }) => <li className="leading-relaxed">{node.children}</li>,
-        paragraph: ({ node }) => <p className="mb-2 leading-relaxed">{node.children}</p>,
-        heading: ({ node }) => (
-          <p className="mb-2 leading-relaxed">
-            <strong className="font-medium text-black">{node.children}</strong>
-          </p>
-        ),
-        text: ({ node }) => {
-          let content: React.ReactNode = node.value;
-          if (node.bold) content = <strong className="font-medium text-black">{content}</strong>;
-          if (node.italic) content = <em className="italic">{content}</em>;
-          return content;
-        },
-      }}
-    />
-  );
+  if (isHtml(data)) {
+    return (
+      <div
+        className={cn(
+          "whitespace-normal leading-relaxed [&_p:not(:last-child)]:mb-2 [&_ul]:my-1 [&_ul]:list-disc [&_ul]:pl-4 [&_strong]:font-medium [&_strong]:text-black",
+          className,
+        )}
+        dangerouslySetInnerHTML={{ __html: data }}
+      />
+    );
+  }
+
+  return <span className={className}>{data}</span>;
 }
 
 function SpecBlock({
@@ -103,7 +120,7 @@ export function ProductDetailSpecs({ product }: { product: CatalogProductDetail 
   const t = useTranslations("productDetail.specs");
 
   const hasSpecification = Boolean(
-    product.description ||
+    product.descriptionHtml ||
     product.specs?.pearlSize ||
     product.specs?.salt ||
     product.specs?.color ||
@@ -146,9 +163,9 @@ export function ProductDetailSpecs({ product }: { product: CatalogProductDetail 
             {t("specificationTitle")}
           </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-6 py-4">
-            {product.description ? (
+            {product.descriptionHtml ? (
               <SpecRichText
-                data={product.description}
+                data={product.descriptionHtml}
                 className="font-sans text-xs leading-relaxed text-black/80"
               />
             ) : null}

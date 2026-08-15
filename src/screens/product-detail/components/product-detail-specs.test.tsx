@@ -147,7 +147,7 @@ describe("ProductDetailSpecs", () => {
   it("renders rich text AST in description", () => {
     const productWithRichSpecs: CatalogProductDetail = {
       ...mockProduct,
-      description: JSON.stringify({
+      descriptionHtml: JSON.stringify({
         children: [
           {
             children: [
