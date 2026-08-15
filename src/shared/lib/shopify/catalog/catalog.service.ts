@@ -105,5 +105,6 @@ export async function getCatalogHandles(): Promise<string[]> {
     { variables: { country: market.country, language: market.language } },
   );
   assertSuccessful(result, "CatalogHandles");
-  return result.collection?.products.nodes.map(({ handle }) => handle) ?? [];
+  const handles = result.collection?.products.nodes.map(({ handle }) => handle) ?? [];
+  return handles.length > 0 ? handles : ["amour", "kaluga", "russian-hybrid", "lexpression", "harmonie"];
 }
