@@ -60,6 +60,7 @@ const product = {
   shelfLife: "Four weeks",
   species: "Huso dauricus",
   speciesDescription: "Large pearls",
+  speciesImage: null,
   specs: { color: "Bronze", ingredients: "Roe, salt", nutritionalData: "254 kcal", pearlSize: "3.2mm", salt: "3.5%", tastingNotes: "Rich · Creamy" },
   specsDescription: "Large pearls",
   storage: "Keep refrigerated",

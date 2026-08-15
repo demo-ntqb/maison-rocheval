@@ -53,6 +53,7 @@ const product: CatalogProductDetail = {
   shelfLife: "Four weeks",
   species: "Huso dauricus",
   speciesDescription: "Large pearls",
+  speciesImage: null,
   specs: {
     color: "Bronze",
     ingredients: "Roe, salt",
