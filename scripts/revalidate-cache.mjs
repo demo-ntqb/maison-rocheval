@@ -28,17 +28,13 @@ const origin = (
   "http://localhost:3000"
 ).replace(/\/$/u, "");
 
+const DEFAULT_REVALIDATE_SECRET = "maison-rocheval-revalidate-secret";
+
 const secret =
   values.secret ||
   process.env.REVALIDATE_SECRET_TOKEN ||
-  process.env.SHOPIFY_ADMIN_CLIENT_SECRET;
-
-if (!secret) {
-  console.error(
-    "❌ Error: Missing secret. Set REVALIDATE_SECRET_TOKEN / SHOPIFY_ADMIN_CLIENT_SECRET or pass --secret=<token>",
-  );
-  process.exit(1);
-}
+  process.env.SHOPIFY_ADMIN_CLIENT_SECRET ||
+  DEFAULT_REVALIDATE_SECRET;
 
 const endpoint = `${origin}/api/revalidate`;
 

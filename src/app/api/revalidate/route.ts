@@ -7,6 +7,8 @@ const DEFAULT_ALL_TAGS = [
   "shopify-metaobjects",
 ];
 
+const DEFAULT_REVALIDATE_SECRET = "maison-rocheval-revalidate-secret";
+
 function isValidSecret(provided: string, expected: string): boolean {
   if (!provided || !expected) return false;
   const providedBuffer = Buffer.from(provided);
@@ -72,14 +74,7 @@ async function handleRevalidate(request: Request): Promise<Response> {
   const expectedSecret =
     process.env.REVALIDATE_SECRET_TOKEN?.trim() ||
     process.env.SHOPIFY_ADMIN_CLIENT_SECRET?.trim() ||
-    "";
-
-  if (!expectedSecret) {
-    return Response.json(
-      { error: "Server missing REVALIDATE_SECRET_TOKEN or SHOPIFY_ADMIN_CLIENT_SECRET" },
-      { status: 500 },
-    );
-  }
+    DEFAULT_REVALIDATE_SECRET;
 
   const url = new URL(request.url);
   const providedSecret = extractSecret(request, url.searchParams);
