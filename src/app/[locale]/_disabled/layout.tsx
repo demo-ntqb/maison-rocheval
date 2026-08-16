@@ -101,7 +101,7 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
         <NextIntlClientProvider messages={null}>
           <main id="main-content" className="w-full flex-1">{children}</main>
-          <Footer />
+          <Footer locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>
