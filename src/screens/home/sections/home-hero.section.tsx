@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
-import { MichelinRating } from "@/shared/components/ui/michelin-rating";
 import { Picture } from "@/shared/components/ui/picture";
 
 export async function HomeHeroSection() {
@@ -12,8 +11,7 @@ export async function HomeHeroSection() {
       aria-labelledby="home-title"
       data-slot="home-hero-section"
       data-plumb-id="frame-2085667109"
-      data-plumb-asset="085abeb6efd175dc24d63837b2ba7c11e815ccab"
-      className="relative -mt-20 flex h-screen w-full flex-col items-center justify-between overflow-hidden bg-ink"
+      className="relative -mt-20 flex h-[100dvh] w-full flex-col items-center justify-between overflow-hidden"
     >
       <div className="absolute inset-0">
         <Picture
@@ -21,36 +19,28 @@ export async function HomeHeroSection() {
           fallbackExtension="jpg"
           alt={t("imageAlt")}
           priority
-          width={2800}
-          height={1600}
+          width={1400}
+          height={800}
           sizes="100vw"
           pictureClassName="block size-full"
           className="size-full object-cover"
-          data-plumb-asset="085abeb6efd175dc24d63837b2ba7c11e815ccab"
+          data-plumb-asset="67cbdac6eacb88d9fe0feed8f11c819741458892"
         />
-        <div className="home-hero-overlay absolute inset-0" aria-hidden="true" />
       </div>
 
       <div
-        className="absolute inset-x-0 top-24 z-10 flex h-[254px] flex-col items-center justify-center"
-        data-plumb-id="frame"
+        className="absolute inset-x-0 top-[56px] lg:top-[96px] z-10 flex h-[200px] flex-col items-center justify-center"
+        data-plumb-id="frame-2085667110"
       >
         <h1 id="home-title" className="sr-only">
           {t("title")}
         </h1>
         <IconMaisonRochevalLogo
-          className="h-auto w-[min(317px,78vw)] text-canvas"
+          className="h-[100px] w-[211px] lg:h-[120px] lg:w-[253px]"
           aria-hidden="true"
           focusable="false"
           data-plumb-id="group-9"
         />
-      </div>
-
-      <div
-        className="absolute inset-x-0 bottom-0 z-10 flex h-[140px] items-end justify-center p-[54px]"
-        data-plumb-id="frame-2085667092"
-      >
-        <MichelinRating count={3} className="gap-[15.5px]" starClassName="h-8 w-[30px] text-canvas" data-plumb-id="frame-2085667021" />
       </div>
     </section>
   );

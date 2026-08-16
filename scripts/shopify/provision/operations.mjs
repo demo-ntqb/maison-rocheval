@@ -144,7 +144,7 @@ export async function upsertMetaobjectDefinition(client, definition, current) {
       mutation CreateMetaobjectDefinition($definition: MetaobjectDefinitionCreateInput!) {
         metaobjectDefinitionCreate(definition: $definition) {
           metaobjectDefinition { id type }
-          userErrors { field message code }
+          userErrors { field message }
         }
       }
     `, {
@@ -181,7 +181,7 @@ export async function upsertMetaobjectDefinition(client, definition, current) {
     mutation UpdateMetaobjectDefinition($id: ID!, $definition: MetaobjectDefinitionUpdateInput!) {
       metaobjectDefinitionUpdate(id: $id, definition: $definition) {
         metaobjectDefinition { id type }
-        userErrors { field message code }
+        userErrors { field message }
       }
     }
   `, {
@@ -202,7 +202,7 @@ export async function deleteMetafieldDefinition(client, id) {
     mutation DeleteMetafieldDefinition($id: ID!) {
       metafieldDefinitionDelete(id: $id, deleteAllAssociatedMetafields: true) {
         deletedDefinitionId
-        userErrors { field message code }
+        userErrors { field message }
       }
     }
   `, { id });
@@ -223,7 +223,7 @@ export async function upsertMetafieldDefinition(client, definition, current) {
       mutation CreateMetafieldDefinition($definition: MetafieldDefinitionInput!) {
         metafieldDefinitionCreate(definition: $definition) {
           createdDefinition { id namespace key pinnedPosition }
-          userErrors { field message code }
+          userErrors { field message }
         }
       }
     `, {
@@ -246,7 +246,7 @@ export async function upsertMetafieldDefinition(client, definition, current) {
     mutation UpdateMetafieldDefinition($definition: MetafieldDefinitionUpdateInput!) {
       metafieldDefinitionUpdate(definition: $definition) {
         updatedDefinition { id namespace key pinnedPosition }
-        userErrors { field message code }
+        userErrors { field message }
       }
     }
   `, {
@@ -271,7 +271,7 @@ export async function upsertMetafieldDefinition(client, definition, current) {
     mutation PinManagedMetafieldDefinition($identifier: MetafieldDefinitionIdentifierInput!) {
       metafieldDefinitionPin(identifier: $identifier) {
         pinnedDefinition { id namespace key pinnedPosition }
-        userErrors { field message code }
+        userErrors { field message }
       }
     }
   `, {
@@ -296,7 +296,7 @@ export async function upsertMetaobject(client, entry, baseLocale) {
     mutation UpsertManagedMetaobject($handle: MetaobjectHandleInput!, $metaobject: MetaobjectUpsertInput!) {
       metaobjectUpsert(handle: $handle, metaobject: $metaobject) {
         metaobject { id type handle }
-        userErrors { field message code }
+        userErrors { field message }
       }
     }
   `, {
@@ -324,7 +324,7 @@ export async function upsertProduct(client, product, baseLocale, current) {
       mutation UpdateManagedProduct($product: ProductUpdateInput!) {
         productUpdate(product: $product) {
           product { id handle }
-          userErrors { field message code }
+          userErrors { field message }
         }
       }
     `, {
@@ -340,7 +340,7 @@ export async function upsertProduct(client, product, baseLocale, current) {
     mutation CreateManagedProduct($identifier: ProductSetIdentifiers, $input: ProductSetInput!) {
       productSet(identifier: $identifier, input: $input, synchronous: true) {
         product { id handle }
-        userErrors { field message code }
+        userErrors { field message }
       }
     }
   `, {
@@ -472,7 +472,7 @@ export async function setProductMetafields(client, product, baseLocale, registry
     mutation SetManagedMetafields($metafields: [MetafieldsSetInput!]!) {
       metafieldsSet(metafields: $metafields) {
         metafields { id namespace key value type }
-        userErrors { field message code }
+        userErrors { field message }
       }
     }
   `, { metafields });

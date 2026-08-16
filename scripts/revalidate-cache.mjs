@@ -9,7 +9,15 @@
  *   node scripts/revalidate-cache.mjs --origin=https://maison-rocheval.com
  */
 
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+import nextEnv from "@next/env";
+
+const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const { loadEnvConfig } = nextEnv;
+loadEnvConfig(PROJECT_ROOT);
+
 
 const { values } = parseArgs({
   allowPositionals: false,

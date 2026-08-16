@@ -3,9 +3,38 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
 import { navigation } from "@/shared/constants/site.constant";
+import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 
-export async function Footer() {
-  const t = await getTranslations("footer");
+interface FooterProps {
+  locale: string;
+}
+
+export async function Footer({ locale }: FooterProps) {
+  const [t, products] = await Promise.all([
+    getTranslations({ locale, namespace: "footer" }),
+    getCollectionProducts(locale, "our-caviar").catch((err) => {
+      console.error("[Footer] Failed to fetch products from Shopify:", err);
+      return [];
+    }),
+  ]);
+
+  const plumbIds = ["patrimoine", "heritage", "reserve", "assemblage", "source"];
+
+  let caviarLinks = products.map((product, index) => ({
+    id: product.handle,
+    href: `/products/${product.handle}`,
+    title: product.title,
+    plumbId: plumbIds[index] || product.handle,
+  }));
+
+  if (caviarLinks.length === 0) {
+    caviarLinks = navigation.footer.caviar.slice(0, -1).map((link, index) => ({
+      id: link.id,
+      href: link.href,
+      title: t(`nav.${link.id}`),
+      plumbId: plumbIds[index] || link.id,
+    }));
+  }
 
   return (
     <footer className="flex w-full flex-col items-center gap-16 bg-warm px-4 py-24 text-ink sm:px-6 lg:px-0 lg:py-[100px]" data-plumb-id="component-6-2">
@@ -38,13 +67,18 @@ export async function Footer() {
                 <span data-plumb-id="caviar">{t("menu.caviar")}</span>
               </strong>
               <ul className="flex flex-col gap-1 font-sans text-sm leading-[18px] lg:gap-4" data-plumb-id="frame-2085667148-2">
-                {navigation.footer.caviar.map((link, index) => (
+                {caviarLinks.map((link) => (
                   <li key={link.id}>
                     <Link href={link.href} className="flex min-h-11 items-center transition-opacity hover:opacity-60 lg:min-h-0">
-                      <span data-plumb-id={["patrimoine", "heritage", "reserve", "assemblage", "source", "all-caviar"][index]}>{t(`nav.${link.id}`)}</span>
+                      <span data-plumb-id={link.plumbId}>{link.title}</span>
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <Link href="/products" className="flex min-h-11 items-center transition-opacity hover:opacity-60 lg:min-h-0">
+                    <span data-plumb-id="all-caviar">{t("nav.collection")}</span>
+                  </Link>
+                </li>
               </ul>
             </div>
 

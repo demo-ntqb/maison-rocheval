@@ -273,6 +273,6 @@ export const SHOPIFY_PROVISIONING_MANIFEST = Object.freeze({
   products,
   collections: [
     { handle: "our-caviar", products: ["amour", "kaluga", "russian-hybrid", "lexpression", "harmonie"], content: { en: { title: "Our Caviar", descriptionHtml: "<p>The Maison Rocheval caviar collection.</p>" }, fr: { title: "Nos caviars", descriptionHtml: "<p>La collection de caviars Maison Rocheval.</p>" } } },
-    { handle: "featured-caviar", products: ["amour", "lexpression", "harmonie"], content: { en: { title: "Featured Caviar", descriptionHtml: "<p>A selection presented by the Maison.</p>" }, fr: { title: "Caviars à l’honneur", descriptionHtml: "<p>Une sélection présentée par la Maison.</p>" } } },
+    { handle: "featured-caviar", products: ["amour", "kaluga", "russian-hybrid", "lexpression", "harmonie"], content: { en: { title: "Featured Caviar", descriptionHtml: "<p>A selection presented by the Maison.</p>" }, fr: { title: "Caviars à l’honneur", descriptionHtml: "<p>Une sélection présentée par la Maison.</p>" } } },
   ],
 });

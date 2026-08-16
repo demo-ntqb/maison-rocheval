@@ -19,9 +19,8 @@
   "header": {
     "nav": {
       "home": "Home",
-      "about": "Our brand",
-      "collection": "Our collection",
-      "shop": "Shop"
+      "about": "The Maison",
+      "collection": "The Collection"
     },
     "menuLabel": "Menu",
     "openMenu": "Open navigation menu",
@@ -47,8 +46,8 @@
       "harmonie": "Harmonie",
       "oscietra": "Oscietra",
       "kaluga": "Kaluga",
-      "collection": "Our collection",
-      "about": "About Maison Rocheval",
+      "collection": "The Collection",
+      "about": "The Maison",
       "faq": "FAQ",
       "contact": "Contact"
     }
@@ -158,28 +157,28 @@
     },
     "intro": {
       "title": "From Source to Ritual",
-      "description": "Forged at the water’s edge by master producers, Maison Rocheval unites decades of sturgeon heritage to select the definitive expression of caviar.",
+      "description": "From the waters that raise the sturgeon to the tables where caviar is served,\nevery decision shapes the final expression.",
       "tableImageAlt": "Maison Rocheval caviar tins arranged for a tasting ritual",
-      "storyTitle": "Before the Maison, there was the Source",
-      "storyDescription": "Maison Rocheval safeguards the knowledge of the harvest and a devotion to elevate every moment at the dining table.",
+      "storyTitle": "Before the Maison, there was the source",
+      "storyDescription": "Our foundations were formed at the water’s edge, alongside producers whose understanding of sturgeon husbandry runs decades deep.",
       "learnMore": "ABOUT MAISON ROCHEVAL",
       "chefsImageAlt": "Chefs plating a caviar course in the kitchen",
       "tastingImageAlt": "A caviar expert examining pearls in an open tin"
     },
     "about": {
-      "highlight": "QUALITY CAN NEVER BE RUSHED",
+      "highlight": "QUALITY IS DECIDED\nLONG BEFORE\nTHE HARVEST",
       "sturgeonImageAlt": "Sturgeon swimming in pristine dark water",
       "caviarImageAlt": "Close view of selected Maison Rocheval caviar pearls",
-      "title": "Selected at the Source",
-      "description": "Each harvest is judged on its own merit. The character of the caviar leads and the standard of the Maison never moves.",
-      "speciesTitle": "Five species, no two alike",
+      "title": "Selected at the source",
+      "description": "Each harvest is judged on its own merit. Character leads the selection and the standard of the Maison never moves.",
+      "speciesTitle": "Five expressions. One standard.",
       "speciesDescription": "Each expression is selected for its own character.",
       "explore": "THE COLLECTION"
     },
     "products": {
       "title": "Presented by the Maison",
-      "description": "From the quiet delicacy of Amour, to the depth of Kalauga, each species holds its own place in the collection.",
-      "shopNow": "SHOP NOW",
+      "description": "From the quiet delicacy of Amour to the depth of Kaluga,\neach expression is selected for a character of its own.",
+      "shopNow": "SHOP",
       "previous": "View previous caviar",
       "next": "View next caviar",
       "cards": {

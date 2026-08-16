@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useTranslations, useLocale } from "next-intl";
-import { Menu, ShoppingCart } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
@@ -65,26 +65,36 @@ export function Header({ initialVariant }: HeaderProps) {
     router.replace(pathname, { locale: nextLocale });
   };
 
+  const isHome = pathname === "/";
+
   // Xác định màu sắc và class động dựa trên variant và scroll state
   const isTransparentMode = resolvedVariant === "transparent" && !isScrolled;
 
-  const headerBgClass = isTransparentMode
-    ? "border-transparent bg-transparent"
-    : resolvedVariant === "transparent"
-    ? "border-b border-white/10 bg-black/90 backdrop-blur-md"
-    : "-mb-px border-b-[0.5px] border-gray-light bg-white shadow-sm";
+  // Xác định màu chữ chính và màu chữ hover
+  let textColorClass = "text-black";
+  let textMutedColorClass = "text-black hover:text-gray-dark";
 
-  const textColorClass = isTransparentMode || resolvedVariant === "transparent"
-    ? "text-white"
-    : "text-black";
+  if (resolvedVariant === "transparent") {
+    if (isHome) {
+      textColorClass = "text-black";
+      textMutedColorClass = "text-black hover:text-gray-dark";
+    } else {
+      textColorClass = "text-white";
+      textMutedColorClass = "text-white/80 hover:text-white";
+    }
+  }
 
-  const textMutedColorClass = isTransparentMode || resolvedVariant === "transparent"
-    ? "text-white/80 hover:text-white"
-    : "text-black hover:text-gray-dark";
+  // Xác định nền header
+  let headerBgClass = "-mb-px border-b-[0.5px] border-gray-light bg-white shadow-sm";
 
-  const textLabelMutedClass = isTransparentMode || resolvedVariant === "transparent"
-    ? "text-white/60"
-    : "text-black";
+  if (resolvedVariant === "transparent" && !isScrolled) {
+    headerBgClass = "border-transparent bg-transparent";
+  } else if (resolvedVariant === "transparent" && isScrolled) {
+    headerBgClass = isHome
+      ? "-mb-px border-b-[0.5px] border-gray-light bg-white shadow-sm"
+      : "border-b border-white/10 bg-black/90 backdrop-blur-md";
+  }
+
 
   return (
     <div className="sticky top-0 z-50 flex w-full flex-col">
@@ -161,43 +171,17 @@ export function Header({ initialVariant }: HeaderProps) {
 
             {/* Right Column: Actions (Desktop/Mobile) */}
             <div className="flex flex-1 items-center justify-end gap-1 sm:gap-4 lg:gap-8" data-plumb-id="frame-2085667020-2">
-              {/* Country Selector (Desktop) */}
-              <span
-                className={cn(
-                  "hidden min-h-11 items-center font-sans text-sm font-normal lg:inline-flex",
-                  textLabelMutedClass
-                )}
-              >
-                <span data-plumb-id="france-uer">France - UER €</span>
-              </span>
-
               {/* Language Switcher Button */}
               <button
                 onClick={toggleLanguage}
                 className={cn(
-                  "hidden min-h-12 items-center px-2 font-sans text-sm font-normal transition-colors sm:flex",
+                  "inline-flex min-h-12 items-center px-2 font-sans text-sm font-normal transition-colors",
                   textMutedColorClass
                 )}
                 aria-label={locale === "en" ? "FR / EN — Afficher le site en français" : "FR / EN — View the site in English"}
               >
                 <span data-plumb-id="fr-en">FR / EN</span>
               </button>
-
-              {/* Cart Button */}
-              <Link
-                href="/cart"
-                prefetch={false}
-                className={cn(
-                  "flex min-h-12 min-w-12 items-center justify-center gap-2 px-2 font-sans text-sm font-normal transition-colors",
-                  textMutedColorClass
-                )}
-                aria-label={t("cart")}
-              >
-                <span className="flex items-center gap-2" data-plumb-id="frame-2085667208">
-                  <ShoppingCart className="size-4" strokeWidth={1.25} aria-hidden="true" data-plumb-id="shoppingcartsimple" />
-                  <span className="hidden md:inline" data-plumb-id="cart">{t("cart")}</span>
-                </span>
-              </Link>
             </div>
           </div>
         </div>

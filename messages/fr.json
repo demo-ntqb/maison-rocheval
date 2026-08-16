@@ -19,9 +19,8 @@
   "header": {
     "nav": {
       "home": "Accueil",
-      "about": "À propos de Maison Rocheval",
-      "collection": "Notre Collection",
-      "shop": "Boutique"
+      "about": "La Maison",
+      "collection": "La Collection"
     },
     "menuLabel": "Menu",
     "openMenu": "Ouvrir le menu de navigation",
@@ -158,28 +157,28 @@
     },
     "intro": {
       "title": "De la Source au Rituel",
-      "description": "Façonnée au bord de l’eau par des producteurs experts, Maison Rocheval réunit des décennies de savoir-faire pour sélectionner l’expression ultime du caviar.",
+      "description": "Des eaux qui élèvent l’esturgeon aux tables où le caviar est servi,\nchaque décision façonne l’expression ultime.",
       "tableImageAlt": "Boîtes de caviar Maison Rocheval dressées pour un rituel de dégustation",
-      "storyTitle": "Avant la Maison, il y avait la Source",
-      "storyDescription": "Maison Rocheval préserve le savoir de la récolte et la volonté d’élever chaque instant autour de la table.",
+      "storyTitle": "Avant la Maison, il y avait la source",
+      "storyDescription": "Nos fondations se sont formées au bord de l’eau, auprès de producteurs dont la connaissance de l’élevage de l’esturgeon s’étend sur plusieurs décennies.",
       "learnMore": "DÉCOUVRIR MAISON ROCHEVAL",
       "chefsImageAlt": "Des chefs dressent un plat de caviar en cuisine",
       "tastingImageAlt": "Un expert examine les grains de caviar dans une boîte ouverte"
     },
     "about": {
-      "highlight": "LA QUALITÉ NE SE PRÉCIPITE JAMAIS",
+      "highlight": "LA QUALITÉ SE DÉCIDE\nBIEN AVANT\nLA RÉCOLTE",
       "sturgeonImageAlt": "Esturgeons nageant dans une eau sombre et pure",
       "caviarImageAlt": "Vue rapprochée des grains de caviar Maison Rocheval",
-      "title": "Sélectionné à la Source",
-      "description": "Chaque récolte est jugée selon sa propre valeur. Le caractère du caviar guide la sélection et l’exigence de la Maison demeure.",
-      "speciesTitle": "Cinq espèces, toutes singulières",
+      "title": "Sélectionné à la source",
+      "description": "Chaque récolte est jugée selon sa propre valeur. Le caractère guide la sélection et l’exigence de la Maison demeure.",
+      "speciesTitle": "Cinq expressions. Un standard.",
       "speciesDescription": "Chaque expression est choisie pour son caractère propre.",
       "explore": "LA COLLECTION"
     },
     "products": {
       "title": "Présenté par la Maison",
-      "description": "De la délicatesse d’Amour à la profondeur du Kalauga, chaque espèce occupe une place singulière dans la collection.",
-      "shopNow": "DÉCOUVRIR",
+      "description": "De la délicatesse d’Amour à la profondeur de Kaluga,\nchaque expression est choisie pour son caractère propre.",
+      "shopNow": "BOUTIQUE",
       "previous": "Voir le caviar précédent",
       "next": "Voir le caviar suivant",
       "cards": {

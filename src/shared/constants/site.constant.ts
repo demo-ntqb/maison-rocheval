@@ -37,7 +37,6 @@ export const navigation = {
   main: [
     { id: "about", href: "/about-the-brand" },
     { id: "collection", href: "/about-the-product" },
-    { id: "shop", href: "/products" },
   ],
   footer: {
     caviar: [

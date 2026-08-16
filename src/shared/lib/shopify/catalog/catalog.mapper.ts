@@ -1,19 +1,19 @@
 import {
-  mapImage,
-  metafieldsByKey,
-  metaobjectFields,
-  parseStringList,
-  stripHtml,
+    mapImage,
+    metafieldsByKey,
+    metaobjectFields,
+    parseStringList,
+    stripHtml,
 } from "./catalog-mapper.helper.ts";
 import type {
-  CatalogImage,
-  CatalogPackagingOption,
-  CatalogProductCard,
-  CatalogProductDetail,
-  CatalogProductProfile,
-  CatalogVariant,
-  StorefrontPresentationOption,
-  StorefrontProduct,
+    CatalogImage,
+    CatalogPackagingOption,
+    CatalogProductCard,
+    CatalogProductDetail,
+    CatalogProductProfile,
+    CatalogVariant,
+    StorefrontPresentationOption,
+    StorefrontProduct,
 } from "./catalog.type.ts";
 
 function mapProductCard(product: StorefrontProduct): CatalogProductCard {
