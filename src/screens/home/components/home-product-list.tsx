@@ -122,14 +122,14 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
 
       {/* Mobile buttons group (Bottom - hidden on desktop) */}
       <div
-        className="flex lg:hidden justify-center mt-12 gap-4 h-8 w-[80px]"
+        className="flex lg:hidden justify-center mt-12 gap-4 h-11 w-26"
         data-plumb-id="frame-2085667302"
       >
         <button
           onClick={scrollPrev}
           disabled={!prevBtnEnabled}
           className={cn(
-            "flex size-8 items-center justify-center rounded-[2px]",
+            "flex size-11 items-center justify-center rounded-[2px]",
             !prevBtnEnabled ? "opacity-30 cursor-not-allowed" : "cursor-pointer opacity-100 hover:opacity-80"
           )}
           data-plumb-id="icon-button"
@@ -141,7 +141,7 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
           onClick={scrollNext}
           disabled={!nextBtnEnabled}
           className={cn(
-            "flex size-8 items-center justify-center rounded-[2px]",
+            "flex size-11 items-center justify-center rounded-[2px]",
             !nextBtnEnabled ? "opacity-30 cursor-not-allowed" : "cursor-pointer opacity-100 hover:opacity-80"
           )}
           data-plumb-id="icon-button-2"

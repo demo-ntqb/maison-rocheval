@@ -7,6 +7,14 @@
     "products": {
       "title": "La Collection de Caviar",
       "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
+    },
+    "aboutBrand": {
+      "title": "La Maison",
+      "description": "Découvrez l'héritage, le savoir-faire et le rituel de la Maison Rocheval."
+    },
+    "aboutProduct": {
+      "title": "Savoir-Faire",
+      "description": "Découvrez l'élevage, la sélection et nos espèces d'esturgeons."
     }
   },
   "common": {
@@ -47,6 +55,7 @@
       "oscietra": "Oscietra",
       "kaluga": "Kaluga",
       "collection": "Notre Collection",
+      "shop":"Boutique",
       "about": "À propos de Maison Rocheval",
       "faq": "FAQ",
       "contact": "Contact"

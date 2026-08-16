@@ -7,6 +7,14 @@
     "products": {
       "title": "The Caviar Collection",
       "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
+    },
+    "aboutBrand": {
+      "title": "The Maison",
+      "description": "Discover the heritage, savoir-faire, and ritual of Maison Rocheval."
+    },
+    "aboutProduct": {
+      "title": "Savoir-Faire",
+      "description": "Learn about the cultivation, selection, and species of our sturgeons."
     }
   },
   "common": {
@@ -47,6 +55,7 @@
       "oscietra": "Oscietra",
       "kaluga": "Kaluga",
       "collection": "The Collection",
+      "shop":"Shop",
       "about": "The Maison",
       "faq": "FAQ",
       "contact": "Contact"

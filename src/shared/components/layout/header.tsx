@@ -67,9 +67,6 @@ export function Header({ initialVariant }: HeaderProps) {
 
   const isHome = pathname === "/";
 
-  // Xác định màu sắc và class động dựa trên variant và scroll state
-  const isTransparentMode = resolvedVariant === "transparent" && !isScrolled;
-
   // Xác định màu chữ chính và màu chữ hover
   let textColorClass = "text-black";
   let textMutedColorClass = "text-black hover:text-gray-dark";

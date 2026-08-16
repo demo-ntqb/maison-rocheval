@@ -45,11 +45,11 @@ export const navigation = {
       { id: "harmonie", href: "/products/harmonie" },
       { id: "oscietra", href: "/products/oscietra" },
       { id: "kaluga", href: "/products/kaluga" },
-      { id: "collection", href: "/products" },
     ],
     brand: [
       { id: "about", href: "/about-the-brand" },
       { id: "collection", href: "/about-the-product" },
+      { id: "shop", href: "/products" },
     ],
     care: [
       { id: "faq", href: "/faq" },

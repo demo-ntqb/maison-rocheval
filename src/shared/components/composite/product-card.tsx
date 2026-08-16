@@ -11,7 +11,7 @@ export interface ProductCardProps extends React.ComponentProps<"article"> {
   size?: "sm" | "md";
 }
 
-export function ProductCard({ product, priority = false, size: _size = "md", className, ...props }: ProductCardProps) {
+export function ProductCard({ product, priority = false, className, ...props }: ProductCardProps) {
   return (
     <article
       className={cn(

@@ -36,6 +36,7 @@ export async function HomeIntroSection() {
             width={1000}
             height={700}
             sizes="(max-width: 1023px) calc(100vw - 32px), 1000px"
+            responsiveWidths={[640, 1000]}
             pictureClassName="block w-full overflow-hidden rounded-brand"
             className="aspect-[40/60] lg:aspect-[10/7] h-[600px] lg:h-[700px] w-full rounded-brand object-cover"
             data-plumb-id="rectangle-4878"
