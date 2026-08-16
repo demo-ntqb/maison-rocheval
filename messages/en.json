@@ -15,6 +15,10 @@
     "aboutProduct": {
       "title": "Savoir-Faire",
       "description": "Learn about the cultivation, selection, and species of our sturgeons."
+    },
+    "comingSoon": {
+      "title": "Maison Rocheval — Coming Soon",
+      "description": "Maison Rocheval, a premium French caviar house, is launching soon. Stay tuned."
     }
   },
   "common": {
@@ -508,6 +512,13 @@
     "related": {
       "title": "You may also like",
       "cta": "Go to shop"
+    }
+  },
+  "comingSoon": {
+    "hero": {
+      "brand": "Maison Rocheval Paris",
+      "message": "Coming soon",
+      "imageAlt": "Aerial view of a sturgeon farm, its circular rearing pens set on a lake below forested mountains"
     }
   }
 }

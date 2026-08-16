@@ -15,6 +15,10 @@
     "aboutProduct": {
       "title": "Savoir-Faire",
       "description": "Découvrez l'élevage, la sélection et nos espèces d'esturgeons."
+    },
+    "comingSoon": {
+      "title": "Maison Rocheval — Bientôt disponible",
+      "description": "Maison Rocheval, une maison de caviar français haut de gamme, ouvre bientôt. Restez à l'écoute."
     }
   },
   "common": {
@@ -508,6 +512,13 @@
     "related": {
       "title": "Vous aimerez aussi",
       "cta": "Découvrir la boutique"
+    }
+  },
+  "comingSoon": {
+    "hero": {
+      "brand": "Maison Rocheval Paris",
+      "message": "Bientôt disponible",
+      "imageAlt": "Vue aérienne d'une ferme d'esturgeons, ses bassins circulaires posés sur un lac au pied de montagnes boisées"
     }
   }
 }
