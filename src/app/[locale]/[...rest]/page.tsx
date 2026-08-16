@@ -10,6 +10,20 @@ import { generatePageMetadata } from "@/shared/lib/metadata";
  * can't tell which layout applies and falls back to its own bare default 404
  * instead of `not-found.tsx` — see node_modules/next/dist/docs/.../not-found.md.
  */
+
+/**
+ * With Cache Components, a catch-all with no static params of its own builds
+ * as an unresolved PPR fallback shell whose output path doesn't match the
+ * per-locale path recorded in the prerender manifest, which breaks Vercel's
+ * output tracing. A placeholder param avoids the fallback shell entirely —
+ * see node_modules/next/dist/docs/.../generate-static-params.md ("With Cache
+ * Components"). Any other path still resolves fine since the page always
+ * calls notFound() regardless of `rest`.
+ */
+export function generateStaticParams() {
+  return [{ rest: ["__placeholder__"] }];
+}
+
 export async function generateMetadata({
   params,
 }: {
