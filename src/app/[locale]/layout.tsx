@@ -1,7 +1,7 @@
 import { routing } from "@/i18n/routing";
 import { generateRootMetadata } from "@/shared/lib/metadata";
 import type { Metadata } from "next";
-import { hasLocale } from "next-intl";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
@@ -99,7 +99,7 @@ export default async function LocaleLayout({
           <Footer locale={locale} />
         </NextIntlClientProvider> */}
         <main id="main-content" className="w-full flex-1">
-          {children}
+          <NextIntlClientProvider messages={null}>{children}</NextIntlClientProvider>
         </main>
       </body>
     </html>

@@ -19,6 +19,10 @@
     "comingSoon": {
       "title": "Maison Rocheval — Coming Soon",
       "description": "Maison Rocheval, a premium French caviar house, is launching soon. Stay tuned."
+    },
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "The page you're looking for doesn't exist or has moved."
     }
   },
   "common": {
@@ -519,6 +523,15 @@
       "brand": "Maison Rocheval Paris",
       "message": "Coming soon",
       "imageAlt": "Aerial view of a sturgeon farm, its circular rearing pens set on a lake below forested mountains"
+    }
+  },
+  "notFound": {
+    "hero": {
+      "brand": "Maison Rocheval Paris",
+      "eyebrow": "404",
+      "heading": "Page not found",
+      "description": "The page you're looking for doesn't exist",
+      "cta": "Back to home"
     }
   }
 }

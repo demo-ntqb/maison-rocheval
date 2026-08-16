@@ -2,8 +2,21 @@ import type { ComponentPropsWithoutRef } from "react";
 
 import { buildPictureSources } from "@/shared/lib/image";
 
+/**
+ * A breakpoint-gated image swap (not just a resolution swap) — e.g. a
+ * completely different crop or photo on desktop vs. mobile. Rendered as
+ * `<source media>` entries ahead of the base `basePath` sources, so the
+ * base acts as the fallback for whichever media query doesn't match.
+ */
+interface ArtDirectedSource {
+  basePath: string;
+  fallbackExtension?: "jpg" | "jpeg" | "png";
+  media: string;
+}
+
 interface PictureProps
   extends Omit<ComponentPropsWithoutRef<"img">, "height" | "loading" | "src" | "width"> {
+  artDirected?: ArtDirectedSource[];
   basePath: string;
   fallbackExtension: "jpg" | "jpeg" | "png";
   height: number;
@@ -15,6 +28,7 @@ interface PictureProps
 
 export function Picture({
   alt,
+  artDirected,
   basePath,
   fallbackExtension,
   height,
@@ -26,24 +40,32 @@ export function Picture({
   ...imageProps
 }: PictureProps) {
   const sources = buildPictureSources(basePath, fallbackExtension);
-  const buildSrcSet = (extension: string, fallbackPath: string) => {
+  const buildSrcSet = (sourceBasePath: string, extension: string, fallbackPath: string) => {
     if (!responsiveWidths?.length) {
       return fallbackPath;
     }
 
     return [
-      ...responsiveWidths.map((responsiveWidth) => `${basePath}-${responsiveWidth}.${extension} ${responsiveWidth}w`),
+      ...responsiveWidths.map((responsiveWidth) => `${sourceBasePath}-${responsiveWidth}.${extension} ${responsiveWidth}w`),
       `${fallbackPath} ${width}w`,
     ].join(", ");
   };
 
   return (
     <picture className={pictureClassName}>
-      <source srcSet={buildSrcSet("avif", sources.avif)} type="image/avif" />
-      <source srcSet={buildSrcSet("webp", sources.webp)} type="image/webp" />
+      {artDirected?.flatMap(({ basePath: artBasePath, fallbackExtension: artExtension = fallbackExtension, media }) => {
+        const artSources = buildPictureSources(artBasePath, artExtension);
+
+        return [
+          <source key={`${artBasePath}-avif`} media={media} srcSet={buildSrcSet(artBasePath, "avif", artSources.avif)} type="image/avif" />,
+          <source key={`${artBasePath}-webp`} media={media} srcSet={buildSrcSet(artBasePath, "webp", artSources.webp)} type="image/webp" />,
+        ];
+      })}
+      <source srcSet={buildSrcSet(basePath, "avif", sources.avif)} type="image/avif" />
+      <source srcSet={buildSrcSet(basePath, "webp", sources.webp)} type="image/webp" />
       <img
         src={sources.fallback}
-        srcSet={responsiveWidths?.length ? buildSrcSet(fallbackExtension, sources.fallback) : undefined}
+        srcSet={responsiveWidths?.length ? buildSrcSet(basePath, fallbackExtension, sources.fallback) : undefined}
         alt={alt}
         fetchPriority={priority ? "high" : undefined}
         loading={priority ? "eager" : "lazy"}
