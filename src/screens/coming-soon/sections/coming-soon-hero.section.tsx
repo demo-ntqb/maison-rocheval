@@ -37,7 +37,7 @@ export async function ComingSoonHeroSection() {
 
       <h1
         id="coming-soon-title"
-        className="relative font-display text-section-title font-normal text-canvas"
+        className="relative font-display text-section-title font-normal text-canvas uppercase"
       >
         <span className="sr-only">{t("brand")} — </span>
         {t("message")}
