@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { HomeProductList } from "../components/home-product-list";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 
 export async function HomeProductsSection({ locale }: { locale: string }) {
@@ -46,7 +47,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
             </div>
           </div>
           <Link
-            href="/products"
+            href={ROUTES.PRODUCTS}
             className="-my-3 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
             data-plumb-id="text-button-5"
           >

@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function HomeIntroSection() {
   const t = await getTranslations("home.intro");
@@ -60,7 +61,7 @@ export async function HomeIntroSection() {
               </div>
             </div>
             <Link
-              href="/about-the-brand"
+              href={ROUTES.ABOUT_BRAND}
               className="-my-3 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
               data-plumb-id="text-button"
             >

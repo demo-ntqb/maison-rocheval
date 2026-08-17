@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { getCollectionProductProfiles } from "@/shared/lib/shopify/catalog";
 import { AboutUnderstandProductTabs } from "../components/about-understand-product-tabs";
 
@@ -55,7 +56,7 @@ export async function AboutUnderstandSection({ locale }: { locale: string }) {
               </p>
             </div>
             <Link
-              href="/products"
+              href={ROUTES.PRODUCTS}
               className="-my-1.5 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
             >
               <span data-plumb-id="text-button-2" className="underline underline-offset-4">

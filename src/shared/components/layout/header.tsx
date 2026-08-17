@@ -7,6 +7,7 @@ import { Menu } from "lucide-react";
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
 import { cn } from "@/shared/lib/utils";
 import { AnnouncementBar } from "./announcement-bar";
@@ -29,13 +30,14 @@ export function Header({ initialVariant }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Tự động nhận diện variant dựa trên route hiện tại nếu không truyền prop cứng
+  const transparentRoutes: string[] = [ROUTES.HOME, ROUTES.ABOUT_BRAND, ROUTES.ABOUT_PRODUCT];
   const resolvedVariant = initialVariant ||
-    (["/", "/about-the-brand", "/about-the-product"].includes(pathname)
+    (transparentRoutes.includes(pathname)
       ? "transparent"
       : "solid");
 
   // Kiểm tra xem trang có hiển thị Announcement Bar không (chỉ trang Shop)
-  const showAnnouncement = pathname.includes("/products");
+  const showAnnouncement = pathname.includes(ROUTES.PRODUCTS);
 
   // Lắng nghe sự kiện scroll để đổi trạng thái nền của transparent header
   useEffect(() => {
@@ -65,7 +67,7 @@ export function Header({ initialVariant }: HeaderProps) {
     router.replace(pathname, { locale: nextLocale });
   };
 
-  const isHome = pathname === "/";
+  const isHome = pathname === ROUTES.HOME;
 
   // Xác định màu chữ chính và màu chữ hover
   let textColorClass = "text-black";

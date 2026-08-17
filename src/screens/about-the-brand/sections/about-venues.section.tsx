@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 
 const venues = [
   { key: "alliance", image: "venue-alliance", width: 968, height: 1400 },
@@ -34,7 +35,7 @@ export async function AboutVenuesSection() {
               <h3 className="font-display text-[32px] leading-none">{t(`${venue.key}.name`)}</h3>
               <p className="mt-5 font-display text-base font-bold">{t(`${venue.key}.subtitle`)}</p>
               <p className="mt-4 max-w-[360px] font-sans text-sm leading-[1.43] text-muted-ink">{t(`${venue.key}.description`)}</p>
-              <Link href="/about-the-brand" className="mt-8 inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-[0.12em] underline underline-offset-4">
+              <Link href={ROUTES.ABOUT_BRAND} className="mt-8 inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-[0.12em] underline underline-offset-4">
                 {t("visit")}
               </Link>
             </div>

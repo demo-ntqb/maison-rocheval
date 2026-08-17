@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/shared/components/composite/product-card";
+import { ROUTES } from "@/shared/constants/route.constant";
 import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 
 export interface ProductDetailRelatedSectionProps {
@@ -26,7 +27,7 @@ export async function ProductDetailRelatedSection({
       </div>
 
       <Link
-        href="/products"
+        href={ROUTES.PRODUCTS}
         className="mt-12 inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-widest text-black underline underline-offset-4 transition-opacity hover:opacity-70"
       >
         {t("cta")}

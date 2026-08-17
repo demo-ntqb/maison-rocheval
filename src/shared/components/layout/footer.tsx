@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 
@@ -22,7 +23,7 @@ export async function Footer({ locale }: FooterProps) {
 
   let caviarLinks = products.map((product, index) => ({
     id: product.handle,
-    href: `/products/${product.handle}`,
+    href: ROUTES.PRODUCT_DETAIL(product.handle),
     title: product.title,
     plumbId: plumbIds[index] || product.handle,
   }));
@@ -53,7 +54,7 @@ export async function Footer({ locale }: FooterProps) {
               </div>
             </div>
             <Link
-              href="/contact"
+              href={ROUTES.CONTACT}
               className="-my-[6.5px] inline-flex min-h-11 w-fit items-center justify-center rounded-brand bg-navy-dark px-5 font-sans text-xs text-canvas transition-colors hover:bg-ink"
             >
               <span data-plumb-id="enquire-more">{t("enquireButton")}</span>

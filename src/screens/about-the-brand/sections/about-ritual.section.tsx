@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { MichelinRating } from "@/shared/components/ui/michelin-rating";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function AboutRitualSection() {
   const t = await getTranslations("aboutBrand.ritual");
@@ -33,7 +34,7 @@ export async function AboutRitualSection() {
             <p>{t("paragraph1")}</p>
             <p>{t("paragraph2")}</p>
           </div>
-          <Link href="/about-the-product" className="mt-8 inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-[0.12em] underline underline-offset-4">
+          <Link href={ROUTES.ABOUT_PRODUCT} className="mt-8 inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-[0.12em] underline underline-offset-4">
             {t("collection")}
           </Link>
         </div>

@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function ProductsEditorialSection() {
   const t = await getTranslations("products.editorial");
@@ -29,7 +30,7 @@ export async function ProductsEditorialSection() {
           </p>
         </div>
         <Link
-          href="/about-the-product"
+          href={ROUTES.ABOUT_PRODUCT}
           className="-my-3 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
         >
           {t("link")}

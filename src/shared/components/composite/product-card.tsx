@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Link } from "@/i18n/navigation";
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
+import { ROUTES } from "@/shared/constants/route.constant";
 import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 import { cn } from "@/shared/lib/utils";
 
@@ -27,7 +28,7 @@ export function ProductCard({ product, priority = false, className, ...props }: 
         data-plumb-id="component-22"
       >
         <Link
-          href={`/products/${product.handle}`}
+          href={ROUTES.PRODUCT_DETAIL(product.handle)}
           className="w-[145px] h-[200px] lg:w-[200px] lg:h-[275px] shrink-0 relative flex items-center justify-center"
           data-plumb-id="frame-2085667163"
         >
@@ -57,7 +58,7 @@ export function ProductCard({ product, priority = false, className, ...props }: 
         data-plumb-id="frame-2085667164"
       >
         <div className="flex flex-col gap-1 items-center" data-plumb-id="frame-2085667136">
-          <Link href={`/products/${product.handle}`} className="block w-full">
+          <Link href={ROUTES.PRODUCT_DETAIL(product.handle)} className="block w-full">
             <h3
               className="font-display text-[20px] font-bold text-ink leading-none truncate"
               data-plumb-id="kaluga-caviar"

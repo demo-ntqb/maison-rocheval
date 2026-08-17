@@ -3,6 +3,7 @@ import { RichText } from "@shopify/hydrogen-react";
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { TabsContent } from "@/shared/components/ui/tabs";
 import type { CatalogProductProfile } from "@/shared/lib/shopify/catalog-mapper";
 import { displayName, tastingProfile } from "../lib/about-the-product.utils";
@@ -187,7 +188,7 @@ function ProductStory({
         </div>
 
         <Link
-          href={`/products/${product.handle}`}
+          href={ROUTES.PRODUCT_DETAIL(product.handle)}
           className="inline-flex min-h-11 w-fit items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
         >
           <span data-plumb-id="text-button-4" className="underline underline-offset-4">

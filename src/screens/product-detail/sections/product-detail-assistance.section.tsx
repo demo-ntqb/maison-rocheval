@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function ProductDetailAssistanceSection() {
   const t = await getTranslations("productDetail.assistance");
@@ -16,7 +17,7 @@ export async function ProductDetailAssistanceSection() {
           {t("description")}
         </p>
         <Link
-          href="/about-the-brand"
+          href={ROUTES.ABOUT_BRAND}
           className="mt-6 inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-widest text-black underline underline-offset-4 transition-opacity hover:opacity-70"
         >
           {t("cta")}

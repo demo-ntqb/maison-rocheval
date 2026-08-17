@@ -1,6 +1,8 @@
 import { FaqSection } from "@/shared/components/composite/faq-section";
 import { getTranslations } from "next-intl/server";
 
+import { ROUTES } from "@/shared/constants/route.constant";
+
 export async function AboutFaqSection() {
   const t = await getTranslations("aboutBrand.faq");
   const items = Array.from({ length: 5 }, (_, index) => ({
@@ -15,7 +17,7 @@ export async function AboutFaqSection() {
         title={t("title")}
         items={items}
         buttonText={t("viewAll")}
-        buttonLink="/about-the-brand"
+        buttonLink={ROUTES.ABOUT_BRAND}
         logoBasePath="/images/about-brand/faq-caviar-tin"
         logoFallbackExtension="png"
         logoAlt={t("imageAlt")}

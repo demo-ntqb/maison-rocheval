@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
+import { ROUTES } from "@/shared/constants/route.constant";
 import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
 import { ProductDetailImageGallery } from "../components/product-detail-image-gallery";
 import { ProductDetailInfo } from "../components/product-detail-info";
@@ -19,7 +20,7 @@ export async function ProductDetailHeroSection({ product }: ProductDetailHeroSec
       {/* Breadcrumb Navigation */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-2 font-sans text-sm text-black">
         <Link
-          href="/products"
+          href={ROUTES.PRODUCTS}
           className="underline underline-offset-4 transition-opacity hover:opacity-70"
         >
           Shop

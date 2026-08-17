@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef } from "react";
 
 import { Link } from "@/i18n/navigation";
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { cn } from "@/shared/lib/utils";
 import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 
@@ -16,7 +17,7 @@ export function ProductsProductCard({
   product,
   ...props
 }: ProductsProductCardProps) {
-  const href = `/products/${product.handle}` as const;
+  const href = ROUTES.PRODUCT_DETAIL(product.handle);
 
   return (
     <article

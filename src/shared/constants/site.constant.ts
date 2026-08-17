@@ -1,6 +1,8 @@
 // Site-wide constants for Maison Rocheval
 // Business info, navigation, social links — shared across every page
 
+import { ROUTES } from "./route.constant";
+
 const DEFAULT_SITE_URL = "https://maison-rocheval.com";
 
 const rawSiteOrigin =
@@ -35,25 +37,25 @@ export const businessInfo = {
 // messages/*.json) and looked up by `id` — this only holds hrefs + ids.
 export const navigation = {
   main: [
-    { id: "about", href: "/about-the-brand" },
-    { id: "collection", href: "/about-the-product" },
+    { id: "about", href: ROUTES.ABOUT_BRAND },
+    { id: "collection", href: ROUTES.ABOUT_PRODUCT },
   ],
   footer: {
     caviar: [
-      { id: "amour", href: "/products/amour" },
-      { id: "lexpression", href: "/products/lexpression" },
-      { id: "harmonie", href: "/products/harmonie" },
-      { id: "oscietra", href: "/products/oscietra" },
-      { id: "kaluga", href: "/products/kaluga" },
+      { id: "amour", href: ROUTES.PRODUCT_DETAIL("amour") },
+      { id: "lexpression", href: ROUTES.PRODUCT_DETAIL("lexpression") },
+      { id: "harmonie", href: ROUTES.PRODUCT_DETAIL("harmonie") },
+      { id: "oscietra", href: ROUTES.PRODUCT_DETAIL("oscietra") },
+      { id: "kaluga", href: ROUTES.PRODUCT_DETAIL("kaluga") },
     ],
     brand: [
-      { id: "about", href: "/about-the-brand" },
-      { id: "collection", href: "/about-the-product" },
-      { id: "shop", href: "/products" },
+      { id: "about", href: ROUTES.ABOUT_BRAND },
+      { id: "collection", href: ROUTES.ABOUT_PRODUCT },
+      { id: "shop", href: ROUTES.PRODUCTS },
     ],
     care: [
-      { id: "faq", href: "/faq" },
-      { id: "contact", href: "/contact" },
+      { id: "faq", href: ROUTES.FAQ },
+      { id: "contact", href: ROUTES.CONTACT },
     ],
   },
 };
