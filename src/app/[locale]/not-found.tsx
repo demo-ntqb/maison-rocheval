@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { NotFoundHeroSection } from "@/screens/not-found";
 import { generatePageMetadata } from "@/shared/lib/metadata";
+import { NextIntlClientProvider } from "next-intl";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -11,5 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function NotFound() {
-  return <NotFoundHeroSection />;
+  return <NextIntlClientProvider messages={null}>
+    <NotFoundHeroSection />
+  </NextIntlClientProvider>;
 }

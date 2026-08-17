@@ -1,10 +1,10 @@
-import { setRequestLocale } from "next-intl/server";
 import {
+  HomeAboutSection,
   HomeHeroSection,
   HomeIntroSection,
-  HomeAboutSection,
   HomeProductsSection,
 } from "@/screens/home";
+import { setRequestLocale } from "next-intl/server";
 
 export default async function Home({
   params,

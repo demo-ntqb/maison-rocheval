@@ -1,8 +1,9 @@
 import { routing } from "@/i18n/routing";
+import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
 import { generateRootMetadata } from "@/shared/lib/metadata";
 import type { Metadata } from "next";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { hasLocale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
@@ -53,7 +54,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata.comingSoon" });
+  const t = await getTranslations({ locale, namespace: "metadata.root" });
   return generateRootMetadata(locale, t("title"), t("description"));
 }
 
@@ -70,8 +71,6 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  setRequestLocale(locale);
-
   return (
     <html
       lang={locale}
@@ -80,27 +79,13 @@ export default async function LocaleLayout({
     >
       <head>
         <meta name="theme-color" content="#16222e" />
+        <ShopifyResourceHints />
       </head>
       <body
         data-plumb-id="shop"
         className="flex min-h-full flex-col items-center overflow-x-hidden bg-canvas font-sans"
       >
-        {/* <a
-          href="#main-content"
-          className="sr-only z-[100] rounded-brand bg-canvas px-4 py-3 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
-        >
-          Skip to content
-        </a>
-        <NextIntlClientProvider messages={{ header: messages.header }}>
-          <Header />
-        </NextIntlClientProvider>
-        <NextIntlClientProvider messages={null}>
-          <main id="main-content" className="w-full flex-1">{children}</main>
-          <Footer locale={locale} />
-        </NextIntlClientProvider> */}
-        <main id="main-content" className="w-full flex-1">
-          <NextIntlClientProvider messages={null}>{children}</NextIntlClientProvider>
-        </main>
+        {children}
       </body>
     </html>
   );
