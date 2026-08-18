@@ -1,6 +1,6 @@
 import { routing } from "@/i18n/routing";
 import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
-import { generateRootMetadata } from "@/shared/lib/metadata";
+import { generateOrganizationJsonLd, generateRootMetadata, isComingSoon } from "@/shared/lib/metadata";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -54,7 +54,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata.root" });
+  const namespace = isComingSoon() ? "metadata.comingSoon" : "metadata.root";
+  const t = await getTranslations({ locale, namespace });
   return generateRootMetadata(locale, t("title"), t("description"));
 }
 
@@ -79,6 +80,10 @@ export default async function LocaleLayout({
     >
       <head>
         <meta name="theme-color" content="#16222e" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: generateOrganizationJsonLd() }}
+        />
         <ShopifyResourceHints />
       </head>
       <body

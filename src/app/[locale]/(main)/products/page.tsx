@@ -7,7 +7,7 @@ import {
   ProductsFaqSection,
   ProductsHeroSection,
 } from "@/screens/products";
-import { generatePageMetadata } from "@/shared/lib/metadata";
+import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -15,6 +15,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  if (isComingSoon()) return generateComingSoonMetadata(locale);
+
   const t = await getTranslations({ locale, namespace: "metadata.products" });
 
   return generatePageMetadata(locale, t("title"), t("description"), {

@@ -11,8 +11,10 @@ import {
 import { SITE_URL } from "@/shared/constants/site.constant";
 import { getCatalogHandles, getProductDetail } from "@/shared/lib/shopify/catalog";
 import {
+  generateComingSoonMetadata,
   generateJsonLd,
   generatePageMetadata,
+  isComingSoon,
   localizedPath,
 } from "@/shared/lib/metadata";
 
@@ -42,6 +44,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string; handle: string }>;
 }): Promise<Metadata> {
   const { locale, handle } = await params;
+  if (isComingSoon()) return generateComingSoonMetadata(locale);
+
   const canonical = canonicalHandle(handle);
   const product = await getProductDetail(locale, canonical);
 

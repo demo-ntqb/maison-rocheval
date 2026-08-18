@@ -9,7 +9,7 @@ import {
   AboutUnderstandSection,
   AboutSelectionSection,
 } from "@/screens/about-the-product";
-import { generatePageMetadata } from "@/shared/lib/metadata";
+import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -17,6 +17,8 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  if (isComingSoon()) return generateComingSoonMetadata(locale);
+
   const t = await getTranslations({ locale, namespace: "metadata.aboutProduct" });
 
   return generatePageMetadata(locale, t("title"), t("description"), {

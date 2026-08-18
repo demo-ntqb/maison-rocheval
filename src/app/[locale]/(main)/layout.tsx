@@ -1,6 +1,7 @@
 import { ComingSoonHeroSection } from "@/screens/coming-soon";
 import { Footer } from "@/shared/components/layout/footer";
 import { Header } from "@/shared/components/layout/header";
+import { isComingSoon } from "@/shared/lib/metadata";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 
@@ -17,8 +18,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   // TODO: remove this when we launch the website
-  const isComingSoon = process.env.NEXT_PUBLIC_COMING_SOON === "true";
-  if (isComingSoon) {
+  if (isComingSoon()) {
     return <main id="main-content" className="w-full flex-1">
       <NextIntlClientProvider messages={null}>
         <div className="flex w-full flex-col" data-screen="coming-soon">
