@@ -3,7 +3,7 @@
 
 import { ROUTES } from "./route.constant";
 
-const DEFAULT_SITE_URL = "https://maison-rocheval.com";
+const DEFAULT_SITE_URL = "https://maisonrocheval.com";
 
 const rawSiteOrigin =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -20,7 +20,7 @@ export const SITE_DOMAIN = (() => {
   try {
     return new URL(SITE_URL).hostname;
   } catch {
-    return "maison-rocheval.com";
+    return "maisonrocheval.com";
   }
 })();
 
