@@ -13,7 +13,7 @@ export async function AboutHeroSection() {
       aria-labelledby="about-product-title"
       /* -mt-20 slides the section under the 80px sticky header, which sits
          over the photograph exactly as it does in the Figma frame. */
-      className="relative -mt-20 h-[800px] w-full overflow-hidden bg-warm"
+      className="relative -mt-20 h-svh lg:h-screen w-full overflow-hidden bg-warm"
     >
       <Picture
         basePath={COLLECTION_IMAGES.heroDesktop}

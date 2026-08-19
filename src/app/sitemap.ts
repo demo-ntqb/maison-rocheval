@@ -5,7 +5,7 @@ import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
 import { localizedPath } from "@/shared/lib/metadata";
 
-const STATIC_PATHS = [ROUTES.HOME] as const;
+const STATIC_PATHS = [ROUTES.HOME, ROUTES.ABOUT_PRODUCT] as const;
 
 function absoluteUrl(locale: string, path: string): string {
   return new URL(localizedPath(locale, path), SITE_URL).toString();

@@ -47,6 +47,22 @@ const PHOTOS = [
 ];
 
 /**
+ * The Open Graph / Twitter card image for the collection page: a single,
+ * un-responsive 1200x630 JPEG (the standard OG size), cropped from the same
+ * source as the hero so the two stay recognisably the same photograph. Cropped
+ * to the OG aspect (1.905) rather than reusing the hero's own crop (1.748) —
+ * feeding a mismatched-aspect source into a fixed 1200x630 slot lets Facebook
+ * and Twitter's own crawler crop it unpredictably instead of us. Centred on
+ * the hero crop's own vertical centre so the framing still matches.
+ */
+const OG_IMAGE = {
+  source: "hero.png",
+  output: "og-hero",
+  crop: { left: 0, top: 136, width: 1463, height: 768 },
+  resize: 1200,
+};
+
+/**
  * Cut-out tins: they carry an alpha channel and sit on the beige/white card
  * backgrounds, so PNG is the fallback and every format keeps transparency.
  */
@@ -86,6 +102,15 @@ async function main() {
   for (const spec of PHOTOS) {
     const { name, width, height } = await encode(spec, { fallback: "jpg" });
     console.log(`${name.padEnd(20)} ${width}x${height}  avif/webp/jpg`);
+  }
+
+  {
+    const pipeline = sharp(path.join(SOURCE_DIR, OG_IMAGE.source))
+      .extract(OG_IMAGE.crop)
+      .resize({ width: OG_IMAGE.resize });
+    const outPath = path.join(OUTPUT_DIR, `${OG_IMAGE.output}.jpg`);
+    await pipeline.jpeg({ quality: 85, mozjpeg: true }).toFile(outPath);
+    console.log(`${OG_IMAGE.output.padEnd(20)} 1200x630  jpg (og:image)`);
   }
 
   for (const spec of CUTOUTS) {
