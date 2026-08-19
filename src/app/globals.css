@@ -46,6 +46,7 @@
       transform: translateY(0);
     }
   }
+
 }
 
 @custom-variant data-open {
@@ -73,6 +74,7 @@
   --palette-beige: #f6f1eb;
   --palette-sand: #e5e2da;
   --palette-gray-light: #bcbcbc;
+  --palette-stone: #bfbbb6;
   --palette-gray-dark: #636363;
   --palette-divider-subtle: #e1e1e1;
   --palette-navy-dark: #16222e;
@@ -115,6 +117,7 @@
   --color-beige: var(--palette-beige);
   --color-sand: var(--palette-sand);
   --color-gray-light: var(--palette-gray-light);
+  --color-stone: var(--palette-stone);
   --color-gray-dark: var(--palette-gray-dark);
   --color-divider-subtle: var(--palette-divider-subtle);
   --color-navy-dark: var(--palette-navy-dark);

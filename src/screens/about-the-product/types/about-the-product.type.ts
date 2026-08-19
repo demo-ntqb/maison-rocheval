@@ -1,41 +1,32 @@
-import type { CatalogProductProfile } from "@/shared/lib/shopify/catalog-mapper";
+/** Asset wiring for one caviar in the collection carousel. */
+export interface CollectionCaviar {
+  id: string;
+  /** Base path (no extension) of the closed tin cut-out. */
+  closedTin: string;
+  /** Base path (no extension) of the open tin cut-out. */
+  openTin: string;
+  /** Base path (no extension) of the plated dish photograph. */
+  dish: string;
+}
 
-export type AboutUnderstandFactsLabels = Readonly<{
-  color: string;
-  commonName: string;
-  pearlSize: string;
-  salt: string;
-  species: string;
+/** Copy for one caviar, resolved on the server and handed to the client leaf. */
+export interface CollectionCaviarContent extends CollectionCaviar {
+  name: string;
+  latinName: string;
+  /** One-word flavour cue shown under the name on the carousel card. */
+  note: string;
   tastingNotes: string;
-}>;
-
-export type AboutUnderstandLabels = Readonly<{
+  description: string;
+  descriptionSecondary: string;
   atTable: string;
-  buyNow: string;
-  facts: AboutUnderstandFactsLabels;
+  tinAlt: string;
+  dishAlt: string;
+}
+
+/** Labels shared by every panel of the collection carousel. */
+export interface CollectionCarouselLabels {
+  atTable: string;
+  next: string;
+  previous: string;
   selectorLabel: string;
-  sturgeonAlt: string;
-}>;
-
-export type AboutUnderstandFactItem = Readonly<{
-  label: string;
-  labelPlumbId: string;
-  rowPlumbId: string;
-  value: string;
-  valuePlumbId: string;
-}>;
-
-export type AboutUnderstandProductFactsProps = Readonly<{
-  labels: AboutUnderstandFactsLabels;
-  product: CatalogProductProfile;
-}>;
-
-export type AboutUnderstandProductPanelProps = Readonly<{
-  labels: AboutUnderstandLabels;
-  product: CatalogProductProfile;
-}>;
-
-export type AboutUnderstandProductTabsProps = Readonly<{
-  labels: AboutUnderstandLabels;
-  products: readonly CatalogProductProfile[];
-}>;
+}

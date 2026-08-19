@@ -63,7 +63,7 @@
       "oscietra": "Oscietra",
       "kaluga": "Kaluga",
       "collection": "The Collection",
-      "shop":"Shop",
+      "shop": "Shop",
       "about": "The Maison",
       "faq": "FAQ",
       "contact": "Contact"
@@ -327,135 +327,79 @@
   "aboutProduct": {
     "hero": {
       "title": "OUR COLLECTION",
-      "statement": "The sturgeon is a true symbol of strength, resilience and longevity.",
-      "description": "Each caviar begins with an ancient species and a patient journey shaped by water, time and exacting care.",
-      "imageAlt": "Maison Rocheval caviar tins presented on crushed ice"
+      "imageAlt": "Maison Rocheval caviar tins laid out on a table with blini, crème fraîche and condiments"
     },
-    "history": {
-      "title": "The Sturgeon: The taste of a 200-million-year journey",
-      "description": "Older than the dinosaurs and refined through centuries of craft, sturgeon carries a rare history. Maison Rocheval respects that long journey in every selection.",
-      "imageAlt": "Sturgeon swimming through dark pristine water"
+    "origin": {
+      "title": "It begins with the sturgeon",
+      "description": "Long before a harvest is selected, its character is being formed. Species, water, diet, maturity and time each leave their mark on the caviar that follows.",
+      "imageAlt": "Sturgeon swimming through the clear turquoise water of a rearing basin"
     },
-    "cultivation": {
-      "title": "20 YEARS OF CULTIVATION",
-      "early": {
-        "title": "Year 0 - 12",
-        "description": "The first years establish the health and character of the fish. Water quality, feed and space are observed with patience and precision.",
-        "imageAlt": "Sturgeon farmer caring for a young fish"
-      },
-      "mature": {
-        "title": "Year 12 - 20",
-        "description": "As the sturgeon matures, its development is monitored closely. Nothing is hurried; each species follows its own rhythm.",
-        "imageAlt": "Sturgeon maturing in clear aquaculture water"
-      },
-      "harvest": {
-        "title": "Year 20",
-        "description": "Only at full maturity can the harvest be considered. The timing decides the integrity, texture and expression of every pearl.",
-        "imageAlt": "Caviar specialists inspecting a mature harvest"
-      }
-    },
-    "understand": {
-      "title": "Understand the product",
+    "collection": {
+      "title": "Understanding our collection",
       "description": "As a living product, its grain, texture and flavor is read fresh with every selection rather than reduced to a number. A number cannot hold what changes by the week.",
-      "select": "GO TO SHOP",
-      "selectorLabel": "Select a caviar to understand its profile",
+      "shop": "SHOP",
+      "tinAlt": "An open tin of Maison Rocheval caviar resting on its lid",
+      "selectorLabel": "Choose a caviar from the collection",
+      "previous": "Previous caviar",
+      "next": "Next caviar",
       "atTable": "At the table",
-      "buyNow": "BUY NOW",
-      "sturgeonAlt": "Sturgeon swimming in dark water",
-      "facts": {
-        "species": "SPECIES",
-        "commonName": "COMMON NAME",
-        "pearlSize": "PEARL SIZE",
-        "salt": "SALT",
-        "color": "COLOR",
-        "tastingNotes": "TASTING NOTES"
-      },
-      "kaluga": {
-        "name": "Kaluga",
-        "imageAlt": "Kaluga caviar tin"
-      },
-      "russian": {
-        "name": "Russian sturgeon",
-        "imageAlt": "Russian sturgeon caviar tin"
-      },
-      "hybrid": {
-        "name": "Kaluga hybrid",
-        "imageAlt": "Kaluga hybrid caviar tin"
-      },
-      "amur": {
-        "name": "Amur",
-        "imageAlt": "Amur caviar tin"
-      },
-      "baerii": {
-        "name": "Baerii",
-        "imageAlt": "Baerii caviar tin"
-      },
-      "featuredTinAlt": "Open tin of Maison Rocheval Amour caviar",
-      "featuredSturgeonAlt": "Amur sturgeon swimming in dark water",
-      "featuredTitle": "Amour",
-      "featuredDescription": "Named twice over — for the Amur sturgeon and for love. A generous, creamy expression with a clean, lingering finish.",
-      "legacyFacts": {
-        "species": {
-          "label": "Species",
-          "value": "Acipenser schrenckii"
+      "products": {
+        "amour": {
+          "name": "Amour",
+          "latinName": "Acipenser schrenckii",
+          "note": "Cheese",
+          "tastingNotes": "Creamy · Delicate · Savoury",
+          "description": "Amour opens with cream, then butter, followed by a soft lactic warmth that lingers rather than lifts. Salinity is almost an afterthought, allowing the caviar to read closer to cultured cheese than to the sea.",
+          "descriptionSecondary": "It is the gentlest caviar in the collection, and often the most persuasive.",
+          "atTable": "Warm blini, crème fraîche, soft egg, potato. Amour favours richness and simplicity: enough depth to meet it, without overwhelming its quieter character. Use acid and smoke with restraint.",
+          "tinAlt": "Tin of Amour caviar, open beside its lid",
+          "dishAlt": "Blini topped with Amour caviar, served on a copper plate"
         },
-        "grain": {
-          "label": "Grain",
-          "value": "Large, firm"
+        "expression": {
+          "name": "L’Expression",
+          "latinName": "Huso dauricus × Acipenser schrenckii",
+          "note": "Nori",
+          "tastingNotes": "Rounded · Nori · Umami",
+          "description": "L’Expression is drawn from the same two lines that anchor this collection: the nuttiness of Kaluga, the cream of Amour. Neither comes through. What emerges instead is marine and deeply savoury: kelp, nori, a rounded salinity that deepens into umami and carries through the finish.",
+          "descriptionSecondary": "It is made from the house’s own two poles, and tastes like neither. That is precisely why L’Expression sits at the heart of the Maison.",
+          "atTable": "Dashi, seasoned rice, cured fish, brown butter, and anything built on umami. L’Expression has the depth to enter a dish rather than sit above it, making it the caviar to build around, not simply to finish with.",
+          "tinAlt": "Tin of L’Expression caviar, open beside its lid",
+          "dishAlt": "Cured fish in a dashi broth finished with L’Expression caviar"
         },
-        "colour": {
-          "label": "Colour",
-          "value": "Amber to olive"
+        "harmonie": {
+          "name": "Harmonie",
+          "latinName": "Acipenser gueldenstaedtii × Acipenser baerii",
+          "note": "Fruity",
+          "tastingNotes": "Soft · Fruity · Balanced",
+          "description": "Harmonie opens bright, with an unusual fruit-led sweetness recalling the delicacy of Koshu grapes, carried by soft salinity and a clean, savoury finish. With time in the tin, the fruit settles into something deeper and smokier. Both are Harmonie. They simply belong to different weeks.",
+          "descriptionSecondary": "It is the caviar least like the others in the collection. Because those different weeks offer genuinely different qualities, it is perhaps the most adaptable of the five.",
+          "atTable": "Shellfish, butter sauces, and anything that moves between sweet and savoury. Its character develops with age, so it rewards a taste before it reaches the plate.",
+          "tinAlt": "Tin of Harmonie caviar, open beside its lid",
+          "dishAlt": "Plated fish and vegetables finished with Harmonie caviar"
         },
-        "taste": {
-          "label": "Taste",
-          "value": "Rich · Creamy · Cheese"
+        "oscietra": {
+          "name": "Oscietra",
+          "latinName": "Acipenser gueldenstaedtii",
+          "note": "Walnut",
+          "tastingNotes": "Precise · Walnut · Minerality",
+          "description": "Precise and unmistakably Oscietra. Iodine first, followed by walnut and a fine, lifted minerality. The grain holds its structure on the tongue before releasing slowly into a finish that rewards nothing more than attention.",
+          "descriptionSecondary": "This is the caviar against which most others are still measured: the profile that has defined Oscietra for as long as caviar has been written about.",
+          "atTable": "Chilled, with mother-of-pearl. The traditional service, and still the correct one. Oysters, raw fish, cold shellfish, or Oscietra entirely on its own. It asks to be tasted, not dressed.",
+          "tinAlt": "Tin of Oscietra caviar, open beside its lid",
+          "dishAlt": "Plated fish and vegetables finished with Oscietra caviar"
+        },
+        "kaluga": {
+          "name": "Kaluga",
+          "latinName": "Huso dauricus",
+          "note": "Hazelnut",
+          "tastingNotes": "Rich · Hazelnut · Length",
+          "description": "The largest grain in the house, and the most patient on the palate. What arrives first is presence: butter, cream, and a richness that announces itself before any single note does. Roasted hazelnut follows, then a restrained salinity that draws everything into a finish that outlasts the rest of the range.",
+          "descriptionSecondary": "Its scale is matched by its restraint. Richness never becomes weight, and its character continues to reveal itself well beyond the first spoon.",
+          "atTable": "Kaluga asks for very little. Chilled, with mother-of-pearl, and nothing else competing for attention. Let the grain, texture and length do the work.",
+          "tinAlt": "Tin of Kaluga caviar, open beside its lid",
+          "dishAlt": "Plated fish and vegetables finished with Kaluga caviar"
         }
       }
-    },
-    "quality": {
-      "title": "QUALITY CAN NEVER BE RUSHED",
-      "description": "From careful consideration to salting, every gesture protects the grain and preserves the character of the harvest.",
-      "consideration": {
-        "title": "Careful consideration",
-        "subtitle": "Purity, no additives",
-        "description": "Each harvest is read as a whole. Colour, firmness, moisture, aroma and finish must align before the Maison makes its selection.",
-        "imageAlt": "Specialist gently handling fresh caviar during selection",
-        "illustrationAlt": "Sturgeon watercolor illustration"
-      },
-      "salting": {
-        "title": "Salting process",
-        "subtitle": "Significant lower salting",
-        "description": "Salt is applied with restraint. Enough to reveal depth and preserve the grain, never enough to conceal the caviar’s natural expression.",
-        "imageAlt": "Fresh caviar pearls being combined with salt"
-      }
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "viewAll": "View all",
-      "imageAlt": "Open Maison Rocheval caviar tin",
-      "items": [
-        {
-          "question": "Which caviar should I choose?",
-          "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile."
-        },
-        {
-          "question": "Why does sturgeon maturity matter?",
-          "answer": "Maturity shapes the size, integrity and aromatic depth of the grain."
-        },
-        {
-          "question": "How is caviar salted?",
-          "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression."
-        },
-        {
-          "question": "Are the sturgeon responsibly raised?",
-          "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison."
-        },
-        {
-          "question": "How long does caviar keep after opening?",
-          "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C."
-        }
-      ]
     }
   },
   "productDetail": {

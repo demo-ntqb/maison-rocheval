@@ -15,11 +15,19 @@ interface ArtDirectedSource {
 }
 
 interface PictureProps
-  extends Omit<ComponentPropsWithoutRef<"img">, "height" | "loading" | "src" | "width"> {
+  extends Omit<ComponentPropsWithoutRef<"img">, "height" | "src" | "width"> {
   artDirected?: ArtDirectedSource[];
   basePath: string;
   fallbackExtension: "jpg" | "jpeg" | "png";
   height: number;
+  /**
+   * Overrides the loading strategy `priority` would otherwise pick. Use
+   * `"eager"` for an image that has to be decoded before it is revealed but
+   * does not deserve `priority`'s high fetch priority — browsers skip lazy
+   * images that are not currently visible, so a transparent or covered one
+   * would never load on its own.
+   */
+  loading?: "eager" | "lazy";
   pictureClassName?: string;
   priority?: boolean;
   responsiveWidths?: number[];
@@ -32,6 +40,7 @@ export function Picture({
   basePath,
   fallbackExtension,
   height,
+  loading,
   pictureClassName,
   priority = false,
   responsiveWidths,
@@ -68,7 +77,7 @@ export function Picture({
         srcSet={responsiveWidths?.length ? buildSrcSet(basePath, fallbackExtension, sources.fallback) : undefined}
         alt={alt}
         fetchPriority={priority ? "high" : undefined}
-        loading={priority ? "eager" : "lazy"}
+        loading={loading ?? (priority ? "eager" : "lazy")}
         decoding="async"
         width={width}
         height={height}

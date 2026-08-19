@@ -67,20 +67,17 @@ export function Header({ initialVariant }: HeaderProps) {
     router.replace(pathname, { locale: nextLocale });
   };
 
-  const isHome = pathname === ROUTES.HOME;
+  // Các trang có hero sáng màu: header trong suốt phải dùng chữ đen
+  const lightHeroRoutes: string[] = [ROUTES.HOME, ROUTES.ABOUT_PRODUCT];
+  const hasLightHero = lightHeroRoutes.includes(pathname);
 
   // Xác định màu chữ chính và màu chữ hover
   let textColorClass = "text-black";
   let textMutedColorClass = "text-black hover:text-gray-dark";
 
-  if (resolvedVariant === "transparent") {
-    if (isHome) {
-      textColorClass = "text-black";
-      textMutedColorClass = "text-black hover:text-gray-dark";
-    } else {
-      textColorClass = "text-white";
-      textMutedColorClass = "text-white/80 hover:text-white";
-    }
+  if (resolvedVariant === "transparent" && !hasLightHero) {
+    textColorClass = "text-white";
+    textMutedColorClass = "text-white/80 hover:text-white";
   }
 
   // Xác định nền header
@@ -89,7 +86,7 @@ export function Header({ initialVariant }: HeaderProps) {
   if (resolvedVariant === "transparent" && !isScrolled) {
     headerBgClass = "border-transparent bg-transparent";
   } else if (resolvedVariant === "transparent" && isScrolled) {
-    headerBgClass = isHome
+    headerBgClass = hasLightHero
       ? "-mb-px border-b-[0.5px] border-gray-light bg-white shadow-sm"
       : "border-b border-white/10 bg-black/90 backdrop-blur-md";
   }

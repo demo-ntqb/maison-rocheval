@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import {
-  AboutFaqSection,
+  AboutCollectionSection,
   AboutHeroSection,
-  AboutHistorySection,
-  AboutCultivationSection,
-  AboutUnderstandSection,
-  AboutSelectionSection,
+  AboutOriginSection,
 } from "@/screens/about-the-product";
 import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
 
@@ -35,13 +32,10 @@ export default async function AboutProductPage({
   setRequestLocale(locale);
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex w-full flex-col">
       <AboutHeroSection />
-      <AboutHistorySection />
-      <AboutCultivationSection />
-      <AboutUnderstandSection locale={locale} />
-      <AboutSelectionSection />
-      <AboutFaqSection />
+      <AboutOriginSection />
+      <AboutCollectionSection />
     </div>
   );
 }
