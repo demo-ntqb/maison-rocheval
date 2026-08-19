@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { IconMaisonRochevalSymbol } from "@/shared/components/icons/maison-rocheval-symbol";
 import { ROUTES } from "@/shared/constants/route.constant";
+import { Picture } from "@/shared/components/ui/picture";
 
 export async function AboutFaqSection() {
   const t = await getTranslations("aboutBrand.sourceToRitual");
@@ -54,26 +55,28 @@ export async function AboutFaqSection() {
         </div>
 
         <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
-          <img
-            src="/images/about-brand/source-to-ritual-preparation.png"
+          <Picture
+            basePath="/images/about-brand/source-to-ritual-preparation"
+            fallbackExtension="jpg"
             alt={t("preparationAlt")}
             loading="lazy"
-            decoding="async"
+            responsiveWidths={[480, 640, 1000]}
+            sizes="(max-width: 767px) 100vw, 484px"
             width={1080}
             height={1080}
-            sizes="(max-width: 767px) 100vw, 484px"
             className="aspect-[.691] w-full rounded-brand object-cover object-[53%_center]"
             data-plumb-id="image-20"
             data-plumb-asset="67cbdac6eacb88d9fe0feed8f11c819741458892"
           />
-          <img
-            src="/images/about-brand/source-to-ritual-service.png"
+          <Picture
+            basePath="/images/about-brand/source-to-ritual-service"
+            fallbackExtension="jpg"
             alt={t("serviceAlt")}
             loading="lazy"
-            decoding="async"
+            responsiveWidths={[480, 640, 1000]}
+            sizes="(max-width: 767px) 100vw, 484px"
             width={1280}
             height={1708}
-            sizes="(max-width: 767px) 100vw, 484px"
             className="aspect-[.691] w-full rounded-brand object-cover object-[50%_center]"
             data-plumb-id="image-8"
             data-plumb-asset="eb4f65ca5e0021129e04a702672d9f927e8c30fc"

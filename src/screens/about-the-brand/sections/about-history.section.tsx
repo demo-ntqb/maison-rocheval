@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { IconMaisonRochevalSymbol } from "@/shared/components/icons/maison-rocheval-symbol";
+import { Picture } from "@/shared/components/ui/picture";
 
 export async function AboutHistorySection() {
   const t = await getTranslations("aboutBrand.story");
@@ -19,14 +20,15 @@ export async function AboutHistorySection() {
           data-plumb-id="image-20-wrap"
           className="relative w-full overflow-hidden md:max-w-[470px] md:flex-[0_0_47%]"
         >
-          <img
-            src="/images/about-brand/story-source.png"
+          <Picture
+            basePath="/images/about-brand/story-source"
+            fallbackExtension="jpg"
             alt={t("imageAlt")}
             loading="lazy"
-            decoding="async"
+            responsiveWidths={[480, 640, 1000]}
+            sizes="(max-width: 767px) 100vw, 470px"
             width={626}
             height={417}
-            sizes="(max-width: 767px) 100vw, 470px"
             className="aspect-[.671] w-full object-cover object-[47%_0%]"
             data-plumb-id="image-20"
             data-plumb-asset="779e209f89a170e6f256e88be293be9e8d0d17b0"

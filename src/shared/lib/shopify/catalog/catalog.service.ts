@@ -102,20 +102,31 @@ const DEFAULT_CATALOG_HANDLES = [
   "harmonie",
 ];
 
-export async function getCatalogHandles(): Promise<string[]> {
+/**
+ * Cached lookup of catalog handles. Only real data (or a transient error) is
+ * ever cached — the fallback list lives in the uncached wrapper below, so a
+ * Shopify outage never pins stale handles for the whole cacheLife window.
+ */
+async function fetchCatalogHandles(): Promise<string[]> {
   "use cache";
-  cacheLife("hours");
+  cacheLife("minutes");
   cacheTag("shopify-products", "shopify-collections", "shopify-collection-our-caviar");
-  const locale = "en";
-  const market = getShopifyMarket(locale);
+  const market = getShopifyMarket("en");
+  const result = await getCatalogStorefrontClient("en").query<CatalogHandlesQuery>(
+    CATALOG_HANDLES_QUERY,
+    { variables: { country: market.country, language: market.language } },
+  );
+  assertSuccessful(result, "CatalogHandles");
+  const handles = result.collection?.products.nodes.map(({ handle }) => handle) ?? [];
+  if (handles.length === 0) {
+    throw new Error("[shopify] Catalog handles query returned no products.");
+  }
+  return handles;
+}
+
+export async function getCatalogHandles(): Promise<string[]> {
   try {
-    const result = await getCatalogStorefrontClient(locale).query<CatalogHandlesQuery>(
-      CATALOG_HANDLES_QUERY,
-      { variables: { country: market.country, language: market.language } },
-    );
-    assertSuccessful(result, "CatalogHandles");
-    const handles = result.collection?.products.nodes.map(({ handle }) => handle) ?? [];
-    return handles.length > 0 ? handles : DEFAULT_CATALOG_HANDLES;
+    return await fetchCatalogHandles();
   } catch (error) {
     console.warn("[shopify] Failed to fetch catalog handles, using fallback:", error);
     return DEFAULT_CATALOG_HANDLES;

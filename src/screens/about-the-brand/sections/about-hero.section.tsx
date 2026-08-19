@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
+import { Picture } from "@/shared/components/ui/picture";
 
 export async function AboutHeroSection() {
   const t = await getTranslations("aboutBrand.hero");
@@ -12,15 +13,15 @@ export async function AboutHeroSection() {
       className="relative -mt-20 flex min-h-[100dvh] flex-col overflow-hidden bg-ink"
     >
       <div className="absolute inset-0">
-        <img
-          src="/images/about-brand/hero-maison-lake.png"
+        <Picture
+          basePath="/images/about-brand/hero-maison-lake"
+          fallbackExtension="jpg"
           alt={t("imageAlt")}
-          fetchPriority="high"
-          loading="eager"
-          decoding="async"
+          priority
+          responsiveWidths={[640, 1000, 1400, 1920]}
+          sizes="100vw"
           width={1920}
           height={1080}
-          sizes="100vw"
           className="size-full object-cover"
         />
       </div>

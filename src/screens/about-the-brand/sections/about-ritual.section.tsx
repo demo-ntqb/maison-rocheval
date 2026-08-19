@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
+import { Picture } from "@/shared/components/ui/picture";
+
 export async function AboutRitualSection() {
   const t = await getTranslations("aboutBrand.ritual");
 
@@ -29,14 +31,15 @@ export async function AboutRitualSection() {
           </p>
         </div>
 
-        <img
-          src="/images/about-brand/ritual-table.png"
+        <Picture
+          basePath="/images/about-brand/ritual-table"
+          fallbackExtension="jpg"
           alt={t("heroImageAlt")}
           loading="lazy"
-          decoding="async"
+          responsiveWidths={[640, 1000, 1400]}
+          sizes="(max-width: 1000px) 100vw, 1000px"
           width={1499}
           height={1049}
-          sizes="(max-width: 1000px) 100vw, 1000px"
           className="aspect-square w-full object-cover"
           data-plumb-id="rectangle-4878-2"
           data-plumb-asset="c9671fa8e74583759e4aff7319996026f43c0655"

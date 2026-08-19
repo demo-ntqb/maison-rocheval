@@ -4,7 +4,7 @@
       "title": "Maison Rocheval — Caviar & Gastronomie",
       "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
     },
-     "home": {
+    "home": {
       "title": "Maison Rocheval — Caviar & Gastronomie",
       "description": "De l'esturgeonnière à la table : découvrez les cinq expressions de caviar Maison Rocheval, sélectionnées à la source et présentées avec tout leur rituel."
     },
@@ -27,6 +27,14 @@
     "notFound": {
       "title": "Page introuvable",
       "description": "La page que vous recherchez n'existe pas ou a été déplacée."
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Réponses pour choisir, conserver et servir le caviar Maison Rocheval."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Écrivez à l’équipe Maison Rocheval — réponse sous 24 heures."
     }
   },
   "common": {
@@ -285,15 +293,24 @@
     "venues": {
       "title": "À table",
       "intro": "Avec le temps, ce savoir a trouvé sa place sur les tables des chefs et des hôtes privés. Chaque service a précisé un peu plus ce que pourrait être la prochaine génération de caviar.",
-      "companyB": { "name": "Company B", "city": "Singapour", "stars": "3", "description": "La cuisine du chef Toshitaka Omiya se définit par la précision, la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.", "imageAlt": "Restaurant blanc entouré de végétation tropicale" },
+      "companyB": {
+        "name": "Company B",
+        "city": "Singapour",
+        "stars": "3",
+        "description": "La cuisine du chef Toshitaka Omiya se définit par la précision, la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.",
+        "imageAlt": "Restaurant blanc entouré de végétation tropicale"
+      },
       "alliance": {
         "name": "Alliance",
-        "city": "Paris", "stars": "2",
+        "city": "Paris",
+        "stars": "2",
         "description": "La cuisine du chef Toshitaka Omiya se définit par la précision, la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.",
         "imageAlt": "Salle du restaurant Alliance à Paris"
       },
       "companyC": {
-        "name": "Company C", "city": "États-Unis", "stars": "2",
+        "name": "Company C",
+        "city": "États-Unis",
+        "stars": "2",
         "description": "La cuisine du chef Toshitaka Omiya se définit par la précision, la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.",
         "imageAlt": "Entrée de restaurant illuminée la nuit"
       }
@@ -490,6 +507,39 @@
       "title": "Vous aimerez aussi",
       "cta": "Découvrir la boutique"
     }
+  },
+  "faq": {
+    "heroTitle": "Questions fréquentes",
+    "heroIntro": "Tout pour choisir, conserver et servir le caviar Maison Rocheval.",
+    "items": [
+      {
+        "question": "Quel caviar choisir ?",
+        "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil."
+      },
+      {
+        "question": "Pourquoi la maturité est-elle importante ?",
+        "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain."
+      },
+      {
+        "question": "Comment le caviar est-il salé ?",
+        "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte."
+      },
+      {
+        "question": "Les esturgeons sont-ils élevés de façon responsable ?",
+        "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison."
+      },
+      {
+        "question": "Combien de temps conserver une boîte ouverte ?",
+        "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C."
+      }
+    ]
+  },
+  "contact": {
+    "heroTitle": "Contact",
+    "heroIntro": "Nos spécialistes vous accompagnent pour choisir, commander ou offrir le caviar Maison Rocheval.",
+    "email": "support@maisonrocheval.com",
+    "emailLabel": "E-mail : support@maisonrocheval.com",
+    "respondNote": "Nous répondons sous 24 heures."
   },
   "comingSoon": {
     "hero": {

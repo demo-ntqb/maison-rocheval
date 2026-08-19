@@ -7,8 +7,6 @@ const DEFAULT_ALL_TAGS = [
   "shopify-metaobjects",
 ];
 
-const DEFAULT_REVALIDATE_SECRET = "maison-rocheval-revalidate-secret";
-
 function isValidSecret(provided: string, expected: string): boolean {
   if (!provided || !expected) return false;
   const providedBuffer = Buffer.from(provided);
@@ -17,16 +15,13 @@ function isValidSecret(provided: string, expected: string): boolean {
   return timingSafeEqual(providedBuffer, expectedBuffer);
 }
 
-function extractSecret(request: Request, searchParams: URLSearchParams): string {
+function extractSecret(request: Request): string {
   const authHeader = request.headers.get("authorization") ?? "";
   if (authHeader.toLowerCase().startsWith("bearer ")) {
     return authHeader.slice(7).trim();
   }
 
-  const customHeader = request.headers.get("x-revalidate-secret")?.trim();
-  if (customHeader) return customHeader;
-
-  return searchParams.get("secret")?.trim() ?? "";
+  return request.headers.get("x-revalidate-secret")?.trim() ?? "";
 }
 
 function resolveTagsToRevalidate(options: {
@@ -73,15 +68,22 @@ function resolveTagsToRevalidate(options: {
 async function handleRevalidate(request: Request): Promise<Response> {
   const expectedSecret =
     process.env.REVALIDATE_SECRET_TOKEN?.trim() ||
-    process.env.SHOPIFY_ADMIN_CLIENT_SECRET?.trim() ||
-    DEFAULT_REVALIDATE_SECRET;
+    process.env.SHOPIFY_ADMIN_CLIENT_SECRET?.trim();
 
-  const url = new URL(request.url);
-  const providedSecret = extractSecret(request, url.searchParams);
+  if (!expectedSecret) {
+    console.error(
+      "[revalidate] REVALIDATE_SECRET_TOKEN (or SHOPIFY_ADMIN_CLIENT_SECRET) is not configured; refusing to revalidate.",
+    );
+    return Response.json({ error: "Revalidation is not configured" }, { status: 503 });
+  }
+
+  const providedSecret = extractSecret(request);
 
   if (!providedSecret || !isValidSecret(providedSecret, expectedSecret)) {
     return Response.json({ error: "Invalid secret" }, { status: 401 });
   }
+
+  const url = new URL(request.url);
 
   let bodyOptions: Record<string, unknown> = {};
   if (request.method === "POST") {

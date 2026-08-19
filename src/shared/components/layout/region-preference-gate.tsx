@@ -12,6 +12,8 @@ import {
 import {
   getRegionStorageSnapshot,
   getServerRegionStorageSnapshot,
+  hasRegionRedirectedThisSession,
+  markRegionRedirectedThisSession,
   parseRegionSnapshot,
   subscribeToRegionStorage,
 } from "@/shared/lib/region-preference";
@@ -60,6 +62,14 @@ export function RegionPreferenceGate() {
     if (!preferredLocale || preferredLocale === activeLocale) {
       return;
     }
+
+    // Chỉ tự redirect một lần khi bắt đầu phiên (vd. vào site qua URL tiếng
+    // Anh nhưng đã lưu preference tiếng Pháp). Không đánh bật các lần điều
+    // hướng chủ đích của user sau đó (toggle FR/EN, URL trực tiếp).
+    if (hasRegionRedirectedThisSession()) {
+      return;
+    }
+    markRegionRedirectedThisSession();
 
     router.replace(pathname, { locale: preferredLocale });
   }, [preferredLocale, activeLocale, pathname, router]);

@@ -1,5 +1,11 @@
 import "server-only";
 
+import {
+  createShopifyRequestContext,
+  createStorefrontClient,
+  type AnyStorefrontQueryString,
+} from "@shopify/hydrogen";
+
 import { getShopifyMarket } from "./config";
 import { resolveStorefrontConfig } from "./storefront-config";
 
@@ -21,29 +27,45 @@ function createCatalogClient({
   privateStorefrontToken: string;
   storeDomain: string;
 }): StorefrontClient {
-  const endpoint = `https://${storeDomain}/api/${STOREFRONT_API_VERSION}/graphql.json`;
+  const client = createStorefrontClient({
+    type: "private_no_buyer_context",
+    requestContext: createShopifyRequestContext({
+      // Static catalog client: no request-scoped state, so a synthetic request
+      // keeps the cache owner Next.js (never calls headers()/cookies() here).
+      request: { headers: new Headers() },
+      i18n: { language: "EN", country: "FR" },
+    }),
+    config: {
+      storeDomain,
+      privateStorefrontToken,
+      apiVersion: STOREFRONT_API_VERSION,
+      // Caching lives at the `use cache` boundary — never pass a cache here.
+    },
+  });
 
   return {
     async query<T extends object>(document: string, options: QueryOptions = {}) {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Shopify-Storefront-Private-Token": privateStorefrontToken,
-        },
-        body: JSON.stringify({ query: document, variables: options.variables ?? {} }),
-      });
-
-      const payload = (await response.json()) as {
-        data?: T;
-        errors?: GraphqlError[];
-      };
-
-      if (!response.ok && !payload.errors?.length) {
-        throw new Error(`[shopify] Storefront request failed with status ${response.status}.`);
+      let result;
+      try {
+        result = await client.graphql(document as AnyStorefrontQueryString, {
+          variables: options.variables,
+        });
+      } catch (error) {
+        if (error instanceof Error) {
+          throw new Error(`[shopify] Storefront request failed: ${error.message}`, {
+            cause: error,
+          });
+        }
+        throw error;
       }
 
-      return Object.assign(payload.data ?? ({} as T), { errors: payload.errors });
+      const data = (result.data ?? ({} as T)) as T;
+      if (result.errors?.length) {
+        return Object.assign(data, {
+          errors: result.errors.map(({ message }) => ({ message })),
+        }) as T & { errors?: GraphqlError[] };
+      }
+      return data as T & { errors?: GraphqlError[] };
     },
   };
 }
@@ -62,4 +84,3 @@ export function getCatalogStorefrontClient(locale: string): StorefrontClient {
   catalogClients.set(cacheKey, client);
   return client;
 }
-

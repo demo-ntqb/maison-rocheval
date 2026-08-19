@@ -4,7 +4,7 @@
       "title": "Maison Rocheval — Caviar & Fine Food",
       "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
     },
-     "home": {
+    "home": {
       "title": "Maison Rocheval — Caviar & Fine Food",
       "description": "From the sturgeon farm to the table: discover Maison Rocheval's five caviar expressions, selected at the source and presented with ritual care."
     },
@@ -27,6 +27,14 @@
     "notFound": {
       "title": "Page Not Found",
       "description": "The page you're looking for doesn't exist or has moved."
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Answers about choosing, storing and serving Maison Rocheval caviar."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Reach the Maison Rocheval team — our specialists answer within 24 hours."
     }
   },
   "common": {
@@ -49,7 +57,7 @@
     "dismissAnnouncement": "Dismiss delivery announcement",
     "cart": "CART"
   },
-   "regionDialog": {
+  "regionDialog": {
     "title": "Are you in the right place?",
     "description": "Please choose your shipping destination and preferred language.",
     "note": "Orders can only be delivered within the selected destination.",
@@ -191,7 +199,7 @@
   "home": {
     "hero": {
       "title": "Maison Rocheval",
-     "imageAlt": "A gloved hand presenting an open tin of Maison Rocheval caviar"
+      "imageAlt": "A gloved hand presenting an open tin of Maison Rocheval caviar"
     },
     "intro": {
       "title": "From source to ritual",
@@ -286,18 +294,23 @@
       "title": "At the table",
       "intro": "In time, that knowledge found its way to the tables of chefs and private hosts. Each service sharpened the same idea a little further: what the next generation of caviar could be.",
       "companyB": {
-        "name": "Company B", "city": "Singapore", "stars": "3",
+        "name": "Company B",
+        "city": "Singapore",
+        "stars": "3",
         "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
         "imageAlt": "White restaurant building surrounded by tropical greenery"
       },
       "alliance": {
         "name": "Alliance",
-        "city": "Paris", "stars": "2",
+        "city": "Paris",
+        "stars": "2",
         "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
         "imageAlt": "Dining room at Alliance restaurant in Paris"
       },
       "companyC": {
-        "name": "Company C", "city": "United States", "stars": "2",
+        "name": "Company C",
+        "city": "United States",
+        "stars": "2",
         "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
         "imageAlt": "Illuminated restaurant entrance at night"
       }
@@ -494,6 +507,39 @@
       "title": "You may also like",
       "cta": "Go to shop"
     }
+  },
+  "faq": {
+    "heroTitle": "Frequently Asked Questions",
+    "heroIntro": "Everything about choosing, storing and serving Maison Rocheval caviar.",
+    "items": [
+      {
+        "question": "Which caviar should I choose?",
+        "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile."
+      },
+      {
+        "question": "Why does sturgeon maturity matter?",
+        "answer": "Maturity shapes the size, integrity and aromatic depth of the grain."
+      },
+      {
+        "question": "How is caviar salted?",
+        "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest's natural expression."
+      },
+      {
+        "question": "Are the sturgeon responsibly raised?",
+        "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison."
+      },
+      {
+        "question": "How long does caviar keep after opening?",
+        "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C."
+      }
+    ]
+  },
+  "contact": {
+    "heroTitle": "Contact",
+    "heroIntro": "Our specialists are happy to guide you in choosing, ordering or gifting Maison Rocheval caviar.",
+    "email": "support@maisonrocheval.com",
+    "emailLabel": "Email: support@maisonrocheval.com",
+    "respondNote": "We will respond within 24 hrs."
   },
   "comingSoon": {
     "hero": {

@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
+import { Picture } from "@/shared/components/ui/picture";
+
 export async function AboutSelectionSection() {
   const t = await getTranslations("aboutBrand.selection");
 
@@ -26,14 +28,15 @@ export async function AboutSelectionSection() {
           </p>
         </div>
 
-        <img
-          src="/images/about-brand/harvest-sturgeon.png"
+        <Picture
+          basePath="/images/about-brand/harvest-sturgeon"
+          fallbackExtension="jpg"
           alt={t("imageAlt")}
           loading="lazy"
-          decoding="async"
+          responsiveWidths={[640, 1000]}
+          sizes="(max-width: 1000px) 100vw, 1000px"
           width={1043}
           height={1508}
-          sizes="(max-width: 1000px) 100vw, 1000px"
           className="aspect-[10/7] w-full rounded-brand object-cover object-[center_22%]"
           data-plumb-id="rectangle-4878"
           data-plumb-asset="76c1cde6a925e94a7e9ebb37fd450bcf8aeffa17"

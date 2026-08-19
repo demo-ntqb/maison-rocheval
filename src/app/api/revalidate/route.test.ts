@@ -74,4 +74,29 @@ describe("Manual Revalidate Route", () => {
     expect(revalidateTag).toHaveBeenCalledWith("shopify-products", { expire: 0 });
     expect(revalidateTag).toHaveBeenCalledWith("shopify-product-kaluga", { expire: 0 });
   });
+
+  it("từ chối (503) khi không có secret nào được cấu hình — không dùng default", async () => {
+    delete process.env.REVALIDATE_SECRET_TOKEN;
+    delete process.env.SHOPIFY_ADMIN_CLIENT_SECRET;
+
+    const req = new Request("https://maison-rocheval.test/api/revalidate", {
+      headers: { authorization: "Bearer maison-rocheval-revalidate-secret" },
+      method: "POST",
+    });
+    const res = await POST(req);
+
+    expect(res.status).toBe(503);
+    expect(revalidateTag).not.toHaveBeenCalled();
+  });
+
+  it("không chấp nhận secret qua query string (tránh rò rỉ vào access log)", async () => {
+    const req = new Request(
+      `https://maison-rocheval.test/api/revalidate?secret=${SECRET}`,
+      { method: "GET" },
+    );
+    const res = await GET(req);
+
+    expect(res.status).toBe(401);
+    expect(revalidateTag).not.toHaveBeenCalled();
+  });
 });

@@ -6,13 +6,14 @@ import { useCallback, useEffect, useState } from "react";
 
 import { Link } from "@/i18n/navigation";
 import { ROUTES } from "@/shared/constants/route.constant";
+import { Picture } from "@/shared/components/ui/picture";
 
 type Venue = {
   alt: string;
   assetId: string;
   city: string;
   description: string;
-  image: string;
+  imageBasePath: string;
   name: string;
   plumbId: string;
   stars: number;
@@ -83,14 +84,15 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
               className="min-w-0 flex-[0_0_86%] md:flex-[0_0_500px]"
               data-plumb-id={venue.plumbId}
             >
-              <img
-                src={venue.image}
+              <Picture
+                basePath={venue.imageBasePath}
+                fallbackExtension="jpg"
                 alt={venue.alt}
                 loading="lazy"
-                decoding="async"
+                responsiveWidths={[500, 1000]}
+                sizes="(max-width: 767px) 86vw, 500px"
                 width={500}
                 height={700}
-                sizes="(max-width: 767px) 86vw, 500px"
                 className="aspect-[.72] w-full rounded-[2px] object-cover"
                 data-plumb-asset={venue.assetId}
               />

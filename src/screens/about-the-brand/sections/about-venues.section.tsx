@@ -2,20 +2,20 @@ import { getTranslations } from "next-intl/server";
 
 import { AboutVenuesCarousel } from "../components/about-venues-carousel";
 
-const VENUE_META: Record<string, { assetId: string; image: string; plumbId: string }> = {
+const VENUE_META: Record<string, { assetId: string; imageBasePath: string; plumbId: string }> = {
   companyB: {
     assetId: "750a4dbbe45d048e65dfbd2252fef9cb53635a58",
-    image: "/images/about-brand/venue-company-b.png",
+    imageBasePath: "/images/about-brand/venue-company-b",
     plumbId: "frame-2085667156",
   },
   alliance: {
     assetId: "ae5e7f472c12964cd17ddebff6f083e065134990",
-    image: "/images/about-brand/venue-alliance-figma.png",
+    imageBasePath: "/images/about-brand/venue-alliance-figma",
     plumbId: "frame-2085667155",
   },
   companyC: {
     assetId: "dec8b5460594b1c032dd0c514207685f4e6d03e4",
-    image: "/images/about-brand/venue-company-c.png",
+    imageBasePath: "/images/about-brand/venue-company-c",
     plumbId: "frame-2085667157",
   },
 };
@@ -29,7 +29,7 @@ export async function AboutVenuesSection() {
       assetId: meta.assetId,
       city: t(`${key}.city`),
       description: t(`${key}.description`),
-      image: meta.image,
+      imageBasePath: meta.imageBasePath,
       name: t(`${key}.name`),
       plumbId: meta.plumbId,
       stars: Number(t(`${key}.stars`)),

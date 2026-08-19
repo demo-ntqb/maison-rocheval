@@ -7,10 +7,13 @@ import type {
 } from "@/shared/types/region.type";
 
 /** localStorage: lựa chọn đã xác nhận — tồn tại vĩnh viễn trên thiết bị. */
-const PREFERENCE_KEY = "mr:region-preference";
+export const PREFERENCE_KEY = "mr:region-preference";
 
 /** sessionStorage: người dùng đóng popup mà không chọn — chỉ im lặng phiên này. */
 const DISMISSED_KEY = "mr:region-preference-dismissed";
+
+/** sessionStorage: gate đã tự redirect theo preference một lần trong phiên này. */
+const REDIRECTED_KEY = "mr:region-redirected";
 
 /** Ký tự phân tách hai giá trị trong snapshot (không xuất hiện trong JSON). */
 const SNAPSHOT_SEPARATOR = "\u0000";
@@ -134,6 +137,34 @@ export function markRegionPromptDismissed(): void {
 
   try {
     window.sessionStorage.setItem(DISMISSED_KEY, "1");
+  } catch {
+    // Xem ghi chú ở `writeRegionPreference`.
+  }
+}
+
+/**
+ * Gate chỉ tự redirect theo preference đã lưu một lần mỗi phiên — sau đó để
+ * user tự điều hướng (toggle ngôn ngữ, mở URL trực tiếp) mà không bị đánh bật.
+ */
+export function hasRegionRedirectedThisSession(): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  try {
+    return window.sessionStorage.getItem(REDIRECTED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+export function markRegionRedirectedThisSession(): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.sessionStorage.setItem(REDIRECTED_KEY, "1");
   } catch {
     // Xem ghi chú ở `writeRegionPreference`.
   }

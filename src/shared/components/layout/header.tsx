@@ -9,6 +9,7 @@ import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
+import { updateRegionPreferenceLocale } from "@/shared/lib/region-preference";
 import { cn } from "@/shared/lib/utils";
 import { AnnouncementBar } from "./announcement-bar";
 
@@ -74,9 +75,11 @@ export function Header({ initialVariant }: HeaderProps) {
     };
   }, [resolvedVariant, pathname]);
 
-  // Chuyển đổi ngôn ngữ EN / FR
+  // Chuyển đổi ngôn ngữ EN / FR. Cập nhật luôn preference đã lưu (nếu có) để
+  // RegionPreferenceGate không đánh bật user về ngôn ngữ cũ.
   const toggleLanguage = () => {
     const nextLocale = locale === "en" ? "fr" : "en";
+    updateRegionPreferenceLocale(nextLocale);
     router.replace(pathname, { locale: nextLocale });
   };
 

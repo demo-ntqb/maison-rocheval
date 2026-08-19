@@ -22,6 +22,12 @@ export function resolveStorefrontConfig(): ResolvedStorefrontConfig {
   const privateStorefrontToken = getOptionalPrivateStorefrontToken();
 
   if (!privateStorefrontToken) {
+    if (process.env.NODE_ENV === "production" && process.env.ALLOW_MOCK_CATALOG !== "true") {
+      throw new Error(
+        "[shopify] PRIVATE_STOREFRONT_API_TOKEN is not configured. Refusing to serve mock.shop data in production. Set ALLOW_MOCK_CATALOG=true only in CI/dev environments that intentionally build without a real token.",
+      );
+    }
+
     if (!didWarnAboutMockShop && process.env.NODE_ENV !== "test") {
       didWarnAboutMockShop = true;
       console.warn(

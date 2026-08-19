@@ -11,8 +11,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
-import { cn } from "@/shared/lib/utils";
 import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
+import { cn } from "@/shared/lib/utils";
 
 function SpecRow({ label, value }: { label: string; value?: string }) {
   if (!value) return null;

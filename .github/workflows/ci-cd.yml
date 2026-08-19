@@ -23,6 +23,11 @@ jobs:
     name: Quality gate
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      # The quality gate builds without Vercel secrets; let it fall back to the
+      # mock.shop catalog instead of failing the build. Production deploys must
+      # NOT set this — the storefront config fails closed there.
+      ALLOW_MOCK_CATALOG: "true"
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
