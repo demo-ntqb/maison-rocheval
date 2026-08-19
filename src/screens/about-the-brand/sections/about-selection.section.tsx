@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
+import { Reveal } from "@/shared/components/ui/reveal";
 
 export async function AboutSelectionSection() {
   const t = await getTranslations("aboutBrand.selection");
@@ -15,7 +16,7 @@ export async function AboutSelectionSection() {
         data-plumb-id="frame-2085667090"
         className="flex w-full max-w-content flex-col gap-10"
       >
-        <div className="mx-auto flex max-w-[640px] flex-col items-center gap-4 text-center">
+        <Reveal className="mx-auto flex max-w-[640px] flex-col items-center gap-4 text-center">
           <h2
             data-plumb-id="lorem-ipsum-dolor-10"
             id="about-brand-selection-title"
@@ -26,29 +27,31 @@ export async function AboutSelectionSection() {
           <p className="mx-auto max-w-[590px] font-sans text-sm leading-[1.43] text-muted-ink">
             {t("description")}
           </p>
-        </div>
+        </Reveal>
 
-        <Picture
-          basePath="/images/about-brand/harvest-sturgeon-desktop"
-          artDirected={[
-            {
-              basePath: "/images/about-brand/harvest-sturgeon-mobile",
-              media: "(max-width: 767px)",
-            },
-          ]}
-          fallbackExtension="jpg"
-          alt={t("imageAlt")}
-          loading="lazy"
-          responsiveWidths={[640, 1000]}
-          sizes="(max-width: 1000px) 100vw, 1000px"
-          width={1000}
-          height={700}
-          className="aspect-2/3 md:aspect-10/7 w-full rounded-brand object-cover object-[center_22%]"
-          data-plumb-id="rectangle-4878"
-          data-plumb-asset="76c1cde6a925e94a7e9ebb37fd450bcf8aeffa17"
-        />
+        <Reveal delay={120}>
+          <Picture
+            basePath="/images/about-brand/harvest-sturgeon-desktop"
+            artDirected={[
+              {
+                basePath: "/images/about-brand/harvest-sturgeon-mobile",
+                media: "(max-width: 767px)",
+              },
+            ]}
+            fallbackExtension="jpg"
+            alt={t("imageAlt")}
+            loading="lazy"
+            responsiveWidths={[640, 1000]}
+            sizes="(max-width: 1000px) 100vw, 1000px"
+            width={1000}
+            height={700}
+            className="aspect-2/3 md:aspect-10/7 w-full rounded-brand object-cover object-[center_22%]"
+            data-plumb-id="rectangle-4878"
+            data-plumb-asset="76c1cde6a925e94a7e9ebb37fd450bcf8aeffa17"
+          />
+        </Reveal>
 
-        <div className="grid w-full grid-cols-1 gap-10 md:grid-cols-[200px_1fr_1fr] md:gap-x-[54px]">
+        <Reveal className="grid w-full grid-cols-1 gap-10 md:grid-cols-[200px_1fr_1fr] md:gap-x-[54px]" delay={240}>
           <h3
             data-plumb-id="lorem-ipsum-dolor-3"
             className="font-display text-[24px] leading-[1.33]"
@@ -67,7 +70,7 @@ export async function AboutSelectionSection() {
           >
             {t("detail2")}
           </p>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

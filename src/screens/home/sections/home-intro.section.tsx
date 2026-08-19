@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { Reveal } from "@/shared/components/ui/reveal";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function HomeIntroSection() {
@@ -16,7 +17,7 @@ export async function HomeIntroSection() {
       <div className="flex w-full max-w-content flex-col items-center gap-[200px]" data-plumb-id="frame-2085667106">
         {/* First block: From source to ritual */}
         <div className="flex w-full flex-col items-center gap-[54px]" data-plumb-id="component-6">
-          <div className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0" data-plumb-id="component-7">
+          <Reveal className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0" data-plumb-id="component-7">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118">
               <div data-plumb-id="lorem-ipsum-dolor">
                 <h2 id="home-source-title" className="font-display text-[32px] leading-none text-ink" data-plumb-id="lorem-ipsum-dolor-2">
@@ -29,30 +30,32 @@ export async function HomeIntroSection() {
                 </p>
               </div>
             </div>
-          </div>
-          <Picture
-            basePath="/images/home/source-ritual-table-mobile"
-            fallbackExtension="jpg"
-            artDirected={[
-              {
-                basePath: "/images/home/source-ritual-table-desktop",
-                media: "(min-width: 500px)",
-              },
-            ]}
-            alt={t("tableImageAlt")}
-            width={800}
-            height={1200}
-            sizes="(max-width: 1023px) calc(100vw - 32px), 1000px"
-            pictureClassName="block w-full overflow-hidden rounded-brand"
-            className="aspect-[40/60] lg:aspect-[10/7] h-auto lg:h-[700px] w-full rounded-brand object-cover"
-            data-plumb-id="rectangle-4878"
-            data-plumb-asset="50b64eb13a2a29b737042e921b49ccda9b8771c7"
-          />
+          </Reveal>
+          <Reveal className="w-full" delay={120}>
+            <Picture
+              basePath="/images/home/source-ritual-table-mobile"
+              fallbackExtension="jpg"
+              artDirected={[
+                {
+                  basePath: "/images/home/source-ritual-table-desktop",
+                  media: "(min-width: 500px)",
+                },
+              ]}
+              alt={t("tableImageAlt")}
+              width={800}
+              height={1200}
+              sizes="(max-width: 1023px) calc(100vw - 32px), 1000px"
+              pictureClassName="block w-full overflow-hidden rounded-brand"
+              className="aspect-[40/60] lg:aspect-[10/7] h-auto lg:h-[700px] w-full rounded-brand object-cover"
+              data-plumb-id="rectangle-4878"
+              data-plumb-asset="50b64eb13a2a29b737042e921b49ccda9b8771c7"
+            />
+          </Reveal>
         </div>
 
         {/* Second block: Before the Maison */}
         <div className="flex w-full flex-col items-center gap-[54px]" data-plumb-id="component-10">
-          <div className="flex max-w-[640px] flex-col items-center gap-8 text-center" data-plumb-id="component-7-2">
+          <Reveal className="flex max-w-[640px] flex-col items-center gap-8 text-center" data-plumb-id="component-7-2">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118-2">
               <div data-plumb-id="lorem-ipsum-dolor-3">
                 <h3 className="font-display text-[32px] leading-none text-ink lg:whitespace-nowrap" data-plumb-id="lorem-ipsum-dolor-4">
@@ -74,9 +77,9 @@ export async function HomeIntroSection() {
                 {t("learnMore")}
               </span>
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="flex flex-col lg:flex-row gap-8 w-full justify-center" data-plumb-id="frame-2085667098">
+          <Reveal className="flex flex-col lg:flex-row gap-8 w-full justify-center" data-plumb-id="frame-2085667098" delay={120}>
             <Picture
               basePath="/images/home/source-chefs"
               fallbackExtension="png"
@@ -101,7 +104,7 @@ export async function HomeIntroSection() {
               data-plumb-id="image-8"
               data-plumb-asset="1b5c22f59782b98f4cb1ad887602bb6a38fe43b1"
             />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

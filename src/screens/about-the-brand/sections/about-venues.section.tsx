@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
+import { Reveal } from "@/shared/components/ui/reveal";
 import { AboutVenuesCarousel } from "../components/about-venues-carousel";
 
 const VENUE_META: Record<string, { assetId: string; imageBasePath: string; plumbId: string }> = {
@@ -46,7 +47,7 @@ export async function AboutVenuesSection() {
         data-plumb-id="frame-2085667314"
         className="flex w-full flex-col max-w-container gap-[54px]"
       >
-        <div className="w-full flex flex-col items-center gap-4 text-center px-4 max-w-[640px] mx-auto">
+        <Reveal className="w-full flex flex-col items-center gap-4 text-center px-4 max-w-[640px] mx-auto">
           <h2
             id="about-brand-venues-title"
             data-plumb-id="lorem-ipsum-dolor"
@@ -60,8 +61,10 @@ export async function AboutVenuesSection() {
           >
             {t("intro")}
           </p>
-        </div>
-        <AboutVenuesCarousel venues={venues} />
+        </Reveal>
+        <Reveal className="w-full" delay={120}>
+          <AboutVenuesCarousel venues={venues} />
+        </Reveal>
       </div>
     </section>
   );

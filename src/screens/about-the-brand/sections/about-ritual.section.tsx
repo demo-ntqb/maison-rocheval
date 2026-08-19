@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
+import { Reveal } from "@/shared/components/ui/reveal";
 
 export async function AboutRitualSection() {
   const t = await getTranslations("aboutBrand.ritual");
@@ -15,7 +16,7 @@ export async function AboutRitualSection() {
         data-plumb-id="frame-2085667122"
         className="flex w-full max-w-content flex-col gap-[54px]"
       >
-        <div className="flex w-full flex-col items-center md:items-end justify-center gap-4 md:flex-row md:gap-4">
+        <Reveal className="flex w-full flex-col md:flex-row items-center md:items-end justify-between gap-4">
           <h2
             data-plumb-id="lorem-ipsum-dolor-2"
             id="about-brand-ritual-title"
@@ -29,27 +30,29 @@ export async function AboutRitualSection() {
           >
             {t("statement")}
           </p>
-        </div>
+        </Reveal>
 
-        <Picture
-          basePath="/images/about-brand/ritual-table-mobile"
-          fallbackExtension="jpg"
-          artDirected={[
-            {
-              basePath: "/images/about-brand/ritual-table-desktop",
-              media: "(min-width: 500px)",
-            },
-          ]}
-          alt={t("heroImageAlt")}
-          loading="lazy"
-          responsiveWidths={[640, 1000, 1400]}
-          sizes="(max-width: 1000px) 100vw, 1000px"
-          width={1000}
-          height={972}
-          className="aspect-396/700 md:aspect-1000/972 w-full object-cover"
-          data-plumb-id="rectangle-4878-2"
-          data-plumb-asset="c9671fa8e74583759e4aff7319996026f43c0655"
-        />
+        <Reveal delay={120}>
+          <Picture
+            basePath="/images/about-brand/ritual-table-mobile"
+            fallbackExtension="jpg"
+            artDirected={[
+              {
+                basePath: "/images/about-brand/ritual-table-desktop",
+                media: "(min-width: 500px)",
+              },
+            ]}
+            alt={t("heroImageAlt")}
+            loading="lazy"
+            responsiveWidths={[640, 1000, 1400]}
+            sizes="(max-width: 1000px) 100vw, 1000px"
+            width={1000}
+            height={972}
+            className="aspect-396/700 md:aspect-1000/972 w-full object-cover"
+            data-plumb-id="rectangle-4878-2"
+            data-plumb-asset="c9671fa8e74583759e4aff7319996026f43c0655"
+          />
+        </Reveal>
       </div>
     </section>
   );

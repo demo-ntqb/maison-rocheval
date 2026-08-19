@@ -31,11 +31,10 @@ export async function AboutHeroSection() {
         <h1
           id="about-brand-title"
           data-plumb-id="the-maison"
-          className="text-center font-display text-[clamp(2.5rem,4.6vw,3.375rem)] font-normal uppercase leading-none tracking-[-0.02em]"
+          className="text-center font-display text-[clamp(2.5rem,4.6vw,3.375rem)] font-normal uppercase leading-none tracking-[-0.02em] motion-safe:animate-fade-in"
         >
           {t("title")}
         </h1>
-
       </div>
     </section>
   );

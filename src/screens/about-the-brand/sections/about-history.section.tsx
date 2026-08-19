@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
+import { Reveal } from "@/shared/components/ui/reveal";
 
 export async function AboutHistorySection() {
   const t = await getTranslations("aboutBrand.story");
@@ -15,7 +16,7 @@ export async function AboutHistorySection() {
         data-plumb-id="component-9"
         className="flex w-full max-w-content flex-col items-stretch gap-y-10 md:flex-row md:items-center md:gap-[54px]"
       >
-        <div
+        <Reveal
           data-plumb-id="frame-2085667324"
           className="relative w-full overflow-hidden md:bg-navy-dark md:p-6 md:rounded-[2px] md:max-w-[543px] md:h-187 md:flex-[0_0_54.3%]"
         >
@@ -32,15 +33,16 @@ export async function AboutHistorySection() {
             data-plumb-id="image-20"
             data-plumb-asset="779e209f89a170e6f256e88be293be9e8d0d17b0"
           />
-        </div>
+        </Reveal>
 
-        <div
+        <Reveal
           data-plumb-id="frame-2085667078"
           className="flex w-full md:flex-1"
+          delay={120}
         >
           <div
             data-plumb-id="frame-2085667142"
-            className="flex w-full flex-col gap-3  lg:max-w-[350px]"
+            className="flex w-full flex-col gap-3 lg:max-w-[350px]"
           >
             <h2
               data-plumb-id="lorem-ipsum-dolor"
@@ -69,7 +71,7 @@ export async function AboutHistorySection() {
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

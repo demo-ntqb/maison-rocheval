@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { Reveal } from "@/shared/components/ui/reveal";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function HomeAboutSection() {
@@ -15,7 +16,7 @@ export async function HomeAboutSection() {
     >
       <div className="flex w-full max-w-content flex-col gap-[54px] lg:gap-[100px]" data-plumb-id="frame-2085667103">
         {/* Title statement block */}
-        <div className="flex w-full flex-col lg:max-w-[628px] px-4 lg:px-0" data-plumb-id="lorem-ipsum-dolor-5">
+        <Reveal className="flex w-full flex-col lg:max-w-[628px] px-4 lg:px-0" data-plumb-id="lorem-ipsum-dolor-5">
           <h2
             id="home-quality-title"
             className="font-display text-[54px] lg:text-[84px] leading-[1.07] text-ink uppercase whitespace-pre-line"
@@ -23,12 +24,12 @@ export async function HomeAboutSection() {
           >
             {t("highlight")}
           </h2>
-        </div>
+        </Reveal>
 
         {/* Overlapping images & text block container */}
         <div className="flex w-full flex-col" data-plumb-id="frame-2085667298">
           {/* Sturgeon image block (Desktop: w 1000, h 400; Mobile: w 396, h 250) */}
-          <div className="w-full h-auto lg:h-[400px] flex justify-end overflow-hidden" data-plumb-id="frame-2085667147">
+          <Reveal className="w-full h-auto lg:h-[400px] flex justify-end overflow-hidden" data-plumb-id="frame-2085667147" delay={120}>
             <Picture
               basePath="/images/home/selection-sturgeon"
               artDirected={[{ basePath: "/images/home/selection-sturgeon-mobile", media: "(max-width: 500px)" }]}
@@ -42,10 +43,10 @@ export async function HomeAboutSection() {
               data-plumb-id="image-873"
               data-plumb-asset="3743e3089f6d2565f0b421627b7b0281e2a74614"
             />
-          </div>
+          </Reveal>
 
           {/* Caviar image & Text block (Figma overlap gap -54px) */}
-          <div className="flex flex-col lg:flex-row w-full items-center lg:items-start -mt-[54px] z-10" data-plumb-id="component-6-2">
+          <Reveal className="flex flex-col lg:flex-row w-full items-center lg:items-start -mt-[54px] z-10" data-plumb-id="component-6-2" delay={240}>
             <Picture
               basePath="/images/home/selection-caviar-pearls"
               fallbackExtension="png"
@@ -88,7 +89,7 @@ export async function HomeAboutSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

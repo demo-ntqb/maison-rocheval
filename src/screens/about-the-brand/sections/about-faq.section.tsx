@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { IconMaisonRochevalSymbol } from "@/shared/components/icons/maison-rocheval-symbol";
 import { Picture } from "@/shared/components/ui/picture";
+import { Reveal } from "@/shared/components/ui/reveal";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function AboutFaqSection() {
@@ -18,43 +19,45 @@ export async function AboutFaqSection() {
         data-plumb-id="frame-2085667169"
         className="flex w-full max-w-content flex-col items-center gap-10"
       >
-        <div
-          data-plumb-id="frame-2085667299"
-          className="flex items-center gap-8 text-ink"
-          aria-hidden="true"
-        >
-          <IconMaisonRochevalSymbol className="h-8 w-7" />
-          <IconMaisonRochevalSymbol className="h-8 w-7" />
-          <IconMaisonRochevalSymbol className="h-8 w-7" />
-        </div>
-
-        <div
-          data-plumb-id="component-7"
-          className="mx-auto flex max-w-[640px] flex-col items-center gap-4 text-center"
-        >
-          <h2
-            data-plumb-id="lorem-ipsum-dolor-10"
-            id="about-brand-source-title"
-            className="font-display text-[32px] leading-none"
+        <Reveal className="flex w-full flex-col items-center gap-10">
+          <div
+            data-plumb-id="frame-2085667299"
+            className="flex items-center gap-8 text-ink"
+            aria-hidden="true"
           >
-            {t("title")}
-          </h2>
-          <p className="font-sans text-sm leading-[1.43] text-muted-ink">
-            {t("intro")}
-          </p>
-          <p className="font-sans text-sm leading-[1.43] text-muted-ink">
-            {t("description")}
-          </p>
-          <Link
-            href={ROUTES.ABOUT_PRODUCT}
-            className="inline-flex min-h-11 items-center font-sans text-xs uppercase underline underline-offset-4"
-            data-plumb-id="text-button"
-          >
-            {t("cta")}
-          </Link>
-        </div>
+            <IconMaisonRochevalSymbol className="h-8 w-7" />
+            <IconMaisonRochevalSymbol className="h-8 w-7" />
+            <IconMaisonRochevalSymbol className="h-8 w-7" />
+          </div>
 
-        <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
+          <div
+            data-plumb-id="component-7"
+            className="mx-auto flex max-w-[640px] flex-col items-center gap-4 text-center"
+          >
+            <h2
+              data-plumb-id="lorem-ipsum-dolor-10"
+              id="about-brand-source-title"
+              className="font-display text-[32px] leading-none"
+            >
+              {t("title")}
+            </h2>
+            <p className="font-sans text-sm leading-[1.43] text-muted-ink">
+              {t("intro")}
+            </p>
+            <p className="font-sans text-sm leading-[1.43] text-muted-ink">
+              {t("description")}
+            </p>
+            <Link
+              href={ROUTES.ABOUT_PRODUCT}
+              className="inline-flex min-h-11 items-center font-sans text-xs uppercase underline underline-offset-4"
+              data-plumb-id="text-button"
+            >
+              {t("cta")}
+            </Link>
+          </div>
+        </Reveal>
+
+        <Reveal delay={120} className="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
           <Picture
             basePath="/images/about-brand/source-to-ritual-preparation"
             fallbackExtension="jpg"
@@ -81,7 +84,7 @@ export async function AboutFaqSection() {
             data-plumb-id="image-8"
             data-plumb-asset="eb4f65ca5e0021129e04a702672d9f927e8c30fc"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   );
