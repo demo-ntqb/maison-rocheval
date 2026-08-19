@@ -35,7 +35,7 @@ export default async function AboutBrandPage({
   setRequestLocale(locale);
 
   return (
-    <div className="flex flex-col w-full">
+    <div data-plumb-id="about-the-brand" className="flex w-full flex-col">
       <AboutHeroSection />
       <AboutHistorySection />
       <AboutVenuesSection />

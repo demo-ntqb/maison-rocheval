@@ -10,7 +10,7 @@ export async function HomeIntroSection() {
   return (
     <section
       aria-labelledby="home-source-title"
-      className="flex w-full flex-col items-center bg-canvas px-4 py-[150px] lg:px-0 lg:py-[200px]"
+      className="-mt-[calc(100svh-var(--home-hero-compact))] flex w-full flex-col items-center bg-canvas px-4 py-[150px] lg:px-0 lg:py-[200px]"
       data-plumb-id="frame-2085667100"
     >
       <div className="flex w-full max-w-content flex-col items-center gap-[200px]" data-plumb-id="frame-2085667106">

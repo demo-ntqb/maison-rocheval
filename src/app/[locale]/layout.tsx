@@ -88,7 +88,7 @@ export default async function LocaleLayout({
       </head>
       <body
         data-plumb-id="shop"
-        className="flex min-h-full flex-col items-center overflow-x-hidden bg-canvas font-sans"
+        className="flex min-h-full flex-col items-center bg-canvas font-sans"
       >
         {children}
       </body>

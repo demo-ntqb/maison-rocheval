@@ -70,6 +70,7 @@
 
   --palette-white: #ffffff;
   --palette-offwhite: #f8f8f8;
+  --palette-canvas: #f7f7f7;
   --palette-black: #000000;
   --palette-beige: #f6f1eb;
   --palette-sand: #e5e2da;
@@ -82,9 +83,13 @@
   --palette-hero-haze: #77848f;
 
   /* Layout scale extracted from the 1400px Figma canvas. */
-  --layout-content: 62.5rem;
-  --space-section: 12.5rem;
-  --space-editorial: 9.375rem;
+  --layout-container: 87.5rem; /* 1400px */
+  --layout-content: 62.5rem; /* 1000px */
+  --space-section: 12.5rem;  /* 200px*/
+  --space-editorial: 9.375rem; /* 150px */
+
+  /* Collapsing hero: the minimum height the home hero collapses to. */
+  --home-hero-compact: 80px;
 
   /* shadcn/ui custom variable mappings */
   --radius: 2px;
@@ -113,6 +118,7 @@
   /* Brand Colors */
   --color-white: var(--palette-white);
   --color-offwhite: var(--palette-offwhite);
+  --color-canvas-soft: var(--palette-canvas);
   --color-black: var(--palette-black);
   --color-beige: var(--palette-beige);
   --color-sand: var(--palette-sand);
@@ -129,6 +135,7 @@
   --color-hero-depth: var(--palette-hero-depth);
 
   /* Layout */
+  --container-container: var(--layout-container);
   --container-content: var(--layout-content);
   --spacing-section: var(--space-section);
   --spacing-editorial: var(--space-editorial);
@@ -164,16 +171,20 @@
   --radius-brand: var(--radius);
 }
 
+@media (min-width: 1024px) {
+  :root {
+    --home-hero-compact: 80px;
+  }
+}
+
 html {
   scroll-behavior: smooth;
-  overflow-x: clip;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  overflow-x: clip;
 }
 
 /* Skip below-the-fold layout and paint work until content nears the viewport. */
@@ -196,6 +207,19 @@ body {
   background:
     radial-gradient(circle at 50% 59%, transparent 0 59%, var(--palette-hero-depth) 100%),
     linear-gradient(to bottom, color-mix(in srgb, var(--palette-black) 18%, transparent), transparent 38%);
+  pointer-events: none;
+}
+
+/* Collapsing hero → header handoff: while the journey attribute is active on
+   <html> (set by HomeHeroStage), the header logo hands its slot over to the
+   hero logo, which morphs into place. */
+[data-slot="header-logo"] {
+  transition-property: opacity, visibility;
+}
+
+html[data-home-hero-journey] [data-slot="header-logo"] {
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 

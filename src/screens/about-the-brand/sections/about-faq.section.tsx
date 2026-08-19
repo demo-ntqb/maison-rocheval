@@ -1,27 +1,85 @@
-import { FaqSection } from "@/shared/components/composite/faq-section";
 import { getTranslations } from "next-intl/server";
 
+import { Link } from "@/i18n/navigation";
+import { IconMaisonRochevalSymbol } from "@/shared/components/icons/maison-rocheval-symbol";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function AboutFaqSection() {
-  const t = await getTranslations("aboutBrand.faq");
-  const items = Array.from({ length: 5 }, (_, index) => ({
-    id: `about-brand-faq-${index + 1}`,
-    question: t(`items.${index}.question`),
-    answer: t(`items.${index}.answer`),
-  }));
+  const t = await getTranslations("aboutBrand.sourceToRitual");
 
   return (
-    <section data-plumb-id="frame-2085667040" className="flex w-full flex-col items-center justify-center bg-white py-24 lg:py-[200px]">
-      <FaqSection
-        title={t("title")}
-        items={items}
-        buttonText={t("viewAll")}
-        buttonLink={ROUTES.ABOUT_BRAND}
-        logoBasePath="/images/about-brand/faq-caviar-tin"
-        logoFallbackExtension="png"
-        logoAlt={t("imageAlt")}
-      />
+    <section
+      data-plumb-id="frame-2085667110-2"
+      aria-labelledby="about-brand-source-title"
+      className="flex w-full justify-center bg-canvas-soft py-[200px]"
+    >
+      <div
+        data-plumb-id="frame-2085667169"
+        className="flex w-full max-w-content flex-col items-center gap-10"
+      >
+        <div
+          data-plumb-id="frame-2085667299"
+          className="flex items-center gap-8 text-ink"
+          aria-hidden="true"
+        >
+          <IconMaisonRochevalSymbol className="h-8 w-7" />
+          <IconMaisonRochevalSymbol className="h-8 w-7" />
+          <IconMaisonRochevalSymbol className="h-8 w-7" />
+        </div>
+
+        <div
+          data-plumb-id="component-7"
+          className="mx-auto flex max-w-[640px] flex-col items-center gap-4 text-center"
+        >
+          <h2
+            data-plumb-id="lorem-ipsum-dolor-10"
+            id="about-brand-source-title"
+            className="font-display text-[32px] leading-none"
+          >
+            {t("title")}
+          </h2>
+          <p className="font-sans text-sm leading-[1.43] text-muted-ink">
+            {t("intro")}
+          </p>
+          <p className="font-sans text-sm leading-[1.43] text-muted-ink">
+            {t("description")}
+          </p>
+          <Link
+            href={ROUTES.ABOUT_PRODUCT}
+            className="inline-flex min-h-11 items-center font-sans text-xs uppercase underline underline-offset-4"
+            data-plumb-id="text-button"
+          >
+            {t("cta")}
+          </Link>
+        </div>
+
+        <div className="grid w-full grid-cols-1 gap-8 md:grid-cols-2">
+          <img
+            src="/images/about-brand/source-to-ritual-preparation.png"
+            alt={t("preparationAlt")}
+            loading="lazy"
+            decoding="async"
+            width={1080}
+            height={1080}
+            sizes="(max-width: 767px) 100vw, 484px"
+            className="aspect-[.691] w-full rounded-brand object-cover object-[53%_center]"
+            data-plumb-id="image-20"
+            data-plumb-asset="67cbdac6eacb88d9fe0feed8f11c819741458892"
+          />
+          <img
+            src="/images/about-brand/source-to-ritual-service.png"
+            alt={t("serviceAlt")}
+            loading="lazy"
+            decoding="async"
+            width={1280}
+            height={1708}
+            sizes="(max-width: 767px) 100vw, 484px"
+            className="aspect-[.691] w-full rounded-brand object-cover object-[50%_center]"
+            data-plumb-id="image-8"
+            data-plumb-asset="eb4f65ca5e0021129e04a702672d9f927e8c30fc"
+          />
+        </div>
+      </div>
     </section>
   );
 }

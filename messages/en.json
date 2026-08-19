@@ -4,6 +4,10 @@
       "title": "Maison Rocheval — Caviar & Fine Food",
       "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
     },
+     "home": {
+      "title": "Maison Rocheval — Caviar & Fine Food",
+      "description": "From the sturgeon farm to the table: discover Maison Rocheval's five caviar expressions, selected at the source and presented with ritual care."
+    },
     "products": {
       "title": "The Caviar Collection",
       "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
@@ -44,6 +48,23 @@
     "announcement": "We currently only deliver to France and United States.",
     "dismissAnnouncement": "Dismiss delivery announcement",
     "cart": "CART"
+  },
+   "regionDialog": {
+    "title": "Are you in the right place?",
+    "description": "Please choose your shipping destination and preferred language.",
+    "note": "Orders can only be delivered within the selected destination.",
+    "countryLabel": "Country",
+    "languageLabel": "Language",
+    "continue": "Continue",
+    "close": "Close",
+    "countries": {
+      "FR": "France",
+      "US": "United States"
+    },
+    "languages": {
+      "en": "English",
+      "fr": "French"
+    }
   },
   "footer": {
     "copyright": "© {year} {name}. All rights reserved.",
@@ -170,12 +191,12 @@
   "home": {
     "hero": {
       "title": "Maison Rocheval",
-      "imageAlt": "Caviar pearls filling a Maison Rocheval presentation bowl"
+     "imageAlt": "A gloved hand presenting an open tin of Maison Rocheval caviar"
     },
     "intro": {
-      "title": "From Source to Ritual",
-      "description": "From the waters that raise the sturgeon to the tables where caviar is served,\nevery decision shapes the final expression.",
-      "tableImageAlt": "Maison Rocheval caviar tins arranged for a tasting ritual",
+      "title": "From source to ritual",
+      "description": "From the waters that raise the sturgeon to the tables where caviar is served, every decision shapes the final expression.",
+      "tableImageAlt": "Maison Rocheval caviar tins set for a tasting ritual",
       "storyTitle": "Before the Maison, there was the source",
       "storyDescription": "Our foundations were formed at the water’s edge, alongside producers whose understanding of sturgeon husbandry runs decades deep.",
       "learnMore": "ABOUT MAISON ROCHEVAL",
@@ -248,10 +269,10 @@
   },
   "aboutBrand": {
     "hero": {
-      "title": "ABOUT MAISON ROCHEVAL",
-      "statement": "Over 50 years of heritage, held at the source",
-      "description": "Maison Rocheval brings together inherited knowledge, exacting selection and a restrained point of view to reveal caviar at its most complete.",
-      "imageAlt": "Maison Rocheval artisan preparing caviar at a dark dining counter"
+      "title": "THE MAISON",
+      "statement": "",
+      "description": "",
+      "imageAlt": "Misty lake at the source of Maison Rocheval caviar"
     },
     "story": {
       "eyebrow": "Before the Maison",
@@ -262,32 +283,36 @@
       "imageAlt": "Founder of Maison Rocheval standing in front of a dining table and classical painting"
     },
     "venues": {
-      "title": "Maison Rocheval venues",
-      "visit": "Visit page",
+      "title": "At the table",
+      "intro": "In time, that knowledge found its way to the tables of chefs and private hosts. Each service sharpened the same idea a little further: what the next generation of caviar could be.",
+      "companyB": {
+        "name": "Company B", "city": "Singapore", "stars": "3",
+        "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
+        "imageAlt": "White restaurant building surrounded by tropical greenery"
+      },
       "alliance": {
         "name": "Alliance",
-        "subtitle": "La Table mystère - Paris",
-        "description": "A singular table where precise gestures, measured hospitality and exceptional ingredients meet in quiet harmony.",
-        "imageAlt": "Illuminated exterior of Alliance restaurant in Paris"
+        "city": "Paris", "stars": "2",
+        "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
+        "imageAlt": "Dining room at Alliance restaurant in Paris"
       },
-      "milo": {
-        "name": "Milo",
-        "subtitle": "La Table mystère - Paris",
-        "description": "A generous dining room shaped by instinct, seasonality and the pleasure of sharing exceptional produce.",
-        "imageAlt": "Warmly illuminated entrance to Milo restaurant"
+      "companyC": {
+        "name": "Company C", "city": "United States", "stars": "2",
+        "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
+        "imageAlt": "Illuminated restaurant entrance at night"
       }
     },
     "selection": {
-      "title": "The most extraordinary things cannot be accelerated",
-      "description": "Selection begins upstream. Maison Rocheval works closely with its producers to understand every harvest: the conditions in which the sturgeon is raised, its diet, its maturity, and the timing of harvest.",
-      "imageAlt": "Chefs evaluating open tins of caviar during selection",
-      "caption": "The caviar is read as a whole.",
+      "title": "Time is part of the harvest",
+      "description": "Selection begins upstream. How the sturgeon was raised, what it was fed, and the moment chosen for harvest.",
+      "imageAlt": "Producer selecting a sturgeon at harvest",
+      "caption": "The caviar is read as a whole",
       "detail1": "Colour, grain, texture, firmness and moisture are judged alongside salinity, aroma, maturation and the integrity of each pearl.",
       "detail2": "On the palate, flavour unfolds in layers — walnut, seaweed, smoke, mushroom — with the truest character often arriving last, in the quality of the finish."
     },
     "ritual": {
       "title": "THE RITUAL",
-      "statement": "The final ingredient is ritual",
+      "statement": "The final expression is in the serving",
       "subtitle": "From Source to Ritual",
       "paragraph1": "Caviar has always carried ceremony: the chilled tin, the turn of the key, mother-of-pearl against the grain, the first spoonful taken before anyone speaks.",
       "paragraph2": "Maison Rocheval preserves that ceremony with restraint. Not as a performance, but because how something is served changes how it is remembered, and the finest tables understand this instinctively, whether found in a celebrated dining room or set for two at home.",
@@ -295,6 +320,14 @@
       "heroImageAlt": "Award-winning chefs celebrating together",
       "sourceImageAlt": "Caviar specialists inspecting a harvest at the source",
       "serviceImageAlt": "A guest tasting caviar with a mother-of-pearl spoon"
+    },
+    "sourceToRitual": {
+      "title": "From source to ritual",
+      "intro": "Caviar has always carried ceremony: the chilled tin, the turn of the key, mother-of-pearl against the grain, the first spoonful taken before anyone speaks.",
+      "description": "Maison Rocheval preserves that ceremony with restraint. Not as a performance, but because how something is served changes how it is remembered, and the finest tables understand this instinctively, whether found in a celebrated dining room or set for two at home.",
+      "cta": "Discover the collection",
+      "preparationAlt": "Chef preparing a tin of caviar",
+      "serviceAlt": "Caviar served in a glass dish"
     },
     "faq": {
       "title": "Frequently Asked Questions",

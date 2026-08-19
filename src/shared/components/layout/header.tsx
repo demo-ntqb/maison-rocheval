@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import { useTranslations, useLocale } from "next-intl";
 import { Menu } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
@@ -16,6 +16,12 @@ const MobileMenu = dynamic(
   () => import("./mobile-menu").then((module) => module.MobileMenu),
   { ssr: false },
 );
+
+const TRANSPARENT_ROUTES: string[] = [ROUTES.HOME, ROUTES.ABOUT_BRAND, ROUTES.ABOUT_PRODUCT];
+
+const LIGHT_HERO_ROUTES: string[] = [ROUTES.HOME, ROUTES.ABOUT_BRAND, ROUTES.ABOUT_PRODUCT];
+
+const ANNOUNCEMENT_ROUTES: string[] = [ROUTES.PRODUCTS]
 
 export interface HeaderProps {
   initialVariant?: "transparent" | "solid";
@@ -30,23 +36,30 @@ export function Header({ initialVariant }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Tự động nhận diện variant dựa trên route hiện tại nếu không truyền prop cứng
-  const transparentRoutes: string[] = [ROUTES.HOME, ROUTES.ABOUT_BRAND, ROUTES.ABOUT_PRODUCT];
   const resolvedVariant = initialVariant ||
-    (transparentRoutes.includes(pathname)
+    (TRANSPARENT_ROUTES.includes(pathname)
       ? "transparent"
       : "solid");
 
-  // Kiểm tra xem trang có hiển thị Announcement Bar không (chỉ trang Shop)
-  const showAnnouncement = pathname.includes(ROUTES.PRODUCTS);
+  // Các trang có hero sáng màu: header trong suốt phải dùng chữ đen
+  const hasLightHero = LIGHT_HERO_ROUTES.includes(pathname);
 
-  // Lắng nghe sự kiện scroll để đổi trạng thái nền của transparent header
+  // Kiểm tra xem trang có hiển thị Announcement Bar không (chỉ trang Shop)
+  const showAnnouncement = ANNOUNCEMENT_ROUTES.some((route) => pathname.includes(route));
+
+  // Lắng nghe sự kiện scroll để đổi trạng thái nền của transparent header.
+  // Trên home, hero báo hiệu [data-home-hero-journey] trên <html> — nền giữ
+  // trong suốt cho đến khi scroll qua khỏi hero section.
   useEffect(() => {
     if (resolvedVariant !== "transparent") {
       return;
     }
 
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      const heroJourneyActive = document.documentElement.hasAttribute(
+        "data-home-hero-journey",
+      );
+      if (window.scrollY > 50 && !heroJourneyActive) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -66,10 +79,6 @@ export function Header({ initialVariant }: HeaderProps) {
     const nextLocale = locale === "en" ? "fr" : "en";
     router.replace(pathname, { locale: nextLocale });
   };
-
-  // Các trang có hero sáng màu: header trong suốt phải dùng chữ đen
-  const lightHeroRoutes: string[] = [ROUTES.HOME, ROUTES.ABOUT_PRODUCT];
-  const hasLightHero = lightHeroRoutes.includes(pathname);
 
   // Xác định màu chữ chính và màu chữ hover
   let textColorClass = "text-black";
@@ -103,7 +112,7 @@ export function Header({ initialVariant }: HeaderProps) {
       )}
 
       <header
-        data-plumb-id="component-7"
+        data-plumb-id="header"
         className={cn(
           "flex w-full flex-row justify-between px-4 py-5 transition-colors duration-300 sm:px-6 lg:px-8",
           headerBgClass
@@ -159,7 +168,15 @@ export function Header({ initialVariant }: HeaderProps) {
 
             {/* Center Column: Logo */}
             <div className="absolute left-1/2 flex -translate-x-1/2 justify-center">
-              <Link href="/" className={cn("flex size-12 items-center justify-center transition-opacity hover:opacity-70", textColorClass)}>
+              <Link
+                href="/"
+                data-slot="header-logo"
+                className={cn(
+                  "flex size-12 items-center justify-center transition-opacity hover:opacity-70",
+                  textColorClass,
+                  ROUTES.HOME === pathname && !isScrolled && "hidden"
+                )}
+              >
                 <IconMaisonRochevalLogo className="h-10 w-[84px] max-w-none shrink-0" aria-hidden="true" focusable="false" data-plumb-id="group" />
                 <span className="sr-only">Maison Rocheval</span>
               </Link>

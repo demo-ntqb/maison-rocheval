@@ -1,6 +1,7 @@
 import { ComingSoonHeroSection } from "@/screens/coming-soon";
 import { Footer } from "@/shared/components/layout/footer";
 import { Header } from "@/shared/components/layout/header";
+import { RegionPreferenceGate } from "@/shared/components/layout/region-preference-gate";
 import { isComingSoon } from "@/shared/lib/metadata";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -35,8 +36,9 @@ export default async function LocaleLayout({
     >
       Skip to content
     </a>
-    <NextIntlClientProvider messages={{ header: messages.header }}>
+    <NextIntlClientProvider messages={{ header: messages.header, regionDialog: messages.regionDialog }}>
       <Header />
+      <RegionPreferenceGate />
     </NextIntlClientProvider>
     <NextIntlClientProvider messages={null}>
       <main id="main-content" className="w-full flex-1">

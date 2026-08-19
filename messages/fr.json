@@ -4,6 +4,10 @@
       "title": "Maison Rocheval — Caviar & Gastronomie",
       "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
     },
+     "home": {
+      "title": "Maison Rocheval — Caviar & Gastronomie",
+      "description": "De l'esturgeonnière à la table : découvrez les cinq expressions de caviar Maison Rocheval, sélectionnées à la source et présentées avec tout leur rituel."
+    },
     "products": {
       "title": "La Collection de Caviar",
       "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
@@ -44,6 +48,23 @@
     "announcement": "Nous livrons actuellement uniquement en France et aux États-Unis.",
     "dismissAnnouncement": "Fermer l’annonce de livraison",
     "cart": "PANIER"
+  },
+  "regionDialog": {
+    "title": "Êtes-vous au bon endroit ?",
+    "description": "Veuillez choisir votre destination de livraison et votre langue préférée.",
+    "note": "Les commandes ne peuvent être livrées que dans la destination sélectionnée.",
+    "countryLabel": "Pays",
+    "languageLabel": "Langue",
+    "continue": "Continuer",
+    "close": "Fermer",
+    "countries": {
+      "FR": "France",
+      "US": "États-Unis"
+    },
+    "languages": {
+      "en": "Anglais",
+      "fr": "Français"
+    }
   },
   "footer": {
     "copyright": "© {year} {name}. Tous droits réservés.",
@@ -248,10 +269,10 @@
   },
   "aboutBrand": {
     "hero": {
-      "title": "À PROPOS DE MAISON ROCHEVAL",
-      "statement": "Plus de 50 ans d’héritage, préservés à la source",
-      "description": "Maison Rocheval réunit un savoir transmis, une sélection exigeante et un regard mesuré pour révéler le caviar dans toute sa plénitude.",
-      "imageAlt": "Un artisan Maison Rocheval prépare le caviar dans une salle sombre"
+      "title": "LA MAISON",
+      "statement": "",
+      "description": "",
+      "imageAlt": "Lac brumeux à la source du caviar Maison Rocheval"
     },
     "story": {
       "eyebrow": "Avant la Maison",
@@ -262,32 +283,32 @@
       "imageAlt": "Le fondateur de Maison Rocheval devant une table et une peinture classique"
     },
     "venues": {
-      "title": "Les tables Maison Rocheval",
-      "visit": "Voir la page",
+      "title": "À table",
+      "intro": "Avec le temps, ce savoir a trouvé sa place sur les tables des chefs et des hôtes privés. Chaque service a précisé un peu plus ce que pourrait être la prochaine génération de caviar.",
+      "companyB": { "name": "Company B", "city": "Singapour", "stars": "3", "description": "La cuisine du chef Toshitaka Omiya se définit par la précision, la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.", "imageAlt": "Restaurant blanc entouré de végétation tropicale" },
       "alliance": {
         "name": "Alliance",
-        "subtitle": "La Table mystère - Paris",
-        "description": "Une table singulière où gestes précis, hospitalité mesurée et ingrédients d’exception se rencontrent en harmonie.",
-        "imageAlt": "Façade illuminée du restaurant Alliance à Paris"
+        "city": "Paris", "stars": "2",
+        "description": "La cuisine du chef Toshitaka Omiya se définit par la précision, la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.",
+        "imageAlt": "Salle du restaurant Alliance à Paris"
       },
-      "milo": {
-        "name": "Milo",
-        "subtitle": "La Table mystère - Paris",
-        "description": "Une salle généreuse façonnée par l’instinct, les saisons et le plaisir de partager des produits d’exception.",
-        "imageAlt": "Entrée chaleureusement éclairée du restaurant Milo"
+      "companyC": {
+        "name": "Company C", "city": "États-Unis", "stars": "2",
+        "description": "La cuisine du chef Toshitaka Omiya se définit par la précision, la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.",
+        "imageAlt": "Entrée de restaurant illuminée la nuit"
       }
     },
     "selection": {
-      "title": "Les choses les plus extraordinaires ne peuvent être accélérées",
-      "description": "La sélection commence en amont. Maison Rocheval travaille étroitement avec ses producteurs pour comprendre chaque récolte : les conditions d’élevage, l’alimentation, la maturité et le moment de la récolte.",
-      "imageAlt": "Des chefs évaluent des boîtes de caviar lors de la sélection",
-      "caption": "Le caviar se lit comme un tout.",
+      "title": "Le temps fait partie de la récolte",
+      "description": "La sélection commence en amont : l’élevage de l’esturgeon, son alimentation et le moment choisi pour la récolte.",
+      "imageAlt": "Producteur sélectionnant un esturgeon lors de la récolte",
+      "caption": "Le caviar se lit comme un tout",
       "detail1": "Couleur, grain, texture, fermeté et humidité sont jugés avec la salinité, l’arôme, la maturation et l’intégrité de chaque grain.",
       "detail2": "En bouche, la saveur se déploie par strates — noix, algue, fumée, champignon — et le caractère le plus vrai apparaît souvent dans la finale."
     },
     "ritual": {
       "title": "LE RITUEL",
-      "statement": "Le dernier ingrédient est le rituel",
+      "statement": "L’expression finale se trouve dans le service",
       "subtitle": "De la Source au Rituel",
       "paragraph1": "Le caviar a toujours porté sa cérémonie : la boîte glacée, le tour de clé, la nacre contre le grain, la première cuillerée avant que quiconque ne parle.",
       "paragraph2": "Maison Rocheval préserve cette cérémonie avec retenue. Non comme une performance, mais parce que la manière de servir transforme le souvenir, à une grande table comme lors d’un dîner à deux.",
@@ -295,6 +316,14 @@
       "heroImageAlt": "Des chefs primés célèbrent ensemble",
       "sourceImageAlt": "Des spécialistes inspectent une récolte de caviar à la source",
       "serviceImageAlt": "Une convive déguste du caviar avec une cuillère en nacre"
+    },
+    "sourceToRitual": {
+      "title": "De la source au rituel",
+      "intro": "Le caviar porte depuis toujours sa cérémonie : la boîte glacée, le tour de clé, la nacre contre le grain, la première cuillerée avant que quiconque ne parle.",
+      "description": "Maison Rocheval préserve cette cérémonie avec retenue, car la manière de servir transforme le souvenir — à une grande table comme lors d’un dîner à deux.",
+      "cta": "Découvrir la collection",
+      "preparationAlt": "Chef préparant une boîte de caviar",
+      "serviceAlt": "Caviar servi dans une coupe en verre"
     },
     "faq": {
       "title": "Questions Fréquentes",

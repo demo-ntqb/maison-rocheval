@@ -38,7 +38,7 @@ export async function Footer({ locale }: FooterProps) {
   }
 
   return (
-    <footer className="flex w-full flex-col items-center gap-16 bg-warm px-4 py-24 text-ink sm:px-6 lg:px-0 lg:py-[100px]" data-plumb-id="component-6-2">
+    <footer className="flex w-full flex-col items-center gap-16 bg-warm px-4 py-24 text-ink sm:px-6 lg:px-0 lg:py-[100px]" data-plumb-id="footer">
       <div className="flex w-full max-w-content flex-col justify-between gap-16 lg:h-[300px] lg:flex-row" data-plumb-id="frame-2085667113">
         <div className="flex w-full max-w-[280px] flex-col" data-plumb-id="frame-2085666973">
           <div className="flex flex-col gap-8" data-plumb-id="frame-2085667166">

@@ -15,7 +15,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
   return (
     <section
       aria-labelledby="home-products-title"
-      className="flex w-full flex-col items-center bg-[#f7f7f7] px-4 py-[150px] lg:px-0 lg:py-[200px]"
+      className="flex w-full flex-col items-center bg-canvas-soft px-4 py-[150px] lg:px-0 lg:py-[200px]"
       data-plumb-id="frame-2085667107"
     >
       <div className="flex w-full max-w-content flex-col items-center gap-16" data-plumb-id="frame-2085667108">
