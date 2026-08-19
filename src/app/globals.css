@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* shadcn/ui runtime primitives (from shadcn/dist/tailwind.css, inlined
    because Turbopack doesn't resolve that bare-specifier @import inside the

@@ -77,6 +77,7 @@ export default async function LocaleLayout({
       lang={locale}
       data-scroll-behavior="smooth"
       className={`${optima.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         <meta name="theme-color" content="#16222e" />

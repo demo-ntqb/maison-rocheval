@@ -16,7 +16,7 @@ export function ProductCard({ product, priority = false, className, ...props }: 
   return (
     <article
       className={cn(
-        "flex flex-col border-[0.5px] border-gray-light rounded-[2px] bg-canvas text-center overflow-hidden shrink-0 transition-shadow hover:shadow-sm",
+        "flex flex-col border-[0.5px] border-gray-light rounded-[2px] bg-canvas text-center overflow-hidden shrink-0 transition-shadow hover:shadow-sm transition-colors duration-300 hover:bg-warm",
         "w-[250px] h-[393px] lg:w-[280px] lg:h-[465px]",
         className
       )}
@@ -54,7 +54,7 @@ export function ProductCard({ product, priority = false, className, ...props }: 
       </div>
 
       <div
-        className="flex flex-col justify-between p-6 min-h-[153px] bg-canvas"
+        className="flex flex-col justify-between p-6 min-h-[153px]"
         data-plumb-id="frame-2085667164"
       >
         <div className="flex flex-col gap-1 items-center" data-plumb-id="frame-2085667136">
