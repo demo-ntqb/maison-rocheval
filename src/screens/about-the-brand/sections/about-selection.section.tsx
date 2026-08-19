@@ -9,7 +9,7 @@ export async function AboutSelectionSection() {
     <section
       data-plumb-id="frame-2085667080"
       aria-labelledby="about-brand-selection-title"
-      className="flex w-full justify-center bg-canvas-soft py-[200px]"
+      className="flex w-full justify-center bg-canvas-soft py-[200px] px-4"
     >
       <div
         data-plumb-id="frame-2085667090"
@@ -29,7 +29,13 @@ export async function AboutSelectionSection() {
         </div>
 
         <Picture
-          basePath="/images/about-brand/harvest-sturgeon"
+          basePath="/images/about-brand/harvest-sturgeon-desktop"
+          artDirected={[
+            {
+              basePath: "/images/about-brand/harvest-sturgeon-mobile",
+              media: "(max-width: 767px)",
+            },
+          ]}
           fallbackExtension="jpg"
           alt={t("imageAlt")}
           loading="lazy"

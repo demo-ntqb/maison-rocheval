@@ -2,8 +2,8 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { IconMaisonRochevalSymbol } from "@/shared/components/icons/maison-rocheval-symbol";
-import { ROUTES } from "@/shared/constants/route.constant";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function AboutFaqSection() {
   const t = await getTranslations("aboutBrand.sourceToRitual");
@@ -12,7 +12,7 @@ export async function AboutFaqSection() {
     <section
       data-plumb-id="frame-2085667110-2"
       aria-labelledby="about-brand-source-title"
-      className="flex w-full justify-center bg-canvas-soft py-[200px]"
+      className="flex w-full justify-center bg-canvas-soft py-[200px] px-4"
     >
       <div
         data-plumb-id="frame-2085667169"

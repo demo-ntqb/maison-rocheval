@@ -23,12 +23,15 @@ const OUTPUT_DIR = path.join(ROOT, "public", "images", "about-brand");
 
 /** [output name, fallback ext, responsive widths] — widths match each section's `sizes`. */
 const IMAGES = [
-  // Hero (LCP, 100vw full-bleed, 1920x1080 source).
-  ["hero-maison-lake", "jpg", [640, 1000, 1400, 1920]],
+  // Hero (LCP, 100vw full-bleed).
+  ["hero-maison-lake-desktop", "jpg", [640, 1000, 1400, 1920]],
+  ["hero-maison-lake-mobile", "jpg", [640, 1000, 1400, 1920]],
   // Ritual photo, max 1000px wide.
-  ["ritual-table", "jpg", [640, 1000, 1400]],
+  ["ritual-table-desktop", "jpg", [640, 1000, 1400]],
+  ["ritual-table-mobile", "jpg", [640, 1000, 1400]],
   // Selection photo, max 1000px wide.
-  ["harvest-sturgeon", "jpg", [640, 1000]],
+  ["harvest-sturgeon-desktop", "jpg", [640, 1000]],
+  ["harvest-sturgeon-mobile", "jpg", [640, 1000]],
   // Story photo, max ~470px wide.
   ["story-source", "jpg", [480, 640, 1000]],
   // Source-to-ritual pair, max ~484px wide.

@@ -283,9 +283,9 @@
       "imageAlt": "Misty lake at the source of Maison Rocheval caviar"
     },
     "story": {
-      "eyebrow": "Before the Maison",
-      "title": "Before the Maison, there was the source",
-      "paragraph1": "The name came later. Our foundations formed years earlier, at the water’s edge, alongside producers whose understanding of sturgeon husbandry runs decades deep.",
+      "title": "The name came later",
+      "eyebrow": "Before the Maison, there was the source",
+      "paragraph1": "Our foundations formed years earlier, at the water’s edge, alongside producers whose understanding of sturgeon husbandry runs decades deep.",
       "paragraph2": "That proximity taught us to see caviar as something decided long before the tin: in the water that raises the fish, the feed it is given, the years it is allowed, and the moment it is finally taken. Each decision was refined long before the caviar is eventually served.",
       "paragraph3": "Maison Rocheval exists to hold that knowledge together. A deep respect for everything that happens before the harvest, and a clear conviction about what earns the right to carry the name.",
       "imageAlt": "Founder of Maison Rocheval standing in front of a dining table and classical painting"
@@ -293,25 +293,25 @@
     "venues": {
       "title": "At the table",
       "intro": "In time, that knowledge found its way to the tables of chefs and private hosts. Each service sharpened the same idea a little further: what the next generation of caviar could be.",
-      "companyB": {
-        "name": "Company B",
-        "city": "Singapore",
-        "stars": "3",
-        "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
+      "willow": {
+        "name": "Willow | Chef Nicolas Tam",
+        "city": "Hong Kong",
+        "stars": "1",
+        "description": "Chef Nicolas Tam showcases precision, technique, and heritage in his signature dish of Amadai with crispy scales.",
         "imageAlt": "White restaurant building surrounded by tropical greenery"
       },
       "alliance": {
-        "name": "Alliance",
+        "name": "Alliance | Chef Toshitaka Omiya",
         "city": "Paris",
         "stars": "2",
-        "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
+        "description": "Chef Toshitaka Omiya's cuisine is defined by restraint and an instinct for letting exceptional ingredients speak for themselves.",
         "imageAlt": "Dining room at Alliance restaurant in Paris"
       },
-      "companyC": {
-        "name": "Company C",
-        "city": "United States",
+      "sushiSakuta": {
+        "name": "Sushi Sakuta | Chef Yoshio Sakuta",
+        "city": "Singapore",
         "stars": "2",
-        "description": "Chef Toshitaka Omiya’s cuisine is defined by precision, restraint and an instinct for letting exceptional ingredients speak for themselves.",
+        "description": "Chef Yoshio Sakuta’s preparation process is meticulously calculated to ensure that every guest taste the ingredients at their best.",
         "imageAlt": "Illuminated restaurant entrance at night"
       }
     },

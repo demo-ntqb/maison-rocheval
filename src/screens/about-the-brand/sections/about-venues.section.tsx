@@ -3,8 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { AboutVenuesCarousel } from "../components/about-venues-carousel";
 
 const VENUE_META: Record<string, { assetId: string; imageBasePath: string; plumbId: string }> = {
-  companyB: {
-    assetId: "750a4dbbe45d048e65dfbd2252fef9cb53635a58",
+  willow: {
+    assetId: "b287a40ae0d202331b00f3e19a7a2ec9776a3406",
     imageBasePath: "/images/about-brand/venue-company-b",
     plumbId: "frame-2085667156",
   },
@@ -13,7 +13,7 @@ const VENUE_META: Record<string, { assetId: string; imageBasePath: string; plumb
     imageBasePath: "/images/about-brand/venue-alliance-figma",
     plumbId: "frame-2085667155",
   },
-  companyC: {
+  sushiSakuta: {
     assetId: "dec8b5460594b1c032dd0c514207685f4e6d03e4",
     imageBasePath: "/images/about-brand/venue-company-c",
     plumbId: "frame-2085667157",
@@ -22,7 +22,7 @@ const VENUE_META: Record<string, { assetId: string; imageBasePath: string; plumb
 
 export async function AboutVenuesSection() {
   const t = await getTranslations("aboutBrand.venues");
-  const venues = (["companyB", "alliance", "companyC"] as const).map((key) => {
+  const venues = (["willow", "alliance", "sushiSakuta"] as const).map((key) => {
     const meta = VENUE_META[key];
     return {
       alt: t(`${key}.imageAlt`),

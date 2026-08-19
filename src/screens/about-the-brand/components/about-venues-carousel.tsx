@@ -5,8 +5,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 import { Link } from "@/i18n/navigation";
-import { ROUTES } from "@/shared/constants/route.constant";
+import { IconMichelinStar } from "@/shared/components/icons";
 import { Picture } from "@/shared/components/ui/picture";
+import { ROUTES } from "@/shared/constants/route.constant";
 
 type Venue = {
   alt: string;
@@ -19,31 +20,21 @@ type Venue = {
   stars: number;
 };
 
-const STAR_COLORS = ["#a1a1a1", "#a1a1a1", "#a1a1a1", "#a1a1a1", "#a1a1a1"];
-
 function StarRow({ count, plumbId }: { count: number; plumbId: string }) {
   return (
-    <span
+    <div
       data-plumb-id={plumbId}
-      aria-label={`${count} Michelin stars`}
-      className="mt-5 flex items-center gap-1 font-display text-sm font-bold"
+      aria-label={`${count} Michelin ${count === 1 ? "star" : "stars"}`}
+      className="flex items-center gap-3"
     >
-      <span>
-        {[...Array(count)].map((_, i) => (
-          <span
-            key={i}
-            aria-hidden="true"
-            style={{ color: STAR_COLORS[i] || "#a1a1a1" }}
-            className="mr-0.5"
-          >
-            ★
-          </span>
-        ))}
-      </span>
-      <span className="ml-2 text-ink">
-        {count} Michelin {count === 1 ? "Star" : "Stars"}
-      </span>
-    </span>
+      {[...Array(count)].map((_, i) => (
+        <IconMichelinStar
+          key={i}
+          className="size-6 text-black"
+          aria-hidden="true"
+        />
+      ))}
+    </div>
   );
 }
 
@@ -96,29 +87,37 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                 className="aspect-[.72] w-full rounded-[2px] object-cover"
                 data-plumb-asset={venue.assetId}
               />
-              <div className="px-8 py-8">
-                <h3 className="font-display text-[32px] leading-none">
-                  {venue.name}
-                </h3>
-                <p className="mt-5 font-display text-sm font-bold text-ink">
-                  {venue.city}
-                </p>
+              <div className="p-8 flex flex-col gap-6">
                 <StarRow count={venue.stars} plumbId={`${venue.plumbId}-stars`} />
-                <p className="mt-4 font-sans text-sm leading-[1.43] text-muted-ink">
-                  {venue.description}
-                </p>
-                <Link
-                  href={ROUTES.ABOUT_PRODUCT}
-                  className="mt-8 inline-flex min-h-11 items-center font-sans text-xs uppercase underline underline-offset-4"
-                >
-                  Discover {venue.name}
-                </Link>
+                <div className="flex flex-col gap-8">
+                  <div className="flex flex-col gap-4">
+                    <h3 className="font-display text-2xl leading-[1.33] text-ink">
+                      {venue.name}
+                    </h3>
+                    <div className="flex flex-col gap-3">
+                      <p className="font-display text-base font-bold text-ink">
+                        {venue.city}
+                      </p>
+                      <p className="font-sans text-sm leading-[1.43] text-muted-ink">
+                        {venue.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <Link
+                      href={ROUTES.ABOUT_PRODUCT}
+                      className="inline-flex min-h-11 items-center font-sans text-sm uppercase underline underline-offset-4 text-ink hover:opacity-80 transition-opacity"
+                    >
+                      Discover {venue.name.split(" | ")[0]}
+                    </Link>
+                  </div>
+                </div>
               </div>
             </article>
           ))}
         </div>
       </div>
-      <div className="mt-14 flex justify-center gap-4">
+      <div className="mt-13 flex justify-center gap-4">
         <button
           type="button"
           onClick={() => api?.scrollPrev()}

@@ -10,11 +10,12 @@ export async function AboutHeroSection() {
       aria-labelledby="about-brand-title"
       data-slot="about-hero-section"
       data-plumb-id="frame-2085667109"
-      className="relative -mt-20 flex min-h-[100dvh] flex-col overflow-hidden bg-ink"
+      className="relative -mt-20 flex min-h-dvh flex-col overflow-hidden bg-ink"
     >
       <div className="absolute inset-0">
         <Picture
-          basePath="/images/about-brand/hero-maison-lake"
+          basePath="/images/about-brand/hero-maison-lake-desktop"
+          artDirected={[{ basePath: "/images/about-brand/hero-maison-lake-mobile", media: "(max-width: 767px)" }]}
           fallbackExtension="jpg"
           alt={t("imageAlt")}
           priority
@@ -26,7 +27,7 @@ export async function AboutHeroSection() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col px-6 pt-28 lg:px-[54px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-350 flex-col px-6 pt-28 lg:px-13.5">
         <h1
           id="about-brand-title"
           data-plumb-id="the-maison"

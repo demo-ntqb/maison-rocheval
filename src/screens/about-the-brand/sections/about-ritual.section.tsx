@@ -9,13 +9,13 @@ export async function AboutRitualSection() {
     <section
       data-plumb-id="frame-2085667081"
       aria-labelledby="about-brand-ritual-title"
-      className="flex w-full justify-center bg-warm py-[200px]"
+      className="flex w-full justify-center bg-warm py-[200px] px-4"
     >
       <div
         data-plumb-id="frame-2085667122"
         className="flex w-full max-w-content flex-col gap-[54px]"
       >
-        <div className="flex w-full flex-col items-end justify-center gap-4 md:flex-row md:gap-4">
+        <div className="flex w-full flex-col items-center md:items-end justify-center gap-4 md:flex-row md:gap-4">
           <h2
             data-plumb-id="lorem-ipsum-dolor-2"
             id="about-brand-ritual-title"
@@ -32,8 +32,14 @@ export async function AboutRitualSection() {
         </div>
 
         <Picture
-          basePath="/images/about-brand/ritual-table"
+          basePath="/images/about-brand/ritual-table-mobile"
           fallbackExtension="jpg"
+          artDirected={[
+            {
+              basePath: "/images/about-brand/ritual-table-desktop",
+              media: "(min-width: 500px)",
+            },
+          ]}
           alt={t("heroImageAlt")}
           loading="lazy"
           responsiveWidths={[640, 1000, 1400]}
