@@ -16,8 +16,8 @@ export async function AboutHistorySection() {
         className="flex w-full max-w-content flex-col items-stretch gap-y-10 md:flex-row md:items-center md:gap-[54px]"
       >
         <div
-          data-plumb-id="image-20-wrap"
-          className="relative w-full overflow-hidden md:max-w-[543px] md:flex-[0_0_54.3%]"
+          data-plumb-id="frame-2085667324"
+          className="relative w-full overflow-hidden md:bg-navy-dark md:p-6 md:rounded-[2px] md:max-w-[543px] md:h-187 md:flex-[0_0_54.3%]"
         >
           <Picture
             basePath="/images/about-brand/story-source"
@@ -25,10 +25,10 @@ export async function AboutHistorySection() {
             alt={t("imageAlt")}
             loading="lazy"
             responsiveWidths={[480, 640, 1000]}
-            sizes="(max-width: 767px) 100vw, 543px"
-            width={543}
-            height={748}
-            className="aspect-543/748 w-full object-cover object-[54.3%_0%]"
+            sizes="(max-width: 767px) 100vw, 495px"
+            width={495}
+            height={700}
+            className="aspect-365/516 md:aspect-495/700 w-full md:h-full object-cover object-[54.3%_0%]"
             data-plumb-id="image-20"
             data-plumb-asset="779e209f89a170e6f256e88be293be9e8d0d17b0"
           />

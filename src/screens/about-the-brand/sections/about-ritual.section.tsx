@@ -44,9 +44,9 @@ export async function AboutRitualSection() {
           loading="lazy"
           responsiveWidths={[640, 1000, 1400]}
           sizes="(max-width: 1000px) 100vw, 1000px"
-          width={1499}
-          height={1049}
-          className="aspect-square w-full object-cover"
+          width={1000}
+          height={972}
+          className="aspect-396/700 md:aspect-1000/972 w-full object-cover"
           data-plumb-id="rectangle-4878-2"
           data-plumb-asset="c9671fa8e74583759e4aff7319996026f43c0655"
         />

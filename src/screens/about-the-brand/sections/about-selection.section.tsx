@@ -41,9 +41,9 @@ export async function AboutSelectionSection() {
           loading="lazy"
           responsiveWidths={[640, 1000]}
           sizes="(max-width: 1000px) 100vw, 1000px"
-          width={1043}
-          height={1508}
-          className="aspect-[10/7] w-full rounded-brand object-cover object-[center_22%]"
+          width={1000}
+          height={700}
+          className="aspect-2/3 md:aspect-10/7 w-full rounded-brand object-cover object-[center_22%]"
           data-plumb-id="rectangle-4878"
           data-plumb-asset="76c1cde6a925e94a7e9ebb37fd450bcf8aeffa17"
         />

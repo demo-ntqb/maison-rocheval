@@ -21,8 +21,8 @@ export async function AboutHeroSection() {
           priority
           responsiveWidths={[640, 1000, 1400, 1920]}
           sizes="100vw"
-          width={1920}
-          height={1080}
+          width={1400}
+          height={800}
           className="size-full object-cover"
         />
       </div>

@@ -62,9 +62,9 @@ export async function AboutFaqSection() {
             loading="lazy"
             responsiveWidths={[480, 640, 1000]}
             sizes="(max-width: 767px) 100vw, 484px"
-            width={1080}
-            height={1080}
-            className="aspect-[.691] w-full rounded-brand object-cover object-[53%_center]"
+            width={484}
+            height={700}
+            className="aspect-396/500 md:aspect-484/700 w-full rounded-brand object-cover object-[53%_center]"
             data-plumb-id="image-20"
             data-plumb-asset="67cbdac6eacb88d9fe0feed8f11c819741458892"
           />
@@ -75,9 +75,9 @@ export async function AboutFaqSection() {
             loading="lazy"
             responsiveWidths={[480, 640, 1000]}
             sizes="(max-width: 767px) 100vw, 484px"
-            width={1280}
-            height={1708}
-            className="aspect-[.691] w-full rounded-brand object-cover object-[50%_center]"
+            width={484}
+            height={700}
+            className="aspect-396/500 md:aspect-484/700 w-full rounded-brand object-cover object-[50%_center]"
             data-plumb-id="image-8"
             data-plumb-asset="eb4f65ca5e0021129e04a702672d9f927e8c30fc"
           />

@@ -84,7 +84,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                 sizes="(max-width: 767px) 86vw, 500px"
                 width={500}
                 height={700}
-                className="aspect-[.72] w-full rounded-[2px] object-cover"
+                className="aspect-7/10 md:aspect-5/7 w-full rounded-[2px] object-cover"
                 data-plumb-asset={venue.assetId}
               />
               <div className="p-8 flex flex-col gap-6">
