@@ -48,6 +48,12 @@ export function generateRootMetadata(locale: string, title: string, description:
       address: false,
     },
     alternates: { canonical, languages: buildLanguageAlternates("/") },
+    icons: {
+      icon: [
+        { url: "/mr-light.png", media: "(prefers-color-scheme: light)", type: "image/png", sizes: "500x500" },
+        { url: "/mr-dark.png", media: "(prefers-color-scheme: dark)", type: "image/png", sizes: "500x500" },
+      ],
+    },
     openGraph: {
       type: "website",
       locale: OG_LOCALE[locale] ?? OG_LOCALE[routing.defaultLocale],
@@ -186,7 +192,7 @@ export function generateOrganizationJsonLd(): string {
     "@type": "Organization",
     name: businessInfo.name,
     url: SITE_URL,
-    logo: new URL("/icon.png", SITE_URL).toString(),
+    logo: new URL("/apple-icon.png", SITE_URL).toString(),
   });
 }
 
