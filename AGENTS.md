@@ -194,3 +194,18 @@ For any interactive UI primitive — accordion, dialog/modal, dropdown, tabs, po
 - **Treat the generated `ui/*.tsx` file as a primitive you don't restyle in place.** Its default classNames reference generic shadcn tokens that don't exist in this project's theme and are intentionally left alone. Do the actual visual work with Tailwind at the **call site**, passing `className` — the project's `cn()` (`@/shared/lib/utils`, clsx + `tailwind-merge`) correctly lets your classes override the component's defaults.
 - **`ui/button.tsx`'s base classes force any child `<svg>` to 16px** via `[&_svg:not([class*='size-'])]:size-4` — a compound `:not()` selector that beats a plain `h-* w-*` utility on the icon regardless of source order. Size icons inside a `Button` with a `size-*` class, not separate `h-*`/`w-*`.
 - **After editing Tailwind classes inside a component already rendered by the dev server, verify computed styles, not just that the class string looks right in JSX.** Turbopack + Tailwind v4 has been known to serve stale CSS after edits. If a class that's clearly present in the DOM isn't taking visual effect, `rm -rf .next` and restart the dev server before assuming the CSS/selector logic itself is wrong.
+
+
+---
+
+**## Hydrogen + Next.js guardrails**
+
+- **Next.js là framework owner**: routing, rendering, RSC, Server Actions, Route Handlers và caching. `@shopify/hydrogen` chỉ là **Shopify commerce SDK / transport layer**.
+- Pin exact Hydrogen preview version đang được project duyệt; **không tự upgrade**, không dùng `^` / `~`. Không thêm `react-router`, `@react-router/*`, `vue` hoặc `vite` nếu app không thực sự cần.
+- Catalog dùng static Storefront client (`type: "private_no_buyer_context"`). **Không gọi `headers()` / `cookies()` trong catalog path**. Request-scoped Shopify context chỉ dùng cho buyer-specific state như cart, account, session, buyer IP.
+- **Next.js là cache owner duy nhất**: giữ `"use cache"` + `cacheLife()` + `cacheTag()`; không truyền Hydrogen `cache` vào `graphql()` và không tạo double-cache.
+- Giữ Storefront API version, GraphQL queries, `@inContext` và typing hiện tại cho đến khi có migration riêng. **Không tự migrate sang `gql.tada`** hoặc refactor service/domain layer chỉ vì thay transport.
+- Không gọi Storefront API bằng custom `fetch` nếu shared Hydrogen client đã đáp ứng được. Production không được silent fallback sang mock catalog nếu thiếu credentials, trừ khi explicit flag cho phép.
+- Không mở rộng transport task sang cart/account, routing, cache redesign, UI rewrite hoặc `hydrogen-react` migration nếu không nằm trong scope.
+- Sau thay đổi Shopify/Hydrogen phải chạy: `yarn lint`, `yarn typecheck`, `yarn test:unit`, `yarn build`, `yarn why react-router`, `yarn why vue`, `yarn audit`; nếu có store thật, chạy thêm `yarn shopify:check` và smoke test catalog routes.
+- Khi có khác biệt về Hydrogen, ưu tiên: **Hydrogen Developer Preview docs → `Shopify/hydrogen` `preview/templates/nextjs` → type definitions của version đang pin**. Không áp dụng architecture React Router của Hydrogen cũ cho framework-agnostic Hydrogen preview.
