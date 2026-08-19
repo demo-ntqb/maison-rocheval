@@ -118,12 +118,18 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
       >
         <div className="absolute inset-x-0 bottom-0 h-[100svh]">
           <Picture
-            basePath="/images/home/hero-caviar-pearls"
+            basePath="/images/home/hero-home-mobile"
             fallbackExtension="jpg"
+            artDirected={[
+              {
+                basePath: "/images/home/hero-home-desktop",
+                media: "(min-width: 500px)",
+              },
+            ]}
             alt={imageAlt}
             priority
-            width={1400}
-            height={800}
+            width={856}
+            height={1600}
             sizes="100vw"
             pictureClassName="block size-full"
             className="size-full object-cover"
@@ -140,7 +146,7 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
             {title}
           </h1>
           <IconMaisonRochevalLogo
-            className="h-[100px] w-[211px] lg:h-[120px] lg:w-[253px]"
+            className="h-[100px] w-[211px] lg:h-[120px] lg:w-[253px] text-white"
             aria-hidden="true"
             focusable="false"
             data-plumb-id="group-9"

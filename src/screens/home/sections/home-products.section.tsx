@@ -1,10 +1,10 @@
 import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
-import { HomeProductList } from "../components/home-product-list";
 import { Picture } from "@/shared/components/ui/picture";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
+import { HomeProductList } from "../components/home-product-list";
 
 export async function HomeProductsSection({ locale }: { locale: string }) {
   const [products, t] = await Promise.all([
@@ -15,7 +15,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
   return (
     <section
       aria-labelledby="home-products-title"
-      className="flex w-full flex-col items-center bg-canvas-soft px-4 py-[150px] lg:px-0 lg:py-[200px]"
+      className="flex w-full flex-col items-center bg-canvas-soft py-[150px] lg:px-0 lg:py-[200px]"
       data-plumb-id="frame-2085667107"
     >
       <div className="flex w-full max-w-content flex-col items-center gap-16" data-plumb-id="frame-2085667108">
@@ -33,7 +33,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
           data-plumb-asset="e5a9cdc2971cfe09bb809242295d1e936320d799"
         />
 
-        <div className="flex max-w-[396px] lg:max-w-[640px] flex-col items-center gap-8 px-4 text-center lg:px-0" data-plumb-id="component-8">
+        <div className="flex max-w-[396px] lg:max-w-[640px] flex-col items-center gap-8 px-4 text-center px-4 lg:px-0" data-plumb-id="component-8">
           <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118-3">
             <div data-plumb-id="lorem-ipsum-dolor-9">
               <h2 id="home-products-title" className="font-display text-[32px] leading-none text-ink" data-plumb-id="lorem-ipsum-dolor-10">

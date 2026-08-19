@@ -53,19 +53,19 @@ export function ProductCard({ product, priority = false, className, ...props }: 
         </Link>
       </div>
 
-      <div
+      <Link href={ROUTES.PRODUCT_DETAIL(product.handle)}
         className="flex flex-col justify-between p-6 min-h-[153px]"
         data-plumb-id="frame-2085667164"
       >
         <div className="flex flex-col gap-1 items-center" data-plumb-id="frame-2085667136">
-          <Link href={ROUTES.PRODUCT_DETAIL(product.handle)} className="block w-full">
+          <div className="block w-full">
             <h3
               className="font-display text-[20px] font-bold text-ink leading-none truncate"
               data-plumb-id="kaluga-caviar"
             >
               {product.title}
             </h3>
-          </Link>
+          </div>
           <p
             className="font-sans text-[12px] font-light text-gray-dark italic truncate w-full"
             data-plumb-id="huso-duricus"
@@ -90,7 +90,7 @@ export function ProductCard({ product, priority = false, className, ...props }: 
             {product.description}
           </p>
         </div>
-      </div>
+      </Link>
     </article>
   );
 }

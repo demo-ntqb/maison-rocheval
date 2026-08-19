@@ -31,15 +31,20 @@ export async function HomeIntroSection() {
             </div>
           </div>
           <Picture
-            basePath="/images/home/source-ritual-table"
-            fallbackExtension="png"
+            basePath="/images/home/source-ritual-table-mobile"
+            fallbackExtension="jpg"
+            artDirected={[
+              {
+                basePath: "/images/home/source-ritual-table-desktop",
+                media: "(min-width: 500px)",
+              },
+            ]}
             alt={t("tableImageAlt")}
-            width={1000}
-            height={700}
+            width={800}
+            height={1200}
             sizes="(max-width: 1023px) calc(100vw - 32px), 1000px"
-            responsiveWidths={[640, 1000]}
             pictureClassName="block w-full overflow-hidden rounded-brand"
-            className="aspect-[40/60] lg:aspect-[10/7] h-[600px] lg:h-[700px] w-full rounded-brand object-cover"
+            className="aspect-[40/60] lg:aspect-[10/7] h-auto lg:h-[700px] w-full rounded-brand object-cover"
             data-plumb-id="rectangle-4878"
             data-plumb-asset="50b64eb13a2a29b737042e921b49ccda9b8771c7"
           />
@@ -80,7 +85,7 @@ export async function HomeIntroSection() {
               height={700}
               sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(50vw - 28px), 484px"
               pictureClassName="block overflow-hidden rounded-brand w-full lg:w-[484px]"
-              className="aspect-[40/50] lg:aspect-[484/700] h-[500px] lg:h-[700px] w-full rounded-brand object-cover"
+              className="aspect-[40/50] lg:aspect-[484/700] h-auto lg:h-[700px] w-full rounded-brand object-cover"
               data-plumb-id="image-20"
               data-plumb-asset="3741b23bd4160b01e6b81f329dcac3be628f9a36"
             />
@@ -92,7 +97,7 @@ export async function HomeIntroSection() {
               height={700}
               sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(50vw - 28px), 484px"
               pictureClassName="block overflow-hidden rounded-brand w-full lg:w-[484px]"
-              className="aspect-[40/50] lg:aspect-[484/700] h-[500px] lg:h-[700px] w-full rounded-brand object-cover"
+              className="aspect-[40/50] lg:aspect-[484/700] h-auto lg:h-[700px] w-full rounded-brand object-cover"
               data-plumb-id="image-8"
               data-plumb-asset="1b5c22f59782b98f4cb1ad887602bb6a38fe43b1"
             />
