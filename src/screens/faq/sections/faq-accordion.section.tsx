@@ -1,18 +1,24 @@
 import { getTranslations } from "next-intl/server";
 
-import { FaqSection } from "@/shared/components/composite/faq-section";
+import { FaqPageAccordion } from "../components/faq-page-accordion";
+import type { FaqItem } from "../types/faq.type";
+
+type FaqTranslationItem = FaqItem;
+
+function isFaqTranslationItem(value: unknown): value is FaqTranslationItem {
+  return typeof value === "object" && value !== null && "question" in value && "answer" in value;
+}
 
 export async function FaqAccordionSection() {
   const t = await getTranslations("faq");
-  const items = Array.from({ length: 5 }, (_, index) => ({
-    id: `faq-${index + 1}`,
-    question: t(`items.${index}.question`),
-    answer: t(`items.${index}.answer`),
-  }));
+  const rawItems = t.raw("items");
 
   return (
-    <div className="flex w-full justify-center bg-canvas pb-24 lg:pb-[120px]">
-      <FaqSection items={items} />
-    </div>
+    <section
+      aria-label="Frequently asked questions"
+      className="flex w-full justify-center bg-canvas px-4 pb-[200px] pt-[54px] sm:px-6"
+    >
+      <FaqPageAccordion items={rawItems as FaqTranslationItem[]} />
+    </section>
   );
 }

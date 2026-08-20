@@ -6,6 +6,9 @@ import * as React from "react"
 import { cn } from "@/shared/lib/utils"
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
+import { IconMinus } from "@/shared/components/icons/ic-minus"
+import { IconPlus } from "@/shared/components/icons/ic-plus"
+
 function Accordion({
   className,
   ...props
@@ -35,8 +38,11 @@ function AccordionItem({
 function AccordionTrigger({
   className,
   children,
+  indicator = "chevron",
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger> & {
+  indicator?: "chevron" | "plus";
+}) {
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
@@ -48,8 +54,25 @@ function AccordionTrigger({
         {...props}
       >
         {children}
-        <ChevronDownIcon data-slot="accordion-trigger-icon" className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden" />
-        <ChevronUpIcon data-slot="accordion-trigger-icon" className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline" />
+        {indicator === "plus" ? (
+          <>
+            <IconPlus
+              aria-hidden="true"
+              data-slot="accordion-trigger-icon"
+              className="mt-0.75 size-4.5 shrink-0 text-gray-icon group-aria-expanded/accordion-trigger:hidden"
+            />
+            <IconMinus
+              aria-hidden="true"
+              data-slot="accordion-trigger-icon"
+              className="mt-0.75 hidden size-4.5 shrink-0 text-gray-icon group-aria-expanded/accordion-trigger:block"
+            />
+          </>
+        ) : (
+          <>
+            <ChevronDownIcon data-slot="accordion-trigger-icon" className="pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden" />
+            <ChevronUpIcon data-slot="accordion-trigger-icon" className="pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline" />
+          </>
+        )}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   )
@@ -63,7 +86,7 @@ function AccordionContent({
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
-      className="overflow-hidden font-sans text-[14px] leading-[1.43] text-(--palette-gray-dark) data-open:animate-accordion-down data-closed:animate-accordion-up"
+      className="group/accordion-content overflow-hidden font-sans text-[14px] leading-[1.43] text-(--palette-gray-dark) data-open:animate-accordion-down data-closed:animate-accordion-up"
       {...props}
     >
       <div
@@ -79,4 +102,3 @@ function AccordionContent({
 }
 
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger }
-
