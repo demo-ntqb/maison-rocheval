@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import {
-  AboutFaqSection,
+  AboutSourceRitualSection,
   AboutHeroSection,
-  AboutHistorySection,
+  AboutStorySection,
   AboutRitualSection,
   AboutSelectionSection,
   AboutVenuesSection,
@@ -89,11 +89,11 @@ export default async function AboutBrandPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbJsonLd }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: aboutPageJsonLd }} />
       <AboutHeroSection />
-      <AboutHistorySection />
+      <AboutStorySection />
       <AboutVenuesSection />
       <AboutSelectionSection />
       <AboutRitualSection />
-      <AboutFaqSection />
+      <AboutSourceRitualSection />
     </div>
   );
 }

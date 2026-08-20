@@ -7,7 +7,7 @@ import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
 import { ROUTES } from "@/shared/constants/route.constant";
 
-export async function AboutFaqSection() {
+export async function AboutSourceRitualSection() {
   const t = await getTranslations("aboutBrand.sourceToRitual");
 
   return (

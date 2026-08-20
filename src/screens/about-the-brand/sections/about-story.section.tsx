@@ -4,7 +4,7 @@ import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
 
-export async function AboutHistorySection() {
+export async function AboutStorySection() {
   const t = await getTranslations("aboutBrand.story");
 
   return (
