@@ -18,7 +18,7 @@
     },
     "aboutProduct": {
       "title": "The Collection",
-      "description": "Discover Amour, L'Expression, Harmonie, Oscietra and Kaluga — five rare caviars from Maison Rocheval, read fresh from the sturgeon, never reduced to a number."
+      "description": "Discover Armour, L'Expression, Harmonie, Oscietra and Kaluga — five rare caviars from Maison Rocheval, read fresh from the sturgeon, never reduced to a number."
     },
     "comingSoon": {
       "title": "Maison Rocheval — Coming Soon",
@@ -80,13 +80,15 @@
     "emailLabel": "Email: support@maisonrocheval.com",
     "respondNote": "We will respond within 24 hrs.",
     "enquireButton": "Enquire more",
+    "comingSoonTooltip": "Coming soon",
+    "shopComingSoon": "Shop (Coming soon)",
     "menu": {
-      "caviar": "Our Collection",
+      "caviar": "The Collection",
       "brand": "Maison Rocheval",
       "care": "Customer Care"
     },
     "nav": {
-      "amour": "Amour",
+      "amour": "Armour",
       "lexpression": "L’Expression",
       "harmonie": "Harmonie",
       "oscietra": "Oscietra",
@@ -223,18 +225,18 @@
     },
     "products": {
       "title": "Presented by the Maison",
-      "description": "From the quiet delicacy of Amour to the depth of Kaluga,\neach expression is selected for a character of its own.",
+      "description": "From the quiet delicacy of Armour to the depth of Kaluga,\neach expression is selected for a character of its own.",
       "shopNow": "SHOP",
       "previous": "View previous caviar",
       "next": "View next caviar",
       "cards": {
         "amour": {
           "eyebrow": "Patrimoine",
-          "title": "Amour",
+          "title": "Armour",
           "species": "Ascipenser schrenckii",
           "profile": "Rich - Creamy - Cheese",
           "description": "Named twice over — for the Amur sturgeon, and for love.",
-          "imageAlt": "Open tin of Maison Rocheval Amour caviar"
+          "imageAlt": "Open tin of Maison Rocheval Armour caviar"
         },
         "expression": {
           "eyebrow": "Réserve",
@@ -391,22 +393,22 @@
       "atTable": "At the table",
       "products": {
         "amour": {
-          "name": "Amour",
+          "name": "Armour",
           "latinName": "Acipenser schrenckii",
           "note": "Cheese",
           "tastingNotes": "Creamy · Delicate · Savoury",
-          "description": "Amour opens with cream, then butter, followed by a soft lactic warmth that lingers rather than lifts. Salinity is almost an afterthought, allowing the caviar to read closer to cultured cheese than to the sea.",
+          "description": "Armour opens with cream, then butter, followed by a soft lactic warmth that lingers rather than lifts. Salinity is almost an afterthought, allowing the caviar to read closer to cultured cheese than to the sea.",
           "descriptionSecondary": "It is the gentlest caviar in the collection, and often the most persuasive.",
-          "atTable": "Warm blini, crème fraîche, soft egg, potato. Amour favours richness and simplicity: enough depth to meet it, without overwhelming its quieter character. Use acid and smoke with restraint.",
-          "tinAlt": "Tin of Amour caviar, open beside its lid",
-          "dishAlt": "Blini topped with Amour caviar, served on a copper plate"
+          "atTable": "Warm blini, crème fraîche, soft egg, potato. Armour favours richness and simplicity: enough depth to meet it, without overwhelming its quieter character. Use acid and smoke with restraint.",
+          "tinAlt": "Tin of Armour caviar, open beside its lid",
+          "dishAlt": "Blini topped with Armour caviar, served on a copper plate"
         },
         "expression": {
           "name": "L’Expression",
           "latinName": "Huso dauricus × Acipenser schrenckii",
           "note": "Nori",
           "tastingNotes": "Rounded · Nori · Umami",
-          "description": "L’Expression is drawn from the same two lines that anchor this collection: the nuttiness of Kaluga, the cream of Amour. Neither comes through. What emerges instead is marine and deeply savoury: kelp, nori, a rounded salinity that deepens into umami and carries through the finish.",
+          "description": "L’Expression is drawn from the same two lines that anchor this collection: the nuttiness of Kaluga, the cream of Armour. Neither comes through. What emerges instead is marine and deeply savoury: kelp, nori, a rounded salinity that deepens into umami and carries through the finish.",
           "descriptionSecondary": "It is made from the house’s own two poles, and tastes like neither. That is precisely why L’Expression sits at the heart of the Maison.",
           "atTable": "Dashi, seasoned rice, cured fish, brown butter, and anything built on umami. L’Expression has the depth to enter a dish rather than sit above it, making it the caviar to build around, not simply to finish with.",
           "tinAlt": "Tin of L’Expression caviar, open beside its lid",

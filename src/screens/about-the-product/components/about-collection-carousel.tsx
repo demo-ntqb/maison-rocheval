@@ -1,8 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { IconButton } from "@/shared/components/ui/icon-button";
 
 import type {
   CollectionCarouselLabels,
@@ -31,7 +34,17 @@ export function AboutCollectionCarousel({
   caviars: CollectionCaviarContent[];
   labels: CollectionCarouselLabels;
 }) {
+  const searchParams = useSearchParams();
+  const tab = searchParams ? searchParams.get("tab") : null;
   const [activeId, setActiveId] = useState(caviars[0].id);
+  const [prevTab, setPrevTab] = useState<string | null>(null);
+
+  if (tab !== prevTab) {
+    setPrevTab(tab);
+    if (tab && caviars.some((c) => c.id === tab)) {
+      setActiveId(tab);
+    }
+  }
   const listRef = useRef<HTMLDivElement>(null);
 
   const step = useCallback(
@@ -68,12 +81,25 @@ export function AboutCollectionCarousel({
     return () => cancelAnimationFrame(frame);
   }, [activeId]);
 
+  useEffect(() => {
+    if (tab) {
+      const frame = requestAnimationFrame(() => {
+        const section = document.getElementById("collection");
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+      return () => cancelAnimationFrame(frame);
+    }
+  }, [tab]);
+
   return (
     <TabsPrimitive.Root
+      id="collection"
       value={activeId}
       onValueChange={setActiveId}
       orientation="horizontal"
-      className="flex w-full flex-col gap-[54px]"
+      className="flex w-full flex-col gap-[54px] scroll-mt-30"
     >
       <TabsPrimitive.List
         ref={listRef}
@@ -100,24 +126,22 @@ export function AboutCollectionCarousel({
       </div>
 
       <div className="flex items-center justify-center gap-4 lg:hidden" data-node-id="410:25345">
-        <button
-          type="button"
+        <IconButton
           aria-label={labels.previous}
           onClick={() => step(-1)}
           /* The design draws 32px controls; the ::after box lifts the touch
              target to 48px without changing the visual size. */
-          className="relative flex size-8 items-center justify-center rounded-[4px] text-ink transition-opacity after:absolute after:-inset-2 after:content-[''] hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          className="relative after:absolute after:-inset-2 after:content-['']"
         >
           <ChevronLeft className="size-6" strokeWidth={1.5} aria-hidden="true" />
-        </button>
-        <button
-          type="button"
+        </IconButton>
+        <IconButton
           aria-label={labels.next}
           onClick={() => step(1)}
-          className="relative flex size-8 items-center justify-center rounded-[4px] text-ink transition-opacity after:absolute after:-inset-2 after:content-[''] hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          className="relative after:absolute after:-inset-2 after:content-['']"
         >
           <ChevronRight className="size-6" strokeWidth={1.5} aria-hidden="true" />
-        </button>
+        </IconButton>
       </div>
     </TabsPrimitive.Root>
   );

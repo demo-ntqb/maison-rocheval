@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
+import { TextButton } from "@/shared/components/ui/text-button";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function HomeAboutSection() {
@@ -108,21 +109,16 @@ export async function HomeAboutSection() {
                       </SplitText>
                     </div>
                   </div>
-                  <Link
-                    href={ROUTES.ABOUT_PRODUCT}
-                    className="inline-flex min-h-11 w-fit items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
-                    data-plumb-id="text-button-3"
-                  >
-                    <SplitText
-                      as="span"
-                      className="underline underline-offset-4"
-                      data-plumb-id="text-button-4"
-                      by="words"
-                      stagger={10}
-                    >
-                      {t("explore")}
-                    </SplitText>
-                  </Link>
+                  <Reveal delay={120} className="w-fit">
+                    <TextButton asChild className="inline-flex min-h-11 w-fit items-center">
+                      <Link
+                        href={ROUTES.ABOUT_PRODUCT}
+                        data-plumb-id="text-button-3"
+                      >
+                        {t("explore")}
+                      </Link>
+                    </TextButton>
+                  </Reveal>
                 </div>
               </div>
             </div>

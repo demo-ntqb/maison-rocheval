@@ -1,11 +1,14 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
+import { IconCaretLeft, IconCaretRight } from "@/shared/components/icons";
+
+import { IconButton } from "@/shared/components/ui/icon-button";
 import { MichelinRating } from "@/shared/components/ui/michelin-rating";
 import { Picture } from "@/shared/components/ui/picture";
+import { TextButton } from "@/shared/components/ui/text-button";
 
 type Venue = {
   alt: string;
@@ -107,14 +110,15 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                     </div>
                   </div>
                   <div>
-                    <a
-                      href={venue.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex min-h-11 items-center font-sans text-sm uppercase underline underline-offset-4 text-ink hover:opacity-80 transition-opacity"
-                    >
-                      Discover {venue.name.split(" | ")[0]}
-                    </a>
+                    <TextButton asChild className="min-h-11 inline-flex items-center">
+                      <a
+                        href={venue.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Discover {venue.name.split(" | ")[0]}
+                      </a>
+                    </TextButton>
                   </div>
                 </div>
               </div>
@@ -124,26 +128,22 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
       </div>
       {venues.length > 1 && (
         <div className="mt-13 flex justify-center gap-4 min-[1564px]:hidden">
-          <button
-            type="button"
+          <IconButton
             onClick={() => api?.scrollPrev()}
             disabled={!canScroll[0] || isWide}
             aria-label="Previous restaurant"
             data-plumb-id="icon-button"
-            className="inline-flex size-8 items-center justify-center rounded-[4px] disabled:opacity-30 disabled:pointer-events-none"
           >
-            <ChevronLeft className="size-5" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
+            <IconCaretLeft className="size-5" aria-hidden="true" />
+          </IconButton>
+          <IconButton
             onClick={() => api?.scrollNext()}
             disabled={!canScroll[1] || isWide}
             aria-label="Next restaurant"
             data-plumb-id="icon-button-2"
-            className="inline-flex size-8 items-center justify-center rounded-[4px] disabled:opacity-30 disabled:pointer-events-none"
           >
-            <ChevronRight className="size-5" aria-hidden="true" />
-          </button>
+            <IconCaretRight className="size-5" aria-hidden="true" />
+          </IconButton>
         </div>
       )}
     </div>

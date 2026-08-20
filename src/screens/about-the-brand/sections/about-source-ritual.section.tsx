@@ -5,6 +5,7 @@ import { IconMaisonRochevalSymbol } from "@/shared/components/icons/maison-roche
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
+import { TextButton } from "@/shared/components/ui/text-button";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function AboutSourceRitualSection() {
@@ -61,20 +62,16 @@ export async function AboutSourceRitualSection() {
             >
               {t("description")}
             </SplitText>
-            <Link
-              href={ROUTES.ABOUT_PRODUCT}
-              className="inline-flex min-h-11 items-center font-sans text-xs uppercase underline underline-offset-4"
-              data-plumb-id="text-button"
-            >
-              <SplitText
-                as="span"
-                className="underline underline-offset-4"
-                by="words"
-                stagger={10}
-              >
-                {t("cta")}
-              </SplitText>
-            </Link>
+            <Reveal delay={120}>
+              <TextButton asChild className="inline-flex items-center">
+                <Link
+                  href={ROUTES.ABOUT_PRODUCT}
+                  data-plumb-id="text-button"
+                >
+                  {t("cta")}
+                </Link>
+              </TextButton>
+            </Reveal>
           </div>
         </div>
 

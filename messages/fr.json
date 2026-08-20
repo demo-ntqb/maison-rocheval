@@ -18,7 +18,7 @@
     },
     "aboutProduct": {
       "title": "La Collection",
-      "description": "Découvrez Amour, L'Expression, Harmonie, Oscietra et Kaluga — cinq caviars rares de Maison Rocheval, lus frais à partir de l'esturgeon, jamais réduits à un chiffre."
+      "description": "Découvrez Armour, L'Expression, Harmonie, Oscietra et Kaluga — cinq caviars rares de Maison Rocheval, lus frais à partir de l'esturgeon, jamais réduits à un chiffre."
     },
     "comingSoon": {
       "title": "Maison Rocheval — Bientôt disponible",
@@ -80,18 +80,20 @@
     "emailLabel": "E-mail: support@maisonrocheval.com",
     "respondNote": "Nous répondrons dans les 24 heures.",
     "enquireButton": "En savoir plus",
+    "comingSoonTooltip": "Bientôt disponible",
+    "shopComingSoon": "Boutique (bientôt disponible)",
     "menu": {
-      "caviar": "Notre Collection",
+      "caviar": "La Collection",
       "brand": "Maison Rocheval",
       "care": "Service Client"
     },
     "nav": {
-      "amour": "Amour",
+      "amour": "Armour",
       "lexpression": "L’Expression",
       "harmonie": "Harmonie",
       "oscietra": "Oscietra",
       "kaluga": "Kaluga",
-      "collection": "Notre Collection",
+      "collection": "La Collection",
       "shop": "Boutique",
       "about": "À propos de Maison Rocheval",
       "faq": "FAQ",
@@ -122,11 +124,11 @@
       "cards": {
         "amur": {
           "eyebrow": "Patrimoine",
-          "title": "Caviar Amour",
+          "title": "Caviar Armour",
           "species": "Huso Dauricus",
           "profile": "Riche · Crémeux · Finale longue",
           "description": "Des grains sombres et généreux, à la texture ample et à la finale nette et persistante.",
-          "imageAlt": "Boîte ouverte de caviar Amour Maison Rocheval"
+          "imageAlt": "Boîte ouverte de caviar Armour Maison Rocheval"
         },
         "kaluga": {
           "eyebrow": "Patrimoine",
@@ -223,18 +225,18 @@
     },
     "products": {
       "title": "Présenté par la Maison",
-      "description": "De la délicatesse d’Amour à la profondeur de Kaluga,\nchaque expression est choisie pour son caractère propre.",
+      "description": "De la délicatesse d’Armour à la profondeur de Kaluga,\nchaque expression est choisie pour son caractère propre.",
       "shopNow": "BOUTIQUE",
       "previous": "Voir le caviar précédent",
       "next": "Voir le caviar suivant",
       "cards": {
         "amour": {
           "eyebrow": "Patrimoine",
-          "title": "Amour",
+          "title": "Armour",
           "species": "Ascipenser schrenckii",
           "profile": "Riche - Crémeux - Fromager",
-          "description": "Deux fois nommé — pour l’esturgeon Amour, et pour l’amour.",
-          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
+          "description": "Deux fois nommé — pour l’esturgeon Armour, et pour l’amour.",
+          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Armour"
         },
         "expression": {
           "eyebrow": "Réserve",
@@ -391,22 +393,22 @@
       "atTable": "À table",
       "products": {
         "amour": {
-          "name": "Amour",
+          "name": "Armour",
           "latinName": "Acipenser schrenckii",
           "note": "Fromage",
           "tastingNotes": "Crémeux · Délicat · Savoureux",
-          "description": "Amour s’ouvre sur la crème, puis le beurre, suivis d’une douce chaleur lactée qui s’attarde plutôt qu’elle ne s’élève. La salinité s’efface presque, laissant le caviar évoquer un fromage affiné plus que la mer.",
+          "description": "Armour s’ouvre sur la crème, puis le beurre, suivis d’une douce chaleur lactée qui s’attarde plutôt qu’elle ne s’élève. La salinité s’efface presque, laissant le caviar évoquer un fromage affiné plus que la mer.",
           "descriptionSecondary": "C’est le caviar le plus tendre de la collection, et souvent le plus convaincant.",
-          "atTable": "Blinis tièdes, crème fraîche, œuf mollet, pomme de terre. Amour aime la richesse et la simplicité : assez de profondeur pour lui répondre, sans écraser son caractère discret. Acidité et fumé avec retenue.",
-          "tinAlt": "Boîte de caviar Amour ouverte à côté de son couvercle",
-          "dishAlt": "Blini garni de caviar Amour, servi sur une assiette de cuivre"
+          "atTable": "Blinis tièdes, crème fraîche, œuf mollet, pomme de terre. Armour aime la richesse et la simplicité : assez de profondeur pour lui répondre, sans écraser son caractère discret. Acidité et fumé avec retenue.",
+          "tinAlt": "Boîte de caviar Armour ouverte à côté de son couvercle",
+          "dishAlt": "Blini garni de caviar Armour, servi sur une assiette de cuivre"
         },
         "expression": {
           "name": "L’Expression",
           "latinName": "Huso dauricus × Acipenser schrenckii",
           "note": "Nori",
           "tastingNotes": "Ample · Nori · Umami",
-          "description": "L’Expression naît des deux lignées qui structurent cette collection : le côté noisette du Kaluga, la crème de l’Amour. Aucune ne s’impose. Ce qui émerge est marin et profondément savoureux : algue, nori, une salinité ample qui s’approfondit en umami et porte toute la finale.",
+          "description": "L’Expression naît des deux lignées qui structurent cette collection : le côté noisette du Kaluga, la crème de l’Armour. Aucune ne s’impose. Ce qui émerge est marin et profondément savoureux : algue, nori, une salinité ample qui s’approfondit en umami et porte toute la finale.",
           "descriptionSecondary": "Il naît des deux pôles de la maison et ne ressemble à aucun des deux. C’est précisément pour cela que L’Expression occupe le cœur de la Maison.",
           "atTable": "Dashi, riz vinaigré, poisson mariné, beurre noisette et tout ce qui se construit sur l’umami. L’Expression a la profondeur nécessaire pour entrer dans un plat plutôt que de le surplomber : un caviar autour duquel bâtir, et non une simple finition.",
           "tinAlt": "Boîte de caviar L’Expression ouverte à côté de son couvercle",

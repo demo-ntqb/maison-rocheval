@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
+import { TextButton } from "@/shared/components/ui/text-button";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function HomeIntroSection() {
@@ -82,31 +83,26 @@ export async function HomeIntroSection() {
                   {t("storyTitle")}
                 </SplitText>
               </div>
-                <SplitText
-                  as="p"
-                  className="font-sans text-sm leading-[18px] text-ink"
-                  data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-2"
-                  by="words"
-                  stagger={10}
-                >
-                  {t("storyDescription")}
-                </SplitText>
-            </div>
-            <Link
-              href={ROUTES.ABOUT_BRAND}
-              className="-my-3 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
-              data-plumb-id="text-button"
-            >
               <SplitText
-                as="span"
-                className="underline underline-offset-4"
-                data-plumb-id="text-button-2"
+                as="p"
+                className="font-sans text-sm leading-[18px] text-ink"
+                data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-2"
                 by="words"
                 stagger={10}
               >
-                {t("learnMore")}
+                {t("storyDescription")}
               </SplitText>
-            </Link>
+            </div>
+            <Reveal delay={120}>
+              <TextButton asChild className="-my-3 min-h-11 inline-flex items-center">
+                <Link
+                  href={ROUTES.ABOUT_BRAND}
+                  data-plumb-id="text-button"
+                >
+                  {t("learnMore")}
+                </Link>
+              </TextButton>
+            </Reveal>
           </div>
 
           <Reveal className="flex flex-col lg:flex-row gap-8 w-full justify-center" data-plumb-id="frame-2085667098" delay={120}>

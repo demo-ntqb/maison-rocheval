@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
+import { TextButton } from "@/shared/components/ui/text-button";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 import { HomeProductList } from "../components/home-product-list";
@@ -64,21 +65,16 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
                 </SplitText>
               </div>
             </div>
-            <Link
-              href={ROUTES.PRODUCTS}
-              className="-my-3 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
-              data-plumb-id="text-button-5"
-            >
-              <SplitText
-                as="span"
-                className="underline underline-offset-4"
-                data-plumb-id="text-button-6"
-                by="words"
-                stagger={10}
-              >
-                {t("shopNow")}
-              </SplitText>
-            </Link>
+            <Reveal delay={120}>
+              <TextButton asChild className="-my-3 min-h-11 inline-flex items-center">
+                <Link
+                  href={ROUTES.PRODUCTS}
+                  data-plumb-id="text-button-5"
+                >
+                  {t("shopNow")}
+                </Link>
+              </TextButton>
+            </Reveal>
           </div>
         </div>
 

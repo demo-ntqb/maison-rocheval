@@ -4,20 +4,10 @@ import useEmblaCarousel from "embla-carousel-react";
 import * as React from "react";
 
 import { ProductCard } from "@/shared/components/composite/product-card";
+import { IconButton } from "@/shared/components/ui/icon-button";
 import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
-import { cn } from "@/shared/lib/utils";
 
-const LeftArrow = () => (
-  <svg width="9" height="16" viewBox="0 0 9 16" fill="none" className="shrink-0 text-ink">
-    <path d="M8 1L1 8L8 15" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const RightArrow = () => (
-  <svg width="9" height="16" viewBox="0 0 9 16" fill="none" className="shrink-0 text-ink">
-    <path d="M1 1L8 8L1 15" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
+import { IconCaretLeft, IconCaretRight } from "@/shared/components/icons";
 
 export function HomeProductList({ products }: { products: CatalogProductCard[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -63,22 +53,19 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
 
   return (
     <div
-      className="flex flex-col lg:flex-row items-center w-full min-w-0 lg:max-w-250 xl:max-w-274 justify-between relative"
+      className="flex flex-col lg:flex-row items-center w-full min-w-0 lg:max-w-249 xl:max-w-273 justify-between relative lg:gap-3.5"
       data-plumb-id="component-6-3"
     >
       {/* Left button (Desktop - hidden on mobile) */}
-      <button
+      <IconButton
         onClick={scrollPrev}
         disabled={!prevBtnEnabled}
-        className={cn(
-          "hidden lg:flex size-8 items-center justify-center rounded-[2px] transition-opacity",
-          !prevBtnEnabled ? "opacity-30 cursor-not-allowed" : "cursor-pointer opacity-100 hover:opacity-80"
-        )}
+        className="hidden lg:flex"
         data-plumb-id="icon-button"
         aria-label="Previous slide"
       >
-        <LeftArrow />
-      </button>
+        <IconCaretLeft />
+      </IconButton>
 
       {/* Viewport container */}
       <div
@@ -99,48 +86,39 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
       </div>
 
       {/* Right button (Desktop - hidden on mobile) */}
-      <button
+      <IconButton
         onClick={scrollNext}
         disabled={!nextBtnEnabled}
-        className={cn(
-          "hidden lg:flex size-8 items-center justify-center rounded-[2px] transition-opacity",
-          !nextBtnEnabled ? "opacity-30 cursor-not-allowed" : "cursor-pointer opacity-100 hover:opacity-80"
-        )}
+        className="hidden lg:flex"
         data-plumb-id="icon-button-2"
         aria-label="Next slide"
       >
-        <RightArrow />
-      </button>
+        <IconCaretRight />
+      </IconButton>
 
       {/* Mobile buttons group (Bottom - hidden on desktop) */}
       <div
         className="flex lg:hidden justify-center mt-12 gap-4 h-11 w-26"
         data-plumb-id="frame-2085667302"
       >
-        <button
+        <IconButton
           onClick={scrollPrev}
           disabled={!prevBtnEnabled}
-          className={cn(
-            "flex size-11 items-center justify-center rounded-[2px]",
-            !prevBtnEnabled ? "opacity-30 cursor-not-allowed" : "cursor-pointer opacity-100 hover:opacity-80"
-          )}
+          className="flex size-11 [&_svg]:size-8"
           data-plumb-id="icon-button"
           aria-label="Previous slide"
         >
-          <LeftArrow />
-        </button>
-        <button
+          <IconCaretLeft />
+        </IconButton>
+        <IconButton
           onClick={scrollNext}
           disabled={!nextBtnEnabled}
-          className={cn(
-            "flex size-11 items-center justify-center rounded-[2px]",
-            !nextBtnEnabled ? "opacity-30 cursor-not-allowed" : "cursor-pointer opacity-100 hover:opacity-80"
-          )}
+          className="flex size-11 [&_svg]:size-8"
           data-plumb-id="icon-button-2"
           aria-label="Next slide"
         >
-          <RightArrow />
-        </button>
+          <IconCaretRight />
+        </IconButton>
       </div>
     </div>
   );

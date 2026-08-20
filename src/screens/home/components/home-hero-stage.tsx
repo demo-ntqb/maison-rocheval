@@ -71,30 +71,23 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
       return;
     }
 
-    let lastScrollY = scrollY.get();
+    let isOpaque = true;
 
     const update = (scrollPosition: number) => {
       const wasActive = root.hasAttribute(JOURNEY_ATTR);
       let active = false;
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const isScrollingDown = scrollPosition > lastScrollY;
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const isScrollingUp = scrollPosition < lastScrollY;
-
-      lastScrollY = scrollPosition;
-
       if (!reduceMotion) {
-        const outOfView = stage.getBoundingClientRect().bottom <= 80;
-        const inOfView = stage.getBoundingClientRect().bottom > 80;
+        // Safe check: if scrollPosition is close to top, stage must be visible.
+        // This prevents boundingClientRect returning 0 on initial mount/layout calculation from hiding the hero.
+        const outOfView = scrollPosition > 50 && stage.getBoundingClientRect().bottom <= 80;
 
-        if (outOfView && isScrollingDown) {
+        if (outOfView && isOpaque) {
           containerRef.current?.style.setProperty("opacity", "0");
-        }
-
-        if (inOfView && isScrollingUp) {
+          isOpaque = false;
+        } else if (!outOfView && !isOpaque) {
           containerRef.current?.style.setProperty("opacity", "1");
+          isOpaque = true;
         }
         active = scrollPosition > HOME_HERO.journeyStart && !outOfView;
       }
