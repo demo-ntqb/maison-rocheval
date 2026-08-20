@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import { FaqAccordionSection, FaqHeroSection } from "@/screens/faq";
 import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
@@ -19,14 +19,7 @@ export async function generateMetadata({
   });
 }
 
-export default async function FaqPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
+export default function FaqPage() {
   return (
     <div className="flex w-full flex-col bg-canvas" data-screen="faq">
       <FaqHeroSection />

@@ -1,10 +1,10 @@
 import { ComingSoonHeroSection } from "@/screens/coming-soon";
 import { Footer } from "@/shared/components/layout/footer";
-import { Header } from "@/shared/components/layout/header";
+import { Header } from "@/shared/components/layout/header/header";
 import { RegionPreferenceGate } from "@/shared/components/layout/region-preference-gate";
 import { isComingSoon } from "@/shared/lib/metadata";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages } from "next-intl/server";
 
 export default async function LocaleLayout({
   children,
@@ -15,7 +15,6 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
-  setRequestLocale(locale);
   const messages = await getMessages();
 
   // TODO: remove this when we launch the website
@@ -32,7 +31,7 @@ export default async function LocaleLayout({
   return <>
     <a
       href="#main-content"
-      className="sr-only z-[100] rounded-brand bg-canvas px-4 py-3 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+      className="sr-only z-100 rounded-brand bg-canvas px-4 py-3 text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
     >
       Skip to content
     </a>

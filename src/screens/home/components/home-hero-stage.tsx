@@ -33,7 +33,7 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
   });
 
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroHeight = useMotionTemplate`calc(var(--home-hero-compact) + (100svh - var(--home-hero-compact)) * ${heroScale})`;
+  const heroHeight = useMotionTemplate`calc(var(--home-hero-compact) + (100dvh - var(--home-hero-compact)) * ${heroScale})`;
 
   // The hero logo morphs into the header logo slot (svg 84x40, center y=40)
   // across the full collapse, then parks there for the sticky pin window.
@@ -71,12 +71,31 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
       return;
     }
 
+    let lastScrollY = scrollY.get();
+
     const update = (scrollPosition: number) => {
       const wasActive = root.hasAttribute(JOURNEY_ATTR);
       let active = false;
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const isScrollingDown = scrollPosition > lastScrollY;
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const isScrollingUp = scrollPosition < lastScrollY;
+
+      lastScrollY = scrollPosition;
+
       if (!reduceMotion) {
         const outOfView = stage.getBoundingClientRect().bottom <= 80;
+        const inOfView = stage.getBoundingClientRect().bottom > 80;
+
+        if (outOfView && isScrollingDown) {
+          containerRef.current?.style.setProperty("opacity", "0");
+        }
+
+        if (inOfView && isScrollingUp) {
+          containerRef.current?.style.setProperty("opacity", "1");
+        }
         active = scrollPosition > HOME_HERO.journeyStart && !outOfView;
       }
 
@@ -103,7 +122,7 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
     <div
       ref={containerRef}
       data-slot="home-hero-container"
-      className="relative -mt-20 h-[calc(200svh-var(--home-hero-compact))] w-full"
+      className="relative -mt-20 h-[calc(200dvh-var(--home-hero-compact))] w-full opacity-100 transition-opacity duration-500 ease-in-out"
     >
       <motion.section
         ref={stageRef}
@@ -111,12 +130,12 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
         data-slot="home-hero-stage"
         data-plumb-id="frame-2085667109"
         className={cn(
-          "z-10 h-[100svh] w-full overflow-hidden",
+          "z-10 h-[100dvh] w-full overflow-hidden",
           reduceMotion ? "relative" : "sticky top-0",
         )}
         style={reduceMotion ? undefined : { height: heroHeight }}
       >
-        <div className="absolute inset-x-0 bottom-0 h-[100svh]">
+        <div className="absolute inset-x-0 bottom-0 h-[100dvh]">
           <Picture
             basePath="/images/home/hero-home-mobile"
             fallbackExtension="jpg"

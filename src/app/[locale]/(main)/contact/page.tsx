@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import { ContactHeroSection } from "@/screens/contact";
 import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
@@ -19,14 +19,7 @@ export async function generateMetadata({
   });
 }
 
-export default async function ContactPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
+export default function ContactPage() {
   return (
     <div className="flex w-full flex-col bg-warm" data-screen="contact">
       <ContactHeroSection />

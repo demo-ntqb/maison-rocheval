@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
 import { notFound, permanentRedirect } from "next/navigation";
 
 import { routing } from "@/i18n/routing";
@@ -63,8 +62,6 @@ export default async function ProductPage({
   params: Promise<{ locale: string; handle: string }>;
 }) {
   const { locale, handle } = await params;
-  setRequestLocale(locale);
-
   const canonical = canonicalHandle(handle);
   if (canonical !== handle) permanentRedirect(productPath(locale, canonical));
 

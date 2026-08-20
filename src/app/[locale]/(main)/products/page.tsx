@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import {
   ProductsCatalogSection,
@@ -30,8 +30,6 @@ export default async function ProductsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
-
   return (
     <div className="flex w-full flex-col bg-canvas">
       <ProductsHeroSection />

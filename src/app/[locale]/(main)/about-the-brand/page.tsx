@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import {
   AboutSourceRitualSection,
@@ -43,8 +43,6 @@ export default async function AboutBrandPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
-
   const [nav, meta] = await Promise.all([
     getTranslations({ locale, namespace: "header.nav" }),
     getTranslations({ locale, namespace: "metadata.aboutBrand" }),

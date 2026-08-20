@@ -1,11 +1,15 @@
 import { getTranslations } from "next-intl/server";
 
-import { Link } from "@/i18n/navigation";
+import type { RouteLocale } from "@/i18n/route-locale";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
 import { Button } from "@/shared/components/ui/button";
+import { localizedPath } from "@/shared/lib/metadata";
+import Link from "next/link";
 
-export async function NotFoundHeroSection() {
-  const t = await getTranslations("notFound.hero");
+export async function NotFoundHeroSection({ locale }: { locale: RouteLocale }) {
+  const t = await getTranslations({ locale, namespace: "notFound.hero" });
+  const homeHref = localizedPath(locale, ROUTES.HOME);
 
   return (
     <section
@@ -31,7 +35,7 @@ export async function NotFoundHeroSection() {
       </div>
 
       <Button asChild variant="outline" className="border-canvas bg-transparent text-canvas hover:bg-canvas hover:text-ink">
-        <Link href="/" prefetch={false}>{t("cta")}</Link>
+        <Link href={homeHref} prefetch={false}>{t("cta")}</Link>
       </Button>
     </section>
   );

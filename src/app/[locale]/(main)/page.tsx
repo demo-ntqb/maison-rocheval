@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import {
   HomeAboutSection,
@@ -41,8 +41,6 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
-
   const [meta] = await Promise.all([
     getTranslations({ locale, namespace: "metadata.home" }),
   ]);
