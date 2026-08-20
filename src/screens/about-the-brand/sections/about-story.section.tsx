@@ -15,7 +15,7 @@ export async function AboutStorySection() {
     >
       <div
         data-plumb-id="component-9"
-        className="flex w-full max-w-content flex-col items-stretch gap-y-10 md:flex-row md:items-center md:gap-[54px]"
+        className="flex w-full max-w-content flex-col items-stretch gap-y-10 md:flex-row md:items-center"
       >
         <Reveal
           data-plumb-id="frame-2085667324"
@@ -42,7 +42,7 @@ export async function AboutStorySection() {
         >
           <div
             data-plumb-id="frame-2085667142"
-            className="flex w-full flex-col gap-3 lg:max-w-[350px]"
+            className="flex w-full flex-col gap-3 max-w-160 md:max-w-[350px] md:mx-auto"
           >
             <SplitText
               as="h2"

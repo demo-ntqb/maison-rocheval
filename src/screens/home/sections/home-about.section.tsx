@@ -50,7 +50,7 @@ export async function HomeAboutSection() {
 
           {/* Caviar image & Text block (Figma overlap gap -54px) */}
           <div className="flex flex-col lg:flex-row w-full items-center lg:items-start -mt-[54px] z-10" data-plumb-id="component-6-2">
-            <Reveal delay={240} className="w-[50%] lg:w-[470px] self-start lg:self-auto">
+            <Reveal delay={240} className="min-w-[50%] w-[50%] lg:min-w-[470px] lg:w-[470px] self-start lg:self-auto">
               <Picture
                 basePath="/images/home/selection-caviar-pearls"
                 fallbackExtension="png"
@@ -65,8 +65,8 @@ export async function HomeAboutSection() {
               />
             </Reveal>
 
-            <div className="flex w-full lg:w-[530px] flex-col items-center justify-center py-16 lg:h-[700px] lg:py-0 px-4" data-plumb-id="frame-2085667078">
-              <div className="flex w-full max-w-[332px] lg:max-w-[400px] flex-col gap-8" data-plumb-id="frame-2085667142">
+            <div className="flex w-full flex-col items-center justify-center py-16 lg:py-0 px-4 h-auto lg:h-[700px]" data-plumb-id="frame-2085667078">
+              <div className="flex w-full max-w-160 lg:max-w-[400px] flex-col gap-8" data-plumb-id="frame-2085667142">
                 <div className="flex flex-col gap-8 lg:gap-8" data-plumb-id="component-7-3">
                   <div className="flex flex-col gap-4 lg:gap-4" data-plumb-id="frame-2085667121">
                     <div data-plumb-id="lorem-ipsum-dolor-7">
@@ -98,15 +98,14 @@ export async function HomeAboutSection() {
                       >
                         {t("speciesTitle")}
                       </SplitText>
-                      <SplitText
+                      {/* <SplitText
                         as="p"
-                        className="hidden lg:block"
                         data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-4"
                         by="words"
                         stagger={10}
                       >
                         {t("speciesDescription")}
-                      </SplitText>
+                      </SplitText> */}
                     </div>
                   </div>
                   <Reveal delay={120} className="w-fit">

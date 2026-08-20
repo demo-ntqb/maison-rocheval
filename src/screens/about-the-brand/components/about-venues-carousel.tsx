@@ -97,7 +97,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                 />
                 <div className="flex flex-col gap-8">
                   <div className="flex flex-col gap-4">
-                    <h3 className="font-display text-2xl leading-[1.33] text-ink">
+                    <h3 className="font-display text-[32px] leading-none text-ink">
                       {venue.name}
                     </h3>
                     <div className="flex flex-col gap-3">

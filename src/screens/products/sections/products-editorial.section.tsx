@@ -13,7 +13,7 @@ export async function ProductsEditorialSection() {
       aria-labelledby="products-editorial-title"
       className="products-editorial-deferred flex w-full max-w-content flex-col items-center gap-[54px] px-4 text-center sm:px-6 lg:px-0"
     >
-      <div className="flex w-full max-w-[500px] flex-col items-center gap-8">
+      <div className="flex w-full max-w-160 flex-col items-center gap-8">
         <div className="flex flex-col gap-4">
           <h2
             id="products-editorial-title"
