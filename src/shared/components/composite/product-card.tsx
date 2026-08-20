@@ -1,4 +1,4 @@
-import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { Link } from "@/i18n/navigation";
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
@@ -6,56 +6,78 @@ import { ROUTES } from "@/shared/constants/route.constant";
 import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 import { cn } from "@/shared/lib/utils";
 
-export interface ProductCardProps extends React.ComponentProps<"article"> {
+const productCardVariants = cva(
+  "flex flex-col border-[0.5px] border-stone rounded-[2px] bg-canvas text-center overflow-hidden shrink-0 transition-all duration-300 hover:shadow-sm hover:bg-warm",
+  {
+    variants: {
+      size: {
+        sm: "w-[200px] h-[360px]",
+        md: "w-[312px] h-[488px]",
+        responsive: "w-[250px] h-[408px] lg:w-[280px] lg:h-[438px] xl:w-[312px] xl:h-[488px]",
+      },
+    },
+    defaultVariants: {
+      size: "responsive",
+    },
+  }
+)
+
+const productImageVariants = cva(
+  "shrink-0 relative flex items-center justify-center overflow-hidden",
+  {
+    variants: {
+      size: {
+        sm: "w-[200px] h-[200px]",
+        md: "w-[312px] h-[312px]",
+        responsive: "w-[250px] h-[250px] lg:w-[280px] lg:h-[280px] xl:w-[312px] xl:h-[312px]",
+      },
+    },
+    defaultVariants: {
+      size: "responsive",
+    },
+  }
+)
+
+const productInfoVariants = cva(
+  "flex flex-col gap-3 shrink-0 items-center",
+  {
+    variants: {
+      size: {
+        sm: "p-4 h-[160px]",
+        md: "p-6 h-[176px]",
+        responsive: "p-6 h-[158px] xl:h-[176px]",
+      },
+    },
+    defaultVariants: {
+      size: "responsive",
+    },
+  }
+)
+
+export interface ProductCardProps
+  extends Omit<React.ComponentProps<"article">, "size">,
+    VariantProps<typeof productCardVariants> {
   product: CatalogProductCard;
   priority?: boolean;
-  size?: "sm" | "md";
 }
 
 export function ProductCard({
   product,
   priority = false,
-  size,
+  size = "responsive",
   className,
   ...props
 }: ProductCardProps) {
-  // If size is provided, use static sizes. If not, use responsive sizes.
-  const sizeClasses = size === "sm"
-    ? "w-[200px] h-[360px]"
-    : size === "md"
-      ? "w-[312px] h-[488px]"
-      : "w-[250px] h-[408px] lg:w-[280px] lg:h-[438px] xl:w-[312px] xl:h-[488px]";
-
-  const imageSizeClasses = size === "sm"
-    ? "w-[200px] h-[200px]"
-    : size === "md"
-      ? "w-[312px] h-[312px]"
-      : "w-[250px] h-[250px] lg:w-[280px] lg:h-[280px] xl:w-[312px] xl:h-[312px]";
-
-  const infoHeightClasses = size === "sm"
-    ? "h-[160px]"
-    : size === "md"
-      ? "h-[176px]"
-      : "h-[158px] xl:h-[176px]";
-
-  const infoPaddingClasses = size === "sm" ? "p-4" : "p-6";
 
   return (
     <article
-      className={cn(
-        "flex flex-col border-[0.5px] border-stone rounded-[2px] bg-canvas text-center overflow-hidden shrink-0 transition-all duration-300 hover:shadow-sm hover:bg-warm",
-        sizeClasses,
-        className
-      )}
+      className={cn(productCardVariants({ size, className }))}
       data-plumb-id="component-22"
       {...props}
     >
       <Link
         href={ROUTES.PRODUCT_DETAIL(product.handle)}
-        className={cn(
-          "shrink-0 relative flex items-center justify-center overflow-hidden",
-          imageSizeClasses
-        )}
+        className={cn(productImageVariants({ size }))}
         data-plumb-id="catalog-image"
       >
         {product.image ? (
@@ -78,11 +100,7 @@ export function ProductCard({
 
       <Link
         href={ROUTES.PRODUCT_DETAIL(product.handle)}
-        className={cn(
-          "flex flex-col gap-3 shrink-0 items-center",
-          infoPaddingClasses,
-          infoHeightClasses
-        )}
+        className={cn(productInfoVariants({ size }))}
         data-plumb-id="frame-2085667164"
       >
         <div className="flex flex-col gap-1 items-center" data-plumb-id="frame-2085667136">

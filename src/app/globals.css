@@ -74,14 +74,18 @@
   --palette-canvas: #f7f7f7;
   --palette-black: #000000;
   --palette-beige: #f6f1eb;
-  --palette-sand: #e5e2da;
   --palette-gray-light: #bcbcbc;
   --palette-stone: #bfbbb6;
   --palette-gray-dark: #636363;
-  --palette-divider-subtle: #e1e1e1;
   --palette-navy-dark: #16222e;
+  --palette-navy-darker: #131e29;
+  --palette-navy-hover: #25394c;
+  --palette-navy-press: #0f161e;
+  --palette-navy-disabled-text: #334d67;
+  --palette-gray-heavy: #454545;
+  --palette-gray-icon: #606060;
+  --palette-beige-dark: #f1ebe4;
   --palette-hero-depth: #071b26;
-  --palette-hero-haze: #77848f;
 
   /* Layout scale extracted from the 1400px Figma canvas. */
   --layout-container: 87.5rem; /* 1400px */
@@ -118,22 +122,25 @@
 
   /* Brand Colors */
   --color-white: var(--palette-white);
-  --color-offwhite: var(--palette-offwhite);
   --color-canvas-soft: var(--palette-canvas);
   --color-black: var(--palette-black);
   --color-beige: var(--palette-beige);
-  --color-sand: var(--palette-sand);
   --color-gray-light: var(--palette-gray-light);
   --color-stone: var(--palette-stone);
   --color-gray-dark: var(--palette-gray-dark);
-  --color-divider-subtle: var(--palette-divider-subtle);
   --color-navy-dark: var(--palette-navy-dark);
+  --color-navy-darker: var(--palette-navy-darker);
+  --color-navy-hover: var(--palette-navy-hover);
+  --color-navy-press: var(--palette-navy-press);
+  --color-navy-disabled-text: var(--palette-navy-disabled-text);
+  --color-gray-heavy: var(--palette-gray-heavy);
+  --color-gray-icon: var(--palette-gray-icon);
+  --color-beige-dark: var(--palette-beige-dark);
   --color-canvas: var(--palette-white);
   --color-ink: var(--palette-black);
   --color-warm: var(--palette-beige);
   --color-line: var(--palette-gray-light);
   --color-muted-ink: var(--palette-gray-dark);
-  --color-hero-depth: var(--palette-hero-depth);
 
   /* Layout */
   --container-container: var(--layout-container);
