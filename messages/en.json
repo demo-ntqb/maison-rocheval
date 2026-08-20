@@ -573,11 +573,37 @@
     ]
   },
   "contact": {
-    "heroTitle": "Contact",
-    "heroIntro": "Our specialists are happy to guide you in choosing, ordering or gifting Maison Rocheval caviar.",
+    "title": "Contact Us",
+    "introBeforeFaq": "We will get back to you in 3 to 5 working days. For general enquires, you can view more on our",
+    "faqLink": "FAQ",
+    "introAfterFaq": "page.",
     "email": "support@maisonrocheval.com",
     "emailLabel": "Email: support@maisonrocheval.com",
-    "respondNote": "We will respond within 24 hrs."
+    "respondNote": "We will respond within 24 hrs.",
+    "imageAlt": "Open Maison Rocheval caviar tin",
+    "privacyBeforeLink": "Maison Rocheval needs the contact information you provide us to contact you about our products and services. For information about our privacy practices and commitment to protecting your privacy, please review our",
+    "privacyLink": "Privacy Policy",
+    "form": {
+      "firstName": "First Name*",
+      "lastName": "Last Name*",
+      "email": "Email*",
+      "country": "Country*",
+      "countryPlaceholder": "Select a country",
+      "countryOptions": {
+        "france": "France",
+        "singapore": "Singapore"
+      },
+      "company": "Company Name",
+      "phone": "Phone Number",
+      "message": "How can we help you?*",
+      "wholesale": "This is a wholesale inquiry",
+      "submit": "Send message",
+      "validation": {
+        "email": "Please enter a valid email address.",
+        "required": "This field is required.",
+        "selection": "Please select a country."
+      }
+    }
   },
   "comingSoon": {
     "hero": {

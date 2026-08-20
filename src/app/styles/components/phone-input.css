@@ -1,0 +1,107 @@
+/* Custom intl-tel-input layout to match Figma spec */
+.iti {
+  display: flex !important;
+  width: 100% !important;
+  height: 40px !important;
+}
+
+.iti__tel-input {
+  width: 100% !important;
+  height: 100% !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 125px !important; /* 75px (flag area) + 34px (dial code +65) + 16px padding */
+  padding-right: 16px !important;
+  border: 0.5px solid var(--color-muted-text) !important;
+  border-radius: 2px !important;
+  background-color: #ffffff !important;
+  font-family: var(--font-sans) !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  color: var(--color-ink) !important;
+  outline: none !important;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+.iti__tel-input:focus {
+  border-color: var(--color-navy-dark) !important;
+  box-shadow: 0 0 0 0.5px var(--color-navy-dark) !important;
+}
+
+.iti__tel-input[aria-invalid="true"] {
+  border-color: #b91c1c !important; /* red-700 */
+  box-shadow: 0 0 0 0.5px rgba(185, 28, 28, 0.2) !important;
+}
+
+.iti__selected-country {
+  width: 115px !important; /* 75px (flag area) + 40px (dial code space) */
+  height: 100% !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+/* Vertical separator line at 75px */
+.iti__selected-country::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 75px !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 0.5px !important;
+  background-color: var(--color-muted-text) !important;
+}
+
+.iti__selected-country .iti__flag {
+  margin-left: 16px !important;
+}
+
+.iti__arrow {
+  margin-left: 8px !important;
+  border-top-color: var(--color-ink) !important;
+}
+
+.iti__selected-dial-code {
+  position: absolute !important;
+  left: 91px !important; /* 75px (line) + 16px gap */
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important; /* $t3 is 14px */
+  color: var(--color-ink) !important;
+}
+
+.iti__country-list {
+  background-color: #ffffff !important;
+  border: 0.5px solid var(--color-stone) !important;
+  border-radius: 2px !important;
+  font-family: var(--font-sans) !important;
+  font-size: 14px !important;
+  color: var(--color-ink) !important;
+  z-index: 50 !important;
+}
+
+.iti__country {
+  padding: 8px 12px !important;
+}
+
+.iti__country.iti__highlight {
+  background-color: var(--color-beige) !important;
+  color: var(--color-ink) !important;
+}
+
+.iti__search-input {
+  border: 0.5px solid var(--color-stone) !important;
+  border-radius: 2px !important;
+  outline: none !important;
+  font-family: var(--font-sans) !important;
+}
+
+.iti__search-input:focus,
+.iti__search-input:focus-visible {
+  border-color: var(--color-navy-dark) !important;
+  box-shadow: 0 0 0 0.5px var(--color-navy-dark) !important;
+  outline: none !important;
+}

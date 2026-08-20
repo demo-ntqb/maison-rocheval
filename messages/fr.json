@@ -29,6 +29,8 @@
       "description": "La page que vous recherchez n'existe pas ou a été déplacée."
     },
     "faq": {
+    "title": "Questions fréquentes",
+    "description": "Réponses sur le choix, la conservation et la dégustation du caviar Maison Rocheval.",
     "heroTitle": "Questions fréquentes",
     "heroIntro": "Pour toute assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons sous 24 heures.",
     "items": [
@@ -631,11 +633,37 @@
     ]
   },
   "contact": {
-    "heroTitle": "Contact",
-    "heroIntro": "Nos spécialistes vous accompagnent pour choisir, commander ou offrir le caviar Maison Rocheval.",
+    "title": "Nous contacter",
+    "introBeforeFaq": "Nous vous répondrons sous 3 à 5 jours ouvrés. Pour toute question générale, consultez notre",
+    "faqLink": "FAQ",
+    "introAfterFaq": ".",
     "email": "support@maisonrocheval.com",
     "emailLabel": "E-mail : support@maisonrocheval.com",
-    "respondNote": "Nous répondons sous 24 heures."
+    "respondNote": "Nous répondons sous 24 heures.",
+    "imageAlt": "Boîte de caviar Maison Rocheval ouverte",
+    "privacyBeforeLink": "Maison Rocheval utilise les informations de contact que vous fournissez pour vous contacter au sujet de ses produits et services. Pour en savoir plus sur nos pratiques de confidentialité et notre engagement à protéger vos données, veuillez consulter notre",
+    "privacyLink": "politique de confidentialité",
+    "form": {
+      "firstName": "Prénom*",
+      "lastName": "Nom*",
+      "email": "E-mail*",
+      "country": "Pays*",
+      "countryPlaceholder": "Sélectionner un pays",
+      "countryOptions": {
+        "france": "France",
+        "singapore": "Singapour"
+      },
+      "company": "Nom de l’entreprise",
+      "phone": "Numéro de téléphone",
+      "message": "Comment pouvons-nous vous aider ?*",
+      "wholesale": "Il s’agit d’une demande professionnelle",
+      "submit": "Envoyer le message",
+      "validation": {
+        "email": "Veuillez saisir une adresse e-mail valide.",
+        "required": "Ce champ est obligatoire.",
+        "selection": "Veuillez sélectionner un pays."
+      }
+    }
   },
   "comingSoon": {
     "hero": {

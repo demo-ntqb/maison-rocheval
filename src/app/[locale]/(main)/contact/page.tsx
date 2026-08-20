@@ -21,7 +21,7 @@ export async function generateMetadata({
 
 export default function ContactPage() {
   return (
-    <div className="flex w-full flex-col bg-warm" data-screen="contact">
+    <div className="flex w-full flex-col bg-white" data-screen="contact">
       <ContactHeroSection />
     </div>
   );

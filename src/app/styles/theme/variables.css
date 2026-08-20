@@ -1,0 +1,59 @@
+:root {
+  /* Maison Rocheval Design Tokens */
+  --background: #ffffff;
+  --foreground: #000000;
+
+  --palette-white: #ffffff;
+  --palette-offwhite: #f8f8f8;
+  --palette-canvas: #f7f7f7;
+  --palette-black: #000000;
+  --palette-beige: #f6f1eb;
+  --palette-gray-light: #bcbcbc;
+  --palette-stone: #bfbbb6;
+  --palette-gray-dark: #636363;
+  --palette-navy-dark: #16222e;
+  --palette-navy-darker: #131e29;
+  --palette-navy-hover: #25394c;
+  --palette-navy-press: #0f161e;
+  --palette-navy-disabled-text: #334d67;
+  --palette-gray-heavy: #454545;
+  --palette-gray-icon: #606060;
+  --palette-ink-soft: #333333;
+  --palette-muted-text: #929292;
+  --palette-beige-dark: #f1ebe4;
+  --palette-hero-depth: #071b26;
+
+  /* Layout scale extracted from the 1400px Figma canvas. */
+  --layout-container: 87.5rem; /* 1400px */
+  --layout-content: 62.5rem; /* 1000px */
+  --space-section: 12.5rem;  /* 200px*/
+  --space-editorial: 9.375rem; /* 150px */
+
+  /* Collapsing hero: the minimum height the home hero collapses to. */
+  --home-hero-compact: 80px;
+
+  /* shadcn/ui custom variable mappings */
+  --radius: 2px;
+  
+  --primary: var(--palette-black);
+  --primary-foreground: var(--palette-white);
+  
+  --secondary: var(--palette-navy-dark);
+  --secondary-foreground: var(--palette-white);
+  
+  --accent: var(--palette-beige);
+  --accent-foreground: var(--palette-black);
+  
+  --muted: var(--palette-offwhite);
+  --muted-foreground: var(--palette-gray-dark);
+  
+  --border: var(--palette-gray-light);
+  --input: var(--palette-gray-light);
+  --ring: var(--palette-navy-dark);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --home-hero-compact: 80px;
+  }
+}

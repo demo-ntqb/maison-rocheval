@@ -85,7 +85,7 @@ function SpecRichText({ data, className }: { data: string; className?: string })
     return (
       <div
         className={cn(
-          "whitespace-normal leading-relaxed [&_p:not(:last-child)]:mb-2 [&_ul]:my-1 [&_ul]:list-disc [&_ul]:pl-4 [&_strong]:font-medium [&_strong]:text-black",
+          "whitespace-normal leading-relaxed [&_p]:mb-2 [&_p:last-child]:mb-0 [&_ul]:my-1 [&_ul]:list-disc [&_ul]:pl-4 [&_strong]:font-medium [&_strong]:text-black",
           className,
         )}
         dangerouslySetInnerHTML={{ __html: data }}

@@ -1,0 +1,126 @@
+/* shadcn/ui runtime animations & keyframes */
+@theme inline {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-slide-up: slide-up 0.4s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height, auto);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height, auto);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Radix & UI state custom variants */
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-closed {
+  &:where([data-state="closed"]),
+  &:where([data-closed]:not([data-closed="false"])) {
+    @slot;
+  }
+}
+
+/* Tailwind v4 theme mappings */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Brand Colors */
+  --color-white: var(--palette-white);
+  --color-canvas-soft: var(--palette-canvas);
+  --color-black: var(--palette-black);
+  --color-beige: var(--palette-beige);
+  --color-gray-light: var(--palette-gray-light);
+  --color-stone: var(--palette-stone);
+  --color-gray-dark: var(--palette-gray-dark);
+  --color-navy-dark: var(--palette-navy-dark);
+  --color-navy-darker: var(--palette-navy-darker);
+  --color-navy-hover: var(--palette-navy-hover);
+  --color-navy-press: var(--palette-navy-press);
+  --color-navy-disabled-text: var(--palette-navy-disabled-text);
+  --color-gray-heavy: var(--palette-gray-heavy);
+  --color-gray-icon: var(--palette-gray-icon);
+  --color-ink-soft: var(--palette-ink-soft);
+  --color-muted-text: var(--palette-muted-text);
+  --color-beige-dark: var(--palette-beige-dark);
+  --color-canvas: var(--palette-white);
+  --color-ink: var(--palette-black);
+  --color-warm: var(--palette-beige);
+  --color-line: var(--palette-gray-light);
+  --color-muted-ink: var(--palette-gray-dark);
+
+  /* Layout */
+  --container-container: var(--layout-container);
+  --container-content: var(--layout-content);
+  --spacing-section: var(--space-section);
+  --spacing-editorial: var(--space-editorial);
+
+  /* shadcn semantic map in Tailwind v4 */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Font Families */
+  --font-display: var(--font-display), "Optima", Georgia, serif;
+  --font-sans: var(--font-sans), Arial, Helvetica, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  /* Type scale */
+  --text-section-title: 2rem;
+  --text-section-title--line-height: 1;
+  --text-display-statement: 5.25rem;
+  --text-display-statement--line-height: 1.07;
+
+  /* Border Radii */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 1px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-brand: var(--radius);
+}

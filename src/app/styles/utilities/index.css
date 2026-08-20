@@ -1,0 +1,35 @@
+/* Skip below-the-fold layout and paint work until content nears the viewport. */
+.products-card-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 540px;
+}
+
+.products-editorial-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 908px;
+}
+
+.products-faq-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 832px;
+}
+
+.home-hero-overlay {
+  background:
+    radial-gradient(circle at 50% 59%, transparent 0 59%, var(--palette-hero-depth) 100%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--palette-black) 18%, transparent), transparent 38%);
+  pointer-events: none;
+}
+
+/* Collapsing hero → header handoff: while the journey attribute is active on
+   <html> (set by HomeHeroStage), the header logo hands its slot over to the
+   hero logo, which morphs into place. */
+[data-slot="header-logo"] {
+  transition-property: opacity, visibility;
+}
+
+html[data-home-hero-journey] [data-slot="header-logo"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
