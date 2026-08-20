@@ -1,4 +1,5 @@
 import { routing } from "@/i18n/routing";
+import { HeadAnalytics } from "@/app/(head)/analytics";
 import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
 import { generateOrganizationJsonLd, generateRootMetadata, isComingSoon } from "@/shared/lib/metadata";
 import type { Metadata } from "next";
@@ -86,6 +87,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: generateOrganizationJsonLd() }}
         />
         <ShopifyResourceHints />
+        <HeadAnalytics />
       </head>
       <body
         data-plumb-id="shop"

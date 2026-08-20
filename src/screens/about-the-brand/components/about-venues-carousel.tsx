@@ -4,10 +4,8 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-import { Link } from "@/i18n/navigation";
 import { IconMichelinStar } from "@/shared/components/icons";
 import { Picture } from "@/shared/components/ui/picture";
-import { ROUTES } from "@/shared/constants/route.constant";
 
 type Venue = {
   alt: string;
@@ -18,6 +16,7 @@ type Venue = {
   name: string;
   plumbId: string;
   stars: number;
+  url: string;
 };
 
 function StarRow({ count, plumbId }: { count: number; plumbId: string }) {
@@ -104,12 +103,14 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                     </div>
                   </div>
                   <div>
-                    <Link
-                      href={ROUTES.ABOUT_PRODUCT}
+                    <a
+                      href={venue.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex min-h-11 items-center font-sans text-sm uppercase underline underline-offset-4 text-ink hover:opacity-80 transition-opacity"
                     >
                       Discover {venue.name.split(" | ")[0]}
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>

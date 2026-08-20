@@ -12,79 +12,105 @@ export interface ProductCardProps extends React.ComponentProps<"article"> {
   size?: "sm" | "md";
 }
 
-export function ProductCard({ product, priority = false, className, ...props }: ProductCardProps) {
+export function ProductCard({
+  product,
+  priority = false,
+  size,
+  className,
+  ...props
+}: ProductCardProps) {
+  // If size is provided, use static sizes. If not, use responsive sizes.
+  const sizeClasses = size === "sm"
+    ? "w-[250px] h-[408px]"
+    : size === "md"
+      ? "w-[312px] h-[488px]"
+      : "w-[250px] h-[408px] lg:w-[280px] lg:h-[438px] xl:w-[312px] xl:h-[488px]";
+
+  const imageSizeClasses = size === "sm"
+    ? "w-[250px] h-[250px]"
+    : size === "md"
+      ? "w-[312px] h-[312px]"
+      : "w-[250px] h-[250px] lg:w-[280px] lg:h-[280px] xl:w-[312px] xl:h-[312px]";
+
+  const infoHeightClasses = size === "sm"
+    ? "h-[158px]"
+    : size === "md"
+      ? "h-[176px]"
+      : "h-[158px] xl:h-[176px]";
+
   return (
     <article
       className={cn(
-        "flex flex-col border-[0.5px] border-gray-light rounded-[2px] bg-canvas text-center overflow-hidden shrink-0 transition-shadow hover:shadow-sm transition-colors duration-300 hover:bg-warm",
-        "w-[250px] h-[393px] lg:w-[280px] lg:h-[465px]",
+        "flex flex-col border-[0.5px] border-stone rounded-[2px] bg-canvas text-center overflow-hidden shrink-0 transition-all duration-300 hover:shadow-sm hover:bg-warm",
+        sizeClasses,
         className
       )}
-      data-plumb-id="product"
+      data-plumb-id="component-22"
       {...props}
     >
-      <div
-        className="w-full flex-1 flex items-end justify-center pb-2 pt-2 bg-transparent relative"
-        data-plumb-id="component-22"
+      <Link
+        href={ROUTES.PRODUCT_DETAIL(product.handle)}
+        className={cn(
+          "shrink-0 relative flex items-center justify-center overflow-hidden",
+          imageSizeClasses
+        )}
+        data-plumb-id="catalog-image"
       >
-        <Link
-          href={ROUTES.PRODUCT_DETAIL(product.handle)}
-          className="w-[145px] h-[200px] lg:w-[200px] lg:h-[275px] shrink-0 relative flex items-center justify-center"
-          data-plumb-id="frame-2085667163"
-        >
-          {/* Overlapping shadow haze (simulates component-28/29 background pattern) */}
-          <div
-            className="absolute w-[130px] h-[130px] lg:w-[180px] lg:h-[180px] rounded-full bg-radial from-[#bfbbb6]/40 to-transparent blur-md -z-10 translate-y-[-10px]"
-            data-plumb-id="component-28"
+        {product.image ? (
+          <ShopifyImage
+            image={product.image}
+            priority={priority}
+            sizes={
+              size === "sm"
+                ? "250px"
+                : size === "md"
+                  ? "312px"
+                  : "(max-width: 768px) 250px, (max-width: 1200px) 280px, 312px"
+            }
+            responsiveWidths={[250, 280, 312, 500, 624]}
+            className="size-full object-contain"
+            data-plumb-id="image-5"
           />
+        ) : null}
+      </Link>
 
-          {product.image ? (
-            <div className="w-[125px] h-[125px] lg:w-[170px] lg:h-[170px] relative z-10 flex items-center justify-center" data-plumb-id="frame-2085667138">
-              <ShopifyImage
-                image={product.image}
-                priority={priority}
-                sizes="(max-width: 639px) 125px, 170px"
-                responsiveWidths={[125, 170, 340]}
-                className="size-full object-contain"
-                data-plumb-id="image-5"
-              />
-            </div>
-          ) : null}
-        </Link>
-      </div>
-
-      <Link href={ROUTES.PRODUCT_DETAIL(product.handle)}
-        className="flex flex-col justify-between p-6 min-h-[153px]"
+      <Link
+        href={ROUTES.PRODUCT_DETAIL(product.handle)}
+        className={cn(
+          "flex flex-col gap-3 p-6 shrink-0 items-center",
+          infoHeightClasses
+        )}
         data-plumb-id="frame-2085667164"
       >
         <div className="flex flex-col gap-1 items-center" data-plumb-id="frame-2085667136">
-          <div className="block w-full">
-            <h3
-              className="font-display text-[20px] font-bold text-ink leading-none truncate"
-              data-plumb-id="kaluga-caviar"
-            >
-              {product.title}
-            </h3>
-          </div>
+          <h3
+            className="font-display text-[20px] font-bold text-black leading-none truncate w-full"
+            data-plumb-id="kaluga-caviar"
+          >
+            {product.title}
+          </h3>
           <p
-            className="font-sans text-[12px] font-light text-gray-dark italic truncate w-full"
+            className="font-sans text-[12px] font-light text-gray-dark not-italic truncate w-full"
             data-plumb-id="huso-duricus"
           >
             {product.species}
           </p>
         </div>
 
-        <div className="border-t-[0.5px] border-gray-light w-full" data-plumb-id="vector-1307" />
+        <div
+          className="border-t-[0.5px] border-stone w-full"
+          data-plumb-id="vector-1307"
+        />
 
         <div className="flex flex-col gap-1 items-center w-full" data-plumb-id="frame-2085667167">
           <p
-            className="font-sans text-[12px] font-normal text-ink truncate w-full"
+            className="font-sans text-[12px] font-normal text-black truncate w-full"
             data-plumb-id="rich-creamy-long-finish"
           >
             {product.profile}
           </p>
           <p
-            className="font-sans text-[12px] font-light text-gray-dark line-clamp-1 w-full"
+            className="font-sans text-[12px] font-light text-gray-dark line-clamp-1 xl:line-clamp-2 w-full"
             data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a"
           >
             {product.description}
