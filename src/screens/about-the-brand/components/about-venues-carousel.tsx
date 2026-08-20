@@ -1,6 +1,5 @@
 "use client";
 
-import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -21,20 +20,25 @@ type Venue = {
 };
 
 export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
+  const [isWide, setIsWide] = useState(false);
+
+  useEffect(() => {
+    const checkSize = () => {
+      setIsWide(window.innerWidth >= 1564);
+    };
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
+
   const [ref, api] = useEmblaCarousel(
     {
       align: "center",
       containScroll: "trimSnaps",
       dragFree: true,
       loop: false,
-    },
-    [
-      Autoplay({
-        delay: 3000,
-        stopOnInteraction: false,
-        stopOnMouseEnter: true,
-      }),
-    ]
+      active: !isWide,
+    }
   );
   const [canScroll, setCanScroll] = useState([false, false]);
   const sync = useCallback(
@@ -58,8 +62,8 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
 
   return (
     <div role="region" aria-roledescription="carousel" aria-label="Restaurant partners">
-      <div ref={ref} className="overflow-hidden">
-        <div className="flex gap-6 md:gap-8">
+      <div ref={ref} className="overflow-visible">
+        <div className="flex gap-6 md:gap-8 min-[1564px]:justify-center">
           {venues.map((venue) => (
             <article
               key={venue.name}
@@ -118,28 +122,30 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
           ))}
         </div>
       </div>
-      <div className="mt-13 flex justify-center gap-4">
-        <button
-          type="button"
-          onClick={() => api?.scrollPrev()}
-          disabled={!canScroll[0]}
-          aria-label="Previous restaurant"
-          data-plumb-id="icon-button"
-          className="inline-flex size-8 items-center justify-center rounded-[4px] disabled:opacity-30"
-        >
-          <ChevronLeft className="size-5" aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          onClick={() => api?.scrollNext()}
-          disabled={!canScroll[1]}
-          aria-label="Next restaurant"
-          data-plumb-id="icon-button-2"
-          className="inline-flex size-8 items-center justify-center rounded-[4px] disabled:opacity-30"
-        >
-          <ChevronRight className="size-5" aria-hidden="true" />
-        </button>
-      </div>
+      {venues.length > 1 && (
+        <div className="mt-13 flex justify-center gap-4 min-[1564px]:hidden">
+          <button
+            type="button"
+            onClick={() => api?.scrollPrev()}
+            disabled={!canScroll[0] || isWide}
+            aria-label="Previous restaurant"
+            data-plumb-id="icon-button"
+            className="inline-flex size-8 items-center justify-center rounded-[4px] disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <ChevronLeft className="size-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => api?.scrollNext()}
+            disabled={!canScroll[1] || isWide}
+            aria-label="Next restaurant"
+            data-plumb-id="icon-button-2"
+            className="inline-flex size-8 items-center justify-center rounded-[4px] disabled:opacity-30 disabled:pointer-events-none"
+          >
+            <ChevronRight className="size-5" aria-hidden="true" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

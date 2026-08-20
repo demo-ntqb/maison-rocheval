@@ -46,11 +46,11 @@ export async function AboutVenuesSection() {
     <section
       data-plumb-id="frame-2085667111"
       aria-labelledby="about-brand-venues-title"
-      className="flex w-full justify-center bg-warm py-50"
+      className="flex w-full justify-center bg-warm py-50 overflow-hidden"
     >
       <div
         data-plumb-id="frame-2085667314"
-        className="flex w-full flex-col max-w-container gap-13.5"
+        className="mx-auto flex w-full flex-col max-w-content gap-13.5 px-4 lg:px-0"
       >
         <div className="w-full flex flex-col items-center gap-4 text-center px-4 max-w-160 mx-auto">
           <SplitText
