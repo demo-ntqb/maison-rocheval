@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
+import { SplitText } from "@/shared/components/ui/split-text";
 
 export async function AboutSelectionSection() {
   const t = await getTranslations("aboutBrand.selection");
@@ -16,18 +17,26 @@ export async function AboutSelectionSection() {
         data-plumb-id="frame-2085667090"
         className="flex w-full max-w-content flex-col gap-10"
       >
-        <Reveal className="mx-auto flex max-w-[640px] flex-col items-center gap-4 text-center">
-          <h2
+        <div className="mx-auto flex max-w-[640px] flex-col items-center gap-4 text-center">
+          <SplitText
+            as="h2"
             data-plumb-id="lorem-ipsum-dolor-10"
             id="about-brand-selection-title"
             className="font-display text-[32px] leading-none"
+            by="words"
+            stagger={40}
           >
             {t("title")}
-          </h2>
-          <p className="mx-auto max-w-[590px] font-sans text-sm leading-[1.43] text-muted-ink">
+          </SplitText>
+          <SplitText
+            as="p"
+            className="mx-auto max-w-[590px] font-sans text-sm leading-[1.43] text-muted-ink"
+            by="words"
+            stagger={10}
+          >
             {t("description")}
-          </p>
-        </Reveal>
+          </SplitText>
+        </div>
 
         <Reveal delay={120}>
           <Picture
@@ -51,26 +60,35 @@ export async function AboutSelectionSection() {
           />
         </Reveal>
 
-        <Reveal className="grid w-full grid-cols-1 gap-10 md:grid-cols-[200px_1fr_1fr] md:gap-x-[54px]" delay={240}>
-          <h3
+        <div className="grid w-full grid-cols-1 gap-10 md:grid-cols-[200px_1fr_1fr] md:gap-x-[54px]">
+          <SplitText
+            as="h3"
             data-plumb-id="lorem-ipsum-dolor-3"
             className="font-display text-[24px] leading-[1.33]"
+            by="words"
+            stagger={40}
           >
             {t("caption")}
-          </h3>
-          <p
+          </SplitText>
+          <SplitText
+            as="p"
             data-plumb-id="colour-grain-texture-firmness-and-moistu"
             className="font-sans text-sm leading-[18px]"
+            by="words"
+            stagger={10}
           >
             {t("detail1")}
-          </p>
-          <p
+          </SplitText>
+          <SplitText
+            as="p"
             data-plumb-id="on-the-palate-flavour-unfolds-in-layers"
             className="font-sans text-sm leading-[18px]"
+            by="words"
+            stagger={10}
           >
             {t("detail2")}
-          </p>
-        </Reveal>
+          </SplitText>
+        </div>
       </div>
     </section>
   );

@@ -18,7 +18,7 @@ export async function HomeIntroSection() {
       <div className="flex w-full max-w-content flex-col items-center gap-[200px]" data-plumb-id="frame-2085667106">
         {/* First block: From source to ritual */}
         <div className="flex w-full flex-col items-center gap-[54px]" data-plumb-id="component-6">
-          <Reveal className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0" data-plumb-id="component-7">
+          <div className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0" data-plumb-id="component-7">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118">
               <div data-plumb-id="lorem-ipsum-dolor">
                 <SplitText
@@ -33,12 +33,18 @@ export async function HomeIntroSection() {
                 </SplitText>
               </div>
               <div className="flex flex-col items-center" data-plumb-id="frame-2085667119">
-                <p className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line" data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a">
+                <SplitText
+                  as="p"
+                  className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line"
+                  data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a"
+                  by="words"
+                  stagger={10}
+                >
                   {t("description")}
-                </p>
+                </SplitText>
               </div>
             </div>
-          </Reveal>
+          </div>
           <Reveal className="w-full" delay={120}>
             <Picture
               basePath="/images/home/source-ritual-table-mobile"
@@ -63,7 +69,7 @@ export async function HomeIntroSection() {
 
         {/* Second block: Before the Maison */}
         <div className="flex w-full flex-col items-center gap-[54px]" data-plumb-id="component-10">
-          <Reveal className="flex max-w-[640px] flex-col items-center gap-8 text-center" data-plumb-id="component-7-2">
+          <div className="flex max-w-[640px] flex-col items-center gap-8 text-center" data-plumb-id="component-7-2">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118-2">
               <div data-plumb-id="lorem-ipsum-dolor-3">
                 <SplitText
@@ -76,22 +82,32 @@ export async function HomeIntroSection() {
                   {t("storyTitle")}
                 </SplitText>
               </div>
-              <div className="flex flex-col items-center" data-plumb-id="frame-2085667119-2">
-                <p className="font-sans text-sm leading-[18px] text-ink" data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-2">
+                <SplitText
+                  as="p"
+                  className="font-sans text-sm leading-[18px] text-ink"
+                  data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-2"
+                  by="words"
+                  stagger={10}
+                >
                   {t("storyDescription")}
-                </p>
-              </div>
+                </SplitText>
             </div>
             <Link
               href={ROUTES.ABOUT_BRAND}
               className="-my-3 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
               data-plumb-id="text-button"
             >
-              <span className="underline underline-offset-4" data-plumb-id="text-button-2">
+              <SplitText
+                as="span"
+                className="underline underline-offset-4"
+                data-plumb-id="text-button-2"
+                by="words"
+                stagger={10}
+              >
                 {t("learnMore")}
-              </span>
+              </SplitText>
             </Link>
-          </Reveal>
+          </div>
 
           <Reveal className="flex flex-col lg:flex-row gap-8 w-full justify-center" data-plumb-id="frame-2085667098" delay={120}>
             <Picture

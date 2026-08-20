@@ -21,20 +21,22 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
       data-plumb-id="frame-2085667107"
     >
       <div className="flex w-full max-w-content flex-col items-center gap-16" data-plumb-id="frame-2085667108">
-        <Reveal className="flex flex-col items-center gap-16 w-full">
-          <Picture
-            basePath="/images/home/presented-sturgeon-illustration"
-            fallbackExtension="png"
-            alt=""
-            aria-hidden="true"
-            width={232}
-            height={100}
-            sizes="(max-width: 1023px) 148px, 232px"
-            pictureClassName="block w-[148px] h-[64px] lg:w-[232px] lg:h-[100px]"
-            className="size-full object-contain"
-            data-plumb-id="chatgpt-image-jul-30-2026-02-46-36-pm-1"
-            data-plumb-asset="e5a9cdc2971cfe09bb809242295d1e936320d799"
-          />
+        <div className="flex flex-col items-center gap-16 w-full">
+          <Reveal>
+            <Picture
+              basePath="/images/home/presented-sturgeon-illustration"
+              fallbackExtension="png"
+              alt=""
+              aria-hidden="true"
+              width={232}
+              height={100}
+              sizes="(max-width: 1023px) 148px, 232px"
+              pictureClassName="block w-[148px] h-[64px] lg:w-[232px] lg:h-[100px]"
+              className="size-full object-contain"
+              data-plumb-id="chatgpt-image-jul-30-2026-02-46-36-pm-1"
+              data-plumb-asset="e5a9cdc2971cfe09bb809242295d1e936320d799"
+            />
+          </Reveal>
 
           <div className="flex max-w-[396px] lg:max-w-[640px] flex-col items-center gap-8 text-center px-4 lg:px-0" data-plumb-id="component-8">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118-3">
@@ -51,9 +53,15 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
                 </SplitText>
               </div>
               <div className="flex flex-col items-center" data-plumb-id="frame-2085667119-3">
-                <p className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line" data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-5">
+                <SplitText
+                  as="p"
+                  className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line"
+                  data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-5"
+                  by="words"
+                  stagger={10}
+                >
                   {t("description")}
-                </p>
+                </SplitText>
               </div>
             </div>
             <Link
@@ -61,10 +69,18 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
               className="-my-3 inline-flex min-h-11 items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
               data-plumb-id="text-button-5"
             >
-              <span className="underline underline-offset-4" data-plumb-id="text-button-6">{t("shopNow")}</span>
+              <SplitText
+                as="span"
+                className="underline underline-offset-4"
+                data-plumb-id="text-button-6"
+                by="words"
+                stagger={10}
+              >
+                {t("shopNow")}
+              </SplitText>
             </Link>
           </div>
-        </Reveal>
+        </div>
 
         <Reveal className="w-full" delay={120}>
           <HomeProductList products={products} />

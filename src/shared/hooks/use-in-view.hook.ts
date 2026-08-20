@@ -18,8 +18,8 @@ interface UseInViewOptions {
  * content is never left hidden.
  */
 export function useInView<T extends HTMLElement = HTMLDivElement>({
-  threshold = 0.15,
-  rootMargin = "0px 0px -10% 0px",
+  threshold = 0.05,
+  rootMargin = "0px 0px -8% 0px",
 }: UseInViewOptions = {}) {
   const ref = useRef<T>(null);
   const [isInView, setIsInView] = useState(false);

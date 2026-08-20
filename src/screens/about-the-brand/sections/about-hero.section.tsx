@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
+import { SplitText } from "@/shared/components/ui/split-text";
 
 export async function AboutHeroSection() {
   const t = await getTranslations("aboutBrand.hero");
@@ -28,14 +29,18 @@ export async function AboutHeroSection() {
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-350 flex-col px-6 pt-28 lg:px-13.5">
-        <h1
+        <SplitText
+          as="h1"
           id="about-brand-title"
           data-plumb-id="the-maison"
-          className="text-center font-display text-[clamp(2.5rem,4.6vw,3.375rem)] font-normal uppercase leading-none tracking-[-0.02em] motion-safe:animate-fade-in"
+          className="text-center font-display text-[clamp(2.5rem,4.6vw,3.375rem)] font-normal uppercase leading-none tracking-[-0.02em]"
+          by="words"
+          stagger={40}
         >
           {t("title")}
-        </h1>
+        </SplitText>
       </div>
     </section>
   );
 }
+

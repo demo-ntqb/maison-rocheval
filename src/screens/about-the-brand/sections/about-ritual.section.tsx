@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
+import { SplitText } from "@/shared/components/ui/split-text";
 
 export async function AboutRitualSection() {
   const t = await getTranslations("aboutBrand.ritual");
@@ -16,21 +17,27 @@ export async function AboutRitualSection() {
         data-plumb-id="frame-2085667122"
         className="flex w-full max-w-content flex-col gap-[54px]"
       >
-        <Reveal className="flex w-full flex-col md:flex-row items-center md:items-end justify-between gap-4">
-          <h2
+        <div className="flex w-full flex-col md:flex-row items-center md:items-end justify-between gap-4">
+          <SplitText
+            as="h2"
             data-plumb-id="lorem-ipsum-dolor-2"
             id="about-brand-ritual-title"
             className="font-display text-[clamp(3.25rem,6vw,5.25rem)] uppercase leading-[1.07]"
+            by="words"
+            stagger={40}
           >
             {t("title")}
-          </h2>
-          <p
+          </SplitText>
+          <SplitText
+            as="p"
             data-plumb-id="lorem-ipsum-dolor-4"
             className="flex-1 pb-2 text-right font-display text-[24px] leading-[1.33]"
+            by="words"
+            stagger={10}
           >
             {t("statement")}
-          </p>
-        </Reveal>
+          </SplitText>
+        </div>
 
         <Reveal delay={120}>
           <Picture

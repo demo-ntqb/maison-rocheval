@@ -25,7 +25,7 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
     {
       align: "center",
       containScroll: "trimSnaps",
-      dragFree: false,
+      dragFree: true,
       loop: false,
     },
     [

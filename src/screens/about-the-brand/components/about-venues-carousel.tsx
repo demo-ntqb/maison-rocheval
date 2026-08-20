@@ -1,5 +1,6 @@
 "use client";
 
+import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -20,10 +21,21 @@ type Venue = {
 };
 
 export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
-  const [ref, api] = useEmblaCarousel({
-    align: "center",
-    containScroll: "trimSnaps",
-  });
+  const [ref, api] = useEmblaCarousel(
+    {
+      align: "center",
+      containScroll: "trimSnaps",
+      dragFree: true,
+      loop: false,
+    },
+    [
+      Autoplay({
+        delay: 3000,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    ]
+  );
   const [canScroll, setCanScroll] = useState([false, false]);
   const sync = useCallback(
     () =>

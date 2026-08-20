@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
+import { SplitText } from "@/shared/components/ui/split-text";
 
 export async function AboutHistorySection() {
   const t = await getTranslations("aboutBrand.story");
@@ -35,43 +36,63 @@ export async function AboutHistorySection() {
           />
         </Reveal>
 
-        <Reveal
+        <div
           data-plumb-id="frame-2085667078"
           className="flex w-full md:flex-1"
-          delay={120}
         >
           <div
             data-plumb-id="frame-2085667142"
             className="flex w-full flex-col gap-3 lg:max-w-[350px]"
           >
-            <h2
+            <SplitText
+              as="h2"
               data-plumb-id="lorem-ipsum-dolor"
               className="font-display text-[32px] leading-none"
+              by="words"
+              stagger={40}
             >
               {t("title")}
-            </h2>
+            </SplitText>
             <div data-plumb-id="component-7" className="flex flex-col gap-3">
-              <p
+              <SplitText
+                as="p"
                 data-plumb-id="lorem-ipsum-dolor-3"
                 id="about-brand-story-title"
                 className="font-display text-base font-bold leading-normal"
+                by="words"
+                stagger={10}
               >
                 {t("eyebrow")}
-              </p>
+              </SplitText>
               <div className="flex flex-col gap-3 font-sans text-sm leading-[1.43] text-muted-ink">
-                <p data-plumb-id="colour-grain-texture-firmness-and-moistu-2">
+                <SplitText
+                  as="p"
+                  data-plumb-id="colour-grain-texture-firmness-and-moistu-2"
+                  by="words"
+                  stagger={10}
+                >
                   {t("paragraph1")}
-                </p>
-                <p data-plumb-id="colour-grain-texture-firmness-and-moistu-3">
+                </SplitText>
+                <SplitText
+                  as="p"
+                  data-plumb-id="colour-grain-texture-firmness-and-moistu-3"
+                  by="words"
+                  stagger={10}
+                >
                   {t("paragraph2")}
-                </p>
-                <p data-plumb-id="colour-grain-texture-firmness-and-moistu-4">
+                </SplitText>
+                <SplitText
+                  as="p"
+                  data-plumb-id="colour-grain-texture-firmness-and-moistu-4"
+                  by="words"
+                  stagger={10}
+                >
                   {t("paragraph3")}
-                </p>
+                </SplitText>
               </div>
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

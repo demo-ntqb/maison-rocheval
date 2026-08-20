@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
+import { SplitText } from "@/shared/components/ui/split-text";
 import { COLLECTION_IMAGES } from "../constants/about-the-product.constant";
 
 export async function AboutOriginSection() {
@@ -15,15 +16,25 @@ export async function AboutOriginSection() {
       className="w-full bg-canvas pt-[200px]"
     >
       <div className="mx-auto flex w-full max-w-content flex-col items-center gap-[54px] px-4 lg:px-0">
-        <Reveal className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0">
-          <h2
+        <div className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0">
+          <SplitText
+            as="h2"
             id="about-product-origin-title"
             className="font-display text-section-title text-ink"
+            by="words"
+            stagger={40}
           >
             {t("title")}
-          </h2>
-          <p className="font-sans text-sm leading-5 text-ink">{t("description")}</p>
-        </Reveal>
+          </SplitText>
+          <SplitText
+            as="p"
+            className="font-sans text-sm leading-5 text-ink"
+            by="words"
+            stagger={10}
+          >
+            {t("description")}
+          </SplitText>
+        </div>
 
         <Reveal className="w-full" delay={120}>
           <Picture

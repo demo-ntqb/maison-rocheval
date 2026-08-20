@@ -38,6 +38,8 @@ interface SplitTextProps extends Omit<HTMLMotionProps<"div">, "children" | "as">
   animation?: "slide-up" | "fade" | "slide-up-fade";
   /** Ngưỡng hiển thị (0 đến 1) để kích hoạt in-view */
   threshold?: number;
+  /** Lề viewport để kích hoạt in-view (ví dụ: "0px 0px -10% 0px") */
+  margin?: string;
 }
 
 export function SplitText({
@@ -48,7 +50,8 @@ export function SplitText({
   delay = 0,
   duration = 600,
   animation = "slide-up-fade",
-  threshold = 0.15,
+  threshold = 0.05,
+  margin = "0px 0px -8% 0px",
   className,
   ...props
 }: SplitTextProps) {
@@ -91,7 +94,7 @@ export function SplitText({
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: threshold }}
+      viewport={{ once: true, amount: threshold, margin }}
       className={cn("select-none", className)}
       {...props}
     >

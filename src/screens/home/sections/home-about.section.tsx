@@ -48,35 +48,64 @@ export async function HomeAboutSection() {
           </Reveal>
 
           {/* Caviar image & Text block (Figma overlap gap -54px) */}
-          <Reveal className="flex flex-col lg:flex-row w-full items-center lg:items-start -mt-[54px] z-10" data-plumb-id="component-6-2" delay={240}>
-            <Picture
-              basePath="/images/home/selection-caviar-pearls"
-              fallbackExtension="png"
-              alt={t("caviarImageAlt")}
-              width={470}
-              height={700}
-              sizes="(max-width: 1023px) calc(100vw - 32px), 470px"
-              pictureClassName="block overflow-hidden rounded-brand w-[50%] lg:w-[470px] h-auto lg:h-[700px] self-start lg:self-auto"
-              className="size-full rounded-brand object-cover"
-              data-plumb-id="image-20-2"
-              data-plumb-asset="610416d8c326714084de6a54be9625325f3d566d"
-            />
+          <div className="flex flex-col lg:flex-row w-full items-center lg:items-start -mt-[54px] z-10" data-plumb-id="component-6-2">
+            <Reveal delay={240} className="w-[50%] lg:w-[470px] self-start lg:self-auto">
+              <Picture
+                basePath="/images/home/selection-caviar-pearls"
+                fallbackExtension="png"
+                alt={t("caviarImageAlt")}
+                width={470}
+                height={700}
+                sizes="(max-width: 1023px) calc(100vw - 32px), 470px"
+                pictureClassName="block overflow-hidden rounded-brand w-full h-auto lg:h-[700px]"
+                className="size-full rounded-brand object-cover"
+                data-plumb-id="image-20-2"
+                data-plumb-asset="610416d8c326714084de6a54be9625325f3d566d"
+              />
+            </Reveal>
 
             <div className="flex w-full lg:w-[530px] flex-col items-center justify-center py-16 lg:h-[700px] lg:py-0 px-4" data-plumb-id="frame-2085667078">
               <div className="flex w-full max-w-[332px] lg:max-w-[400px] flex-col gap-8" data-plumb-id="frame-2085667142">
                 <div className="flex flex-col gap-8 lg:gap-8" data-plumb-id="component-7-3">
                   <div className="flex flex-col gap-4 lg:gap-4" data-plumb-id="frame-2085667121">
                     <div data-plumb-id="lorem-ipsum-dolor-7">
-                      <h3 className="font-display text-[32px] leading-none text-ink" data-plumb-id="lorem-ipsum-dolor-8">
+                      <SplitText
+                        as="h3"
+                        className="font-display text-[32px] leading-none text-ink"
+                        data-plumb-id="lorem-ipsum-dolor-8"
+                        by="words"
+                        stagger={40}
+                      >
                         {t("title")}
-                      </h3>
+                      </SplitText>
                     </div>
                     <div className="flex flex-col gap-3 font-sans text-sm leading-[18px] text-ink" data-plumb-id="frame-2085667120">
-                      <p data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-3">{t("description")}</p>
-                      <p className="font-display text-base font-bold leading-[19px]" data-plumb-id="lorem-ipsum-dolor-sit-amet">
+                      <SplitText
+                        as="p"
+                        data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-3"
+                        by="words"
+                        stagger={10}
+                      >
+                        {t("description")}
+                      </SplitText>
+                      <SplitText
+                        as="p"
+                        className="font-display text-base font-bold leading-[19px]"
+                        data-plumb-id="lorem-ipsum-dolor-sit-amet"
+                        by="words"
+                        stagger={10}
+                      >
                         {t("speciesTitle")}
-                      </p>
-                      <p className="hidden lg:block" data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-4">{t("speciesDescription")}</p>
+                      </SplitText>
+                      <SplitText
+                        as="p"
+                        className="hidden lg:block"
+                        data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-4"
+                        by="words"
+                        stagger={10}
+                      >
+                        {t("speciesDescription")}
+                      </SplitText>
                     </div>
                   </div>
                   <Link
@@ -84,14 +113,20 @@ export async function HomeAboutSection() {
                     className="inline-flex min-h-11 w-fit items-center font-sans text-sm leading-5 text-ink underline underline-offset-4 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4"
                     data-plumb-id="text-button-3"
                   >
-                    <span className="underline underline-offset-4" data-plumb-id="text-button-4">
+                    <SplitText
+                      as="span"
+                      className="underline underline-offset-4"
+                      data-plumb-id="text-button-4"
+                      by="words"
+                      stagger={10}
+                    >
                       {t("explore")}
-                    </span>
+                    </SplitText>
                   </Link>
                 </div>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
