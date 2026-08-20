@@ -21,22 +21,24 @@ export function ProductCard({
 }: ProductCardProps) {
   // If size is provided, use static sizes. If not, use responsive sizes.
   const sizeClasses = size === "sm"
-    ? "w-[250px] h-[408px]"
+    ? "w-[200px] h-[360px]"
     : size === "md"
       ? "w-[312px] h-[488px]"
       : "w-[250px] h-[408px] lg:w-[280px] lg:h-[438px] xl:w-[312px] xl:h-[488px]";
 
   const imageSizeClasses = size === "sm"
-    ? "w-[250px] h-[250px]"
+    ? "w-[200px] h-[200px]"
     : size === "md"
       ? "w-[312px] h-[312px]"
       : "w-[250px] h-[250px] lg:w-[280px] lg:h-[280px] xl:w-[312px] xl:h-[312px]";
 
   const infoHeightClasses = size === "sm"
-    ? "h-[158px]"
+    ? "h-[160px]"
     : size === "md"
       ? "h-[176px]"
       : "h-[158px] xl:h-[176px]";
+
+  const infoPaddingClasses = size === "sm" ? "p-4" : "p-6";
 
   return (
     <article
@@ -62,12 +64,12 @@ export function ProductCard({
             priority={priority}
             sizes={
               size === "sm"
-                ? "250px"
+                ? "200px"
                 : size === "md"
                   ? "312px"
                   : "(max-width: 768px) 250px, (max-width: 1200px) 280px, 312px"
             }
-            responsiveWidths={[250, 280, 312, 500, 624]}
+            responsiveWidths={[200, 250, 280, 312, 500, 624]}
             className="size-full object-contain"
             data-plumb-id="image-5"
           />
@@ -77,7 +79,8 @@ export function ProductCard({
       <Link
         href={ROUTES.PRODUCT_DETAIL(product.handle)}
         className={cn(
-          "flex flex-col gap-3 p-6 shrink-0 items-center",
+          "flex flex-col gap-3 shrink-0 items-center",
+          infoPaddingClasses,
           infoHeightClasses
         )}
         data-plumb-id="frame-2085667164"

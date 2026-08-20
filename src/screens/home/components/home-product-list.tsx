@@ -1,6 +1,5 @@
 "use client";
 
-import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import * as React from "react";
 
@@ -27,14 +26,7 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
       containScroll: "trimSnaps",
       dragFree: true,
       loop: false,
-    },
-    [
-      Autoplay({
-        delay: 3000,
-        stopOnInteraction: false,
-        stopOnMouseEnter: true,
-      }),
-    ]
+    }
   );
 
   const [prevBtnEnabled, setPrevBtnEnabled] = React.useState(false);
@@ -71,7 +63,7 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
 
   return (
     <div
-      className="flex flex-col lg:flex-row items-center w-full max-w-[1000px] justify-between relative"
+      className="flex flex-col lg:flex-row items-center w-full min-w-0 lg:max-w-250 xl:max-w-274 justify-between relative"
       data-plumb-id="component-6-3"
     >
       {/* Left button (Desktop - hidden on mobile) */}
@@ -90,7 +82,7 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
 
       {/* Viewport container */}
       <div
-        className="w-full lg:w-[904px] overflow-hidden"
+        className="w-full min-w-0 lg:w-[904px] xl:w-250 overflow-hidden"
         ref={emblaRef}
         data-plumb-id="frame-2085667295"
       >

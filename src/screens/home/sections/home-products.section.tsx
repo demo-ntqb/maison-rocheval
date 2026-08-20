@@ -17,10 +17,10 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
   return (
     <section
       aria-labelledby="home-products-title"
-      className="flex w-full flex-col items-center bg-canvas-soft py-[150px] lg:px-0 lg:py-[200px]"
+      className="flex w-full flex-col items-center bg-transparent py-[150px] lg:px-0 lg:py-[200px]"
       data-plumb-id="frame-2085667107"
     >
-      <div className="flex w-full max-w-content flex-col items-center gap-16" data-plumb-id="frame-2085667108">
+      <div className="flex w-full flex-col items-center gap-16" data-plumb-id="frame-2085667108">
         <div className="flex flex-col items-center gap-16 w-full">
           <Reveal>
             <Picture
@@ -82,7 +82,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
           </div>
         </div>
 
-        <Reveal className="w-full" delay={120}>
+        <Reveal className="w-full min-w-0 lg:w-auto" delay={120}>
           <HomeProductList products={products} />
         </Reveal>
       </div>
