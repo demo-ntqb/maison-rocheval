@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
+import { SplitText } from "@/shared/components/ui/split-text";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function HomeIntroSection() {
@@ -20,9 +21,16 @@ export async function HomeIntroSection() {
           <Reveal className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0" data-plumb-id="component-7">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118">
               <div data-plumb-id="lorem-ipsum-dolor">
-                <h2 id="home-source-title" className="font-display text-[32px] leading-none text-ink" data-plumb-id="lorem-ipsum-dolor-2">
+                <SplitText
+                  as="h2"
+                  id="home-source-title"
+                  className="font-display text-[32px] leading-none text-ink"
+                  data-plumb-id="lorem-ipsum-dolor-2"
+                  by="words"
+                  stagger={40}
+                >
                   {t("title")}
-                </h2>
+                </SplitText>
               </div>
               <div className="flex flex-col items-center" data-plumb-id="frame-2085667119">
                 <p className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line" data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a">
@@ -58,9 +66,15 @@ export async function HomeIntroSection() {
           <Reveal className="flex max-w-[640px] flex-col items-center gap-8 text-center" data-plumb-id="component-7-2">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118-2">
               <div data-plumb-id="lorem-ipsum-dolor-3">
-                <h3 className="font-display text-[32px] leading-none text-ink lg:whitespace-nowrap" data-plumb-id="lorem-ipsum-dolor-4">
+                <SplitText
+                  as="h3"
+                  className="font-display text-[32px] leading-none text-ink lg:whitespace-nowrap"
+                  data-plumb-id="lorem-ipsum-dolor-4"
+                  by="words"
+                  stagger={40}
+                >
                   {t("storyTitle")}
-                </h3>
+                </SplitText>
               </div>
               <div className="flex flex-col items-center" data-plumb-id="frame-2085667119-2">
                 <p className="font-sans text-sm leading-[18px] text-ink" data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-2">

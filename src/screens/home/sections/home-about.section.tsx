@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
+import { SplitText } from "@/shared/components/ui/split-text";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 export async function HomeAboutSection() {
@@ -16,15 +17,16 @@ export async function HomeAboutSection() {
     >
       <div className="flex w-full max-w-content flex-col gap-[54px] lg:gap-[100px]" data-plumb-id="frame-2085667103">
         {/* Title statement block */}
-        <Reveal className="flex w-full flex-col lg:max-w-[628px] px-4 lg:px-0" data-plumb-id="lorem-ipsum-dolor-5">
-          <h2
-            id="home-quality-title"
-            className="font-display text-[54px] lg:text-[84px] leading-[1.07] text-ink uppercase whitespace-pre-line"
-            data-plumb-id="lorem-ipsum-dolor-6"
-          >
-            {t("highlight")}
-          </h2>
-        </Reveal>
+        <SplitText
+          as="h2"
+          id="home-quality-title"
+          className="font-display text-[54px] lg:text-[84px] leading-[1.07] text-ink uppercase flex w-full flex-col lg:max-w-[628px] px-4 lg:px-0"
+          data-plumb-id="lorem-ipsum-dolor-6"
+          by="words"
+          stagger={40}
+        >
+          {t("highlight")}
+        </SplitText>
 
         {/* Overlapping images & text block container */}
         <div className="flex w-full flex-col" data-plumb-id="frame-2085667298">

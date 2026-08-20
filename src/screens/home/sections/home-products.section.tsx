@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
+import { SplitText } from "@/shared/components/ui/split-text";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 import { HomeProductList } from "../components/home-product-list";
@@ -38,9 +39,16 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
           <div className="flex max-w-[396px] lg:max-w-[640px] flex-col items-center gap-8 text-center px-4 lg:px-0" data-plumb-id="component-8">
             <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118-3">
               <div data-plumb-id="lorem-ipsum-dolor-9">
-                <h2 id="home-products-title" className="font-display text-[32px] leading-none text-ink" data-plumb-id="lorem-ipsum-dolor-10">
+                <SplitText
+                  as="h2"
+                  id="home-products-title"
+                  className="font-display text-[32px] leading-none text-ink"
+                  data-plumb-id="lorem-ipsum-dolor-10"
+                  by="words"
+                  stagger={40}
+                >
                   {t("title")}
-                </h2>
+                </SplitText>
               </div>
               <div className="flex flex-col items-center" data-plumb-id="frame-2085667119-3">
                 <p className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line" data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a-5">

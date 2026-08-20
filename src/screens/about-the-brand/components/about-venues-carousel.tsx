@@ -4,7 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-import { IconMichelinStar } from "@/shared/components/icons";
+import { MichelinRating } from "@/shared/components/ui/michelin-rating";
 import { Picture } from "@/shared/components/ui/picture";
 
 type Venue = {
@@ -18,24 +18,6 @@ type Venue = {
   stars: number;
   url: string;
 };
-
-function StarRow({ count, plumbId }: { count: number; plumbId: string }) {
-  return (
-    <div
-      data-plumb-id={plumbId}
-      aria-label={`${count} Michelin ${count === 1 ? "star" : "stars"}`}
-      className="flex items-center gap-3"
-    >
-      {[...Array(count)].map((_, i) => (
-        <IconMichelinStar
-          key={i}
-          className="size-6 text-black"
-          aria-hidden="true"
-        />
-      ))}
-    </div>
-  );
-}
 
 export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
   const [ref, api] = useEmblaCarousel({
@@ -87,7 +69,13 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                 data-plumb-asset={venue.assetId}
               />
               <div className="p-8 flex flex-col gap-6">
-                <StarRow count={venue.stars} plumbId={`${venue.plumbId}-stars`} />
+                <MichelinRating
+                  count={venue.stars}
+                  data-plumb-id={`${venue.plumbId}-stars`}
+                  aria-label={`${venue.stars} Michelin ${venue.stars === 1 ? "star" : "stars"}`}
+                  className="gap-3"
+                  starClassName="size-6 text-black"
+                />
                 <div className="flex flex-col gap-8">
                   <div className="flex flex-col gap-4">
                     <h3 className="font-display text-2xl leading-[1.33] text-ink">
