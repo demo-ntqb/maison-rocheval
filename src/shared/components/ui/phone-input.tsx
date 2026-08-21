@@ -12,7 +12,7 @@ type PhoneInputProps = {
   "aria-invalid"?: boolean;
   "aria-describedby"?: string;
   placeholder?: string;
-  onlyCountries?: string[];
+  onlyCountries?: React.ComponentProps<typeof IntlTelInput>["onlyCountries"];
 };
 
 export function PhoneInput({
@@ -32,7 +32,7 @@ export function PhoneInput({
         separateDialCode
         disabled={disabled}
         value={value}
-        onlyCountries={onlyCountries as any}
+        onlyCountries={onlyCountries}
         onChangeNumber={(number) => {
           onChange?.(number);
         }}

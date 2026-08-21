@@ -5,10 +5,6 @@ import type { FaqItem } from "../types/faq.type";
 
 type FaqTranslationItem = FaqItem;
 
-function isFaqTranslationItem(value: unknown): value is FaqTranslationItem {
-  return typeof value === "object" && value !== null && "question" in value && "answer" in value;
-}
-
 export async function FaqAccordionSection() {
   const t = await getTranslations("faq");
   const rawItems = t.raw("items");

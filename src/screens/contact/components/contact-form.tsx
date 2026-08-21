@@ -9,6 +9,7 @@ import { IconCaretDown } from "@/shared/components/icons";
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import { Field, FieldLabel } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
+import { PhoneInput } from "@/shared/components/ui/phone-input";
 import {
   Select,
   SelectContent,
@@ -17,13 +18,12 @@ import {
   SelectValue,
 } from "@/shared/components/ui/select";
 import { Textarea } from "@/shared/components/ui/textarea";
-import { PhoneInput } from "@/shared/components/ui/phone-input";
 import { ROUTES } from "@/shared/constants/route.constant";
 
 import {
   controlClassName,
-  createContactFormSchema,
   COUNTRY_VALUES,
+  createContactFormSchema,
 } from "../constants/contact.constant";
 import type { ContactFormProps, ContactFormValues } from "../types/contact.type";
 
@@ -50,14 +50,15 @@ export function ContactForm({
       lastName: "",
       message: "",
       phone: "",
-      country: "" as any,
+      country: "" as ContactFormValues["country"],
       wholesale: false,
     },
     resolver: zodResolver(contactFormSchema),
   });
 
-  const onSubmit = (_values: ContactFormValues) => {
+  const onSubmit = (values: ContactFormValues) => {
     // TODO: submit to API
+    console.log("submit", values);
   };
 
   return (
