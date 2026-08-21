@@ -45,24 +45,44 @@
   justify-content: flex-start !important;
 }
 
-/* Vertical separator line at 75px */
-.iti__selected-country::after {
-  content: "" !important;
-  position: absolute !important;
-  left: 75px !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  width: 0.5px !important;
-  background-color: var(--color-muted-text) !important;
+.iti__selected-country-primary {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  width: 75px !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  border-right: 0.5px solid var(--color-stone) !important;
 }
 
-.iti__selected-country .iti__flag {
-  margin-left: 16px !important;
+.iti__selected-country-primary .iti__flag {
+  margin: 0 !important;
 }
 
 .iti__arrow {
-  margin-left: 8px !important;
-  border-top-color: var(--color-ink) !important;
+  margin: 0 !important;
+  margin-top: 0px !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: none !important;
+  transform: none !important;
+  background-color: var(--color-ink) !important;
+  -webkit-mask-image: url("/icons/icon-caret-down.svg") !important;
+  mask-image: url("/icons/icon-caret-down.svg") !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-repeat: no-repeat !important;
+  -webkit-mask-position: center !important;
+  mask-position: center !important;
+  -webkit-mask-size: contain !important;
+  mask-size: contain !important;
+}
+
+.iti__arrow.iti__arrow--up {
+  transform: none !important;
+  margin-top: 0px !important;
 }
 
 .iti__selected-dial-code {
