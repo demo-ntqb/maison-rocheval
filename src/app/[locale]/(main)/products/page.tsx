@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import {
@@ -29,6 +30,8 @@ export default async function ProductsPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
+  // TODO: Tạm thời return notfound cho đến khi sẵn sàng
+  notFound();
   const { locale } = await params;
   return (
     <div className="flex w-full flex-col bg-canvas">

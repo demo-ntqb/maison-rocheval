@@ -31,7 +31,7 @@ export async function AboutRitualSection() {
           <SplitText
             as="p"
             data-plumb-id="lorem-ipsum-dolor-4"
-            className="flex-1 pb-2 text-right font-display text-[24px] leading-[1.33]"
+            className="flex-1 pb-2 text-center md:text-right font-display text-[24px] leading-[1.33]"
             by="words"
             stagger={10}
           >

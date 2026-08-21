@@ -1,8 +1,9 @@
 "use client";
 
+import { IconX } from "@/shared/components/icons";
+import { cn } from "@/shared/lib/utils";
 import * as React from "react";
 import { useState } from "react";
-import { cn } from "@/shared/lib/utils";
 
 export interface AnnouncementBarProps extends React.ComponentProps<"div"> {
   dismissLabel: string;
@@ -26,12 +27,12 @@ export function AnnouncementBar({
       data-plumb-id="frame-2085667211"
       data-slot="announcement-bar"
       className={cn(
-        "relative flex h-[42px] w-full items-center justify-between bg-navy-dark py-3 pl-4 pr-2 font-sans text-xs font-normal text-white sm:pl-8 sm:pr-6 sm:text-sm",
+        "relative flex items-center w-full bg-navy-dark py-4 px-3 font-sans font-normal text-white sm:py-2 sm:pl-8 sm:pr-4 text-sm",
         className
       )}
       {...props}
     >
-      <span data-plumb-id="we-currently-only-deliver-to-france-and">{message}</span>
+      <div data-plumb-id="we-currently-only-deliver-to-france-and" className="flex-auto">{message}</div>
       <button
         type="button"
         onClick={() => setIsVisible(false)}
@@ -41,11 +42,9 @@ export function AnnouncementBar({
           }
         }}
         aria-label={dismissLabel}
-        className="-my-px -mr-4 inline-flex size-11 shrink-0 items-center justify-center text-white transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
+        className="flex size-8 shrink-0 p-1.5 text-white transition-opacity hover:opacity-80 self-start"
       >
-        <svg data-plumb-id="x" aria-hidden="true" viewBox="0 0 16 16" className="size-4" fill="none">
-          <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1" />
-        </svg>
+        <IconX data-plumb-id="x" aria-hidden="true" className="size-5" />
       </button>
     </div>
   );
