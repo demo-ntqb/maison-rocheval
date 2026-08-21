@@ -11,7 +11,7 @@ import {
 import type { FaqItem } from "../types/faq.type";
 
 export function FaqPageAccordion({ items }: { items: FaqItem[] }) {
-  const [openItems, setOpenItems] = useState<string[]>([...items.map((_, index) => `faq-${index + 1}`)]);
+  const [openItems, setOpenItems] = useState<string[]>([]);
 
   return (
     <Accordion
@@ -24,7 +24,7 @@ export function FaqPageAccordion({ items }: { items: FaqItem[] }) {
         <AccordionItem key={`${item.question}-${index}`} value={`faq-${index + 1}`}>
           <AccordionTrigger
             indicator="plus"
-            className="gap-4 border-b border-stone py-6 pr-4 font-display text-[18px] font-normal leading-8 text-black data-[state=open]:border-b-0 data-[state=open]:pb-0 lg:py-10 lg:text-[20px] lg:data-[state=open]:pb-0"
+            className="gap-4 border-b border-stone py-6 pr-4 font-display text-[18px] font-normal leading-8 text-black transition-[padding-bottom,border-color] duration-300 ease-out data-[state=open]:border-b-transparent data-[state=open]:pb-0 lg:py-10 lg:text-[20px] lg:data-[state=open]:pb-0"
           >
             <span className="min-w-0">{item.question}</span>
           </AccordionTrigger>
