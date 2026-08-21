@@ -38,7 +38,7 @@ export async function AboutStorySection() {
 
         <div
           data-plumb-id="frame-2085667078"
-          className="flex w-full md:flex-1"
+          className="flex w-full md:flex-1 md:px-4"
         >
           <div
             data-plumb-id="frame-2085667142"
