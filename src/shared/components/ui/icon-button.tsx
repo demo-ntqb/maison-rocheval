@@ -14,7 +14,7 @@ const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       <Comp
         ref={ref}
         className={cn(
-          "inline-flex size-8 items-center justify-center rounded-[4px] bg-transparent text-gray-icon hover:bg-beige hover:text-black active:bg-beige-dark active:text-black transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg:not([class*='size-'])]:size-6 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+          "inline-flex size-8 cursor-pointer items-center justify-center rounded-[4px] bg-transparent text-gray-icon hover:bg-beige hover:text-black active:bg-beige-dark active:text-black transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg:not([class*='size-'])]:size-6 [&_svg]:pointer-events-none [&_svg]:shrink-0",
           className
         )}
         {...props}

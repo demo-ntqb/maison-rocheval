@@ -14,7 +14,7 @@ const TextButton = React.forwardRef<HTMLButtonElement, TextButtonProps>(
       <Comp
         ref={ref}
         className={cn(
-          "inline-flex items-center justify-center font-sans text-[14px] font-normal uppercase tracking-[0.15em] underline text-black hover:text-gray-heavy transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center font-sans text-[14px] font-normal uppercase underline underline-offset-[25%] text-black hover:text-gray-heavy transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
           className
         )}
         {...props}
