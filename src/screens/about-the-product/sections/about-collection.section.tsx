@@ -57,7 +57,7 @@ export async function AboutCollectionSection() {
               <SplitText
                 as="h2"
                 id="about-product-collection-title"
-                className="font-display text-[32px] leading-none text-ink"
+                className="font-display text-[32px] leading-none text-ink h-8"
                 by="words"
                 stagger={40}
               >

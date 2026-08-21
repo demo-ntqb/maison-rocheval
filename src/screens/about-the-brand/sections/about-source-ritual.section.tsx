@@ -40,7 +40,7 @@ export async function AboutSourceRitualSection() {
               as="h2"
               data-plumb-id="lorem-ipsum-dolor-10"
               id="about-brand-source-title"
-              className="font-display text-[32px] leading-none"
+              className="font-display text-[32px] leading-none h-8"
               by="words"
               stagger={40}
             >

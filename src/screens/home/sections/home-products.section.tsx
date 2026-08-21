@@ -45,7 +45,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
                 <SplitText
                   as="h2"
                   id="home-products-title"
-                  className="font-display text-[32px] leading-none text-ink"
+                  className="font-display text-[32px] leading-none text-ink h-8"
                   data-plumb-id="lorem-ipsum-dolor-10"
                   by="words"
                   stagger={40}

@@ -103,7 +103,7 @@ export function SplitText({
           lines.map((line, lineIdx) => {
             const lineWords = line.split(" ");
             return (
-              <span key={lineIdx} className="block">
+              <span key={lineIdx} className="block h-full">
                 {lineWords.map((word, wordIdx) => (
                   <span
                     key={wordIdx}
@@ -125,7 +125,7 @@ export function SplitText({
           lines.map((line, lineIdx) => {
             const lineWords = line.split(" ");
             return (
-              <span key={lineIdx} className="block">
+              <span key={lineIdx} className="block h-full">
                 {lineWords.map((word, wordIdx) => (
                   <span
                     key={wordIdx}

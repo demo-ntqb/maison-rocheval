@@ -72,7 +72,7 @@ export async function HomeAboutSection() {
                     <div data-plumb-id="lorem-ipsum-dolor-7">
                       <SplitText
                         as="h3"
-                        className="font-display text-[32px] leading-none text-ink"
+                        className="font-display text-[32px] leading-none text-ink h-8"
                         data-plumb-id="lorem-ipsum-dolor-8"
                         by="words"
                         stagger={40}

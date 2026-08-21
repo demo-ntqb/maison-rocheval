@@ -57,7 +57,7 @@ export async function AboutVenuesSection() {
             as="h2"
             id="about-brand-venues-title"
             data-plumb-id="lorem-ipsum-dolor"
-            className="font-display text-[32px] leading-none"
+            className="font-display text-[32px] leading-none h-8"
             by="words"
             stagger={40}
           >
