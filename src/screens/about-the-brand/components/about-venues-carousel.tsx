@@ -131,6 +131,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
           <IconButton
             onClick={() => api?.scrollPrev()}
             disabled={!canScroll[0] || isWide}
+            className="flex"
             aria-label="Previous restaurant"
             data-plumb-id="icon-button"
           >
@@ -139,6 +140,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
           <IconButton
             onClick={() => api?.scrollNext()}
             disabled={!canScroll[1] || isWide}
+            className="flex"
             aria-label="Next restaurant"
             data-plumb-id="icon-button-2"
           >

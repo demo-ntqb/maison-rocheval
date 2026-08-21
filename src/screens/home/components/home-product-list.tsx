@@ -104,7 +104,7 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
         <IconButton
           onClick={scrollPrev}
           disabled={!prevBtnEnabled}
-          className="flex size-11 [&_svg]:size-8"
+          className="flex"
           data-plumb-id="icon-button"
           aria-label="Previous slide"
         >
@@ -113,7 +113,7 @@ export function HomeProductList({ products }: { products: CatalogProductCard[] }
         <IconButton
           onClick={scrollNext}
           disabled={!nextBtnEnabled}
-          className="flex size-11 [&_svg]:size-8"
+          className="flex"
           data-plumb-id="icon-button-2"
           aria-label="Next slide"
         >
