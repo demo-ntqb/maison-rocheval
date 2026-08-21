@@ -50,6 +50,7 @@ export function ContactForm({
       lastName: "",
       message: "",
       phone: "",
+      country: "" as any,
       wholesale: false,
     },
     resolver: zodResolver(contactFormSchema),
@@ -136,7 +137,7 @@ export function ContactForm({
           control={form.control}
           name="country"
           render={({ field }) => (
-            <Select onValueChange={field.onChange} value={field.value}>
+            <Select onValueChange={field.onChange} value={field.value ?? ""}>
               <SelectTrigger
                 aria-invalid={Boolean(form.formState.errors.country)}
                 aria-describedby={form.formState.errors.country ? "country-error" : undefined}
@@ -187,6 +188,7 @@ export function ContactForm({
               onChange={field.onChange}
               aria-invalid={Boolean(form.formState.errors.phone)}
               aria-describedby={form.formState.errors.phone ? "phone-error" : undefined}
+              onlyCountries={["fr", "us", "sg"]}
             />
           )}
         />

@@ -21,8 +21,17 @@ export const HEADER_ROUTE_CONFIG: Record<string, HeaderRouteConfig> = {
     heroTone: "light",
   },
   [ROUTES.PRODUCTS]: {
-    variant: "solid",
+    variant: "transparent",
+    heroTone: "light",
     announcement: true,
+  },
+  [ROUTES.CONTACT]: {
+    variant: "transparent",
+    heroTone: "light",
+  },
+  [ROUTES.FAQ]: {
+    variant: "transparent",
+    heroTone: "light",
   },
 };
 

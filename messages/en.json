@@ -591,6 +591,7 @@
       "countryPlaceholder": "Select a country",
       "countryOptions": {
         "france": "France",
+        "united_states": "United States",
         "singapore": "Singapore"
       },
       "company": "Company Name",

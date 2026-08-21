@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import {
   Accordion,
@@ -11,16 +11,7 @@ import {
 import type { FaqItem } from "../types/faq.type";
 
 export function FaqPageAccordion({ items }: { items: FaqItem[] }) {
-  const [openItems, setOpenItems] = useState<string[]>([]);
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 1023px)");
-    const timer = window.setTimeout(() => {
-      setOpenItems(media.matches ? ["faq-3"] : []);
-    }, 0);
-
-    return () => window.clearTimeout(timer);
-  }, []);
+  const [openItems, setOpenItems] = useState<string[]>([...items.map((_, index) => `faq-${index + 1}`)]);
 
   return (
     <Accordion

@@ -6,6 +6,7 @@ export type ContactFormProps = {
   countryLabel: string;
   countryOptions: {
     france: string;
+    united_states: string;
     singapore: string;
   };
   fields: {

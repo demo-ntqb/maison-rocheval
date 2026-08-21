@@ -76,6 +76,7 @@ export async function ContactHeroSection() {
               countryLabel={t("form.countryPlaceholder")}
               countryOptions={{
                 france: t("form.countryOptions.france"),
+                united_states: t("form.countryOptions.united_states"),
                 singapore: t("form.countryOptions.singapore"),
               }}
               fields={{

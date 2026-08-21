@@ -12,6 +12,7 @@ type PhoneInputProps = {
   "aria-invalid"?: boolean;
   "aria-describedby"?: string;
   placeholder?: string;
+  onlyCountries?: string[];
 };
 
 export function PhoneInput({
@@ -22,6 +23,7 @@ export function PhoneInput({
   "aria-invalid": ariaInvalid,
   "aria-describedby": ariaDescribedby,
   placeholder,
+  onlyCountries,
 }: PhoneInputProps) {
   return (
     <div className="w-full" data-slot="phone-input">
@@ -30,6 +32,7 @@ export function PhoneInput({
         separateDialCode
         disabled={disabled}
         value={value}
+        onlyCountries={onlyCountries as any}
         onChangeNumber={(number) => {
           onChange?.(number);
         }}

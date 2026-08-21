@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const COUNTRY_VALUES = ["france", "singapore"] as const;
+export const COUNTRY_VALUES = ["france", "united_states", "singapore"] as const;
 
 export const createContactFormSchema = (validation: {
   email: string;
