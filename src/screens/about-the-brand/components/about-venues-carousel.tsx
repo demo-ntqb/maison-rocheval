@@ -41,6 +41,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
       dragFree: true,
       loop: false,
       active: !isWide,
+      startIndex: 1,
     }
   );
   const [canScroll, setCanScroll] = useState([false, false]);
@@ -66,13 +67,13 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
   return (
     <div role="region" aria-roledescription="carousel" aria-label="Restaurant partners">
       <div ref={ref} className="overflow-visible">
-        <div className="flex gap-6 md:gap-8 min-[1564px]:justify-center">
+        <div className="flex gap-6 will-change-transform md:gap-8 min-[1564px]:justify-center">
           {venues.map((venue) => (
             <article
               key={venue.name}
               role="group"
               aria-roledescription="slide"
-              className="min-w-0 flex-[0_0_86%] md:flex-[0_0_500px]"
+              className="min-w-0 flex flex-col flex-[0_0_86%] md:flex-[0_0_500px]"
               data-plumb-id={venue.plumbId}
             >
               <Picture
@@ -84,10 +85,10 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                 sizes="(max-width: 767px) 86vw, 500px"
                 width={500}
                 height={700}
-                className="aspect-7/10 md:aspect-5/7 w-full rounded-[2px] object-cover"
+                className="aspect-7/10 md:aspect-5/7 w-full rounded-[2px] object-cover shrink-0"
                 data-plumb-asset={venue.assetId}
               />
-              <div className="p-8 flex flex-col gap-6">
+              <div className="p-8 flex flex-col gap-6 flex-1 min-h-0">
                 <MichelinRating
                   count={venue.stars}
                   data-plumb-id={`${venue.plumbId}-stars`}
@@ -95,7 +96,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                   className="gap-3"
                   starClassName="size-6 text-black"
                 />
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-8 justify-between h-full">
                   <div className="flex flex-col gap-4">
                     <h3 className="font-display text-[32px] leading-none text-ink">
                       {venue.name}
