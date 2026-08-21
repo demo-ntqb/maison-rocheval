@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
+import { LANGUAGE_SWITCHER_ENABLED } from "@/shared/constants/region.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
 import { cn } from "@/shared/lib/utils";
@@ -48,9 +49,9 @@ export function Header({ initialVariant }: HeaderProps) {
     isScrolled && pathname === ROUTES.HOME && 'text-black hover:text-gray-dark'
   );
 
-  const backgroundHeader = hasLightHero
-    ? "border-b border-gray-light bg-white backdrop-blur-md"
-    : "border-b border-white/10 bg-black/90 backdrop-blur-md"
+  // const backgroundHeader = hasLightHero
+  //   ? "border-b border-gray-light bg-white backdrop-blur-md"
+  //   : "border-b border-white/10 bg-black/90 backdrop-blur-md"
 
 
   const headerBgClass = cn(
@@ -64,8 +65,8 @@ export function Header({ initialVariant }: HeaderProps) {
     isTransparent &&
     isScrolled && pathname === ROUTES.HOME && 'border-transparent bg-transparent',
 
-    isTransparent &&
-    isScrolled && pathname !== ROUTES.HOME && backgroundHeader
+    // isTransparent &&
+    // isScrolled && pathname !== ROUTES.HOME && backgroundHeader
   );
 
   const mobileLinks = navigation.main.map((item) => ({
@@ -170,7 +171,7 @@ export function Header({ initialVariant }: HeaderProps) {
               className="flex flex-1 items-center justify-end gap-1 sm:gap-4 lg:gap-8"
               data-plumb-id="frame-2085667020-2"
             >
-              <LanguageSwitcher className={textColorClass} />
+              {LANGUAGE_SWITCHER_ENABLED && <LanguageSwitcher className={textColorClass} />}
             </div>
           </div>
         </div>

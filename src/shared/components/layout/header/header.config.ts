@@ -10,7 +10,7 @@ export const HEADER_ROUTE_CONFIG: Record<string, HeaderRouteConfig> = {
   [ROUTES.HOME]: {
     variant: "transparent",
     heroTone: "dark",
-    
+
   },
   [ROUTES.ABOUT_BRAND]: {
     variant: "transparent",
