@@ -73,6 +73,9 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
 
     let isOpaque = true;
 
+    // Ensure we start fresh with opacity 1 on mount
+    containerRef.current?.style.setProperty("opacity", "1");
+
     const update = (scrollPosition: number) => {
       const wasActive = root.hasAttribute(JOURNEY_ATTR);
       let active = false;
@@ -102,6 +105,7 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
     };
 
     const unsubscribe = scrollY.on("change", update);
+
     update(scrollY.get());
 
     return () => {
