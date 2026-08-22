@@ -80,7 +80,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                 basePath={venue.imageBasePath}
                 fallbackExtension="jpg"
                 alt={venue.alt}
-                loading="lazy"
+                loading="eager"
                 responsiveWidths={[500, 1000]}
                 sizes="(max-width: 767px) 86vw, 500px"
                 width={500}
