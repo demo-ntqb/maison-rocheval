@@ -22,7 +22,7 @@ export async function AboutSelectionSection() {
             as="h2"
             data-plumb-id="lorem-ipsum-dolor-10"
             id="about-brand-selection-title"
-            className="font-display text-[32px] leading-none h-8"
+            className="font-display text-[32px] leading-none"
             by="words"
             stagger={40}
           >

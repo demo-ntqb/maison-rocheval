@@ -47,7 +47,7 @@ export async function AboutStorySection() {
             <SplitText
               as="h2"
               data-plumb-id="lorem-ipsum-dolor"
-              className="font-display text-[32px] leading-none h-8"
+              className="font-display text-[32px] leading-none"
               by="words"
               stagger={40}
             >

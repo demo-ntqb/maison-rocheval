@@ -25,7 +25,7 @@ export async function HomeIntroSection() {
                 <SplitText
                   as="h2"
                   id="home-source-title"
-                  className="font-display text-[32px] leading-none text-ink h-8"
+                  className="font-display text-[32px] leading-none text-ink"
                   data-plumb-id="lorem-ipsum-dolor-2"
                   by="words"
                   stagger={40}

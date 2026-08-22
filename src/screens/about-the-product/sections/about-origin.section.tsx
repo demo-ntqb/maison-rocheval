@@ -20,7 +20,7 @@ export async function AboutOriginSection() {
           <SplitText
             as="h2"
             id="about-product-origin-title"
-            className="font-display text-[32px] leading-none text-ink h-8"
+            className="font-display text-[32px] leading-none text-ink"
             by="words"
             stagger={40}
           >
