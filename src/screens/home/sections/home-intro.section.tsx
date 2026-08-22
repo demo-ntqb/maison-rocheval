@@ -75,7 +75,7 @@ export async function HomeIntroSection() {
               <div data-plumb-id="lorem-ipsum-dolor-3">
                 <SplitText
                   as="h3"
-                  className="font-display text-[32px] leading-none text-ink h-8 lg:whitespace-nowrap"
+                  className="font-display text-[32px] leading-none text-ink lg:whitespace-nowrap"
                   data-plumb-id="lorem-ipsum-dolor-4"
                   by="words"
                   stagger={40}

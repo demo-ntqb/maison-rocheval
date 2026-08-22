@@ -11,7 +11,7 @@ export async function AboutHeroSection() {
       aria-labelledby="about-brand-title"
       data-slot="about-hero-section"
       data-plumb-id="frame-2085667109"
-      className="relative -mt-20 flex min-h-dvh flex-col overflow-hidden bg-ink"
+      className="relative -mt-20 flex h-svh flex-col overflow-hidden bg-ink"
     >
       <div className="absolute inset-0">
         <Picture

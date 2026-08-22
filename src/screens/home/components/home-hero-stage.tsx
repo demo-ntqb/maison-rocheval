@@ -33,7 +33,7 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
   });
 
   const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroHeight = useMotionTemplate`calc(var(--home-hero-compact) + (100dvh - var(--home-hero-compact)) * ${heroScale})`;
+  const heroHeight = useMotionTemplate`calc(var(--home-hero-compact) + (100svh - var(--home-hero-compact)) * ${heroScale})`;
 
   // The hero logo morphs into the header logo slot (svg 84x40, center y=40)
   // across the full collapse, then parks there for the sticky pin window.
@@ -64,6 +64,21 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
   // is completely out of view, so the header's transparent → solid flip
   // happens over white Section 2 instead of over the still-visible hero
   // image. Discrete toggles only, no per-frame React state.
+  const svhHeightRef = useRef(0);
+
+  useEffect(() => {
+    const updateSvh = () => {
+      if (containerRef.current) {
+        // C = 2 * 100svh - 80 => 100svh = (C + 80) / 2
+        svhHeightRef.current = (containerRef.current.clientHeight + 80) / 2;
+      }
+    };
+
+    updateSvh();
+    window.addEventListener("resize", updateSvh);
+    return () => window.removeEventListener("resize", updateSvh);
+  }, []);
+
   useEffect(() => {
     const root = document.documentElement;
     const stage = stageRef.current;
@@ -77,13 +92,13 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
 
       if (!reduceMotion) {
         // Calculate when the sticky stage starts scrolling out of the viewport.
-        // Since the container starts at -80px (due to -mt-20) and has a sticky stage of 100dvh,
-        // the stage collapses to 80px when scrollPosition reaches (window.innerHeight - 80).
+        // Since the container starts at -80px (due to -mt-20) and has a sticky stage of 100svh,
+        // the stage collapses to 80px when scrollPosition reaches (100svh - 80).
         // Beyond this point, the stage starts scrolling up and out of the viewport.
-        // Using window.innerHeight avoids triggering layout reflow (getBoundingClientRect).
         const outOfView =
           scrollPosition > 50 &&
-          scrollPosition >= window.innerHeight - 80;
+          scrollPosition >= svhHeightRef.current - 80;
+
         active = scrollPosition > HOME_HERO.journeyStart && !outOfView;
       }
 
@@ -108,11 +123,12 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
   }, [scrollY, reduceMotion]);
 
 
+
   return (
     <div
       ref={containerRef}
       data-slot="home-hero-container"
-      className="relative -mt-20 h-[calc(200dvh-var(--home-hero-compact))] w-full opacity-100 transition-opacity duration-500 ease-in-out"
+      className="relative -mt-20 h-[calc(200svh-var(--home-hero-compact))] w-full opacity-100 transition-opacity duration-500 ease-in-out"
     >
       <motion.section
         ref={stageRef}
@@ -120,12 +136,12 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
         data-slot="home-hero-stage"
         data-plumb-id="frame-2085667109"
         className={cn(
-          "z-10 h-[100dvh] w-full overflow-hidden",
+          "z-10 h-[100svh] w-full overflow-hidden",
           reduceMotion ? "relative" : "sticky top-0",
         )}
         style={reduceMotion ? undefined : { height: heroHeight }}
       >
-        <div className="absolute inset-x-0 bottom-0 h-[100dvh]">
+        <div className="absolute inset-x-0 bottom-0 h-[100svh]">
           <Picture
             basePath="/images/home/hero-home-mobile"
             fallbackExtension="jpg"
