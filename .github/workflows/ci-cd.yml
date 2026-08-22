@@ -15,8 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "22"
-  VERCEL_CLI_VERSION: "58.9.4"
+  NODE_VERSION: "24.16.0"
+  VERCEL_CLI_VERSION: "59.0.0"
 
 jobs:
   quality:
@@ -53,58 +53,6 @@ jobs:
       - name: Build application
         run: yarn build
 
-  deploy_preview:
-    name: Deploy Preview
-    if: >-
-      github.event_name == 'pull_request' &&
-      github.event.pull_request.head.repo.full_name == github.repository
-    needs: quality
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ github.base_ref == 'production' && secrets.VERCEL_PROJECT_ID || secrets.VERCEL_UAT_PROJECT_ID }}
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      - name: Configure Git Author for Vercel
-        run: |
-          git config --global user.email "[EMAIL_ADDRESS_VERCEL]"
-          git commit --amend --reset-author --no-edit
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: yarn
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Install pinned Vercel CLI
-        run: npm install --global "vercel@$VERCEL_CLI_VERSION"
-
-      - name: Pull Vercel Preview environment
-        run: vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
-
-      - name: Build Vercel Preview artifact
-        run: vercel build --token="$VERCEL_TOKEN"
-
-      - name: Deploy Vercel Preview artifact
-        id: deploy
-        shell: bash
-        run: |
-          deployment_url="$(vercel deploy --prebuilt --token="$VERCEL_TOKEN")"
-          echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
-
-      - name: Add Preview URL to summary
-        shell: bash
-        run: |
-          echo "### Vercel Preview" >> "$GITHUB_STEP_SUMMARY"
-          echo "- URL: ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
-
   deploy_uat:
     name: Deploy UAT
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -113,8 +61,8 @@ jobs:
     timeout-minutes: 20
     environment: uat
     env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_UAT_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_UAT_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_UAT_PROJECT_ID }}
     steps:
       - name: Checkout source
@@ -122,7 +70,7 @@ jobs:
 
       - name: Configure Git Author for Vercel
         run: |
-          git config --global user.name "Binh Nguyen"
+          git config --global user.name "deploy-uat"
           git config --global user.email "ytbntq001@gmail.com"
           git commit --amend --reset-author --no-edit
 
@@ -174,8 +122,8 @@ jobs:
 
       - name: Configure Git Author for Vercel
         run: |
-          git config --global user.name "Binh Nguyen"
-          git config --global user.email "ytbntq001@gmail.com"
+          git config --global user.name "deploy-production"
+          git config --global user.email "bennyjikyl@gmail.com"
           git commit --amend --reset-author --no-edit
 
       - name: Set up Node.js
