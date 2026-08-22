@@ -72,6 +72,7 @@ export function ContactForm({
       if (result.status === "success") {
         setSubmitStatus("success");
         form.reset();
+        setTimeout(() => form.clearErrors(), 0);
       } else {
         setSubmitStatus(result.status);
       }
@@ -261,9 +262,8 @@ export function ContactForm({
       {submitStatus !== "idle" && (
         <p
           aria-live="polite"
-          className={`w-full font-sans text-sm ${
-            submitStatus === "success" ? "text-ink" : "text-red-700"
-          }`}
+          className={`w-full font-sans font-medium text-sm ${submitStatus === "success" ? "text-ink" : "text-red-700"
+            }`}
           role="status"
         >
           {submitStatus === "success" && successMessage}
