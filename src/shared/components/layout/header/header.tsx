@@ -49,9 +49,9 @@ export function Header({ initialVariant }: HeaderProps) {
     isScrolled && pathname === ROUTES.HOME && 'text-black hover:text-gray-dark'
   );
 
-  // const backgroundHeader = hasLightHero
-  //   ? "border-b border-gray-light bg-white backdrop-blur-md"
-  //   : "border-b border-white/10 bg-black/90 backdrop-blur-md"
+  const backgroundHeader = hasLightHero
+    ? "border-b border-gray-light bg-white backdrop-blur-md"
+    : "border-b border-white/10 bg-black/90 backdrop-blur-md"
 
 
   const headerBgClass = cn(
@@ -63,10 +63,10 @@ export function Header({ initialVariant }: HeaderProps) {
     "border-transparent bg-transparent",
 
     isTransparent &&
-    isScrolled && pathname === ROUTES.HOME && 'border-transparent bg-transparent',
+    isScrolled && pathname === ROUTES.HOME && 'border-b border-gray-light bg-white backdrop-blur-md',
 
-    // isTransparent &&
-    // isScrolled && pathname !== ROUTES.HOME && backgroundHeader
+    isTransparent &&
+    isScrolled && pathname !== ROUTES.HOME && backgroundHeader
   );
 
   const mobileLinks = navigation.main.map((item) => ({
