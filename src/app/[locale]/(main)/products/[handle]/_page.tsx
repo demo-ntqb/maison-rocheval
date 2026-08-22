@@ -8,7 +8,6 @@ import {
   ProductDetailRelatedSection,
 } from "@/screens/product-detail";
 import { SITE_URL } from "@/shared/constants/site.constant";
-import { getCatalogHandles, getProductDetail } from "@/shared/lib/shopify/catalog";
 import {
   generateComingSoonMetadata,
   generateJsonLd,
@@ -16,6 +15,7 @@ import {
   isComingSoon,
   localizedPath,
 } from "@/shared/lib/metadata";
+import { getCatalogHandles, getProductDetail } from "@/shared/lib/shopify/catalog";
 
 const LEGACY_HANDLES: Record<string, string> = {
   "caviar-amur": "amour",

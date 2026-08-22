@@ -56,7 +56,7 @@ const productInfoVariants = cva(
 
 export interface ProductCardProps
   extends Omit<React.ComponentProps<"article">, "size">,
-    VariantProps<typeof productCardVariants> {
+  VariantProps<typeof productCardVariants> {
   product: CatalogProductCard;
   priority?: boolean;
 }
@@ -105,7 +105,7 @@ export function ProductCard({
       >
         <div className="flex flex-col gap-1 items-center" data-plumb-id="frame-2085667136">
           <h3
-            className="font-display text-[20px] font-bold text-black leading-none truncate w-full"
+            className="font-display text-[20px] font-bold text-black leading-[24px] truncate w-full"
             data-plumb-id="kaluga-caviar"
           >
             {product.title}

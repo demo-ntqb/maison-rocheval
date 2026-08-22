@@ -6,14 +6,37 @@ import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
 import { TextButton } from "@/shared/components/ui/text-button";
 import { ROUTES } from "@/shared/constants/route.constant";
-import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 import { HomeProductList } from "../components/home-product-list";
 
 export async function HomeProductsSection({ locale }: { locale: string }) {
-  const [products, t] = await Promise.all([
-    getCollectionProducts(locale, "featured-caviar"),
-    getTranslations({ locale, namespace: "home.products" }),
-  ]);
+  const t = await getTranslations({ locale, namespace: "home.products" });
+
+  // TODO: Đổ dữ liệu thật từ Shopify sau. Hiện tại lấy dữ liệu tĩnh từ translation files (home.products.cards)
+  const rawCards = t.raw("cards") as Record<
+    string,
+    { eyebrow: string; title: string; species: string; profile: string; description: string; imageAlt: string }
+  >;
+
+  const products = Object.entries(rawCards).map(([key, card]) => ({
+    id: key,
+    handle: key,
+    availableForSale: true,
+    title: card.title,
+    eyebrow: card.eyebrow,
+    species: card.species,
+    profile: card.profile,
+    description: card.description,
+    price: {
+      amount: "0",
+      currencyCode: "EUR",
+    },
+    image: {
+      url: `/images/caviar/${key}.png`,
+      altText: card.imageAlt,
+      width: 600,
+      height: 600,
+    },
+  }));
 
   return (
     <section
@@ -45,7 +68,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
                 <SplitText
                   as="h2"
                   id="home-products-title"
-                  className="font-display text-[32px] leading-none text-ink h-8"
+                  className="font-display text-[32px] leading-none text-ink"
                   data-plumb-id="lorem-ipsum-dolor-10"
                   by="words"
                   stagger={40}

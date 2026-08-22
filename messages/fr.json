@@ -292,27 +292,43 @@
       "cards": {
         "amour": {
           "eyebrow": "Patrimoine",
-          "title": "Armour",
-          "species": "Ascipenser schrenckii",
-          "profile": "Riche - Crémeux - Fromager",
-          "description": "Deux fois nommé — pour l’esturgeon Armour, et pour l’amour.",
-          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Armour"
+          "title": "Amour",
+          "species": "Acipenser schrenckii",
+          "profile": "Crémeux · Fromager · Délicat",
+          "description": "Nommé pour l’Amour, et pour l’amour.",
+          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
         },
         "expression": {
           "eyebrow": "Réserve",
           "title": "L’Expression",
-          "species": "Huso dauricus x Acipenser schrenckii",
-          "profile": "Rond - Précis - Noisetté",
+          "species": "Huso dauricus × Acipenser schrenckii",
+          "profile": "Rond · Nori · Umami",
           "description": "La signature de la Maison",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval L’Expression"
         },
         "harmonie": {
           "eyebrow": "Assemblage",
           "title": "Harmonie",
-          "species": "Acipenser gueldenstardtii x Acipenser baerii",
-          "profile": "Soyeux - Doux - Fruité",
-          "description": "Nommé pour l’équilibre. Défini par le fruit.",
+          "species": "Acipenser gueldenstaedtii × Acipenser baerii",
+          "profile": "Doux · Fruité · Équilibré",
+          "description": "Défini par l’équilibre et un fruit subtil",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Harmonie"
+        },
+        "oscietra": {
+          "eyebrow": "Patrimoine",
+          "title": "Oscietra",
+          "species": "Acipenser gueldenstaedtii",
+          "profile": "Précis · Noix · Minéralité",
+          "description": "L’une des grandes voix classiques du caviar",
+          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Oscietra"
+        },
+        "kaluga": {
+          "eyebrow": "Patrimoine",
+          "title": "Kaluga",
+          "species": "Huso dauricus",
+          "profile": "Riche · Noisette · Longueur",
+          "description": "Au sommet de la collection",
+          "imageAlt": "Boîte ouverte de caviar Kaluga Maison Rocheval"
         }
       }
     },
