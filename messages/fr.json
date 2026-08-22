@@ -675,6 +675,10 @@
       "message": "Comment pouvons-nous vous aider ?*",
       "wholesale": "Il s’agit d’une demande professionnelle",
       "submit": "Envoyer le message",
+      "submitting": "Envoi en cours...",
+      "successMessage": "Merci — votre message a bien été envoyé. Nous vous répondrons sous peu.",
+      "errorMessage": "Une erreur est survenue et votre message n’a pas pu être envoyé. Veuillez réessayer.",
+      "rateLimitMessage": "Vous avez envoyé trop de messages récemment. Veuillez patienter quelques minutes avant de réessayer.",
       "validation": {
         "email": "Veuillez saisir une adresse e-mail valide.",
         "required": "Ce champ est obligatoire.",

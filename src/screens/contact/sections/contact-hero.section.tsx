@@ -2,7 +2,6 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { ContactForm } from "@/screens/contact/components/contact-form";
-import { Button } from "@/shared/components/ui/button";
 import { Picture } from "@/shared/components/ui/picture";
 import { ROUTES } from "@/shared/constants/route.constant";
 
@@ -79,6 +78,7 @@ export async function ContactHeroSection() {
                 united_states: t("form.countryOptions.united_states"),
                 singapore: t("form.countryOptions.singapore"),
               }}
+              errorMessage={t("form.errorMessage")}
               fields={{
                 company: t("form.company"),
                 country: t("form.country"),
@@ -87,26 +87,20 @@ export async function ContactHeroSection() {
                 lastName: t("form.lastName"),
                 message: t("form.message"),
                 phone: t("form.phone"),
+                submit: t("form.submit"),
+                submitting: t("form.submitting"),
                 wholesale: t("form.wholesale"),
               }}
               privacyBeforeLink={t("privacyBeforeLink")}
               privacyLink={t("privacyLink")}
+              rateLimitMessage={t("form.rateLimitMessage")}
+              successMessage={t("form.successMessage")}
               validation={{
                 email: t("form.validation.email"),
                 required: t("form.validation.required"),
                 selection: t("form.validation.selection"),
               }}
             />
-
-            <Button
-              className="h-12 w-[177px] bg-navy-dark py-2 text-base"
-              data-plumb-id="component-35"
-              form="contact-form"
-              size="lg"
-              type="submit"
-            >
-              {t("form.submit")}
-            </Button>
           </div>
         </div>
       </div>

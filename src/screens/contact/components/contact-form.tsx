@@ -1,11 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMemo } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { Link } from "@/i18n/navigation";
 import { IconCaretDown } from "@/shared/components/icons";
+import { Button } from "@/shared/components/ui/button";
 import { Checkbox } from "@/shared/components/ui/checkbox";
 import { Field, FieldLabel } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
@@ -20,6 +21,7 @@ import {
 import { Textarea } from "@/shared/components/ui/textarea";
 import { ROUTES } from "@/shared/constants/route.constant";
 
+import { submitContactForm } from "../actions/contact.action";
 import {
   controlClassName,
   COUNTRY_VALUES,
@@ -32,11 +34,18 @@ import { ContactField } from "./contact-field";
 export function ContactForm({
   countryLabel,
   countryOptions,
+  errorMessage,
   fields,
   privacyBeforeLink,
   privacyLink,
+  rateLimitMessage,
+  successMessage,
   validation,
 }: ContactFormProps) {
+  const [submitStatus, setSubmitStatus] = useState<
+    "error" | "idle" | "rate-limited" | "success"
+  >("idle");
+  const [isPending, startTransition] = useTransition();
   const contactFormSchema = useMemo(
     () => createContactFormSchema(validation),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,8 +66,16 @@ export function ContactForm({
   });
 
   const onSubmit = (values: ContactFormValues) => {
-    // TODO: submit to API
-    console.log("submit", values);
+    setSubmitStatus("idle");
+    startTransition(async () => {
+      const result = await submitContactForm(values);
+      if (result.status === "success") {
+        setSubmitStatus("success");
+        form.reset();
+      } else {
+        setSubmitStatus(result.status);
+      }
+    });
   };
 
   return (
@@ -240,6 +257,30 @@ export function ContactForm({
           .
         </p>
       </div>
+
+      {submitStatus !== "idle" && (
+        <p
+          aria-live="polite"
+          className={`w-full font-sans text-sm ${
+            submitStatus === "success" ? "text-ink" : "text-red-700"
+          }`}
+          role="status"
+        >
+          {submitStatus === "success" && successMessage}
+          {submitStatus === "rate-limited" && rateLimitMessage}
+          {submitStatus === "error" && errorMessage}
+        </p>
+      )}
+
+      <Button
+        className="h-12 w-[177px] bg-navy-dark py-2 text-base"
+        data-plumb-id="component-35"
+        disabled={isPending}
+        size="lg"
+        type="submit"
+      >
+        {isPending ? fields.submitting : fields.submit}
+      </Button>
     </form>
   );
 }

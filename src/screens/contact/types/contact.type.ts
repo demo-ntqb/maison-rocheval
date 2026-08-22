@@ -9,6 +9,7 @@ export type ContactFormProps = {
     united_states: string;
     singapore: string;
   };
+  errorMessage: string;
   fields: {
     company: string;
     country: string;
@@ -17,10 +18,14 @@ export type ContactFormProps = {
     lastName: string;
     message: string;
     phone: string;
+    submit: string;
+    submitting: string;
     wholesale: string;
   };
   privacyBeforeLink: string;
   privacyLink: string;
+  rateLimitMessage: string;
+  successMessage: string;
   validation: {
     email: string;
     required: string;

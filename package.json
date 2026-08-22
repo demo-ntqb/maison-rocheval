@@ -30,6 +30,8 @@
     "@radix-ui/react-tooltip": "^1.2.16",
     "@shopify/hydrogen": "2026.10.0-preview.1",
     "@shopify/hydrogen-react": "^2026.4.3",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.6.0",
@@ -43,6 +45,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.85.0",
+    "resend": "^6.22.0",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3"
