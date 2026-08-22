@@ -32,6 +32,10 @@
       "title": "FAQ",
       "description": "Answers about choosing, storing and serving Maison Rocheval caviar."
     },
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "description": "How Maison Rocheval collects, uses, and protects your personal data across the EU, US, and Singapore."
+    },
     "contact": {
       "title": "Contact",
       "description": "Reach the Maison Rocheval team — our specialists answer within 24 hours."
@@ -97,7 +101,8 @@
       "shop": "Shop",
       "about": "The Maison",
       "faq": "FAQ",
-      "contact": "Contact"
+      "contact": "Contact",
+      "privacyPolicy": "Privacy Policy"
     }
   },
   "shop": {
@@ -254,7 +259,7 @@
           "description": "Defined by balance and subtle fruit",
           "imageAlt": "Open tin of Maison Rocheval Harmonie caviar"
         },
-          "oscietra": {
+        "oscietra": {
           "eyebrow": "Patrimoine",
           "title": "Oscietra",
           "species": "Acipenser gueldenstaedtii",
@@ -262,7 +267,7 @@
           "description": "One of caviar's great classical voices",
           "imageAlt": "Open tin of Maison Rocheval Oscietra caviar"
         },
-         "kaluga": {
+        "kaluga": {
           "eyebrow": "Patrimoine",
           "title": "Kaluga",
           "species": "Huso dauricus",
@@ -585,6 +590,78 @@
       {
         "question": "Does it contain any additives?",
         "answer": "<p>None. No artificial colouring and no preservatives.</p>"
+      }
+    ]
+  },
+  "privacyPolicy": {
+    "heroTitle": "Privacy Policy",
+    "lastUpdated": "Last updated: 22 August 2026",
+    "intro1": "This Privacy Policy explains how Maison Rocheval Pte. Ltd. (“Maison Rocheval,” “we,” “us,” or “our”) collects, uses, discloses, and protects your personal information when you visit maison-rocheval.com (the “Site”), purchase our products, or otherwise interact with us.",
+    "intro2": "This policy is designed to meet the requirements of the EU/UK General Data Protection Regulation (GDPR), the California Consumer Privacy Act as amended by the CPRA and other U.S. state privacy laws, and Singapore’s Personal Data Protection Act 2012 (PDPA). Where a specific regime grants you additional rights, the relevant section below applies to you.",
+    "sections": [
+      {
+        "title": "1. Who we are",
+        "body": "<p>The controller responsible for your personal data is:</p>\n<ul>\n<li><strong>Legal entity:</strong> Maison Rocheval Pte. Ltd.</li>\n<li><strong>Brand:</strong> Maison Rocheval</li>\n</ul>\n<p>You can contact us, including our Data Protection Officer, about any privacy matter through the contact form on our website: <strong>maison-rocheval.com/contact</strong>.</p>"
+      },
+      {
+        "title": "2. Information we collect",
+        "body": "<p><strong>Information you give us</strong></p>\n<ul>\n<li>Identity and contact details: name, billing and shipping address, email, phone number.</li>\n<li>Order and transaction data: products purchased, order history, delivery preferences.</li>\n<li>Payment information: processed by our payment providers; we do not store full card numbers.</li>\n<li>Account credentials, if you create an account.</li>\n<li>Communications: messages you send us via the contact form, email, or customer service.</li>\n<li>Marketing preferences and any information you provide when subscribing.</li>\n</ul>\n<p><strong>Information collected automatically</strong></p>\n<ul>\n<li>Device and usage data: IP address, browser type, operating system, referring pages, pages viewed, timestamps.</li>\n<li>Cookies and similar technologies (see Section 7).</li>\n</ul>\n<p><strong>Information from third parties</strong></p>\n<ul>\n<li>Payment processors, fraud-prevention services, shipping and logistics partners, and analytics providers.</li>\n</ul>\n<p>We do not intentionally collect special categories of data (e.g., health, religion, biometrics). Please do not submit such data to us.</p>"
+      },
+      {
+        "title": "3. How we use your information",
+        "body": "<p>We use your personal data to:</p>\n<ul>\n<li>Process and fulfil orders, arrange shipping, and handle returns.</li>\n<li>Take payment and prevent fraud.</li>\n<li>Provide customer support and respond to enquiries.</li>\n<li>Manage your account.</li>\n<li>Send transactional communications (order confirmations, delivery updates).</li>\n<li>Send marketing communications where you have consented or where otherwise permitted.</li>\n<li>Operate, secure, and improve the Site.</li>\n<li>Comply with legal, tax, accounting, and regulatory obligations.</li>\n</ul>"
+      },
+      {
+        "title": "4. Legal bases for processing (EU/EEA and UK users)",
+        "body": "<p>We rely on the following legal bases under the GDPR:</p>\n<table>\n<thead><tr><th>Purpose</th><th>Legal basis</th></tr></thead>\n<tbody>\n<tr><td>Fulfilling your order, account management</td><td>Performance of a contract (Art. 6(1)(b))</td></tr>\n<tr><td>Payment, fraud prevention, security</td><td>Legitimate interests (Art. 6(1)(f))</td></tr>\n<tr><td>Tax, accounting, regulatory record-keeping</td><td>Legal obligation (Art. 6(1)(c))</td></tr>\n<tr><td>Marketing emails, non-essential cookies</td><td>Consent (Art. 6(1)(a))</td></tr>\n<tr><td>Product improvement, analytics</td><td>Legitimate interests / consent</td></tr>\n</tbody>\n</table>\n<p>Where we rely on legitimate interests, we have balanced those interests against your rights. You may object at any time (see Section 9).</p>"
+      },
+      {
+        "title": "5. How we share your information",
+        "body": "<p>We share personal data with:</p>\n<ul>\n<li><strong>Service providers / processors:</strong> payment processors, shipping and cold-chain logistics partners, website hosting and infrastructure (Vercel Inc.), analytics providers (Google LLC for Google Analytics; Vercel Inc. for Vercel Analytics), email, and customer-service tools.</li>\n<li><strong>Professional advisers:</strong> lawyers, accountants, auditors.</li>\n<li><strong>Authorities:</strong> where required by law, regulation, or legal process.</li>\n<li><strong>Business transfers:</strong> in connection with a merger, acquisition, or sale of assets.</li>\n</ul>\n<p>We require processors to protect your data and to use it only on our instructions. We do not sell your personal information for money, and we do not share it for cross-context behavioral advertising.</p>"
+      },
+      {
+        "title": "6. International data transfers",
+        "body": "<p>We operate across Singapore, the EU/France, the United States (including California), and Hong Kong, so your data may be transferred and stored outside your home country.</p>\n<p>For transfers of EU/EEA or UK data to countries without an adequacy decision, we rely on appropriate safeguards, such as the European Commission's Standard Contractual Clauses (SCCs) and, where relevant, the UK Addendum. For transfers of Singapore data, we take reasonable steps to ensure a comparable standard of protection as required under the PDPA. A copy of the relevant safeguards is available on request via our contact form.</p>"
+      },
+      {
+        "title": "7. Cookies and similar technologies",
+        "body": "<p>We use cookies and similar technologies to operate the Site, remember your preferences, and analyse traffic.</p>\n<ul>\n<li><strong>Strictly necessary cookies</strong> — required for the Site to function.</li>\n<li><strong>Analytics cookies</strong> — help us understand how visitors use the Site. We use:\n<ul>\n<li><strong>Google Analytics</strong> (provided by Google LLC / Google Ireland Limited), which uses cookies and similar identifiers to measure traffic and usage. Google processes this data on our behalf; data may be transferred to the United States. See Google's Privacy Policy and how Google uses information from sites that use its services. You can opt out via the Google Analytics Opt-out Browser Add-on.</li>\n<li><strong>Vercel Analytics / Vercel Speed Insights</strong> (provided by Vercel Inc.), which measure Site traffic and performance. Vercel's Web Analytics is designed to operate without cookies and without tracking individuals across sites. See Vercel's Privacy Policy.</li>\n</ul>\n</li>\n</ul>\n<p>Where required (EU/EEA/UK), non-essential cookies — including Google Analytics — are set only after you consent via our cookie banner. You can also control cookies through your browser settings and by enabling Global Privacy Control (GPC) signals in your browser.</p>"
+      },
+      {
+        "title": "8. Data retention",
+        "body": "<p>We keep personal data only as long as necessary for the purposes described, including to satisfy legal, tax, and reporting requirements. As a general rule:</p>\n<ul>\n<li><strong>Order and transaction records:</strong> retained for 5 years to meet tax and accounting obligations.</li>\n<li><strong>Account data:</strong> retained while your account is active, then deleted or anonymised.</li>\n<li><strong>Marketing data:</strong> retained until you unsubscribe or withdraw consent.</li>\n</ul>\n<p>When data is no longer needed, we securely delete or anonymise it.</p>"
+      },
+      {
+        "title": "9. Your rights (EU/EEA and UK — GDPR)",
+        "body": "<p>If you are in the EU/EEA or UK, you have the right to:</p>\n<ul>\n<li><strong>Access</strong> the personal data we hold about you.</li>\n<li><strong>Rectify</strong> inaccurate or incomplete data.</li>\n<li><strong>Erase</strong> your data (“right to be forgotten”).</li>\n<li><strong>Restrict</strong> processing in certain circumstances.</li>\n<li><strong>Data portability</strong> — receive your data in a structured, machine-readable format.</li>\n<li><strong>Object</strong> to processing based on legitimate interests, and to direct marketing at any time.</li>\n<li><strong>Withdraw consent</strong> at any time, without affecting prior lawful processing.</li>\n<li><strong>Lodge a complaint</strong> with your local supervisory authority (in France, the CNIL; in the UK, the ICO).</li>\n</ul>\n<p>To exercise any right, contact us via our contact form. We will respond within one month, as required by the GDPR.</p>"
+      },
+      {
+        "title": "10. Your rights (United States — California and other states)",
+        "body": "<p>This section applies to U.S. residents, including residents of California, Virginia, Colorado, Connecticut, Utah, and other states with comprehensive privacy laws.</p>\n<p><strong>Categories of personal information we collect</strong> include identifiers (name, email, address), commercial information (purchase history), internet activity (browsing on the Site), approximate geolocation (from IP), and payment information. We collect these for the business purposes described in Section 3.</p>\n<p>Depending on your state, you have the right to:</p>\n<ul>\n<li><strong>Know / access</strong> the personal information we have collected about you.</li>\n<li><strong>Delete</strong> personal information, subject to exceptions.</li>\n<li><strong>Correct</strong> inaccurate personal information.</li>\n<li><strong>Opt out</strong> of the “sale” or “sharing” of personal information and of targeted advertising.</li>\n<li><strong>Limit the use</strong> of sensitive personal information, where applicable.</li>\n<li><strong>Non-discrimination</strong> for exercising your rights.</li>\n</ul>\n<p>We do not sell personal information for money and do not share it for cross-context behavioral advertising. We honor Global Privacy Control (GPC) signals. To exercise any of these rights, contact us via our contact form. We will verify your identity before responding, and you may use an authorized agent.</p>"
+      },
+      {
+        "title": "11. Your rights (Singapore — PDPA)",
+        "body": "<p>Under the PDPA you may:</p>\n<ul>\n<li><strong>Request access</strong> to your personal data and information about how it has been used or disclosed.</li>\n<li><strong>Request correction</strong> of inaccurate or incomplete data.</li>\n<li><strong>Withdraw consent</strong> to our collection, use, or disclosure of your personal data, on reasonable notice. Withdrawal may affect our ability to provide products or services to you.</li>\n</ul>\n<p>We will respond to access and correction requests within the timeframes required under the PDPA. Our Data Protection Officer is responsible for ensuring our compliance and can be reached via our contact form.</p>"
+      },
+      {
+        "title": "12. Data security",
+        "body": "<p>We implement appropriate technical and organisational measures to protect personal data against unauthorised access, loss, misuse, or alteration — including encryption in transit, access controls, and use of reputable processors. No method of transmission or storage is completely secure, and we cannot guarantee absolute security. We will notify you and the relevant authorities of a data breach where required by law.</p>"
+      },
+      {
+        "title": "13. Children's privacy",
+        "body": "<p>The Site is not directed to children, and we do not knowingly collect personal data from children under 16. If you believe a child has provided us with personal data, contact us and we will delete it.</p>"
+      },
+      {
+        "title": "14. Third-party links",
+        "body": "<p>The Site may contain links to third-party websites. We are not responsible for the privacy practices of those sites, and we encourage you to review their policies.</p>"
+      },
+      {
+        "title": "15. Changes to this policy",
+        "body": "<p>We may update this Privacy Policy from time to time. We will post the updated version with a revised “Last updated” date and, where required, notify you of material changes.</p>"
+      },
+      {
+        "title": "16. Contact us",
+        "body": "<p>For any questions, requests, or complaints regarding this policy or your personal data, please reach us through the contact form on our website: <strong>maison-rocheval.com/contact</strong>.</p>"
       }
     ]
   },

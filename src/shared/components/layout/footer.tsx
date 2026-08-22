@@ -137,10 +137,10 @@ export async function Footer({ locale }: FooterProps) {
                 <span data-plumb-id="customer-care">{t("menu.care")}</span>
               </strong>
               <ul className="flex flex-col gap-4 font-sans text-sm leading-4.5" data-plumb-id="frame-2085667148-4">
-                {navigation.footer.care.map((link, index) => (
+                {navigation.footer.care.map((link) => (
                   <li key={link.id}>
                     <Link href={link.href} className="flex py-1 lg:py-0 items-center transition-opacity hover:opacity-60">
-                      <span data-plumb-id={index === 0 ? "faq" : "contact-2"}>{t(`nav.${link.id}`)}</span>
+                      <span data-plumb-id={link.id === "faq" ? "faq" : link.id === "contact" ? "contact-2" : link.id}>{t(`nav.${link.id}`)}</span>
                     </Link>
                   </li>
                 ))}

@@ -29,69 +29,73 @@
       "description": "La page que vous recherchez n'existe pas ou a été déplacée."
     },
     "faq": {
-    "title": "Questions fréquentes",
-    "description": "Réponses sur le choix, la conservation et la dégustation du caviar Maison Rocheval.",
-    "heroTitle": "Questions fréquentes",
-    "heroIntro": "Pour toute assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons sous 24 heures.",
-    "items": [
-      {
-        "question": "Qu'est-ce que le caviar ?",
-        "answer": "<p>Des œufs d'esturgeon (famille des Acipenseridae) salés à sec. Les œufs d'autres poissons — saumon, truite — ne sont pas du caviar.</p>"
-      },
-      {
-        "question": "Quelle est la différence entre le caviar et les œufs de poisson ?",
-        "answer": "<p>Les œufs peuvent provenir de n'importe quel poisson ; le caviar ne vient que de l'esturgeon.</p>"
-      },
-      {
-        "question": "Quels caviars propose Maison Rocheval ?",
-        "answer": "<p>Cinq, classés du plus délicat au plus généreux :</p><ul><li><strong>Amour</strong> <span>(<em>Acipenser schrenckii</em>)</span> : crème et beurre, à peine salin ; le plus doux de la collection. Avec des blinis tièdes, de la crème fraîche, un œuf mollet.</li><li><strong>L'Expression</strong> <span>(<em>Huso dauricus × A. schrenckii</em>)</span> : la signature de la maison ; marin et savoureux, avec des notes de kelp et de nori qui s'approfondissent en umami. Avec du dashi, du riz assaisonné, du poisson séché.</li><li><strong>Harmonie</strong> <span>(<em>A. gueldenstaedtii × A. baerii</em>)</span> : une douceur fruitée et lumineuse qui se fait plus fumée avec le temps. Avec des sauces aux crustacés et au beurre.</li><li><strong>Oscietra</strong> <span>(<em>A. gueldenstaedtii</em>)</span> : la référence classique ; iode, noix et fine minéralité. Frais, sur nacre, ou seul.</li><li><strong>Kaluga</strong> <span>(<em>Huso dauricus</em>)</span> : le grain le plus gros ; beurre, crème, noisette grillée et une longue finale. Frais, sur nacre.</li></ul>"
-      },
-      {
-        "question": "Comment notez-vous votre caviar ?",
-        "answer": "<p>Nous n'utilisons pas de grades numérotés. Chaque récolte est jugée à l'état frais et dans sa globalité — couleur, grain, texture, salinité, arôme et finale.</p>"
-      },
-      {
-        "question": "Que signifie \u00ab malossol \u00bb ?",
-        "answer": "<p>Du russe, \u00ab peu salé \u00bb. Notre caviar est traité malossol — sel minimal pour que la saveur des œufs s'exprime pleinement.</p>"
-      },
-      {
-        "question": "Comment le conserver avant ouverture ?",
-        "answer": "<p>Gardez la boîte fermée dans la partie la plus froide du réfrigérateur (\u22122 à +3°C). Ne pas congeler. Elle se conserve jusqu'à 3 mois — vérifiez toujours la date de péremption.</p>"
-      },
-      {
-        "question": "Combien de temps se conserve-t-il après ouverture ?",
-        "answer": "<p>Idéalement dans les 24 heures. Refermez, chassez l'air et maintenez au frais.</p>"
-      },
-      {
-        "question": "Peut-on congeler le caviar ?",
-        "answer": "<p>Non — la congélation fait éclater les grains et détruit la texture et le goût.</p>"
-      },
-      {
-        "question": "Pourquoi une cuillère en nacre et non en métal ?",
-        "answer": "<p>Le métal réagit avec le caviar et lui ajoute un goût métallique. Utilisez de la nacre, de l'os ou de la corne.</p>"
-      },
-      {
-        "question": "Comment le servir ?",
-        "answer": "<p>Directement depuis la boîte réfrigérée, ou sur des blinis avec de la crème fraîche. Servez froid, la boîte posée sur de la glace.</p>"
-      },
-      {
-        "question": "Quelles boissons accompagnent le caviar ?",
-        "answer": "<p>Champagne ou vin effervescent sec, vodka froide, ou un blanc sec et vif comme un Chablis.</p>"
-      },
-      {
-        "question": "Le caviar est-il bon pour la santé ?",
-        "answer": "<p>Il est riche en protéines, en vitamine B12 et en oméga-3, et contient beaucoup de sodium — c'est pourquoi il se consomme en petites portions.</p>"
-      },
-      {
-        "question": "Votre caviar est-il durable ?",
-        "answer": "<p>Oui — élevé en ferme plutôt que sauvage, et certifié CITES.</p>"
-      },
-      {
-        "question": "Contient-il des additifs ?",
-        "answer": "<p>Aucun. Ni colorant artificiel, ni conservateur.</p>"
-      }
-    ]
-  },
+      "title": "Questions fréquentes",
+      "description": "Réponses sur le choix, la conservation et la dégustation du caviar Maison Rocheval.",
+      "heroTitle": "Questions fréquentes",
+      "heroIntro": "Pour toute assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons sous 24 heures.",
+      "items": [
+        {
+          "question": "Qu'est-ce que le caviar ?",
+          "answer": "<p>Des œufs d'esturgeon (famille des Acipenseridae) salés à sec. Les œufs d'autres poissons — saumon, truite — ne sont pas du caviar.</p>"
+        },
+        {
+          "question": "Quelle est la différence entre le caviar et les œufs de poisson ?",
+          "answer": "<p>Les œufs peuvent provenir de n'importe quel poisson ; le caviar ne vient que de l'esturgeon.</p>"
+        },
+        {
+          "question": "Quels caviars propose Maison Rocheval ?",
+          "answer": "<p>Cinq, classés du plus délicat au plus généreux :</p><ul><li><strong>Amour</strong> <span>(<em>Acipenser schrenckii</em>)</span> : crème et beurre, à peine salin ; le plus doux de la collection. Avec des blinis tièdes, de la crème fraîche, un œuf mollet.</li><li><strong>L'Expression</strong> <span>(<em>Huso dauricus × A. schrenckii</em>)</span> : la signature de la maison ; marin et savoureux, avec des notes de kelp et de nori qui s'approfondissent en umami. Avec du dashi, du riz assaisonné, du poisson séché.</li><li><strong>Harmonie</strong> <span>(<em>A. gueldenstaedtii × A. baerii</em>)</span> : une douceur fruitée et lumineuse qui se fait plus fumée avec le temps. Avec des sauces aux crustacés et au beurre.</li><li><strong>Oscietra</strong> <span>(<em>A. gueldenstaedtii</em>)</span> : la référence classique ; iode, noix et fine minéralité. Frais, sur nacre, ou seul.</li><li><strong>Kaluga</strong> <span>(<em>Huso dauricus</em>)</span> : le grain le plus gros ; beurre, crème, noisette grillée et une longue finale. Frais, sur nacre.</li></ul>"
+        },
+        {
+          "question": "Comment notez-vous votre caviar ?",
+          "answer": "<p>Nous n'utilisons pas de grades numérotés. Chaque récolte est jugée à l'état frais et dans sa globalité — couleur, grain, texture, salinité, arôme et finale.</p>"
+        },
+        {
+          "question": "Que signifie « malossol » ?",
+          "answer": "<p>Du russe, « peu salé ». Notre caviar est traité malossol — sel minimal pour que la saveur des œufs s'exprime pleinement.</p>"
+        },
+        {
+          "question": "Comment le conserver avant ouverture ?",
+          "answer": "<p>Gardez la boîte fermée dans la partie la plus froide du réfrigérateur (−2 à +3°C). Ne pas congeler. Elle se conserve jusqu'à 3 mois — vérifiez toujours la date de péremption.</p>"
+        },
+        {
+          "question": "Combien de temps se conserve-t-il après ouverture ?",
+          "answer": "<p>Idéalement dans les 24 heures. Refermez, chassez l'air et maintenez au frais.</p>"
+        },
+        {
+          "question": "Peut-on congeler le caviar ?",
+          "answer": "<p>Non — la congélation fait éclater les grains et détruit la texture et le goût.</p>"
+        },
+        {
+          "question": "Pourquoi une cuillère en nacre et non en métal ?",
+          "answer": "<p>Le métal réagit avec le caviar et lui ajoute un goût métallique. Utilisez de la nacre, de l'os ou de la corne.</p>"
+        },
+        {
+          "question": "Comment le servir ?",
+          "answer": "<p>Directement depuis la boîte réfrigérée, ou sur des blinis avec de la crème fraîche. Servez froid, la boîte posée sur de la glace.</p>"
+        },
+        {
+          "question": "Quelles boissons accompagnent le caviar ?",
+          "answer": "<p>Champagne ou vin effervescent sec, vodka froide, ou un blanc sec et vif comme un Chablis.</p>"
+        },
+        {
+          "question": "Le caviar est-il bon pour la santé ?",
+          "answer": "<p>Il est riche en protéines, en vitamine B12 et en oméga-3, et contient beaucoup de sodium — c'est pourquoi il se consomme en petites portions.</p>"
+        },
+        {
+          "question": "Votre caviar est-il durable ?",
+          "answer": "<p>Oui — élevé en ferme plutôt que sauvage, et certifié CITES.</p>"
+        },
+        {
+          "question": "Contient-il des additifs ?",
+          "answer": "<p>Aucun. Ni colorant artificiel, ni conservateur.</p>"
+        }
+      ]
+    },
+    "privacyPolicy": {
+      "title": "Politique de confidentialité",
+      "description": "Comment Maison Rocheval collecte, utilise et protège vos données personnelles en UE, aux États-Unis et à Singapour."
+    },
     "contact": {
       "title": "Contact",
       "description": "Écrivez à l’équipe Maison Rocheval — réponse sous 24 heures."
@@ -157,7 +161,8 @@
       "shop": "Boutique",
       "about": "À propos de Maison Rocheval",
       "faq": "FAQ",
-      "contact": "Contact"
+      "contact": "Contact",
+      "privacyPolicy": "Politique de confidentialité"
     }
   },
   "shop": {
@@ -645,6 +650,78 @@
       {
         "question": "Contient-il des additifs ?",
         "answer": "<p>Aucun. Ni colorant artificiel, ni conservateur.</p>"
+      }
+    ]
+  },
+  "privacyPolicy": {
+    "heroTitle": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour : 22 août 2026",
+    "intro1": "Cette Politique de confidentialité explique comment Maison Rocheval Pte. Ltd. (« Maison Rocheval », « nous », « notre ») collecte, utilise, divulgue et protège vos informations personnelles lorsque vous visitez maison-rocheval.com (le « Site »), achetez nos produits, ou interagissez autrement avec nous.",
+    "intro2": "Cette politique est conçue pour répondre aux exigences du Règlement général sur la protection des données de l’UE/du Royaume-Uni (RGPD), du California Consumer Privacy Act tel que modifié par le CPRA et d’autres lois américaines sur la protection de la vie privée, ainsi que de la loi singapourienne sur la protection des données personnelles de 2012 (PDPA). Lorsqu’un régime spécifique vous accorde des droits supplémentaires, la section correspondante ci-dessous s’applique.",
+    "sections": [
+      {
+        "title": "1. Qui nous sommes",
+        "body": "<p>Le responsable du traitement de vos données personnelles est :</p>\n<ul>\n<li><strong>Entité juridique :</strong> Maison Rocheval Pte. Ltd.</li>\n<li><strong>Marque :</strong> Maison Rocheval</li>\n</ul>\n<p>Vous pouvez nous contacter, y compris notre délégué à la protection des données, pour toute question relative à la confidentialité via le formulaire de contact de notre site : <strong>maison-rocheval.com/contact</strong>.</p>"
+      },
+      {
+        "title": "2. Informations que nous collectons",
+        "body": "<p><strong>Informations que vous nous fournissez</strong></p>\n<ul>\n<li>Coordonnées d’identité : nom, adresse de facturation et de livraison, email, numéro de téléphone.</li>\n<li>Données de commande et de transaction : produits achetés, historique des commandes, préférences de livraison.</li>\n<li>Informations de paiement : traitées par nos prestataires de paiement ; nous ne conservons pas les numéros de carte complets.</li>\n<li>Identifiants de compte, si vous créez un compte.</li>\n<li>Communications : messages que vous nous envoyez via le formulaire de contact, l’email ou le service client.</li>\n<li>Préférences marketing et toute information que vous fournissez lors de votre inscription.</li>\n</ul>\n<p><strong>Informations collectées automatiquement</strong></p>\n<ul>\n<li>Données d’appareil et d’utilisation : adresse IP, type de navigateur, système d’exploitation, pages de provenance, pages consultées, horodatages.</li>\n<li>Cookies et technologies similaires (voir Section 7).</li>\n</ul>\n<p><strong>Informations provenant de tiers</strong></p>\n<ul>\n<li>Prestataires de paiement, services de prévention de la fraude, partenaires d’expédition et de logistique, et fournisseurs d’analyse.</li>\n</ul>\n<p>Nous ne collectons pas intentionnellement de catégories particulières de données (par exemple, santé, religion, données biométriques). Merci de ne pas nous transmettre ce type de données.</p>"
+      },
+      {
+        "title": "3. Comment nous utilisons vos informations",
+        "body": "<p>Nous utilisons vos données personnelles pour :</p>\n<ul>\n<li>Traiter et exécuter les commandes, organiser l’expédition et gérer les retours.</li>\n<li>Encaisser les paiements et prévenir la fraude.</li>\n<li>Fournir un support client et répondre à vos demandes.</li>\n<li>Gérer votre compte.</li>\n<li>Envoyer des communications transactionnelles (confirmations de commande, mises à jour de livraison).</li>\n<li>Envoyer des communications marketing lorsque vous y avez consenti ou lorsque cela est autrement permis.</li>\n<li>Exploiter, sécuriser et améliorer le Site.</li>\n<li>Respecter nos obligations légales, fiscales, comptables et réglementaires.</li>\n</ul>"
+      },
+      {
+        "title": "4. Bases légales du traitement (utilisateurs de l’UE/EEE et du Royaume-Uni)",
+        "body": "<p>Nous nous appuyons sur les bases légales suivantes au titre du RGPD :</p>\n<table>\n<thead><tr><th>Finalité</th><th>Base légale</th></tr></thead>\n<tbody>\n<tr><td>Exécution de la commande, gestion du compte</td><td>Exécution d’un contrat (art. 6(1)(b))</td></tr>\n<tr><td>Paiement, prévention de la fraude, sécurité</td><td>Intérêts légitimes (art. 6(1)(f))</td></tr>\n<tr><td>Comptabilité, obligations fiscales et réglementaires</td><td>Obligation légale (art. 6(1)(c))</td></tr>\n<tr><td>Emails marketing, cookies non essentiels</td><td>Consentement (art. 6(1)(a))</td></tr>\n<tr><td>Amélioration produit, analyse</td><td>Intérêts légitimes / consentement</td></tr>\n</tbody>\n</table>\n<p>Lorsque nous nous appuyons sur nos intérêts légitimes, nous avons mis ces intérêts en balance avec vos droits. Vous pouvez vous y opposer à tout moment (voir Section 9).</p>"
+      },
+      {
+        "title": "5. Comment nous partageons vos informations",
+        "body": "<p>Nous partageons vos données personnelles avec :</p>\n<ul>\n<li><strong>Prestataires de services / sous-traitants :</strong> prestataires de paiement, partenaires d’expédition et de logistique sous température dirigée, hébergement et infrastructure du site (Vercel Inc.), fournisseurs d’analyse (Google LLC pour Google Analytics ; Vercel Inc. pour Vercel Analytics), outils d’emailing et de service client.</li>\n<li><strong>Conseillers professionnels :</strong> avocats, comptables, auditeurs.</li>\n<li><strong>Autorités :</strong> lorsque la loi, la réglementation ou une procédure judiciaire l’exige.</li>\n<li><strong>Cessions d’entreprise :</strong> dans le cadre d’une fusion, d’une acquisition ou d’une cession d’actifs.</li>\n</ul>\n<p>Nous exigeons de nos sous-traitants qu’ils protègent vos données et ne les utilisent que sur nos instructions. Nous ne vendons pas vos informations personnelles et ne les partageons pas à des fins de publicité comportementale intersites.</p>"
+      },
+      {
+        "title": "6. Transferts internationaux de données",
+        "body": "<p>Nous opérons à Singapour, dans l’UE/en France, aux États-Unis (y compris en Californie) et à Hong Kong ; vos données peuvent donc être transférées et stockées en dehors de votre pays de résidence.</p>\n<p>Pour les transferts de données de l’UE/EEE ou du Royaume-Uni vers des pays sans décision d’adéquation, nous nous appuyons sur des garanties appropriées, telles que les clauses contractuelles types de la Commission européenne (CCT) et, le cas échéant, l’addendum britannique. Pour les transferts de données depuis Singapour, nous prenons des mesures raisonnables afin d’assurer un niveau de protection comparable, comme l’exige la PDPA. Une copie des garanties applicables est disponible sur demande via notre formulaire de contact.</p>"
+      },
+      {
+        "title": "7. Cookies et technologies similaires",
+        "body": "<p>Nous utilisons des cookies et technologies similaires pour faire fonctionner le Site, mémoriser vos préférences et analyser le trafic.</p>\n<ul>\n<li><strong>Cookies strictement nécessaires</strong> — indispensables au fonctionnement du Site.</li>\n<li><strong>Cookies analytiques</strong> — nous aident à comprendre comment les visiteurs utilisent le Site. Nous utilisons :\n<ul>\n<li><strong>Google Analytics</strong> (fourni par Google LLC / Google Ireland Limited), qui utilise des cookies et identifiants similaires pour mesurer le trafic et l’utilisation. Google traite ces données pour notre compte ; elles peuvent être transférées aux États-Unis. Consultez la politique de confidentialité de Google et la page sur l’utilisation des informations par Google. Vous pouvez vous désinscrire via le module complémentaire de désactivation de Google Analytics.</li>\n<li><strong>Vercel Analytics / Vercel Speed Insights</strong> (fourni par Vercel Inc.), qui mesure le trafic et la performance du Site. Vercel Web Analytics est conçu pour fonctionner sans cookies et sans suivi des utilisateurs entre les sites. Consultez la politique de confidentialité de Vercel.</li>\n</ul>\n</li>\n</ul>\n<p>Lorsque la loi l’exige (UE/EEE/Royaume-Uni), les cookies non essentiels — y compris Google Analytics — ne sont déposés qu’après votre consentement via notre bandeau cookies. Vous pouvez également gérer les cookies via les paramètres de votre navigateur et en activant les signaux Global Privacy Control (GPC).</p>"
+      },
+      {
+        "title": "8. Conservation des données",
+        "body": "<p>Nous conservons vos données personnelles uniquement le temps nécessaire aux finalités décrites, y compris pour satisfaire nos obligations légales, fiscales et de reporting. En règle générale :</p>\n<ul>\n<li><strong>Registres de commande et de transaction :</strong> conservés 5 ans pour répondre aux obligations comptables et fiscales.</li>\n<li><strong>Données de compte :</strong> conservées tant que votre compte est actif, puis supprimées ou anonymisées.</li>\n<li><strong>Données marketing :</strong> conservées jusqu’à votre désabonnement ou le retrait de votre consentement.</li>\n</ul>\n<p>Lorsque les données ne sont plus nécessaires, nous les supprimons ou les anonymisons de manière sécurisée.</p>"
+      },
+      {
+        "title": "9. Vos droits (UE/EEE et Royaume-Uni — RGPD)",
+        "body": "<p>Si vous résidez dans l’UE/EEE ou au Royaume-Uni, vous disposez du droit :</p>\n<ul>\n<li>D’<strong>accéder</strong> aux données personnelles que nous détenons à votre sujet.</li>\n<li>De <strong>rectifier</strong> les données inexactes ou incomplètes.</li>\n<li>D’<strong>effacer</strong> vos données (« droit à l’oubli »).</li>\n<li>De <strong>limiter</strong> le traitement dans certaines circonstances.</li>\n<li>À la <strong>portabilité des données</strong> — recevoir vos données dans un format structuré et lisible par machine.</li>\n<li>De vous <strong>opposer</strong> au traitement fondé sur l’intérêt légitime, et à la prospection directe à tout moment.</li>\n<li>De <strong>retirer votre consentement</strong> à tout moment, sans affecter la licéité du traitement antérieur.</li>\n<li>D’<strong>introduire une réclamation</strong> auprès de votre autorité de contrôle locale (en France, la CNIL ; au Royaume-Uni, l’ICO).</li>\n</ul>\n<p>Pour exercer l’un de ces droits, contactez-nous via notre formulaire de contact. Nous répondrons dans un délai d’un mois, conformément au RGPD.</p>"
+      },
+      {
+        "title": "10. Vos droits (États-Unis — Californie et autres États)",
+        "body": "<p>Cette section s’applique aux résidents des États-Unis, y compris ceux de Californie, de Virginie, du Colorado, du Connecticut, de l’Utah et d’autres États dotés d’une loi complète sur la protection de la vie privée.</p>\n<p><strong>Catégories de données personnelles que nous collectons :</strong> identifiants (nom, email, adresse), informations commerciales (historique d’achats), activité en ligne (navigation sur le Site), géolocalisation approximative (à partir de l’adresse IP) et informations de paiement. Nous les collectons pour les finalités commerciales décrites à la Section 3.</p>\n<p>Selon votre État de résidence, vous disposez du droit de :</p>\n<ul>\n<li><strong>Connaître / accéder</strong> aux informations personnelles que nous avons collectées à votre sujet.</li>\n<li><strong>Supprimer</strong> vos informations personnelles, sous réserve d’exceptions.</li>\n<li><strong>Corriger</strong> des informations personnelles inexactes.</li>\n<li><strong>Refuser</strong> la « vente » ou le « partage » de vos informations personnelles ainsi que la publicité ciblée.</li>\n<li><strong>Limiter l’utilisation</strong> de vos informations personnelles sensibles, le cas échéant.</li>\n<li><strong>Ne pas être discriminé</strong> pour avoir exercé vos droits.</li>\n</ul>\n<p>Nous ne vendons pas vos informations personnelles et ne les partageons pas à des fins de publicité comportementale intersites. Nous respectons les signaux Global Privacy Control (GPC). Pour exercer l’un de ces droits, contactez-nous via notre formulaire de contact. Nous vérifierons votre identité avant de répondre ; vous pouvez également mandater un représentant autorisé.</p>"
+      },
+      {
+        "title": "11. Vos droits (Singapour — PDPA)",
+        "body": "<p>En vertu de la PDPA, vous pouvez :</p>\n<ul>\n<li><strong>Demander l’accès</strong> à vos données personnelles et à des informations sur la manière dont elles ont été utilisées ou divulguées.</li>\n<li><strong>Demander la correction</strong> de données inexactes ou incomplètes.</li>\n<li><strong>Retirer votre consentement</strong> à notre collecte, utilisation ou divulgation de vos données personnelles, moyennant un préavis raisonnable. Ce retrait peut affecter notre capacité à vous fournir nos produits ou services.</li>\n</ul>\n<p>Nous répondrons aux demandes d’accès et de correction dans les délais requis par la PDPA. Notre délégué à la protection des données est responsable de notre conformité et peut être contacté via notre formulaire de contact.</p>"
+      },
+      {
+        "title": "12. Sécurité des données",
+        "body": "<p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger les données personnelles contre tout accès non autorisé, perte, utilisation abusive ou altération — notamment le chiffrement en transit, des contrôles d’accès et le recours à des sous-traitants réputés. Aucune méthode de transmission ou de stockage n’est totalement sécurisée, et nous ne pouvons garantir une sécurité absolue. Nous vous informerons, ainsi que les autorités compétentes, en cas de violation de données lorsque la loi l’exige.</p>"
+      },
+      {
+        "title": "13. Confidentialité des mineurs",
+        "body": "<p>Le Site ne s’adresse pas aux enfants, et nous ne collectons pas sciemment de données personnelles auprès d’enfants de moins de 16 ans. Si vous pensez qu’un enfant nous a transmis des données personnelles, contactez-nous et nous les supprimerons.</p>"
+      },
+      {
+        "title": "14. Liens vers des sites tiers",
+        "body": "<p>Le Site peut contenir des liens vers des sites web tiers. Nous ne sommes pas responsables des pratiques de confidentialité de ces sites, et nous vous encourageons à consulter leurs politiques respectives.</p>"
+      },
+      {
+        "title": "15. Modifications de cette politique",
+        "body": "<p>Nous pouvons mettre à jour cette Politique de confidentialité de temps à autre. Nous publierons la version mise à jour avec une date de « Dernière mise à jour » révisée et, lorsque cela est requis, nous vous informerons de tout changement important.</p>"
+      },
+      {
+        "title": "16. Nous contacter",
+        "body": "<p>Pour toute question, demande ou réclamation concernant cette politique ou vos données personnelles, veuillez nous contacter via le formulaire de contact de notre site : <strong>maison-rocheval.com/contact</strong>.</p>"
       }
     ]
   },

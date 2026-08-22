@@ -252,7 +252,12 @@ export function ContactForm({
         />
         <p className="font-sans text-sm font-normal leading-[1.43] text-ink-soft">
           {privacyBeforeLink}{" "}
-          <Link className="underline underline-offset-2" href={ROUTES.FAQ}>
+          <Link
+            className="underline underline-offset-2"
+            href={ROUTES.PRIVACY_POLICY}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             {privacyLink}
           </Link>
           .

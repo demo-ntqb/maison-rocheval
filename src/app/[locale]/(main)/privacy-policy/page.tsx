@@ -1,0 +1,29 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+import { PrivacyPolicyContentSection, PrivacyPolicyHeroSection } from "@/screens/privacy-policy";
+import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (isComingSoon()) return generateComingSoonMetadata(locale);
+
+  const t = await getTranslations({ locale, namespace: "metadata.privacyPolicy" });
+
+  return generatePageMetadata(locale, t("title"), t("description"), {
+    canonical: "/privacy-policy",
+  });
+}
+
+export default function PrivacyPolicyPage() {
+  return (
+    <div className="flex w-full flex-col bg-canvas" data-screen="privacy-policy">
+      <PrivacyPolicyHeroSection />
+      <PrivacyPolicyContentSection />
+    </div>
+  );
+}

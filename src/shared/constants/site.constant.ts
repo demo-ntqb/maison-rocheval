@@ -56,6 +56,7 @@ export const navigation = {
     care: [
       { id: "faq", href: ROUTES.FAQ },
       { id: "contact", href: ROUTES.CONTACT },
+      { id: "privacyPolicy", href: ROUTES.PRIVACY_POLICY },
     ],
   },
 };
