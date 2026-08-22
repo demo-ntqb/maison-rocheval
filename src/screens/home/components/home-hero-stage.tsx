@@ -71,27 +71,19 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
       return;
     }
 
-    let isOpaque = true;
-
-    // Ensure we start fresh with opacity 1 on mount
-    containerRef.current?.style.setProperty("opacity", "1");
-
     const update = (scrollPosition: number) => {
       const wasActive = root.hasAttribute(JOURNEY_ATTR);
       let active = false;
 
       if (!reduceMotion) {
-        // Safe check: if scrollPosition is close to top, stage must be visible.
-        // This prevents boundingClientRect returning 0 on initial mount/layout calculation from hiding the hero.
-        const outOfView = scrollPosition > 50 && stage.getBoundingClientRect().bottom <= 80;
-
-        if (outOfView && isOpaque) {
-          containerRef.current?.style.setProperty("opacity", "0");
-          isOpaque = false;
-        } else if (!outOfView && !isOpaque) {
-          containerRef.current?.style.setProperty("opacity", "1");
-          isOpaque = true;
-        }
+        // Calculate when the sticky stage starts scrolling out of the viewport.
+        // Since the container starts at -80px (due to -mt-20) and has a sticky stage of 100dvh,
+        // the stage collapses to 80px when scrollPosition reaches (window.innerHeight - 80).
+        // Beyond this point, the stage starts scrolling up and out of the viewport.
+        // Using window.innerHeight avoids triggering layout reflow (getBoundingClientRect).
+        const outOfView =
+          scrollPosition > 50 &&
+          scrollPosition >= window.innerHeight - 80;
         active = scrollPosition > HOME_HERO.journeyStart && !outOfView;
       }
 
@@ -114,6 +106,7 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
       window.dispatchEvent(new Event("scroll"));
     };
   }, [scrollY, reduceMotion]);
+
 
   return (
     <div
@@ -154,7 +147,7 @@ export function HomeHeroStage({ imageAlt, title }: HomeHeroStageProps) {
         </div>
 
         <motion.div
-          className="absolute inset-x-0 top-[56px] z-10 flex h-[200px] flex-col items-center justify-center lg:top-[96px]"
+          className="absolute inset-x-0 top-[56px] z-10 flex h-[200px] flex-col items-center justify-center lg:top-[96px] will-change-transform"
           data-plumb-id="frame-2085667110"
           style={reduceMotion ? undefined : { scale: logoScale, y: logoY }}
         >
