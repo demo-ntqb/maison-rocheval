@@ -88,7 +88,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
                 </SplitText>
               </div>
             </div>
-            <Reveal delay={120}>
+            {/* <Reveal delay={120}>
               <TextButton asChild className="-my-3 min-h-11 inline-flex items-center">
                 <Link
                   href={ROUTES.PRODUCTS}
@@ -97,7 +97,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
                   {t("shopNow")}
                 </Link>
               </TextButton>
-            </Reveal>
+            </Reveal> */}
           </div>
         </div>
 
