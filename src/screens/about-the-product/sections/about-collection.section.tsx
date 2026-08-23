@@ -72,7 +72,7 @@ export async function AboutCollectionSection() {
                 {t("description")}
               </SplitText>
             </div>
-            <Reveal delay={120}>
+            {/* <Reveal delay={120}>
               <TextButton asChild className="inline-flex min-h-11 items-center">
                 <Link
                   href={ROUTES.PRODUCTS}
@@ -81,7 +81,7 @@ export async function AboutCollectionSection() {
                   {t("shop")}
                 </Link>
               </TextButton>
-            </Reveal>
+            </Reveal> */}
           </div>
         </div>
 
