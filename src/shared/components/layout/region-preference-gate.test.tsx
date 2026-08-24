@@ -11,6 +11,13 @@ vi.mock("next-intl", () => ({
   useLocale: () => activeLocale,
 }));
 
+vi.mock("@/i18n/routing", () => ({
+  routing: {
+    locales: ["en", "fr"],
+    defaultLocale: "en",
+  },
+}));
+
 vi.mock("@/i18n/navigation", () => ({
   usePathname: () => mockPathname,
   useRouter: () => ({ replace }),
