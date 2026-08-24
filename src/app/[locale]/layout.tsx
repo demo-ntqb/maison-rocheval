@@ -2,6 +2,7 @@ import { HeadAnalytics } from "@/app/(head)/analytics";
 import { routing } from "@/i18n/routing";
 import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
 import { generateOrganizationJsonLd, generateRootMetadata, isComingSoon } from "@/shared/lib/metadata";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -98,6 +99,7 @@ export default async function LocaleLayout({
         className="flex min-h-full flex-col items-center bg-canvas font-sans"
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
