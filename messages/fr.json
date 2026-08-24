@@ -24,10 +24,6 @@
       "title": "Maison Rocheval — Bientôt disponible",
       "description": "Maison Rocheval, une maison de caviar français haut de gamme, ouvre bientôt. Restez à l'écoute."
     },
-    "notFound": {
-      "title": "Page introuvable",
-      "description": "La page que vous recherchez n'existe pas ou a été déplacée."
-    },
     "faq": {
       "title": "Questions fréquentes",
       "description": "Réponses sur le choix, la conservation et la dégustation du caviar Maison Rocheval.",
@@ -768,15 +764,6 @@
       "brand": "Maison Rocheval Paris",
       "message": "Bientôt disponible",
       "imageAlt": "Vue aérienne d'une ferme d'esturgeons, ses bassins circulaires posés sur un lac au pied de montagnes boisées"
-    }
-  },
-  "notFound": {
-    "hero": {
-      "brand": "Maison Rocheval Paris",
-      "eyebrow": "404",
-      "heading": "Page introuvable",
-      "description": "La page que vous recherchez n'existe pas ou a été déplacée.",
-      "cta": "Retour à l'accueil"
     }
   }
 }
