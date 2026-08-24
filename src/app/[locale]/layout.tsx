@@ -69,10 +69,6 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  // TODO: Tạm ẩn fr
-  if (locale === "fr") {
-    return notFound();
-  }
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();

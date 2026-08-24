@@ -1,11 +1,13 @@
-import { routing } from "@/i18n/routing";
+// import { routing } from "@/i18n/routing";
 
 type I18nBase = {
   country: "FR";
   language: "EN" | "FR";
 };
 
-type StorefrontLocale = (typeof routing.locales)[number];
+// TODO: Tạm ẩn fr
+type StorefrontLocale = "en" | "fr";
+// type StorefrontLocale = (typeof routing.locales)[number];
 
 type StorefrontConfig = {
   publicStorefrontToken: string;
