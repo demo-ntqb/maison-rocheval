@@ -64,7 +64,7 @@ export async function AboutSelectionSection() {
           <SplitText
             as="h3"
             data-plumb-id="lorem-ipsum-dolor-3"
-            className="font-display text-[24px] leading-none md:leading-[1.33]"
+            className="font-display text-[24px] md:leading-none leading-[1.33]"
             by="words"
             stagger={40}
           >
