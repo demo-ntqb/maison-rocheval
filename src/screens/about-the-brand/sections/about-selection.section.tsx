@@ -60,11 +60,11 @@ export async function AboutSelectionSection() {
           />
         </Reveal>
 
-        <div className="grid w-full grid-cols-1 gap-10 md:grid-cols-[200px_1fr_1fr] md:gap-x-[54px]">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[200px_1fr_1fr] md:gap-x-[54px]">
           <SplitText
             as="h3"
             data-plumb-id="lorem-ipsum-dolor-3"
-            className="font-display text-[24px] leading-[1.33]"
+            className="font-display text-[24px] leading-none md:leading-[1.33]"
             by="words"
             stagger={40}
           >
