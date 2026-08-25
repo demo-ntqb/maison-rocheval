@@ -60,7 +60,7 @@ export async function AboutSelectionSection() {
           />
         </Reveal>
 
-        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[200px_1fr_1fr] md:gap-x-[54px]">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[200px_1fr_1fr] md:gap-8 lg:gap-x-[54px]">
           <SplitText
             as="h3"
             data-plumb-id="lorem-ipsum-dolor-3"
