@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { ContactHeroSection } from "@/screens/contact";
+import { ROUTES } from "@/shared/constants/route.constant";
 import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
 
 export async function generateMetadata({
@@ -15,7 +16,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata.contact" });
 
   return generatePageMetadata(locale, t("title"), t("description"), {
-    canonical: "/contact",
+    canonical: ROUTES.CONTACT,
   });
 }
 

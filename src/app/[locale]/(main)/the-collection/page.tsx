@@ -39,7 +39,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata.aboutProduct" });
 
   return generatePageMetadata(locale, t("title"), t("description"), {
-    canonical: "/about-the-product",
+    canonical: ROUTES.ABOUT_PRODUCT,
     image: new URL(OG_IMAGE, SITE_URL).toString(),
   });
 }

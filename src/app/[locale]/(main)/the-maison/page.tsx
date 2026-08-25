@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import {
-  AboutSourceRitualSection,
   AboutHeroSection,
-  AboutStorySection,
   AboutRitualSection,
   AboutSelectionSection,
+  AboutSourceRitualSection,
+  AboutStorySection,
   AboutVenuesSection,
 } from "@/screens/about-the-brand";
 import { ROUTES } from "@/shared/constants/route.constant";
@@ -32,7 +32,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata.aboutBrand" });
 
   return generatePageMetadata(locale, t("title"), t("description"), {
-    canonical: "/about-the-brand",
+    canonical: ROUTES.ABOUT_BRAND,
     image: new URL(OG_IMAGE, SITE_URL).toString(),
   });
 }

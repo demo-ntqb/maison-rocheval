@@ -30,7 +30,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata.home" });
 
   return generatePageMetadata(locale, t("title"), t("description"), {
-    canonical: "/",
+    canonical: ROUTES.HOME,
     image: new URL(OG_IMAGE, SITE_URL).toString(),
   });
 }
