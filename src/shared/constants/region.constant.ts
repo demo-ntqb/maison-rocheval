@@ -1,13 +1,6 @@
 import type { AppLocale, ShippingCountryCode } from "@/shared/types/region.type";
 
 /**
- * Tạm ẩn phần chuyển ngôn ngữ (header switcher + language field trong popup
- * region) trong khi site chỉ support EN. Đổi thành `true` để bật lại — không
- * cần đụng vào code ở nơi khác.
- */
-export const LANGUAGE_SWITCHER_ENABLED = false;
-
-/**
  * Các thị trường Maison Rocheval đang giao hàng — khớp với announcement bar
  * ("We currently only deliver to France and United States").
  *

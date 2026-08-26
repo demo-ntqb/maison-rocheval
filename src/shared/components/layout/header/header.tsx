@@ -7,7 +7,6 @@ import { useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
-import { LANGUAGE_SWITCHER_ENABLED } from "@/shared/constants/region.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
 import { cn } from "@/shared/lib/utils";
@@ -171,7 +170,7 @@ export function Header({ initialVariant }: HeaderProps) {
               className="flex flex-1 items-center justify-end gap-1 sm:gap-4 lg:gap-8"
               data-plumb-id="frame-2085667020-2"
             >
-              {LANGUAGE_SWITCHER_ENABLED && <LanguageSwitcher className={textColorClass} />}
+              <LanguageSwitcher className={textColorClass} />
             </div>
           </div>
         </div>

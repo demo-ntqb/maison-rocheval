@@ -17,8 +17,7 @@ import {
 import {
   DEFAULT_SHIPPING_COUNTRY,
   LANGUAGE_OPTIONS,
-  LANGUAGE_SWITCHER_ENABLED,
-  SHIPPING_COUNTRIES,
+  SHIPPING_COUNTRIES
 } from "@/shared/constants/region.constant";
 import {
   markRegionPromptDismissed,
@@ -187,20 +186,18 @@ export function RegionPreferenceDialog({
             }
             className="w-full md:min-w-0 md:flex-1"
           />
-          {LANGUAGE_SWITCHER_ENABLED && (
-            <RegionSelectField
-              id="region-preference-language"
-              label={t("languageLabel")}
-              value={locale}
-              onChange={(next) => setLocale(next as AppLocale)}
-              options={LANGUAGE_OPTIONS.map((option) => ({
-                value: option,
-                label: t(`languages.${option}`),
-              }))}
-              display={<span>{t(`languages.${locale}`)}</span>}
-              className="w-full md:w-[200px] md:shrink-0"
-            />
-          )}
+          <RegionSelectField
+            id="region-preference-language"
+            label={t("languageLabel")}
+            value={locale}
+            onChange={(next) => setLocale(next as AppLocale)}
+            options={LANGUAGE_OPTIONS.map((option) => ({
+              value: option,
+              label: t(`languages.${option}`),
+            }))}
+            display={<span>{t(`languages.${locale}`)}</span>}
+            className="w-full md:w-[200px] md:shrink-0"
+          />
         </div>
 
         <button

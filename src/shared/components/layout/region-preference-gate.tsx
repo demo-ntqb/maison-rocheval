@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
-import dynamic from "next/dynamic";
+import { useMounted } from "@/shared/hooks/use-mounted.hook";
 import { useLocale } from "next-intl";
+import dynamic from "next/dynamic";
+import { useEffect, useSyncExternalStore } from "react";
 
 import { usePathname, useRouter } from "@/i18n/navigation";
 import {
@@ -34,18 +35,7 @@ const countryForLocale = (locale: AppLocale): ShippingCountryCode =>
   SHIPPING_COUNTRIES.find((country) => country.defaultLocale === locale)?.code ??
   DEFAULT_SHIPPING_COUNTRY;
 
-/**
- * Quyết định có hiện popup chọn vùng/ngôn ngữ hay không:
- *
- * - Chưa có lựa chọn nào trong localStorage và chưa đóng popup trong phiên này
- *   → hiện popup.
- * - Đã có lựa chọn → không hỏi lại, và nếu ngôn ngữ đang xem khác ngôn ngữ đã
- *   lưu thì chuyển sang ngôn ngữ mặc định của thiết bị này.
- *
- * Snapshot trên server là `null` nên lượt hydrate đầu tiên không render gì —
- * không có nguy cơ lệch markup.
- */
-export function RegionPreferenceGate() {
+function RegionPreferenceGateInner() {
   const activeLocale = useLocale() as AppLocale;
   const pathname = usePathname();
   const router = useRouter();
@@ -80,3 +70,24 @@ export function RegionPreferenceGate() {
 
   return <RegionPreferenceDialog initialCountryCode={countryForLocale(activeLocale)} />;
 }
+
+/**
+ * Quyết định có hiện popup chọn vùng/ngôn ngữ hay không:
+ *
+ * - Chưa có lựa chọn nào trong localStorage và chưa đóng popup trong phiên này
+ *   → hiện popup.
+ * - Đã có lựa chọn → không hỏi lại, và nếu ngôn ngữ đang xem khác ngôn ngữ đã
+ *   lưu thì chuyển sang ngôn ngữ mặc định của thiết bị này.
+ *
+ * Để tránh hydration mismatch hoàn toàn, gate chỉ render ở phía client sau khi đã mount.
+ */
+export function RegionPreferenceGate() {
+  const mounted = useMounted();
+
+  if (!mounted) {
+    return null;
+  }
+
+  return <RegionPreferenceGateInner />;
+}
+
