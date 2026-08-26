@@ -20,6 +20,7 @@ export async function HomeProductsSection({ locale }: { locale: string }) {
   const products = Object.entries(rawCards).map(([key, card]) => ({
     id: key,
     handle: key,
+    productType: "Caviar" as const,
     availableForSale: true,
     title: card.title,
     eyebrow: card.eyebrow,

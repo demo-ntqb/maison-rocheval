@@ -3,19 +3,23 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/shared/components/composite/product-card";
 import { ROUTES } from "@/shared/constants/route.constant";
+import { ProductCategory } from "@/shared/lib/catalog-mock";
 import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 
+
 export interface ProductDetailRelatedSectionProps {
-  products: CatalogProductCard[];
+  products: readonly CatalogProductCard[];
+  category: ProductCategory;
 }
 
 export async function ProductDetailRelatedSection({
   products,
+  category
 }: ProductDetailRelatedSectionProps) {
   const t = await getTranslations("productDetail.related");
 
   return (
-    <section className="flex w-full max-w-[1000px] flex-col items-center px-6 text-center lg:px-0">
+    <section className="flex w-full max-w-[1000px] flex-col items-center px-6 text-center lg:px-0 mx-auto">
       <h2 className="font-display text-2xl font-normal text-black sm:text-[28px]">
         {t("title")}
       </h2>
@@ -25,9 +29,8 @@ export async function ProductDetailRelatedSection({
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-
       <Link
-        href={ROUTES.PRODUCTS}
+        href={ROUTES.PRODUCT_CATEGORY(category)}
         className="mt-12 inline-flex min-h-11 items-center font-sans text-xs uppercase tracking-widest text-black underline underline-offset-4 transition-opacity hover:opacity-70"
       >
         {t("cta")}

@@ -32,6 +32,7 @@ vi.mock("next-intl", () => ({
 
 const money = (amount: string) => ({ amount, currencyCode: "EUR" });
 const product = {
+  productType: "Caviar" as const,
   availableForSale: true,
   delivery: {
     duration: "Overnight delivery",

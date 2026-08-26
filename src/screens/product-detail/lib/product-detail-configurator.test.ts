@@ -9,6 +9,7 @@ import {
 } from "./product-detail-configurator";
 
 const product: CatalogProductDetail = {
+  productType: "Caviar",
   availableForSale: true,
   delivery: {
     duration: "Overnight delivery",

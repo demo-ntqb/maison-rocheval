@@ -17,6 +17,7 @@ export const COLLECTION_PRODUCTS_QUERY = `#graphql
     id
     handle
     title
+    productType
     availableForSale
     descriptionHtml
     featuredImage { url altText width height }
@@ -47,6 +48,7 @@ export const COLLECTION_PRODUCT_PROFILES_QUERY = `#graphql
           id
           handle
           title
+          productType
           availableForSale
           descriptionHtml
           featuredImage { url altText width height }

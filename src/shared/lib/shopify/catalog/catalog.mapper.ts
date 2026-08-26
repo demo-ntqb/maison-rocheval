@@ -14,12 +14,22 @@ import type {
     CatalogVariant,
     StorefrontPresentationOption,
     StorefrontProduct,
+    CatalogProductBaseDetail,
+    CatalogCaviarDetail,
+    CatalogGiftSetDetail,
 } from "./catalog.type.ts";
 
 function mapProductCard(product: StorefrontProduct): CatalogProductCard {
   const fields = metafieldsByKey(product);
   const tastingNotes = parseStringList(fields.get("tasting_notes")?.value);
+  const rawProductType = product.productType || "Caviar";
+  const productType: "Caviar" | "Gift Set" =
+    rawProductType === "Gift Set" || rawProductType === "gift-sets"
+      ? "Gift Set"
+      : "Caviar";
+
   return {
+    productType,
     availableForSale: product.availableForSale,
     description: fields.get("short_description")?.value || stripHtml(product.descriptionHtml),
     eyebrow: fields.get("collection_line")?.value || "",
@@ -128,7 +138,7 @@ export function mapProductDetail(
 ): CatalogProductDetail {
   const profile = mapProductProfile(product);
   const fields = metafieldsByKey(product);
-  return {
+  const baseDetail: CatalogProductBaseDetail = {
     ...profile,
     delivery: {
       duration: fields.get("duration")?.value || "",
@@ -152,4 +162,16 @@ export function mapProductDetail(
     shelfLife: fields.get("shelf_life")?.value || "",
     variants: mapVariants(product),
   };
+
+  if (profile.productType === "Gift Set") {
+    return {
+      ...baseDetail,
+      productType: "Gift Set",
+    } as CatalogGiftSetDetail;
+  }
+
+  return {
+    ...baseDetail,
+    productType: "Caviar",
+  } as CatalogCaviarDetail;
 }

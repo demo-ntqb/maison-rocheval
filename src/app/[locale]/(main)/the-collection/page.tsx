@@ -79,7 +79,7 @@ export default async function AboutProductPage({
             name: collection(`products.${caviar.id}.name`),
             description: collection(`products.${caviar.id}.tastingNotes`),
             image: new URL(`${caviar.closedTin}.png`, SITE_URL).toString(),
-            url: new URL(localizedPath(locale, ROUTES.PRODUCT_DETAIL(caviar.id)), SITE_URL).toString(),
+            url: new URL(localizedPath(locale, ROUTES.COLLECTION_TAB(caviar.id)), SITE_URL).toString(),
           },
         };
       }),

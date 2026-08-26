@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
-import { getCatalogHandles } from "@/shared/lib/shopify/catalog";
+import { getMockStaticParams, PRODUCT_CATEGORIES } from "@/shared/lib/catalog-mock";
 import { localizedPath } from "@/shared/lib/metadata";
 
 const STATIC_PATHS = [
@@ -32,9 +32,9 @@ function sitemapEntry(path: string): MetadataRoute.Sitemap[number] {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const handles = await getCatalogHandles();
-
-  return [...STATIC_PATHS, ...handles.map((handle) => ROUTES.PRODUCT_DETAIL(handle))].map(
+  const productPaths = getMockStaticParams().map(({ category, handle }) => ROUTES.PRODUCT_DETAIL(category, handle));
+  const categoryPaths = PRODUCT_CATEGORIES.map((category) => ROUTES.PRODUCT_CATEGORY(category));
+  return [...STATIC_PATHS, ...categoryPaths, ...productPaths].map(
     sitemapEntry,
   );
 }

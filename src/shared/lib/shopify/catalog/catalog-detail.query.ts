@@ -8,6 +8,7 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
       id
       handle
       title
+      productType
       availableForSale
       descriptionHtml
       featuredImage { url altText width height }
@@ -24,6 +25,7 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
         }
       }
       metafields(identifiers: [
+        { namespace: "rocheval", key: "subtitle" }
         { namespace: "rocheval", key: "short_description" }
         { namespace: "rocheval", key: "collection_line" }
         { namespace: "rocheval", key: "tasting_notes" }
@@ -90,6 +92,7 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
     id
     handle
     title
+    productType
     availableForSale
     descriptionHtml
     featuredImage { url altText width height }

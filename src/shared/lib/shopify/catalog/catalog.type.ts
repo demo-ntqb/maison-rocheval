@@ -11,6 +11,7 @@ export type CatalogImage = {
 };
 
 export type CatalogProductCard = {
+  productType: "Caviar" | "Gift Set";
   availableForSale: boolean;
   description: string;
   eyebrow: string;
@@ -21,6 +22,39 @@ export type CatalogProductCard = {
   profile: string;
   species: string;
   title: string;
+};
+
+export type CatalogSpeciesRef = {
+  handle: string;
+  scientificName: string;
+  description: string;
+  image: CatalogImage | null;
+};
+
+export type CatalogServingRef = {
+  handle: string;
+  recommendation: string;
+  storage: string;
+  shelfLife: string;
+};
+
+export type CatalogDeliveryRef = {
+  handle: string;
+  shipping: string;
+  duration: string;
+};
+
+export type CatalogGiftingRef = {
+  handle: string;
+  box: string;
+  message: string;
+  addOns: string;
+};
+
+export type CatalogBundleComponent = {
+  product: CatalogProductCard;
+  variantId: string;
+  quantity: number;
 };
 
 export type CatalogProductProfile = CatalogProductCard & {
@@ -54,7 +88,7 @@ export type CatalogPackagingOption = {
   variantId: string | null;
 };
 
-export type CatalogProductDetail = CatalogProductProfile & {
+export type CatalogProductBaseDetail = CatalogProductProfile & {
   delivery: {
     duration: string;
     shipping: string;
@@ -71,11 +105,38 @@ export type CatalogProductDetail = CatalogProductProfile & {
     ingredients: string;
     nutritionalData: string;
   };
+  // Structured metaobjects
+  speciesRef?: CatalogSpeciesRef;
+  servingGuide?: CatalogServingRef;
+  deliveryProfile?: CatalogDeliveryRef;
+  giftingProfile?: CatalogGiftingRef;
+
+  // Additional metafields from product YAML definitions
+  pearlColour?: string; // e.g., "Dark grey to golden olive"
+  saltContent?: number; // e.g., 3.5
+  ingredients?: string; // detailed ingredient list
+  shelfLifeDays?: number; // e.g., 28
+  relatedProductsMeta?: string[]; // array of related product identifiers
+  subtitle?: string; // e.g., "Perfect for your private tasting"
+  shortDescription?: string; // short description text
   specsDescription: string;
   storage: string;
   shelfLife: string;
   variants: CatalogVariant[];
 };
+
+export type CatalogCaviarDetail = CatalogProductBaseDetail & {
+  productType: "Caviar";
+};
+
+export type CatalogGiftSetDetail = CatalogProductBaseDetail & {
+  productType: "Gift Set";
+  bundle?: {
+    components: CatalogBundleComponent[];
+  };
+};
+
+export type CatalogProductDetail = CatalogCaviarDetail | CatalogGiftSetDetail;
 
 export type StorefrontMetafield = {
   key: string;
@@ -99,6 +160,7 @@ export type StorefrontMetaobject = {
 };
 
 export type StorefrontProduct = {
+  productType?: string;
   availableForSale: boolean;
   descriptionHtml: string;
   featuredImage: {

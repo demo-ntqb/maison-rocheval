@@ -61,6 +61,11 @@ export interface ProductCardProps
   priority?: boolean;
 }
 
+const PRODUCT_CATEGORY_MAP = {
+  "Caviar": "caviar",
+  "Gift Set": "gift-sets",
+} as const;
+
 export function ProductCard({
   product,
   priority = false,
@@ -68,6 +73,7 @@ export function ProductCard({
   className,
   ...props
 }: ProductCardProps) {
+  const category = PRODUCT_CATEGORY_MAP[product.productType];
 
   return (
     <article
@@ -76,7 +82,7 @@ export function ProductCard({
       {...props}
     >
       <Link
-        href={ROUTES.PRODUCT_DETAIL(product.handle)}
+        href={ROUTES.PRODUCT_DETAIL(category, product.handle)}
         className={cn(productImageVariants({ size }))}
         data-plumb-id="catalog-image"
       >
@@ -99,7 +105,7 @@ export function ProductCard({
       </Link>
 
       <Link
-        href={ROUTES.PRODUCT_DETAIL(product.handle)}
+        href={ROUTES.PRODUCT_DETAIL(category, product.handle)}
         className={cn(productInfoVariants({ size }))}
         data-plumb-id="frame-2085667164"
       >
