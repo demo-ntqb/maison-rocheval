@@ -134,6 +134,12 @@ export type CatalogGiftSetDetail = CatalogProductBaseDetail & {
   bundle?: {
     components: CatalogBundleComponent[];
   };
+  /**
+   * Identifiers of what the set contains, in presentation order — either a
+   * caviar handle (`amour`) or an accessory code (`spoons_2`, `key_1`). Each
+   * one resolves to a label through the `productDetail.composition` messages.
+   */
+  composition?: readonly string[];
 };
 
 export type CatalogProductDetail = CatalogCaviarDetail | CatalogGiftSetDetail;

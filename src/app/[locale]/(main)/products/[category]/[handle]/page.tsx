@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ProductDetailHeroSection, ProductDetailRelatedSection } from "@/screens/product-detail";
+import {
+  ProductDetailGiftSetSection,
+  ProductDetailHeroSection,
+  ProductDetailRelatedSection,
+} from "@/screens/product-detail";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
 import { getMockProduct, getMockStaticParams, getProductsByCategory, isProductCategory, mapMockToCatalogCard, mapMockToProductDetail, type ProductCategory } from "@/shared/lib/catalog-mock";
@@ -115,7 +119,11 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
     <div className="flex w-full flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: productJsonLd }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbJsonLd }} />
-      <ProductDetailHeroSection product={product} />
+      {product.productType === "Gift Set" ? (
+        <ProductDetailGiftSetSection product={product} />
+      ) : (
+        <ProductDetailHeroSection product={product} />
+      )}
       <div className="pb-24 lg:pb-50">
         <ProductDetailRelatedSection category={category} products={related} />
       </div>
