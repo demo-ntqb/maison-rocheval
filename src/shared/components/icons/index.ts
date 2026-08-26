@@ -1,9 +1,11 @@
 export * from './ic-caret-down';
 export * from './ic-caret-left';
 export * from './ic-caret-right';
+export * from './ic-envelope-simple';
+export * from './ic-minus';
 export * from './ic-plus';
+export * from './ic-shopping-cart';
 export * from './ic-x';
 export * from './maison-rocheval-logo';
 export * from './maison-rocheval-symbol';
 export * from './michelin-star';
-
