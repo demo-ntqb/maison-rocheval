@@ -1,11 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
-import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { Reveal } from "@/shared/components/ui/reveal";
 import { SplitText } from "@/shared/components/ui/split-text";
-import { TextButton } from "@/shared/components/ui/text-button";
-import { ROUTES } from "@/shared/constants/route.constant";
 import { HomeProductList } from "../components/home-product-list";
 
 export async function HomeProductsSection({ locale }: { locale: string }) {

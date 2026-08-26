@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { AboutCollectionCarousel } from "./about-collection-carousel";
 import type { CollectionCaviarContent } from "../types/about-the-product.type";
 
-const caviars: CollectionCaviarContent[] = ["amour", "expression", "kaluga"].map((id) => ({
+const caviars: CollectionCaviarContent[] = ["amour", "lexpression", "kaluga"].map((id) => ({
   id,
   closedTin: `/images/tin-closed-${id}`,
   openTin: `/images/tin-open-${id}`,
@@ -84,7 +84,7 @@ describe("AboutCollectionCarousel", () => {
     const next = screen.getByRole("button", { name: labels.next });
 
     await user.click(next);
-    expect(within(activePanel()).getByText("Name expression")).toBeInTheDocument();
+    expect(within(activePanel()).getByText("Name lexpression")).toBeInTheDocument();
 
     await user.click(next);
     await user.click(next);

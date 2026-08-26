@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shared/components/ui/tooltip";
-import { COLLECTION_CAVIAR_IDS } from "@/shared/constants/collection.constant";
+import { CAVIAR_COLLECTION } from "@/shared/constants/collection.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
 
@@ -20,16 +20,12 @@ interface FooterProps {
 export async function Footer({ locale }: FooterProps) {
   const t = await getTranslations({ locale, namespace: "footer" });
 
-  const plumbIds = ["amour", "l-expression", "harmonie", "oscietra", "kaluga"];
-
-  const caviarLinks = COLLECTION_CAVIAR_IDS.map((id, index) => {
-    const translationKey = id === "expression" ? "lexpression" : id;
-
+  const caviarLinks = CAVIAR_COLLECTION.map((caviar) => {
     return {
-      id,
-      href: `${ROUTES.ABOUT_PRODUCT}?tab=${id}`,
-      title: t(`nav.${translationKey}`),
-      plumbId: plumbIds[index] || id,
+      id: caviar.id,
+      href: `${ROUTES.ABOUT_PRODUCT}?tab=${caviar.id}`,
+      title: t(`nav.${caviar.translationKey}`),
+      plumbId: caviar.plumbId,
     };
   });
 

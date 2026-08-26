@@ -207,7 +207,7 @@
           "description": "Une expression raffinée aux grains olive, à la salinité précise et à la finale vive et persistante.",
           "imageAlt": "Boîte ouverte de caviar Russian Hybrid Maison Rocheval"
         },
-        "expression": {
+        "lexpression": {
           "eyebrow": "Réserve",
           "title": "L’Expression",
           "species": "Kaluga Hybride",
@@ -299,7 +299,7 @@
           "description": "Nommé pour l’Amour, et pour l’amour.",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
         },
-        "expression": {
+        "lexpression": {
           "eyebrow": "Réserve",
           "title": "L’Expression",
           "species": "Huso dauricus × Acipenser schrenckii",
@@ -480,7 +480,7 @@
           "tinAlt": "Boîte de caviar Armour ouverte à côté de son couvercle",
           "dishAlt": "Blini garni de caviar Armour, servi sur une assiette de cuivre"
         },
-        "expression": {
+        "lexpression": {
           "name": "L’Expression",
           "latinName": "Huso dauricus × Acipenser schrenckii",
           "note": "Nori",
