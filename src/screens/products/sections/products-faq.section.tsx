@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { FaqSection } from "@/shared/components/composite/faq-section";
 import { ROUTES } from "@/shared/constants/route.constant";
 
-export async function ProductsFaqSection() {
+export async function ProductsFaqSection({ category }: { category: "caviar" | "gift-sets" }) {
   const t = await getTranslations("products.faq");
   const items = Array.from({ length: 5 }, (_, index) => ({
     id: `products-faq-${index + 1}`,
@@ -14,7 +14,7 @@ export async function ProductsFaqSection() {
   return (
     <FaqSection
       data-plumb-id="component-6"
-      title={t("title")}
+      title={t(`category.${category}.title`)}
       items={items}
       buttonText={t("viewAll")}
       buttonLink={ROUTES.ABOUT_PRODUCT}

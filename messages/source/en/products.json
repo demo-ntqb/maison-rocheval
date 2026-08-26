@@ -2,10 +2,19 @@
   "metadata": {
     "products": {
       "title": "The Caviar Collection",
-      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
+      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish.",
+      "caviar": { "title": "The Caviar Collection", "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish." },
+      "gift-sets": { "title": "Maison Rocheval Gift Sets", "description": "Discover composed caviar rituals, ready to offer for every occasion." }
     }
   },
   "products": {
+    "breadcrumb": { "shop": "Shop" },
+    "categoryNavLabel": "Product category",
+    "categories": { "caviar": "Caviar", "gift-sets": "Gift sets" },
+    "categoryContent": {
+      "gift-sets": { "title": "Shop Maison Rocheval", "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary." },
+      "caviar": { "title": "Shop Maison Rocheval", "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary." }
+    },
     "hero": {
       "title": "Our Collection"
     },
@@ -16,13 +25,18 @@
     "editorial": {
       "title": "Learn more about our caviar",
       "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
-      "link": "About collection",
-      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
+      "link": "DISCOVER THE COLLECTION",
+      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table",
+      "category": {
+        "gift-sets": { "title": "The collection", "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary." },
+        "caviar": { "title": "The Caviars", "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary." }
+      }
     },
     "faq": {
       "title": "Frequently Asked Questions",
       "viewAll": "View all",
       "imageAlt": "Open Maison Rocheval caviar tin",
+      "category": { "caviar": { "title": "Frequently Asked Questions" }, "gift-sets": { "title": "Frequently Asked Questions" } },
       "items": [
         {
           "question": "Which caviar should I choose?",

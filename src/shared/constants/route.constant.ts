@@ -6,6 +6,7 @@ export const ROUTES = {
   FAQ: "/faq",
   CONTACT: "/contact",
   PRIVACY_POLICY: "/privacy-policy",
-  // PRODUCT_DETAIL: (handle: string) => `/products/${handle}` as const,
-  PRODUCT_DETAIL: (handle: string) => `${ROUTES.ABOUT_PRODUCT}?tab=${handle}` as const,
+  COLLECTION_TAB: (tab: string) => `${ROUTES.ABOUT_PRODUCT}?tab=${tab}` as const,
+  PRODUCT_CATEGORY: (category: "caviar" | "gift-sets") => `/products/${category}` as const,
+  PRODUCT_DETAIL: (category: "caviar" | "gift-sets", handle: string) => `/products/${category}/${handle}` as const,
 } as const;

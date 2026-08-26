@@ -17,7 +17,7 @@ export async function Footer({ locale }: FooterProps) {
   const caviarLinks = CAVIAR_COLLECTION.map((caviar) => {
     return {
       id: caviar.id,
-      href: `${ROUTES.ABOUT_PRODUCT}?tab=${caviar.id}`,
+      href: ROUTES.COLLECTION_TAB(caviar.id),
       title: t(`nav.${caviar.translationKey}`),
       plumbId: caviar.plumbId,
     };
@@ -71,8 +71,6 @@ export async function Footer({ locale }: FooterProps) {
             </strong>
             <ul className="flex flex-col gap-4 font-sans text-sm leading-4.5" data-plumb-id="frame-2085667148-3">
               {navigation.footer.brand.map((link, index) => {
-                const isShop = link.id === "shop";
-
                 return (
                   <li key={link.id}>
                     <Link

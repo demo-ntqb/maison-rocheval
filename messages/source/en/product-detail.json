@@ -1,6 +1,11 @@
 {
   "productDetail": {
-    "sizeLabel": "SIZE",
+    "sizeLabel": "TIN WEIGHT",
+    "compositionLabel": "COMPOSITION",
+    "galleryLabel": "Product gallery",
+    "selectImage": "Show {title} image",
+    "addedToCart": "{quantity} × {title} added to your mock cart",
+    "notFound": { "title": "Product not found", "description": "This product is unavailable in the selected collection.", "cta": "Browse caviar" },
     "packagingLabel": "PACKAGING",
     "perBoxLabel": "PER BOX",
     "summaryLabel": "SUMMARY",
@@ -14,7 +19,7 @@
     "boxOf": "{packaging} BOX OF {perBox}",
     "perBoxFormat": "{perBox} X {size} {title} per box",
     "specs": {
-      "specificationTitle": "Specification",
+      "specificationTitle": "Product",
       "pearlSize": "Pearl Size",
       "salt": "Salt",
       "color": "Color",
@@ -42,6 +47,58 @@
     "related": {
       "title": "You may also like",
       "cta": "Go to shop"
+    },
+    "composition": {
+      "amour": "Armour",
+      "lexpression": "L’expression",
+      "harmonie": "Harmonie",
+      "spoons_2": "2 River Pearl Serving Spoons",
+      "key_1": "Branded Caviar Key",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "spoons_4": "4 River Pearl Serving Spoons"
+    },
+    "products": {
+      "amour": {
+        "title": "Armour",
+        "subtitle": "Acipenser schrenckii",
+        "description": "This defining collection offers a taste of our legendary Royal Ossetra, Beluga, Daurenki®, Persicus® and Kaluga Huso Hybrid Caviar."
+      },
+      "lexpression": {
+        "title": "L’Expression",
+        "subtitle": "Acipenser gueldenstaedtii",
+        "description": "A selected caviar with a firm grain, elegant amber highlights, and a complex nutty flavor."
+      },
+      "harmonie": {
+        "title": "Harmonie",
+        "subtitle": "Acipenser baerii",
+        "description": "A balanced caviar with dark, silky grains, light salinity, and a delicate buttery finish."
+      },
+      "oscietra": {
+        "title": "Oscietra",
+        "subtitle": "Acipenser gueldenstaedtii",
+        "description": "Our legendary Royal Oscietra Caviar, offering amber grains with complex hazelnut and marine notes."
+      },
+      "kaluga": {
+        "title": "Kaluga",
+        "subtitle": "Huso dauricus",
+        "description": "A generous caviar with large golden grains, rich buttery texture, and a persistent, creamy finish."
+      },
+      "linitiation": {
+        "title": "L’Initiation",
+        "subtitle": "Maison Rocheval gift set",
+        "description": "A composed tasting set featuring three 30g tins (Armour, L’Expression, Harmonie) with two mother-of-pearl spoons and a caviar key."
+      },
+      "lexcellence": {
+        "title": "L’Excellence",
+        "subtitle": "Maison Rocheval gift set",
+        "description": "A refined tasting set for two featuring two 50g tins (L’Expression, Oscietra) with two mother-of-pearl spoons and a caviar key."
+      },
+      "lopulence": {
+        "title": "L’Opulence",
+        "subtitle": "Maison Rocheval gift set",
+        "description": "A grand celebration collection featuring three 50g tins (Kaluga, Oscietra, Harmonie) with four mother-of-pearl spoons and a caviar key."
+      }
     }
   }
 }

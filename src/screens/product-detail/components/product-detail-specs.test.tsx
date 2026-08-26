@@ -42,6 +42,7 @@ vi.mock("@/i18n/navigation", () => ({
 const money = (amount: string) => ({ amount, currencyCode: "EUR" });
 
 const mockProduct: CatalogProductDetail = {
+  productType: "Caviar",
   availableForSale: true,
   delivery: {
     duration: "Perishable – ships Fedex Priority Overnight.",

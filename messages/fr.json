@@ -34,7 +34,15 @@
     },
     "products": {
       "title": "La Collection de Caviar",
-      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
+      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière.",
+      "caviar": {
+        "title": "La Collection de Caviar",
+        "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
+      },
+      "gift-sets": {
+        "title": "Coffrets Cadeaux Maison Rocheval",
+        "description": "Découvrez des rituels de caviar composés pour toutes les occasions."
+      }
     }
   },
   "aboutBrand": {
@@ -477,7 +485,16 @@
     ]
   },
   "productDetail": {
-    "sizeLabel": "TAILLE",
+    "sizeLabel": "POIDS DE LA BOÎTE",
+    "compositionLabel": "COMPOSITION",
+    "galleryLabel": "Galerie produit",
+    "selectImage": "Afficher l’image de {title}",
+    "addedToCart": "{quantity} × {title} ajouté à votre panier fictif",
+    "notFound": {
+      "title": "Produit introuvable",
+      "description": "Ce produit n’est pas disponible dans la collection sélectionnée.",
+      "cta": "Découvrir le caviar"
+    },
     "packagingLabel": "EMBALLAGE",
     "perBoxLabel": "PAR BOÎTE",
     "summaryLabel": "RÉSUMÉ",
@@ -491,7 +508,7 @@
     "boxOf": "COFFRET {packaging} DE {perBox}",
     "perBoxFormat": "{perBox} X {size} {title} par boîte",
     "specs": {
-      "specificationTitle": "Spécifications",
+      "specificationTitle": "Produit",
       "pearlSize": "Taille des grains",
       "salt": "Salinité",
       "color": "Couleur",
@@ -519,9 +536,79 @@
     "related": {
       "title": "Vous aimerez aussi",
       "cta": "Découvrir la boutique"
+    },
+    "composition": {
+      "amour": "Amour",
+      "lexpression": "L’expression",
+      "harmonie": "Harmonie",
+      "spoons_2": "2 cuillères de service en nacre",
+      "key_1": "Clé à caviar gravée",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "spoons_4": "4 cuillères de service en nacre"
+    },
+    "products": {
+      "amour": {
+        "title": "Amour",
+        "subtitle": "Acipenser schrenckii",
+        "description": "Cette collection emblématique propose une dégustation de nos légendaires caviars Royal Oscietra, Beluga, Daurenki®, Persicus® et Kaluga Huso Hybrid."
+      },
+      "lexpression": {
+        "title": "L’Expression",
+        "subtitle": "Acipenser gueldenstaedtii",
+        "description": "Un caviar de choix aux grains fermes, reflets ambrés élégants et saveurs complexes de fruits secs."
+      },
+      "harmonie": {
+        "title": "Harmonie",
+        "subtitle": "Acipenser baerii",
+        "description": "Un caviar équilibré aux grains sombres et soyeux, avec une salinité douce et un fini beurré délicat."
+      },
+      "oscietra": {
+        "title": "Oscietra",
+        "subtitle": "Acipenser gueldenstaedtii",
+        "description": "Notre légendaire Caviar Royal Oscietra, offrant des grains ambrés aux notes marines et de noisette complexes."
+      },
+      "kaluga": {
+        "title": "Kaluga",
+        "subtitle": "Huso dauricus",
+        "description": "Un caviar généreux aux grands grains dorés, une texture riche et beurrée avec une fin de bouche persistante et crémeuse."
+      },
+      "linitiation": {
+        "title": "L’Initiation",
+        "subtitle": "Coffret cadeau Maison Rocheval",
+        "description": "Un coffret d'initiation composé de trois boîtes de 30g (Amour, L’Expression, Harmonie) avec deux cuillères en nacre et une clé à caviar."
+      },
+      "lexcellence": {
+        "title": "L’Excellence",
+        "subtitle": "Coffret cadeau Maison Rocheval",
+        "description": "Un coffret de dégustation raffiné pour deux composé de deux boîtes de 50g (L’Expression, Oscietra) avec deux cuillères en nacre et une clé à caviar."
+      },
+      "lopulence": {
+        "title": "L’Opulence",
+        "subtitle": "Coffret cadeau Maison Rocheval",
+        "description": "Un grand coffret de célébration composé de trois boîtes de 50g (Kaluga, Oscietra, Harmonie) avec quatre cuillères en nacre et une clé à caviar."
+      }
     }
   },
   "products": {
+    "breadcrumb": {
+      "shop": "Boutique"
+    },
+    "categoryNavLabel": "Catégorie de produits",
+    "categories": {
+      "caviar": "Caviar",
+      "gift-sets": "Coffrets cadeaux"
+    },
+    "categoryContent": {
+      "gift-sets": {
+        "title": "Cadeaux Maison Rocheval",
+        "description": "Un rituel de caviar composé pour les occasions extraordinaires."
+      },
+      "caviar": {
+        "title": "La Boutique Maison Rocheval",
+        "description": "Découvrez notre collection de caviars, sélectionnés pour leur grain, leur texture et leur finale."
+      }
+    },
     "hero": {
       "title": "Notre Collection"
     },
@@ -532,13 +619,31 @@
     "editorial": {
       "title": "En savoir plus sur notre caviar",
       "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
-      "link": "La collection",
-      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
+      "link": "DÉCOUVRIR LA COLLECTION",
+      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table",
+      "category": {
+        "gift-sets": {
+          "title": "L’art d’offrir",
+          "description": "Chaque coffret Maison Rocheval est composé pour rendre un geste généreux évident."
+        },
+        "caviar": {
+          "title": "Les Caviars",
+          "description": "Pour offrir du caviar, un coffret Maison Rocheval sera toujours divin. Quelle que soit l’occasion, nous pouvons la rendre extraordinaire."
+        }
+      }
     },
     "faq": {
       "title": "Questions Fréquentes",
       "viewAll": "Tout voir",
       "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
+      "category": {
+        "caviar": {
+          "title": "Questions Fréquentes"
+        },
+        "gift-sets": {
+          "title": "Questions sur les coffrets"
+        }
+      },
       "items": [
         {
           "question": "Quel caviar choisir ?",

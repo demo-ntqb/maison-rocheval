@@ -10,5 +10,8 @@ export type {
   CatalogProductDetail,
   CatalogProductProfile,
   CatalogVariant,
+  CatalogProductBaseDetail,
+  CatalogCaviarDetail,
+  CatalogGiftSetDetail,
 } from "./catalog/catalog.type.ts";
 

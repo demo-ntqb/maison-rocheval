@@ -42,11 +42,11 @@ export const navigation = {
   ],
   footer: {
     caviar: [
-      { id: "amour", href: ROUTES.PRODUCT_DETAIL("amour") },
-      { id: "lexpression", href: ROUTES.PRODUCT_DETAIL("lexpression") },
-      { id: "harmonie", href: ROUTES.PRODUCT_DETAIL("harmonie") },
-      { id: "oscietra", href: ROUTES.PRODUCT_DETAIL("oscietra") },
-      { id: "kaluga", href: ROUTES.PRODUCT_DETAIL("kaluga") },
+      { id: "amour", href: ROUTES.COLLECTION_TAB("amour") },
+      { id: "lexpression", href: ROUTES.COLLECTION_TAB("lexpression") },
+      { id: "harmonie", href: ROUTES.COLLECTION_TAB("harmonie") },
+      { id: "oscietra", href: ROUTES.COLLECTION_TAB("oscietra") },
+      { id: "kaluga", href: ROUTES.COLLECTION_TAB("kaluga") },
     ],
     brand: [
       { id: "about", href: ROUTES.ABOUT_BRAND },
@@ -68,4 +68,3 @@ export const seoDefaults = {
   image: "/images/og/default.jpg",
   twitterHandle: "",
 };
-

@@ -2,10 +2,19 @@
   "metadata": {
     "products": {
       "title": "La Collection de Caviar",
-      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
+      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière.",
+      "caviar": { "title": "La Collection de Caviar", "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière." },
+      "gift-sets": { "title": "Coffrets Cadeaux Maison Rocheval", "description": "Découvrez des rituels de caviar composés pour toutes les occasions." }
     }
   },
   "products": {
+    "breadcrumb": { "shop": "Boutique" },
+    "categoryNavLabel": "Catégorie de produits",
+    "categories": { "caviar": "Caviar", "gift-sets": "Coffrets cadeaux" },
+    "categoryContent": {
+      "gift-sets": { "title": "Cadeaux Maison Rocheval", "description": "Un rituel de caviar composé pour les occasions extraordinaires." },
+      "caviar": { "title": "La Boutique Maison Rocheval", "description": "Découvrez notre collection de caviars, sélectionnés pour leur grain, leur texture et leur finale." }
+    },
     "hero": {
       "title": "Notre Collection"
     },
@@ -16,13 +25,18 @@
     "editorial": {
       "title": "En savoir plus sur notre caviar",
       "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
-      "link": "La collection",
-      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
+      "link": "DÉCOUVRIR LA COLLECTION",
+      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table",
+      "category": {
+        "gift-sets": { "title": "L’art d’offrir", "description": "Chaque coffret Maison Rocheval est composé pour rendre un geste généreux évident." },
+        "caviar": { "title": "Les Caviars", "description": "Pour offrir du caviar, un coffret Maison Rocheval sera toujours divin. Quelle que soit l’occasion, nous pouvons la rendre extraordinaire." }
+      }
     },
     "faq": {
       "title": "Questions Fréquentes",
       "viewAll": "Tout voir",
       "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
+      "category": { "caviar": { "title": "Questions Fréquentes" }, "gift-sets": { "title": "Questions sur les coffrets" } },
       "items": [
         {
           "question": "Quel caviar choisir ?",

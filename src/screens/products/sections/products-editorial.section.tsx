@@ -4,12 +4,12 @@ import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
 import { ROUTES } from "@/shared/constants/route.constant";
 
-export async function ProductsEditorialSection() {
+export async function ProductsEditorialSection({ category }: { category: "caviar" | "gift-sets" }) {
   const t = await getTranslations("products.editorial");
 
   return (
     <section
-      data-plumb-id="component-7-2"
+      data-plumb-id="component-10"
       aria-labelledby="products-editorial-title"
       className="products-editorial-deferred flex w-full max-w-content flex-col items-center gap-[54px] px-4 text-center sm:px-6 lg:px-0"
     >
@@ -20,13 +20,13 @@ export async function ProductsEditorialSection() {
             data-plumb-id="lorem-ipsum-dolor-2"
             className="font-display text-section-title leading-none text-ink"
           >
-            {t("title")}
+            {t(`category.${category}.title`)}
           </h2>
           <p
             data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a"
             className="min-h-[54px] font-sans text-sm leading-[18px] text-ink"
           >
-            {t("description")}
+            {t(`category.${category}.description`)}
           </p>
         </div>
         <Link
@@ -45,7 +45,7 @@ export async function ProductsEditorialSection() {
         height={1400}
         sizes="(max-width: 1023px) calc(100vw - 32px), 1000px"
         responsiveWidths={[640, 1000]}
-        pictureClassName="block aspect-[10/7] w-full overflow-hidden rounded-brand"
+        pictureClassName="block aspect-[1000/908] w-full overflow-hidden rounded-brand"
         className="size-full rounded-brand object-cover"
         data-plumb-id="rectangle-4878"
       />

@@ -34,7 +34,15 @@
     },
     "products": {
       "title": "The Caviar Collection",
-      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
+      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish.",
+      "caviar": {
+        "title": "The Caviar Collection",
+        "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
+      },
+      "gift-sets": {
+        "title": "Maison Rocheval Gift Sets",
+        "description": "Discover composed caviar rituals, ready to offer for every occasion."
+      }
     }
   },
   "aboutBrand": {
@@ -477,7 +485,16 @@
     ]
   },
   "productDetail": {
-    "sizeLabel": "SIZE",
+    "sizeLabel": "TIN WEIGHT",
+    "compositionLabel": "COMPOSITION",
+    "galleryLabel": "Product gallery",
+    "selectImage": "Show {title} image",
+    "addedToCart": "{quantity} × {title} added to your mock cart",
+    "notFound": {
+      "title": "Product not found",
+      "description": "This product is unavailable in the selected collection.",
+      "cta": "Browse caviar"
+    },
     "packagingLabel": "PACKAGING",
     "perBoxLabel": "PER BOX",
     "summaryLabel": "SUMMARY",
@@ -491,7 +508,7 @@
     "boxOf": "{packaging} BOX OF {perBox}",
     "perBoxFormat": "{perBox} X {size} {title} per box",
     "specs": {
-      "specificationTitle": "Specification",
+      "specificationTitle": "Product",
       "pearlSize": "Pearl Size",
       "salt": "Salt",
       "color": "Color",
@@ -519,9 +536,79 @@
     "related": {
       "title": "You may also like",
       "cta": "Go to shop"
+    },
+    "composition": {
+      "amour": "Armour",
+      "lexpression": "L’expression",
+      "harmonie": "Harmonie",
+      "spoons_2": "2 River Pearl Serving Spoons",
+      "key_1": "Branded Caviar Key",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "spoons_4": "4 River Pearl Serving Spoons"
+    },
+    "products": {
+      "amour": {
+        "title": "Armour",
+        "subtitle": "Acipenser schrenckii",
+        "description": "This defining collection offers a taste of our legendary Royal Ossetra, Beluga, Daurenki®, Persicus® and Kaluga Huso Hybrid Caviar."
+      },
+      "lexpression": {
+        "title": "L’Expression",
+        "subtitle": "Acipenser gueldenstaedtii",
+        "description": "A selected caviar with a firm grain, elegant amber highlights, and a complex nutty flavor."
+      },
+      "harmonie": {
+        "title": "Harmonie",
+        "subtitle": "Acipenser baerii",
+        "description": "A balanced caviar with dark, silky grains, light salinity, and a delicate buttery finish."
+      },
+      "oscietra": {
+        "title": "Oscietra",
+        "subtitle": "Acipenser gueldenstaedtii",
+        "description": "Our legendary Royal Oscietra Caviar, offering amber grains with complex hazelnut and marine notes."
+      },
+      "kaluga": {
+        "title": "Kaluga",
+        "subtitle": "Huso dauricus",
+        "description": "A generous caviar with large golden grains, rich buttery texture, and a persistent, creamy finish."
+      },
+      "linitiation": {
+        "title": "L’Initiation",
+        "subtitle": "Maison Rocheval gift set",
+        "description": "A composed tasting set featuring three 30g tins (Armour, L’Expression, Harmonie) with two mother-of-pearl spoons and a caviar key."
+      },
+      "lexcellence": {
+        "title": "L’Excellence",
+        "subtitle": "Maison Rocheval gift set",
+        "description": "A refined tasting set for two featuring two 50g tins (L’Expression, Oscietra) with two mother-of-pearl spoons and a caviar key."
+      },
+      "lopulence": {
+        "title": "L’Opulence",
+        "subtitle": "Maison Rocheval gift set",
+        "description": "A grand celebration collection featuring three 50g tins (Kaluga, Oscietra, Harmonie) with four mother-of-pearl spoons and a caviar key."
+      }
     }
   },
   "products": {
+    "breadcrumb": {
+      "shop": "Shop"
+    },
+    "categoryNavLabel": "Product category",
+    "categories": {
+      "caviar": "Caviar",
+      "gift-sets": "Gift sets"
+    },
+    "categoryContent": {
+      "gift-sets": {
+        "title": "Shop Maison Rocheval",
+        "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary."
+      },
+      "caviar": {
+        "title": "Shop Maison Rocheval",
+        "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary."
+      }
+    },
     "hero": {
       "title": "Our Collection"
     },
@@ -532,13 +619,31 @@
     "editorial": {
       "title": "Learn more about our caviar",
       "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
-      "link": "About collection",
-      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
+      "link": "DISCOVER THE COLLECTION",
+      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table",
+      "category": {
+        "gift-sets": {
+          "title": "The collection",
+          "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary."
+        },
+        "caviar": {
+          "title": "The Caviars",
+          "description": "When it comes to giving the gift of caviar, a gift set from Maison Rocheval will always be divine. Whatever the occasion, we can always make it extraordinary."
+        }
+      }
     },
     "faq": {
       "title": "Frequently Asked Questions",
       "viewAll": "View all",
       "imageAlt": "Open Maison Rocheval caviar tin",
+      "category": {
+        "caviar": {
+          "title": "Frequently Asked Questions"
+        },
+        "gift-sets": {
+          "title": "Frequently Asked Questions"
+        }
+      },
       "items": [
         {
           "question": "Which caviar should I choose?",
