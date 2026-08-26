@@ -51,7 +51,7 @@ export const navigation = {
     brand: [
       { id: "about", href: ROUTES.ABOUT_BRAND },
       { id: "collection", href: ROUTES.ABOUT_PRODUCT },
-      // { id: "shop", href: ROUTES.PRODUCTS },
+      { id: "shop", href: ROUTES.PRODUCTS },
     ],
     care: [
       { id: "faq", href: ROUTES.FAQ },
