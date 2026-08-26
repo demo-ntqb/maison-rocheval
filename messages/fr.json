@@ -1,17 +1,5 @@
 {
   "metadata": {
-    "root": {
-      "title": "Maison Rocheval — Caviar & Gastronomie",
-      "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
-    },
-    "home": {
-      "title": "Maison Rocheval — Caviar & Gastronomie",
-      "description": "De l'esturgeonnière à la table : découvrez les cinq expressions de caviar Maison Rocheval, sélectionnées à la source et présentées avec tout leur rituel."
-    },
-    "products": {
-      "title": "La Collection de Caviar",
-      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
-    },
     "aboutBrand": {
       "title": "La Maison",
       "description": "Découvrez l'héritage, le savoir-faire et le rituel de la Maison Rocheval."
@@ -24,341 +12,34 @@
       "title": "Maison Rocheval — Bientôt disponible",
       "description": "Maison Rocheval, une maison de caviar français haut de gamme, ouvre bientôt. Restez à l'écoute."
     },
+    "root": {
+      "title": "Maison Rocheval — Caviar & Gastronomie",
+      "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Écrivez à l’équipe Maison Rocheval — réponse sous 24 heures."
+    },
     "faq": {
       "title": "Questions fréquentes",
-      "description": "Réponses sur le choix, la conservation et la dégustation du caviar Maison Rocheval.",
-      "heroTitle": "Questions fréquentes",
-      "heroIntro": "Pour toute assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons sous 24 heures.",
-      "items": [
-        {
-          "question": "Qu'est-ce que le caviar ?",
-          "answer": "<p>Des œufs d'esturgeon (famille des Acipenseridae) salés à sec. Les œufs d'autres poissons — saumon, truite — ne sont pas du caviar.</p>"
-        },
-        {
-          "question": "Quelle est la différence entre le caviar et les œufs de poisson ?",
-          "answer": "<p>Les œufs peuvent provenir de n'importe quel poisson ; le caviar ne vient que de l'esturgeon.</p>"
-        },
-        {
-          "question": "Quels caviars propose Maison Rocheval ?",
-          "answer": "<p>Cinq, classés du plus délicat au plus généreux :</p><ul><li><strong>Amour</strong> <span>(<em>Acipenser schrenckii</em>)</span> : crème et beurre, à peine salin ; le plus doux de la collection. Avec des blinis tièdes, de la crème fraîche, un œuf mollet.</li><li><strong>L'Expression</strong> <span>(<em>Huso dauricus × A. schrenckii</em>)</span> : la signature de la maison ; marin et savoureux, avec des notes de kelp et de nori qui s'approfondissent en umami. Avec du dashi, du riz assaisonné, du poisson séché.</li><li><strong>Harmonie</strong> <span>(<em>A. gueldenstaedtii × A. baerii</em>)</span> : une douceur fruitée et lumineuse qui se fait plus fumée avec le temps. Avec des sauces aux crustacés et au beurre.</li><li><strong>Oscietra</strong> <span>(<em>A. gueldenstaedtii</em>)</span> : la référence classique ; iode, noix et fine minéralité. Frais, sur nacre, ou seul.</li><li><strong>Kaluga</strong> <span>(<em>Huso dauricus</em>)</span> : le grain le plus gros ; beurre, crème, noisette grillée et une longue finale. Frais, sur nacre.</li></ul>"
-        },
-        {
-          "question": "Comment notez-vous votre caviar ?",
-          "answer": "<p>Nous n'utilisons pas de grades numérotés. Chaque récolte est jugée à l'état frais et dans sa globalité — couleur, grain, texture, salinité, arôme et finale.</p>"
-        },
-        {
-          "question": "Que signifie « malossol » ?",
-          "answer": "<p>Du russe, « peu salé ». Notre caviar est traité malossol — sel minimal pour que la saveur des œufs s'exprime pleinement.</p>"
-        },
-        {
-          "question": "Comment le conserver avant ouverture ?",
-          "answer": "<p>Gardez la boîte fermée dans la partie la plus froide du réfrigérateur (−2 à +3°C). Ne pas congeler. Elle se conserve jusqu'à 3 mois — vérifiez toujours la date de péremption.</p>"
-        },
-        {
-          "question": "Combien de temps se conserve-t-il après ouverture ?",
-          "answer": "<p>Idéalement dans les 24 heures. Refermez, chassez l'air et maintenez au frais.</p>"
-        },
-        {
-          "question": "Peut-on congeler le caviar ?",
-          "answer": "<p>Non — la congélation fait éclater les grains et détruit la texture et le goût.</p>"
-        },
-        {
-          "question": "Pourquoi une cuillère en nacre et non en métal ?",
-          "answer": "<p>Le métal réagit avec le caviar et lui ajoute un goût métallique. Utilisez de la nacre, de l'os ou de la corne.</p>"
-        },
-        {
-          "question": "Comment le servir ?",
-          "answer": "<p>Directement depuis la boîte réfrigérée, ou sur des blinis avec de la crème fraîche. Servez froid, la boîte posée sur de la glace.</p>"
-        },
-        {
-          "question": "Quelles boissons accompagnent le caviar ?",
-          "answer": "<p>Champagne ou vin effervescent sec, vodka froide, ou un blanc sec et vif comme un Chablis.</p>"
-        },
-        {
-          "question": "Le caviar est-il bon pour la santé ?",
-          "answer": "<p>Il est riche en protéines, en vitamine B12 et en oméga-3, et contient beaucoup de sodium — c'est pourquoi il se consomme en petites portions.</p>"
-        },
-        {
-          "question": "Votre caviar est-il durable ?",
-          "answer": "<p>Oui — élevé en ferme plutôt que sauvage, et certifié CITES.</p>"
-        },
-        {
-          "question": "Contient-il des additifs ?",
-          "answer": "<p>Aucun. Ni colorant artificiel, ni conservateur.</p>"
-        }
-      ]
+      "description": "Réponses sur le choix, la conservation et la dégustation du caviar Maison Rocheval."
+    },
+    "home": {
+      "title": "Maison Rocheval — Caviar & Gastronomie",
+      "description": "De l'esturgeonnière à la table : découvrez les cinq expressions de caviar Maison Rocheval, sélectionnées à la source et présentées avec tout leur rituel."
     },
     "privacyPolicy": {
       "title": "Politique de confidentialité",
       "description": "Comment Maison Rocheval collecte, utilise et protège vos données personnelles en UE, aux États-Unis et à Singapour."
     },
-    "contact": {
-      "title": "Contact",
-      "description": "Écrivez à l’équipe Maison Rocheval — réponse sous 24 heures."
-    }
-  },
-  "common": {
-    "siteName": "Maison Rocheval",
-    "language": {
-      "en": "English",
-      "fr": "Français"
-    }
-  },
-  "header": {
-    "nav": {
-      "home": "Accueil",
-      "about": "La Maison",
-      "collection": "La Collection"
-    },
-    "menuLabel": "Menu",
-    "openMenu": "Ouvrir le menu de navigation",
-    "closeMenu": "Fermer le menu de navigation",
-    "announcement": "Nous livrons actuellement uniquement en France et aux États-Unis.",
-    "dismissAnnouncement": "Fermer l’annonce de livraison",
-    "cart": "PANIER"
-  },
-  "regionDialog": {
-    "title": "Êtes-vous au bon endroit ?",
-    "description": "Veuillez choisir votre destination de livraison et votre langue préférée.",
-    "note": "Les commandes ne peuvent être livrées que dans la destination sélectionnée.",
-    "countryLabel": "Pays",
-    "languageLabel": "Langue",
-    "continue": "Continuer",
-    "close": "Fermer",
-    "countries": {
-      "FR": "France",
-      "US": "États-Unis"
-    },
-    "languages": {
-      "en": "Anglais",
-      "fr": "Français"
-    }
-  },
-  "footer": {
-    "copyright": "© {year} {name}. Tous droits réservés.",
-    "contact": "Contact",
-    "emailLabel": "E-mail: contact@maisonrocheval.com",
-    "respondNote": "Nous répondrons dans les 24 heures.",
-    "enquireButton": "En savoir plus",
-    "comingSoonTooltip": "Bientôt disponible",
-    "shopComingSoon": "Boutique (bientôt disponible)",
-    "menu": {
-      "caviar": "Notre Collection",
-      "brand": "Maison Rocheval",
-      "care": "Service Client"
-    },
-    "nav": {
-      "amour": "Armour",
-      "lexpression": "L’Expression",
-      "harmonie": "Harmonie",
-      "oscietra": "Oscietra",
-      "kaluga": "Kaluga",
-      "collection": "La Collection",
-      "shop": "Boutique",
-      "about": "À propos de Maison Rocheval",
-      "faq": "FAQ",
-      "contact": "Contact",
-      "privacyPolicy": "Politique de confidentialité"
-    }
-  },
-  "shop": {
-    "title": "Notre Collection",
-    "subtitle": "Sélection de Caviar d'Exception",
-    "addToBag": "Ajouter au panier",
-    "filter": "Filtrer",
-    "sort": "Trier par",
-    "announcement": "Livraison offerte dès 150€ d'achat en France métropolitaine",
-    "featured": {
-      "title": "En savoir plus sur notre caviar",
-      "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
-      "link": "La collection",
-      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
-    }
-  },
-  "products": {
-    "hero": {
-      "title": "Notre Collection"
-    },
-    "catalog": {
-      "title": "Nos caviars",
-      "itemCount": "{count} produits",
-      "cards": {
-        "amur": {
-          "eyebrow": "Patrimoine",
-          "title": "Caviar Armour",
-          "species": "Huso Dauricus",
-          "profile": "Riche · Crémeux · Finale longue",
-          "description": "Des grains sombres et généreux, à la texture ample et à la finale nette et persistante.",
-          "imageAlt": "Boîte ouverte de caviar Armour Maison Rocheval"
-        },
-        "kaluga": {
-          "eyebrow": "Patrimoine",
-          "title": "Caviar Kaluga",
-          "species": "Huso Dauricus",
-          "profile": "Riche · Crémeux · Finale longue",
-          "description": "De grands grains souples aux reflets bronze, profonds et portés par une finale marine arrondie.",
-          "imageAlt": "Boîte ouverte de caviar Kaluga Maison Rocheval"
-        },
-        "russianHybrid": {
-          "eyebrow": "Patrimoine",
-          "title": "Caviar Russian Hybrid",
-          "species": "Acipenser Gueldenstaedtii",
-          "profile": "Soyeux · Net · Frais",
-          "description": "Une expression raffinée aux grains olive, à la salinité précise et à la finale vive et persistante.",
-          "imageAlt": "Boîte ouverte de caviar Russian Hybrid Maison Rocheval"
-        },
-        "lexpression": {
-          "eyebrow": "Réserve",
-          "title": "L’Expression",
-          "species": "Kaluga Hybride",
-          "profile": "Rond · Précis · Noisetté",
-          "description": "La signature de la Maison, sélectionnée pour son équilibre et sa finale d’une grande netteté.",
-          "imageAlt": "Boîte ouverte de caviar L’Expression Maison Rocheval"
-        },
-        "harmonie": {
-          "eyebrow": "Assemblage",
-          "title": "Harmonie",
-          "species": "Russian Hybrid",
-          "profile": "Soyeux · Doux · Fruité",
-          "description": "Nommé pour son équilibre et défini par le fruit, avec un grain souple et une persistance délicate.",
-          "imageAlt": "Boîte ouverte de caviar Harmonie Maison Rocheval"
-        }
-      }
-    },
-    "editorial": {
-      "title": "En savoir plus sur notre caviar",
-      "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
-      "link": "La collection",
-      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
-    },
-    "faq": {
-      "title": "Questions Fréquentes",
-      "viewAll": "Tout voir",
-      "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
-      "items": [
-        {
-          "question": "Quel caviar choisir ?",
-          "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil."
-        },
-        {
-          "question": "Pourquoi la maturité est-elle importante ?",
-          "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain."
-        },
-        {
-          "question": "Comment le caviar est-il salé ?",
-          "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte."
-        },
-        {
-          "question": "Les esturgeons sont-ils élevés de façon responsable ?",
-          "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison."
-        },
-        {
-          "question": "Combien de temps conserver une boîte ouverte ?",
-          "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C."
-        }
-      ]
-    }
-  },
-  "home": {
-    "hero": {
-      "title": "Maison Rocheval",
-      "imageAlt": "Grains de caviar dans une présentation Maison Rocheval"
-    },
-    "intro": {
-      "title": "De la Source au Rituel",
-      "description": "Des eaux qui élèvent l’esturgeon aux tables où le caviar est servi,\nchaque décision façonne l’expression ultime.",
-      "tableImageAlt": "Boîtes de caviar Maison Rocheval dressées pour un rituel de dégustation",
-      "storyTitle": "Avant la Maison, il y avait la source",
-      "storyDescription": "Nos fondations se sont formées au bord de l’eau, auprès de producteurs dont la connaissance de l’élevage de l’esturgeon s’étend sur plusieurs décennies.",
-      "learnMore": "DÉCOUVRIR MAISON ROCHEVAL",
-      "chefsImageAlt": "Des chefs dressent un plat de caviar en cuisine",
-      "tastingImageAlt": "Un expert examine les grains de caviar dans une boîte ouverte"
-    },
-    "about": {
-      "highlight": "LA QUALITÉ SE DÉCIDE\nBIEN AVANT\nLA RÉCOLTE",
-      "sturgeonImageAlt": "Esturgeons nageant dans une eau sombre et pure",
-      "caviarImageAlt": "Vue rapprochée des grains de caviar Maison Rocheval",
-      "title": "Sélectionné à la source",
-      "description": "Chaque récolte est jugée selon sa propre valeur. Le caractère guide la sélection et l’exigence de la Maison demeure.",
-      "speciesTitle": "Cinq expressions. Un standard.",
-      "speciesDescription": "Chaque expression est choisie pour son caractère propre.",
-      "explore": "LA COLLECTION"
-    },
     "products": {
-      "title": "Présenté par la Maison",
-      "description": "De la délicatesse d’Armour à la profondeur de Kaluga,\nchaque expression est choisie pour son caractère propre.",
-      "shopNow": "BOUTIQUE",
-      "previous": "Voir le caviar précédent",
-      "next": "Voir le caviar suivant",
-      "cards": {
-        "amour": {
-          "eyebrow": "Patrimoine",
-          "title": "Amour",
-          "species": "Acipenser schrenckii",
-          "profile": "Crémeux · Fromager · Délicat",
-          "description": "Nommé pour l’Amour, et pour l’amour.",
-          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
-        },
-        "lexpression": {
-          "eyebrow": "Réserve",
-          "title": "L’Expression",
-          "species": "Huso dauricus × Acipenser schrenckii",
-          "profile": "Rond · Nori · Umami",
-          "description": "La signature de la Maison",
-          "imageAlt": "Boîte ouverte de caviar Maison Rocheval L’Expression"
-        },
-        "harmonie": {
-          "eyebrow": "Assemblage",
-          "title": "Harmonie",
-          "species": "Acipenser gueldenstaedtii × Acipenser baerii",
-          "profile": "Doux · Fruité · Équilibré",
-          "description": "Défini par l’équilibre et un fruit subtil",
-          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Harmonie"
-        },
-        "oscietra": {
-          "eyebrow": "Patrimoine",
-          "title": "Oscietra",
-          "species": "Acipenser gueldenstaedtii",
-          "profile": "Précis · Noix · Minéralité",
-          "description": "L’une des grandes voix classiques du caviar",
-          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Oscietra"
-        },
-        "kaluga": {
-          "eyebrow": "Patrimoine",
-          "title": "Kaluga",
-          "species": "Huso dauricus",
-          "profile": "Riche · Noisette · Longueur",
-          "description": "Au sommet de la collection",
-          "imageAlt": "Boîte ouverte de caviar Kaluga Maison Rocheval"
-        }
-      }
-    },
-    "faq": {
-      "title": "Questions Fréquentes",
-      "subtitle": "En savoir plus sur le caviar",
-      "moreQuestions": "Vous avez d'autres questions? Contactez nos experts"
-    }
-  },
-  "about": {
-    "hero": {
-      "title": "Notre Héritage",
-      "description": "La quête du grain parfait. Un voyage gustatif sans compromis."
-    },
-    "history": {
-      "title": "Né d'Eaux Pures",
-      "description": "Nos esturgeons sont élevés dans des environnements préservés et durables. Nous croyons qu'un caviar exceptionnel commence par un respect absolu de la nature et de l'espèce."
-    },
-    "selection": {
-      "highlight": "Standards de Sélection",
-      "title": "Les Neuf Critères",
-      "description": "La couleur, le grain, la texture, la fermeté et l'humidité sont évalués aux côtés de la salinité, de l'arôme, de la maturation et de l'intégrité de chaque grain pour garantir une expérience de dégustation inoubliable."
+      "title": "La Collection de Caviar",
+      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
     }
   },
   "aboutBrand": {
     "hero": {
       "title": "LA MAISON",
-      "statement": "",
-      "description": "",
       "imageAlt": "Lac brumeux à la source du caviar Maison Rocheval"
     },
     "story": {
@@ -405,13 +86,7 @@
     "ritual": {
       "title": "LE RITUEL",
       "statement": "L’expression finale se trouve dans le service",
-      "subtitle": "De la Source au Rituel",
-      "paragraph1": "Le caviar a toujours porté sa cérémonie : la boîte glacée, le tour de clé, la nacre contre le grain, la première cuillerée avant que quiconque ne parle.",
-      "paragraph2": "Maison Rocheval préserve cette cérémonie avec retenue. Non comme une performance, mais parce que la manière de servir transforme le souvenir, à une grande table comme lors d’un dîner à deux.",
-      "collection": "La collection",
-      "heroImageAlt": "Des chefs primés célèbrent ensemble",
-      "sourceImageAlt": "Des spécialistes inspectent une récolte de caviar à la source",
-      "serviceImageAlt": "Une convive déguste du caviar avec une cuillère en nacre"
+      "heroImageAlt": "Des chefs primés célèbrent ensemble"
     },
     "sourceToRitual": {
       "title": "De la source au rituel",
@@ -420,33 +95,6 @@
       "cta": "Découvrir la collection",
       "preparationAlt": "Chef préparant une boîte de caviar",
       "serviceAlt": "Caviar servi dans une coupe en verre"
-    },
-    "faq": {
-      "title": "Questions Fréquentes",
-      "viewAll": "Tout voir",
-      "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
-      "items": [
-        {
-          "question": "Comment conserver le caviar ?",
-          "answer": "Conservez-le entre 0°C et 4°C et dégustez-le rapidement après ouverture."
-        },
-        {
-          "question": "Quelle quantité servir par personne ?",
-          "answer": "Prévoyez environ 20 à 30 grammes par convive pour une dégustation."
-        },
-        {
-          "question": "Quelle est la meilleure façon de servir le caviar ?",
-          "answer": "Servez-le bien frais avec une cuillère en nacre afin de préserver son caractère."
-        },
-        {
-          "question": "Qu’est-ce qui distingue chaque expression ?",
-          "answer": "L’espèce, l’eau, l’alimentation, la maturité et l’affinage façonnent le grain, la texture et la saveur."
-        },
-        {
-          "question": "D’où vient le caviar Maison Rocheval ?",
-          "answer": "Nous travaillons avec des producteurs sélectionnés dont les standards d’élevage et de récolte répondent à ceux de la Maison."
-        }
-      ]
     }
   },
   "aboutProduct": {
@@ -527,64 +175,98 @@
       }
     }
   },
-  "productDetail": {
-    "sizeLabel": "TAILLE",
-    "packagingLabel": "EMBALLAGE",
-    "perBoxLabel": "PAR BOÎTE",
-    "summaryLabel": "RÉSUMÉ",
-    "addToCart": "Ajouter au panier",
-    "unavailable": "Indisponible",
-    "free": "OFFERT",
-    "decreaseQty": "Réduire la quantité",
-    "increaseQty": "Augmenter la quantité",
-    "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
-    "personalizedMessage": "Message personnalisé inclus",
-    "boxOf": "COFFRET {packaging} DE {perBox}",
-    "perBoxFormat": "{perBox} X {size} {title} par boîte",
-    "packaging": {
-      "standard": {
-        "name": "STANDARD",
-        "description": "Sac en papier avec glace"
+  "comingSoon": {
+    "hero": {
+      "brand": "Maison Rocheval Paris",
+      "message": "Bientôt disponible",
+      "imageAlt": "Vue aérienne d'une ferme d'esturgeons, ses bassins circulaires posés sur un lac au pied de montagnes boisées"
+    }
+  },
+  "header": {
+    "nav": {
+      "home": "Accueil",
+      "about": "La Maison",
+      "collection": "La Collection"
+    },
+    "menuLabel": "Menu",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation",
+    "announcement": "Nous livrons actuellement uniquement en France et aux États-Unis.",
+    "dismissAnnouncement": "Fermer l’annonce de livraison"
+  },
+  "regionDialog": {
+    "title": "Êtes-vous au bon endroit ?",
+    "description": "Veuillez choisir votre destination de livraison et votre langue préférée.",
+    "note": "Les commandes ne peuvent être livrées que dans la destination sélectionnée.",
+    "countryLabel": "Pays",
+    "languageLabel": "Langue",
+    "continue": "Continuer",
+    "close": "Fermer",
+    "countries": {
+      "FR": "France",
+      "US": "États-Unis"
+    },
+    "languages": {
+      "en": "Anglais",
+      "fr": "Français"
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "emailLabel": "E-mail: contact@maisonrocheval.com",
+    "enquireButton": "En savoir plus",
+    "menu": {
+      "caviar": "Notre Collection",
+      "brand": "Maison Rocheval",
+      "care": "Service Client"
+    },
+    "nav": {
+      "amour": "Armour",
+      "lexpression": "L’Expression",
+      "harmonie": "Harmonie",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "collection": "La Collection",
+      "shop": "Boutique",
+      "about": "À propos de Maison Rocheval",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "privacyPolicy": "Politique de confidentialité"
+    }
+  },
+  "contact": {
+    "title": "Nous contacter",
+    "introBeforeFaq": "Nous vous répondrons sous 3 à 5 jours ouvrés. Pour toute question générale, consultez notre",
+    "faqLink": "FAQ",
+    "introAfterFaq": ".",
+    "imageAlt": "Boîte de caviar Maison Rocheval ouverte",
+    "privacyBeforeLink": "Maison Rocheval utilise les informations de contact que vous fournissez pour vous contacter au sujet de ses produits et services. Pour en savoir plus sur nos pratiques de confidentialité et notre engagement à protéger vos données, veuillez consulter notre",
+    "privacyLink": "politique de confidentialité",
+    "form": {
+      "firstName": "Prénom*",
+      "lastName": "Nom*",
+      "email": "E-mail*",
+      "country": "Pays*",
+      "countryPlaceholder": "Sélectionner un pays",
+      "countryOptions": {
+        "france": "France",
+        "united_states": "États-Unis",
+        "singapore": "Singapour"
       },
-      "premium": {
-        "name": "PREMIUM",
-        "description": "Boîte en carton de chất lượng avec ruban Bolduc."
-      },
-      "luxury": {
-        "name": "LUXE",
-        "description": "Boîte en bois de qualité supérieure avec ruban Bolduc."
+      "company": "Nom de l’entreprise",
+      "phone": "Numéro de téléphone",
+      "message": "Comment pouvons-nous vous aider ?*",
+      "wholesale": "Il s’agit d’une demande professionnelle",
+      "submit": "Envoyer le message",
+      "submitting": "Envoi en cours...",
+      "successMessage": "Merci — votre message a bien été envoyé. Nous vous répondrons sous peu.",
+      "errorMessage": "Une erreur est survenue et votre message n’a pas pu être envoyé. Veuillez réessayer.",
+      "rateLimitMessage": "Vous avez envoyé trop de messages récemment. Veuillez patienter quelques minutes avant de réessayer.",
+      "validation": {
+        "email": "Veuillez saisir une adresse e-mail valide.",
+        "required": "Ce champ est obligatoire.",
+        "selection": "Veuillez sélectionner un pays."
       }
-    },
-    "specs": {
-      "specificationTitle": "Spécifications",
-      "pearlSize": "Taille des grains",
-      "salt": "Salinité",
-      "color": "Couleur",
-      "tastingNotes": "Notes de dégustation",
-      "ingredients": "Ingrédients",
-      "nutritionalData": "Valeurs nutritionnelles pour 100g",
-      "servingTitle": "Conseils de service",
-      "shelfLife": "Conservation",
-      "storage": "Stockage",
-      "recommendation": "Conseils de dégustation",
-      "deliveryTitle": "Livraison",
-      "shipping": "Expédition",
-      "duration": "Délai",
-      "giftingTitle": "Offrir",
-      "box": "Coffret & Emballage",
-      "message": "Message",
-      "addOns": "Accessoires",
-      "customerService": "Service Client"
-    },
-    "assistance": {
-      "title": "Besoin de conseils ?",
-      "description": "Nos spécialistes du caviar sont à votre disposition pour vous guider dans le choix, les quantités et les cadeaux.",
-      "cta": "Nous contacter",
-      "imageAlt": "Paysage d’élevage d’esturgeons Maison Rocheval"
-    },
-    "related": {
-      "title": "Vous aimerez aussi",
-      "cta": "Découvrir la boutique"
     }
   },
   "faq": {
@@ -648,6 +330,79 @@
         "answer": "<p>Aucun. Ni colorant artificiel, ni conservateur.</p>"
       }
     ]
+  },
+  "home": {
+    "hero": {
+      "title": "Maison Rocheval",
+      "imageAlt": "Grains de caviar dans une présentation Maison Rocheval"
+    },
+    "intro": {
+      "title": "De la Source au Rituel",
+      "description": "Des eaux qui élèvent l’esturgeon aux tables où le caviar est servi,\nchaque décision façonne l’expression ultime.",
+      "tableImageAlt": "Boîtes de caviar Maison Rocheval dressées pour un rituel de dégustation",
+      "storyTitle": "Avant la Maison, il y avait la source",
+      "storyDescription": "Nos fondations se sont formées au bord de l’eau, auprès de producteurs dont la connaissance de l’élevage de l’esturgeon s’étend sur plusieurs décennies.",
+      "learnMore": "DÉCOUVRIR MAISON ROCHEVAL",
+      "chefsImageAlt": "Des chefs dressent un plat de caviar en cuisine",
+      "tastingImageAlt": "Un expert examine les grains de caviar dans une boîte ouverte"
+    },
+    "about": {
+      "highlight": "LA QUALITÉ SE DÉCIDE\nBIEN AVANT\nLA RÉCOLTE",
+      "sturgeonImageAlt": "Esturgeons nageant dans une eau sombre et pure",
+      "caviarImageAlt": "Vue rapprochée des grains de caviar Maison Rocheval",
+      "title": "Sélectionné à la source",
+      "description": "Chaque récolte est jugée selon sa propre valeur. Le caractère guide la sélection et l’exigence de la Maison demeure.",
+      "speciesTitle": "Cinq expressions. Un standard.",
+      "speciesDescription": "Chaque expression est choisie pour son caractère propre.",
+      "explore": "LA COLLECTION"
+    },
+    "products": {
+      "title": "Présenté par la Maison",
+      "description": "De la délicatesse d’Armour à la profondeur de Kaluga,\nchaque expression est choisie pour son caractère propre.",
+      "shopNow": "BOUTIQUE",
+      "cards": {
+        "amour": {
+          "eyebrow": "Patrimoine",
+          "title": "Amour",
+          "species": "Acipenser schrenckii",
+          "profile": "Crémeux · Fromager · Délicat",
+          "description": "Nommé pour l’Amour, et pour l’amour.",
+          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
+        },
+        "lexpression": {
+          "eyebrow": "Réserve",
+          "title": "L’Expression",
+          "species": "Huso dauricus × Acipenser schrenckii",
+          "profile": "Rond · Nori · Umami",
+          "description": "La signature de la Maison",
+          "imageAlt": "Boîte ouverte de caviar Maison Rocheval L’Expression"
+        },
+        "harmonie": {
+          "eyebrow": "Assemblage",
+          "title": "Harmonie",
+          "species": "Acipenser gueldenstaedtii × Acipenser baerii",
+          "profile": "Doux · Fruité · Équilibré",
+          "description": "Défini par l’équilibre et un fruit subtil",
+          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Harmonie"
+        },
+        "oscietra": {
+          "eyebrow": "Patrimoine",
+          "title": "Oscietra",
+          "species": "Acipenser gueldenstaedtii",
+          "profile": "Précis · Noix · Minéralité",
+          "description": "L’une des grandes voix classiques du caviar",
+          "imageAlt": "Boîte ouverte de caviar Maison Rocheval Oscietra"
+        },
+        "kaluga": {
+          "eyebrow": "Patrimoine",
+          "title": "Kaluga",
+          "species": "Huso dauricus",
+          "profile": "Riche · Noisette · Longueur",
+          "description": "Au sommet de la collection",
+          "imageAlt": "Boîte ouverte de caviar Kaluga Maison Rocheval"
+        }
+      }
+    }
   },
   "privacyPolicy": {
     "heroTitle": "Politique de confidentialité",
@@ -721,49 +476,91 @@
       }
     ]
   },
-  "contact": {
-    "title": "Nous contacter",
-    "introBeforeFaq": "Nous vous répondrons sous 3 à 5 jours ouvrés. Pour toute question générale, consultez notre",
-    "faqLink": "FAQ",
-    "introAfterFaq": ".",
-    "email": "contact@maisonrocheval.com",
-    "emailLabel": "E-mail : contact@maisonrocheval.com",
-    "respondNote": "Nous répondons sous 24 heures.",
-    "imageAlt": "Boîte de caviar Maison Rocheval ouverte",
-    "privacyBeforeLink": "Maison Rocheval utilise les informations de contact que vous fournissez pour vous contacter au sujet de ses produits et services. Pour en savoir plus sur nos pratiques de confidentialité et notre engagement à protéger vos données, veuillez consulter notre",
-    "privacyLink": "politique de confidentialité",
-    "form": {
-      "firstName": "Prénom*",
-      "lastName": "Nom*",
-      "email": "E-mail*",
-      "country": "Pays*",
-      "countryPlaceholder": "Sélectionner un pays",
-      "countryOptions": {
-        "france": "France",
-        "united_states": "États-Unis",
-        "singapore": "Singapour"
-      },
-      "company": "Nom de l’entreprise",
-      "phone": "Numéro de téléphone",
-      "message": "Comment pouvons-nous vous aider ?*",
-      "wholesale": "Il s’agit d’une demande professionnelle",
-      "submit": "Envoyer le message",
-      "submitting": "Envoi en cours...",
-      "successMessage": "Merci — votre message a bien été envoyé. Nous vous répondrons sous peu.",
-      "errorMessage": "Une erreur est survenue et votre message n’a pas pu être envoyé. Veuillez réessayer.",
-      "rateLimitMessage": "Vous avez envoyé trop de messages récemment. Veuillez patienter quelques minutes avant de réessayer.",
-      "validation": {
-        "email": "Veuillez saisir une adresse e-mail valide.",
-        "required": "Ce champ est obligatoire.",
-        "selection": "Veuillez sélectionner un pays."
-      }
+  "productDetail": {
+    "sizeLabel": "TAILLE",
+    "packagingLabel": "EMBALLAGE",
+    "perBoxLabel": "PAR BOÎTE",
+    "summaryLabel": "RÉSUMÉ",
+    "addToCart": "Ajouter au panier",
+    "unavailable": "Indisponible",
+    "free": "OFFERT",
+    "decreaseQty": "Réduire la quantité",
+    "increaseQty": "Augmenter la quantité",
+    "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
+    "personalizedMessage": "Message personnalisé inclus",
+    "boxOf": "COFFRET {packaging} DE {perBox}",
+    "perBoxFormat": "{perBox} X {size} {title} par boîte",
+    "specs": {
+      "specificationTitle": "Spécifications",
+      "pearlSize": "Taille des grains",
+      "salt": "Salinité",
+      "color": "Couleur",
+      "tastingNotes": "Notes de dégustation",
+      "ingredients": "Ingrédients",
+      "nutritionalData": "Valeurs nutritionnelles pour 100g",
+      "servingTitle": "Conseils de service",
+      "shelfLife": "Conservation",
+      "storage": "Stockage",
+      "recommendation": "Conseils de dégustation",
+      "deliveryTitle": "Livraison",
+      "shipping": "Expédition",
+      "duration": "Délai",
+      "giftingTitle": "Offrir",
+      "box": "Coffret & Emballage",
+      "message": "Message",
+      "addOns": "Accessoires"
+    },
+    "assistance": {
+      "title": "Besoin de conseils ?",
+      "description": "Nos spécialistes du caviar sont à votre disposition pour vous guider dans le choix, les quantités et les cadeaux.",
+      "cta": "Nous contacter",
+      "imageAlt": "Paysage d’élevage d’esturgeons Maison Rocheval"
+    },
+    "related": {
+      "title": "Vous aimerez aussi",
+      "cta": "Découvrir la boutique"
     }
   },
-  "comingSoon": {
+  "products": {
     "hero": {
-      "brand": "Maison Rocheval Paris",
-      "message": "Bientôt disponible",
-      "imageAlt": "Vue aérienne d'une ferme d'esturgeons, ses bassins circulaires posés sur un lac au pied de montagnes boisées"
+      "title": "Notre Collection"
+    },
+    "catalog": {
+      "title": "Nos caviars",
+      "itemCount": "{count} produits"
+    },
+    "editorial": {
+      "title": "En savoir plus sur notre caviar",
+      "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
+      "link": "La collection",
+      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
+    },
+    "faq": {
+      "title": "Questions Fréquentes",
+      "viewAll": "Tout voir",
+      "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
+      "items": [
+        {
+          "question": "Quel caviar choisir ?",
+          "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil."
+        },
+        {
+          "question": "Pourquoi la maturité est-elle importante ?",
+          "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain."
+        },
+        {
+          "question": "Comment le caviar est-il salé ?",
+          "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte."
+        },
+        {
+          "question": "Les esturgeons sont-ils élevés de façon responsable ?",
+          "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison."
+        },
+        {
+          "question": "Combien de temps conserver une boîte ouverte ?",
+          "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C."
+        }
+      ]
     }
   }
 }

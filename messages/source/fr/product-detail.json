@@ -1,0 +1,47 @@
+{
+  "productDetail": {
+    "sizeLabel": "TAILLE",
+    "packagingLabel": "EMBALLAGE",
+    "perBoxLabel": "PAR BOÎTE",
+    "summaryLabel": "RÉSUMÉ",
+    "addToCart": "Ajouter au panier",
+    "unavailable": "Indisponible",
+    "free": "OFFERT",
+    "decreaseQty": "Réduire la quantité",
+    "increaseQty": "Augmenter la quantité",
+    "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
+    "personalizedMessage": "Message personnalisé inclus",
+    "boxOf": "COFFRET {packaging} DE {perBox}",
+    "perBoxFormat": "{perBox} X {size} {title} par boîte",
+    "specs": {
+      "specificationTitle": "Spécifications",
+      "pearlSize": "Taille des grains",
+      "salt": "Salinité",
+      "color": "Couleur",
+      "tastingNotes": "Notes de dégustation",
+      "ingredients": "Ingrédients",
+      "nutritionalData": "Valeurs nutritionnelles pour 100g",
+      "servingTitle": "Conseils de service",
+      "shelfLife": "Conservation",
+      "storage": "Stockage",
+      "recommendation": "Conseils de dégustation",
+      "deliveryTitle": "Livraison",
+      "shipping": "Expédition",
+      "duration": "Délai",
+      "giftingTitle": "Offrir",
+      "box": "Coffret & Emballage",
+      "message": "Message",
+      "addOns": "Accessoires"
+    },
+    "assistance": {
+      "title": "Besoin de conseils ?",
+      "description": "Nos spécialistes du caviar sont à votre disposition pour vous guider dans le choix, les quantités et les cadeaux.",
+      "cta": "Nous contacter",
+      "imageAlt": "Paysage d’élevage d’esturgeons Maison Rocheval"
+    },
+    "related": {
+      "title": "Vous aimerez aussi",
+      "cta": "Découvrir la boutique"
+    }
+  }
+}

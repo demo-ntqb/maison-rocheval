@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "predev": "yarn messages:build",
+    "prebuild": "yarn messages:build",
+    "messages:build": "node scripts/build-messages.mjs",
+    "messages:check": "node scripts/build-messages.mjs --check",
     "start": "next start",
     "lint": "eslint",
     "knip": "knip",

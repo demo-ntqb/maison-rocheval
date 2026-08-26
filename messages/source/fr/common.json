@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "root": {
+      "title": "Maison Rocheval — Caviar & Gastronomie",
+      "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
+    }
+  },
+  "header": {
+    "nav": {
+      "home": "Accueil",
+      "about": "La Maison",
+      "collection": "La Collection"
+    },
+    "menuLabel": "Menu",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation",
+    "announcement": "Nous livrons actuellement uniquement en France et aux États-Unis.",
+    "dismissAnnouncement": "Fermer l’annonce de livraison"
+  },
+  "regionDialog": {
+    "title": "Êtes-vous au bon endroit ?",
+    "description": "Veuillez choisir votre destination de livraison et votre langue préférée.",
+    "note": "Les commandes ne peuvent être livrées que dans la destination sélectionnée.",
+    "countryLabel": "Pays",
+    "languageLabel": "Langue",
+    "continue": "Continuer",
+    "close": "Fermer",
+    "countries": {
+      "FR": "France",
+      "US": "États-Unis"
+    },
+    "languages": {
+      "en": "Anglais",
+      "fr": "Français"
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "emailLabel": "E-mail: contact@maisonrocheval.com",
+    "enquireButton": "En savoir plus",
+    "menu": {
+      "caviar": "Notre Collection",
+      "brand": "Maison Rocheval",
+      "care": "Service Client"
+    },
+    "nav": {
+      "amour": "Armour",
+      "lexpression": "L’Expression",
+      "harmonie": "Harmonie",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "collection": "La Collection",
+      "shop": "Boutique",
+      "about": "À propos de Maison Rocheval",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "privacyPolicy": "Politique de confidentialité"
+    }
+  }
+}

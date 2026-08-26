@@ -1,0 +1,60 @@
+{
+  "metadata": {
+    "root": {
+      "title": "Maison Rocheval — Caviar & Fine Food",
+      "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
+    }
+  },
+  "header": {
+    "nav": {
+      "home": "Home",
+      "about": "The Maison",
+      "collection": "The Collection"
+    },
+    "menuLabel": "Menu",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "announcement": "We currently only deliver to France and United States.",
+    "dismissAnnouncement": "Dismiss delivery announcement"
+  },
+  "regionDialog": {
+    "title": "Are you in the right place?",
+    "description": "Please choose your shipping destination and preferred language.",
+    "note": "Orders can only be delivered within the selected destination.",
+    "countryLabel": "Country",
+    "languageLabel": "Language",
+    "continue": "Continue",
+    "close": "Close",
+    "countries": {
+      "FR": "France",
+      "US": "United States"
+    },
+    "languages": {
+      "en": "English",
+      "fr": "French"
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "emailLabel": "Email: contact@maisonrocheval.com",
+    "enquireButton": "Enquire more",
+    "menu": {
+      "caviar": "Our Collection",
+      "brand": "Maison Rocheval",
+      "care": "Customer Care"
+    },
+    "nav": {
+      "amour": "Amour",
+      "lexpression": "L’Expression",
+      "harmonie": "Harmonie",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "collection": "The Collection",
+      "shop": "Shop",
+      "about": "The Maison",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "privacyPolicy": "Privacy Policy"
+    }
+  }
+}

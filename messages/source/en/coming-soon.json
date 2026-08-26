@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "comingSoon": {
+      "title": "Maison Rocheval — Coming Soon",
+      "description": "Maison Rocheval, a premium French caviar house, is launching soon. Stay tuned."
+    }
+  },
+  "comingSoon": {
+    "hero": {
+      "brand": "Maison Rocheval Paris",
+      "message": "Coming soon",
+      "imageAlt": "Aerial view of a sturgeon farm, its circular rearing pens set on a lake below forested mountains"
+    }
+  }
+}

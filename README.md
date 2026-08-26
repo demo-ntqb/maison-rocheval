@@ -18,7 +18,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `src/screens/<name>/` — one folder per page: `sections/`, `components/`, `constants/`, `index.ts`
 - `src/shared/` — cross-screen components, constants, and lib helpers
 - `src/shared/lib/shopify/` — server-only Storefront clients, typed catalog queries, market and image helpers
-- `messages/<locale>.json` — i18n copy, namespaced by section
+- `messages/source/<locale>/<screen>.json` — i18n source tách theo screen; `messages/<locale>.json` là catalog generated duy nhất được runtime nạp
 
 Full conventions (naming, SEO, performance, accessibility, i18n) are documented in [AGENTS.md](AGENTS.md).
 
@@ -26,6 +26,8 @@ Full conventions (naming, SEO, performance, accessibility, i18n) are documented 
 
 - `yarn dev` — start the dev server
 - `yarn build` — production build
+- `yarn messages:build` — merge i18n fragments into the runtime catalog
+- `yarn messages:check` — verify generated catalogs and locale key shapes
 - `yarn lint` — ESLint
 - `yarn typecheck` — TypeScript + Hydrogen GraphQL validation
 - `yarn test:cicd` — verify Vercel GitHub Actions contract

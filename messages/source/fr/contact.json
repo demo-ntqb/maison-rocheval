@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "contact": {
+      "title": "Contact",
+      "description": "Écrivez à l’équipe Maison Rocheval — réponse sous 24 heures."
+    }
+  },
+  "contact": {
+    "title": "Nous contacter",
+    "introBeforeFaq": "Nous vous répondrons sous 3 à 5 jours ouvrés. Pour toute question générale, consultez notre",
+    "faqLink": "FAQ",
+    "introAfterFaq": ".",
+    "imageAlt": "Boîte de caviar Maison Rocheval ouverte",
+    "privacyBeforeLink": "Maison Rocheval utilise les informations de contact que vous fournissez pour vous contacter au sujet de ses produits et services. Pour en savoir plus sur nos pratiques de confidentialité et notre engagement à protéger vos données, veuillez consulter notre",
+    "privacyLink": "politique de confidentialité",
+    "form": {
+      "firstName": "Prénom*",
+      "lastName": "Nom*",
+      "email": "E-mail*",
+      "country": "Pays*",
+      "countryPlaceholder": "Sélectionner un pays",
+      "countryOptions": {
+        "france": "France",
+        "united_states": "États-Unis",
+        "singapore": "Singapour"
+      },
+      "company": "Nom de l’entreprise",
+      "phone": "Numéro de téléphone",
+      "message": "Comment pouvons-nous vous aider ?*",
+      "wholesale": "Il s’agit d’une demande professionnelle",
+      "submit": "Envoyer le message",
+      "submitting": "Envoi en cours...",
+      "successMessage": "Merci — votre message a bien été envoyé. Nous vous répondrons sous peu.",
+      "errorMessage": "Une erreur est survenue et votre message n’a pas pu être envoyé. Veuillez réessayer.",
+      "rateLimitMessage": "Vous avez envoyé trop de messages récemment. Veuillez patienter quelques minutes avant de réessayer.",
+      "validation": {
+        "email": "Veuillez saisir une adresse e-mail valide.",
+        "required": "Ce champ est obligatoire.",
+        "selection": "Veuillez sélectionner un pays."
+      }
+    }
+  }
+}

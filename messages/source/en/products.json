@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "products": {
+      "title": "The Caviar Collection",
+      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
+    }
+  },
+  "products": {
+    "hero": {
+      "title": "Our Collection"
+    },
+    "catalog": {
+      "title": "Our caviar",
+      "itemCount": "{count} items"
+    },
+    "editorial": {
+      "title": "Learn more about our caviar",
+      "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
+      "link": "About collection",
+      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "viewAll": "View all",
+      "imageAlt": "Open Maison Rocheval caviar tin",
+      "items": [
+        {
+          "question": "Which caviar should I choose?",
+          "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile."
+        },
+        {
+          "question": "Why does sturgeon maturity matter?",
+          "answer": "Maturity shapes the size, integrity and aromatic depth of the grain."
+        },
+        {
+          "question": "How is caviar salted?",
+          "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression."
+        },
+        {
+          "question": "Are the sturgeon responsibly raised?",
+          "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison."
+        },
+        {
+          "question": "How long does caviar keep after opening?",
+          "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C."
+        }
+      ]
+    }
+  }
+}
