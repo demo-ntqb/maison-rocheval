@@ -15,14 +15,7 @@ import {
   localizedPath
 } from "@/shared/lib/metadata";
 
-/**
- * `COLLECTION_CAVIARS` uses "expression" (matches its own asset filenames);
- * the live product route uses "lexpression" — see `LEGACY_HANDLES` in
- * `products/[handle]/page.tsx`, which still 301s the shorter form.
- */
-const PRODUCT_HANDLES: Record<string, string> = {
-  expression: "lexpression",
-};
+
 
 const OG_IMAGE = "/images/about-product/collection/og-hero.jpg";
 
@@ -78,7 +71,6 @@ export default async function AboutProductPage({
     mainEntity: {
       "@type": "ItemList",
       itemListElement: COLLECTION_CAVIARS.map((caviar, index) => {
-        const handle = PRODUCT_HANDLES[caviar.id] ?? caviar.id;
         return {
           "@type": "ListItem",
           position: index + 1,
@@ -87,7 +79,7 @@ export default async function AboutProductPage({
             name: collection(`products.${caviar.id}.name`),
             description: collection(`products.${caviar.id}.tastingNotes`),
             image: new URL(`${caviar.closedTin}.png`, SITE_URL).toString(),
-            url: new URL(localizedPath(locale, ROUTES.PRODUCT_DETAIL(handle)), SITE_URL).toString(),
+            url: new URL(localizedPath(locale, ROUTES.PRODUCT_DETAIL(caviar.id)), SITE_URL).toString(),
           },
         };
       }),

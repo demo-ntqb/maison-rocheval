@@ -147,7 +147,7 @@
           "description": "A refined expression with olive pearls, precise salinity and a bright, persistent finish.",
           "imageAlt": "Open Maison Rocheval Russian Hybrid caviar tin"
         },
-        "expression": {
+        "lexpression": {
           "eyebrow": "Réserve",
           "title": "L’Expression",
           "species": "Kaluga Hybrid",
@@ -239,7 +239,7 @@
           "description": "Named for the Amur, and for love.",
           "imageAlt": "Open tin of Maison Rocheval Amour caviar"
         },
-        "expression": {
+        "lexpression": {
           "eyebrow": "Réserve",
           "title": "L’Expression",
           "species": "Huso dauricus × Acipenser schrenckii",
@@ -420,7 +420,7 @@
           "tinAlt": "Tin of Armour caviar, open beside its lid",
           "dishAlt": "Blini topped with Armour caviar, served on a copper plate"
         },
-        "expression": {
+        "lexpression": {
           "name": "L’Expression",
           "latinName": "Huso dauricus × Acipenser schrenckii",
           "note": "Nori",
