@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { ContactHeroSection } from "@/screens/contact";
 import { ROUTES } from "@/shared/constants/route.constant";
-import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
+import { generatePageMetadata } from "@/shared/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -11,7 +11,6 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  if (isComingSoon()) return generateComingSoonMetadata(locale);
 
   const t = await getTranslations({ locale, namespace: "metadata.contact" });
 
