@@ -183,6 +183,39 @@
       }
     }
   },
+  "cart": {
+    "title": "VOTRE PANIER ({count})",
+    "close": "Fermer le panier",
+    "openBag": "Ouvrir votre panier ({count} articles)",
+    "add": "Ajouter",
+    "addToGroup": "Ajouter un autre {title}",
+    "remove": "Retirer",
+    "removeLine": "Retirer {title}",
+    "weightLabel": "Poids :",
+    "priceLabel": "Prix :",
+    "addMessage": "Ajouter un message",
+    "message": "Message",
+    "decreaseQuantity": "Diminuer la quantité de {title}",
+    "increaseQuantity": "Augmenter la quantité de {title}",
+    "total": "TOTAL",
+    "checkout": "Passer commande",
+    "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
+    "empty": {
+      "label": "Votre panier est vide",
+      "cta": "Poursuivre vos achats"
+    },
+    "messageDialog": {
+      "title": "MESSAGE ({title})",
+      "close": "Fermer l’éditeur de message",
+      "optionLabel": "Message de la carte",
+      "blankCard": "Carte vierge",
+      "personalMessage": "Message personnel",
+      "hint": "Saisissez votre message ci-dessous (minimum 1 caractère). Pour un résultat optimal, évitez les caractères spéciaux et les émoticônes.",
+      "placeholder": "Votre message*",
+      "linesRemaining": "{count} ligne(s) restante(s)",
+      "save": "Enregistrer"
+    }
+  },
   "comingSoon": {
     "hero": {
       "brand": "Maison Rocheval Paris",
@@ -588,7 +621,16 @@
         "subtitle": "Coffret cadeau Maison Rocheval",
         "description": "Un grand coffret de célébration composé de trois boîtes de 50g (Kaluga, Oscietra, Harmonie) avec quatre cuillères en nacre et une clé à caviar."
       }
-    }
+    },
+    "seeMore": "voir plus",
+    "seeLess": "voir moins",
+    "information": {
+      "product": "Produit",
+      "serving": "Service",
+      "delivery": "Livraison",
+      "gifting": "Offrir"
+    },
+    "selectImageIndexed": "Afficher l’image {index} de {title}"
   },
   "products": {
     "breadcrumb": {

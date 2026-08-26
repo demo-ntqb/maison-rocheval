@@ -183,6 +183,39 @@
       }
     }
   },
+  "cart": {
+    "title": "YOUR BAG ({count})",
+    "close": "Close bag",
+    "openBag": "Open your bag ({count} items)",
+    "add": "Add",
+    "addToGroup": "Add another {title}",
+    "remove": "Remove",
+    "removeLine": "Remove {title}",
+    "weightLabel": "Weight:",
+    "priceLabel": "Price:",
+    "addMessage": "Add message",
+    "message": "Message",
+    "decreaseQuantity": "Decrease quantity of {title}",
+    "increaseQuantity": "Increase quantity of {title}",
+    "total": "TOTAL",
+    "checkout": "Check out",
+    "deliveryNote": "We offer variety of delivery options in check-out",
+    "empty": {
+      "label": "Your cart is empty",
+      "cta": "Continue shopping"
+    },
+    "messageDialog": {
+      "title": "MESSAGE ({title})",
+      "close": "Close message editor",
+      "optionLabel": "Card message",
+      "blankCard": "Blank card",
+      "personalMessage": "Personal message",
+      "hint": "Enter your message below (minimum 1 character). For an optimal result, please avoid special characters and emoticons.",
+      "placeholder": "Your message*",
+      "linesRemaining": "{count} line(s) remaining",
+      "save": "Save"
+    }
+  },
   "comingSoon": {
     "hero": {
       "brand": "Maison Rocheval Paris",
@@ -588,7 +621,16 @@
         "subtitle": "Maison Rocheval gift set",
         "description": "A grand celebration collection featuring three 50g tins (Kaluga, Oscietra, Harmonie) with four mother-of-pearl spoons and a caviar key."
       }
-    }
+    },
+    "seeMore": "see more",
+    "seeLess": "see less",
+    "information": {
+      "product": "Product",
+      "serving": "Serving",
+      "delivery": "Delivery",
+      "gifting": "Gifting"
+    },
+    "selectImageIndexed": "Show {title} image {index}"
   },
   "products": {
     "breadcrumb": {

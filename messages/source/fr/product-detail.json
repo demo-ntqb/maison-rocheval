@@ -5,7 +5,11 @@
     "galleryLabel": "Galerie produit",
     "selectImage": "Afficher l’image de {title}",
     "addedToCart": "{quantity} × {title} ajouté à votre panier fictif",
-    "notFound": { "title": "Produit introuvable", "description": "Ce produit n’est pas disponible dans la collection sélectionnée.", "cta": "Découvrir le caviar" },
+    "notFound": {
+      "title": "Produit introuvable",
+      "description": "Ce produit n’est pas disponible dans la collection sélectionnée.",
+      "cta": "Découvrir le caviar"
+    },
     "packagingLabel": "EMBALLAGE",
     "perBoxLabel": "PAR BOÎTE",
     "summaryLabel": "RÉSUMÉ",
@@ -99,6 +103,15 @@
         "subtitle": "Coffret cadeau Maison Rocheval",
         "description": "Un grand coffret de célébration composé de trois boîtes de 50g (Kaluga, Oscietra, Harmonie) avec quatre cuillères en nacre et une clé à caviar."
       }
-    }
+    },
+    "seeMore": "voir plus",
+    "seeLess": "voir moins",
+    "information": {
+      "product": "Produit",
+      "serving": "Service",
+      "delivery": "Livraison",
+      "gifting": "Offrir"
+    },
+    "selectImageIndexed": "Afficher l’image {index} de {title}"
   }
 }

@@ -226,8 +226,7 @@ export function mapMockToProductDetail(mock: MockProduct): CatalogProductDetail 
     },
   ];
 
-  return {
-    productType: (mock.category === "gift-sets" ? "Gift Set" : "Caviar") as "Caviar" | "Gift Set",
+  const base = {
     availableForSale: mock.availability,
     description: mock.shortDescription,
     descriptionHtml: `<p>${mock.description}</p>`,
@@ -270,6 +269,14 @@ export function mapMockToProductDetail(mock: MockProduct): CatalogProductDetail 
     relatedProducts: [],
     storage: "Keep refrigerated between -2°C and +2°C",
     shelfLife: "Consumable within 4 weeks of delivery (see tin expiry date)",
+    subtitle: mock.subtitle,
+    shortDescription: mock.shortDescription,
     variants,
   };
+
+  if (mock.category === "gift-sets") {
+    return { ...base, productType: "Gift Set", composition: mock.composition ?? [] };
+  }
+
+  return { ...base, productType: "Caviar" };
 }
