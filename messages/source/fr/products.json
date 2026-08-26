@@ -1,0 +1,50 @@
+{
+  "metadata": {
+    "products": {
+      "title": "La Collection de Caviar",
+      "description": "Découvrez cinq expressions de caviar Maison Rocheval, sélectionnées pour leur grain, leur texture et leur finale singulière."
+    }
+  },
+  "products": {
+    "hero": {
+      "title": "Notre Collection"
+    },
+    "catalog": {
+      "title": "Nos caviars",
+      "itemCount": "{count} produits"
+    },
+    "editorial": {
+      "title": "En savoir plus sur notre caviar",
+      "description": "Des espèces à la culture, de la sélection au service, découvrez le voyage contenu dans chaque boîte.",
+      "link": "La collection",
+      "imageAlt": "Collection de caviar Maison Rocheval dressée sur une table"
+    },
+    "faq": {
+      "title": "Questions Fréquentes",
+      "viewAll": "Tout voir",
+      "imageAlt": "Boîte ouverte de caviar Maison Rocheval",
+      "items": [
+        {
+          "question": "Quel caviar choisir ?",
+          "answer": "Commencez par la texture et la finale que vous appréciez ; chaque collection décrit son profil."
+        },
+        {
+          "question": "Pourquoi la maturité est-elle importante ?",
+          "answer": "Elle façonne la taille, l’intégrité et la profondeur aromatique du grain."
+        },
+        {
+          "question": "Comment le caviar est-il salé ?",
+          "answer": "Maison Rocheval utilise un salage mesuré pour préserver l’expression naturelle de la récolte."
+        },
+        {
+          "question": "Les esturgeons sont-ils élevés de façon responsable ?",
+          "answer": "Nous sélectionnons des producteurs dont les standards répondent à ceux de la Maison."
+        },
+        {
+          "question": "Combien de temps conserver une boîte ouverte ?",
+          "answer": "Dégustez-la rapidement et conservez-la entre 0°C et 4°C."
+        }
+      ]
+    }
+  }
+}

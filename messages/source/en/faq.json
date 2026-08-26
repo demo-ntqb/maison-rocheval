@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "faq": {
+      "title": "FAQ",
+      "description": "Answers about choosing, storing and serving Maison Rocheval caviar."
+    }
+  },
+  "faq": {
+    "heroTitle": "Frequently Asked Questions",
+    "heroIntro": "If you require more assistance, you can contact us <link>here</link>. We will get back to you within 24 hrs.",
+    "items": [
+      {
+        "question": "What is caviar?",
+        "answer": "<p>Salt-cured roe from sturgeon (family Acipenseridae). Roe from other fish — salmon, trout — isn’t caviar.</p>"
+      },
+      {
+        "question": "What’s the difference between caviar and fish roe?",
+        "answer": "<p>Roe can come from any fish; caviar comes only from sturgeon.</p>"
+      },
+      {
+        "question": "Which caviars does Maison Rocheval offer?",
+        "answer": "<p>Five, listed from the most delicate to the fullest:</p><ul><li><strong>Amour</strong> <span class='text-stone'>(<em>Acipenser schrenckii</em>)</span>: cream and butter, barely saline; the gentlest in the collection. With warm blini, crème fraîche, soft egg.</li><li><strong>L'Expression</strong> <span class='text-stone'>(<em>Huso dauricus × A. schrenckii</em>)</span>: the house signature; marine and savoury, kelp and nori deepening into umami. With dashi, seasoned rice, cured fish.</li><li><strong>Harmonie</strong> <span class='text-stone'>(<em>A. gueldenstaedtii × A. baerii</em>)</span>: bright, fruit-led sweetness that turns smokier with age. With shellfish and butter sauces.</li><li><strong>Oscietra</strong> <span class='text-stone'>(<em>A. gueldenstaedtii</em>)</span>: the classical benchmark; iodine, walnut and fine minerality. Chilled, with mother-of-pearl, or on its own.</li><li><strong>Kaluga</strong> <span class='text-stone'>(<em>Huso dauricus</em>)</span>: the largest grain; butter, cream, roasted hazelnut and a long finish. Chilled, with mother-of-pearl.</li></ul>"
+      },
+      {
+        "question": "How do you grade your caviar?",
+        "answer": "<p>We don’t use numbered grades. Each harvest is judged fresh and as a whole — colour, grain, texture, salinity, aroma and finish.</p>"
+      },
+      {
+        "question": "What does “malossol” mean?",
+        "answer": "<p>Russian for “little salt.” Our caviar is cured malossol — minimal salt, so the flavour of the roe leads.</p>"
+      },
+      {
+        "question": "How should I store it before opening?",
+        "answer": "<p>Keep the unopened tin in the coldest part of the fridge (−2 to +3°C). Don’t freeze. It keeps up to 3 months — always check the best-before date.</p>"
+      },
+      {
+        "question": "How long does it last once opened?",
+        "answer": "<p>Best within 24 hours. Reseal, press out the air, and keep it cold.</p>"
+      },
+      {
+        "question": "Can I freeze caviar?",
+        "answer": "<p>No — freezing ruptures the grains and ruins the texture and flavour.</p>"
+      },
+      {
+        "question": "Why a mother-of-pearl spoon, not metal?",
+        "answer": "<p>Metal reacts with caviar and adds a metallic taste. Use mother-of-pearl, bone or horn.</p>"
+      },
+      {
+        "question": "How is it served?",
+        "answer": "<p>Straight from the chilled tin, or on blini with crème fraîche. Serve cold, resting the tin on ice.</p>"
+      },
+      {
+        "question": "What drinks pair with caviar?",
+        "answer": "<p>Champagne or dry sparkling wine, chilled vodka, or a crisp dry white such as Chablis.</p>"
+      },
+      {
+        "question": "Is caviar good for you?",
+        "answer": "<p>It’s rich in protein, vitamin B12 and omega-3, and high in sodium — so it’s served in small portions.</p>"
+      },
+      {
+        "question": "Is your caviar sustainable?",
+        "answer": "<p>Yes — farmed rather than wild, and CITES-certified.</p>"
+      },
+      {
+        "question": "Does it contain any additives?",
+        "answer": "<p>None. No artificial colouring and no preservatives.</p>"
+      }
+    ]
+  }
+}

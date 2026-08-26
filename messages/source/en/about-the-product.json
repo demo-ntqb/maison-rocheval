@@ -1,0 +1,86 @@
+{
+  "metadata": {
+    "aboutProduct": {
+      "title": "The Collection",
+      "description": "Discover Armour, L'Expression, Harmonie, Oscietra and Kaluga — five rare caviars from Maison Rocheval, read fresh from the sturgeon, never reduced to a number."
+    }
+  },
+  "aboutProduct": {
+    "hero": {
+      "title": "OUR COLLECTION",
+      "imageAlt": "Maison Rocheval caviar tins laid out on a table with blini, crème fraîche and condiments"
+    },
+    "origin": {
+      "title": "It begins with the sturgeon",
+      "description": "Long before a harvest is selected, its character is being formed. Species, water, diet, maturity and time each leave their mark on the caviar that follows.",
+      "imageAlt": "Sturgeon swimming through the clear turquoise water of a rearing basin"
+    },
+    "collection": {
+      "title": "Understanding our collection",
+      "description": "As a living product, it’s grain, texture and flavor is read fresh with every selection rather than reduced to a number. A number cannot hold what changes by the week.",
+      "shop": "SHOP",
+      "tinAlt": "An open tin of Maison Rocheval caviar resting on its lid",
+      "selectorLabel": "Choose a caviar from the collection",
+      "previous": "Previous caviar",
+      "next": "Next caviar",
+      "atTable": "At the table",
+      "products": {
+        "amour": {
+          "name": "Amour",
+          "latinName": "Acipenser schrenckii",
+          "note": "Cheese",
+          "tastingNotes": "Creamy · Cheese · Delicate",
+          "description": "Amour opens with cream, then butter, followed by a soft lactic warmth that lingers rather than lifts. Salinity is almost an afterthought, allowing the caviar to read closer to cultured cheese than to the sea.",
+          "descriptionSecondary": "It is the gentlest caviar in the collection, and often the most persuasive.",
+          "atTable": "Warm blini, crème fraîche, soft egg, potato. Amour rewards richness and simplicity, or anything with enough fat to meet it halfway. Acid and smoke should be used with restraint to allow its quiet character a chance to speak.",
+          "tinAlt": "Tin of Armour caviar, open beside its lid",
+          "dishAlt": "Blini topped with Armour caviar, served on a copper plate"
+        },
+        "lexpression": {
+          "name": "L’Expression",
+          "latinName": "Huso dauricus × Acipenser schrenckii",
+          "note": "Nori",
+          "tastingNotes": "Rounded · Nori · Umami",
+          "description": "L’Expression is drawn from the same two lines that anchor this collection: the nuttiness of Kaluga, the cream of Amour. Neither comes through. What emerges instead is marine and deeply savoury: kelp, nori, a rounded salinity that deepens into umami and carries through the finish.",
+          "descriptionSecondary": "It is made from the house’s own two poles, and tastes like neither. That is precisely why L’Expression sits at the heart of the Maison.",
+          "atTable": "Dashi, seasoned rice, cured fish, brown butter, and anything built on umami. L’Expression has the depth to enter a dish rather than sit above it, making it the caviar to build around, not simply to finish with.",
+          "tinAlt": "Tin of L’Expression caviar, open beside its lid",
+          "dishAlt": "Cured fish in a dashi broth finished with L’Expression caviar"
+        },
+        "harmonie": {
+          "name": "Harmonie",
+          "latinName": "Acipenser gueldenstaedtii × Acipenser baerii",
+          "note": "Fruity",
+          "tastingNotes": "Soft · Fruity · Balanced",
+          "description": "Harmonie opens bright, with an unusual fruit-led sweetness recalling the delicacy of Kyoho grapes, carried by soft salinity and a clean, savoury finish. With time in the tin, the fruit settles into something deeper and smokier. Both are Harmonie. They simply belong to different weeks.",
+          "descriptionSecondary": "It is the caviar least like the others in the collection. Because those different weeks offer genuinely different qualities, it is perhaps the most adaptable of the five.",
+          "atTable": "Shellfish, butter sauces, and anything that moves between sweet and savoury. Its character develops with age, so it rewards a taste before it reaches the plate.",
+          "tinAlt": "Tin of Harmonie caviar, open beside its lid",
+          "dishAlt": "Plated fish and vegetables finished with Harmonie caviar"
+        },
+        "oscietra": {
+          "name": "Oscietra",
+          "latinName": "Acipenser gueldenstaedtii",
+          "note": "Walnut",
+          "tastingNotes": "Precise · Walnut · Minerality",
+          "description": "Precise and unmistakably Oscietra. Iodine first, followed by walnut and a fine, lifted minerality. The grain holds its structure on the tongue before releasing slowly into a finish that rewards nothing more than attention.",
+          "descriptionSecondary": "This is the caviar against which most others are still measured: the profile that has defined Oscietra for as long as caviar has been written about.",
+          "atTable": "Chilled, with mother-of-pearl. The traditional service, and still the correct one. Oysters, raw fish, cold shellfish, or Oscietra entirely on its own. It asks to be tasted, not dressed.",
+          "tinAlt": "Tin of Oscietra caviar, open beside its lid",
+          "dishAlt": "Plated fish and vegetables finished with Oscietra caviar"
+        },
+        "kaluga": {
+          "name": "Kaluga",
+          "latinName": "Huso dauricus",
+          "note": "Hazelnut",
+          "tastingNotes": "Rich · Hazelnut · Length",
+          "description": "The largest grain in the house, and the most patient on the palate. What arrives first is presence: butter, cream, and a richness that announces itself before any single note does. Roasted hazelnut follows, then a restrained salinity that draws everything into a finish that outlasts the rest of the range.",
+          "descriptionSecondary": "Its scale is matched by its restraint. Richness never becomes weight, and its character continues to reveal itself well beyond the first spoon.",
+          "atTable": "Kaluga asks for very little. Chilled, with mother-of-pearl, and nothing else competing for attention. Let the grain, texture and length do the work.",
+          "tinAlt": "Tin of Kaluga caviar, open beside its lid",
+          "dishAlt": "Plated fish and vegetables finished with Kaluga caviar"
+        }
+      }
+    }
+  }
+}

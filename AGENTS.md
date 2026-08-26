@@ -97,7 +97,7 @@ public/
 ## i18n
 
 - Routing is via `next-intl`, configured in `src/i18n/routing.ts` (`locales`, `defaultLocale`, `localePrefix`). All routes live under `src/app/[locale]/`.
-- Copy lives in `messages/<locale>.json`, namespaced by section (`metadata.root`, `header.nav`, `home.hero`, ...). Add a key to every locale file at once — don't let them drift.
+- Copy source lives in `messages/source/<locale>/<screen>.json`, namespaced by section (`metadata.root`, `header.nav`, `home.hero`, ...). `messages/<locale>.json` is the generated catalog consumed by `next-intl`; never edit it by hand. Add a key to every locale fragment at once and run `yarn messages:build` — don't let locales drift.
 - `<html lang>` MUST match the active locale **and** the `openGraph.locale` in metadata — keep them consistent.
 - Use `Link`/`useRouter`/`usePathname` from `@/i18n/navigation`, never `next/link`/`next/navigation` directly, so locale prefixes are handled automatically.
 

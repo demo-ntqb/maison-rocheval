@@ -1,0 +1,47 @@
+{
+  "productDetail": {
+    "sizeLabel": "SIZE",
+    "packagingLabel": "PACKAGING",
+    "perBoxLabel": "PER BOX",
+    "summaryLabel": "SUMMARY",
+    "addToCart": "Add to cart",
+    "unavailable": "Unavailable",
+    "free": "FREE",
+    "decreaseQty": "Decrease quantity",
+    "increaseQty": "Increase quantity",
+    "deliveryNote": "We offer variety of delivery options in check-out",
+    "personalizedMessage": "Personalized message included",
+    "boxOf": "{packaging} BOX OF {perBox}",
+    "perBoxFormat": "{perBox} X {size} {title} per box",
+    "specs": {
+      "specificationTitle": "Specification",
+      "pearlSize": "Pearl Size",
+      "salt": "Salt",
+      "color": "Color",
+      "tastingNotes": "Tasting Notes",
+      "ingredients": "Ingredients",
+      "nutritionalData": "Nutritional Data per 100g",
+      "servingTitle": "Serving Info",
+      "shelfLife": "Shelf Life",
+      "storage": "Storage",
+      "recommendation": "Serving Recommendation",
+      "deliveryTitle": "Delivery Info",
+      "shipping": "Shipping",
+      "duration": "Duration",
+      "giftingTitle": "Gifting",
+      "box": "Box",
+      "message": "Message",
+      "addOns": "Add Ons"
+    },
+    "assistance": {
+      "title": "Require more assistance?",
+      "description": "Our caviar specialists can help with selection, quantities and gifting.",
+      "cta": "Contact Us",
+      "imageAlt": "Maison Rocheval sturgeon sourcing landscape"
+    },
+    "related": {
+      "title": "You may also like",
+      "cta": "Go to shop"
+    }
+  }
+}

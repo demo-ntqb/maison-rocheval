@@ -1,17 +1,5 @@
 {
   "metadata": {
-    "root": {
-      "title": "Maison Rocheval — Caviar & Fine Food",
-      "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
-    },
-    "home": {
-      "title": "Maison Rocheval — Caviar & Fine Food",
-      "description": "From the sturgeon farm to the table: discover Maison Rocheval's five caviar expressions, selected at the source and presented with ritual care."
-    },
-    "products": {
-      "title": "The Caviar Collection",
-      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
-    },
     "aboutBrand": {
       "title": "The Maison",
       "description": "Discover the heritage, savoir-faire, and ritual of Maison Rocheval."
@@ -24,281 +12,34 @@
       "title": "Maison Rocheval — Coming Soon",
       "description": "Maison Rocheval, a premium French caviar house, is launching soon. Stay tuned."
     },
+    "root": {
+      "title": "Maison Rocheval — Caviar & Fine Food",
+      "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Reach the Maison Rocheval team — our specialists answer within 24 hours."
+    },
     "faq": {
       "title": "FAQ",
       "description": "Answers about choosing, storing and serving Maison Rocheval caviar."
+    },
+    "home": {
+      "title": "Maison Rocheval — Caviar & Fine Food",
+      "description": "From the sturgeon farm to the table: discover Maison Rocheval's five caviar expressions, selected at the source and presented with ritual care."
     },
     "privacyPolicy": {
       "title": "Privacy Policy",
       "description": "How Maison Rocheval collects, uses, and protects your personal data across the EU, US, and Singapore."
     },
-    "contact": {
-      "title": "Contact",
-      "description": "Reach the Maison Rocheval team — our specialists answer within 24 hours."
-    }
-  },
-  "common": {
-    "siteName": "Maison Rocheval",
-    "language": {
-      "en": "English",
-      "fr": "Français"
-    }
-  },
-  "header": {
-    "nav": {
-      "home": "Home",
-      "about": "The Maison",
-      "collection": "The Collection"
-    },
-    "menuLabel": "Menu",
-    "openMenu": "Open navigation menu",
-    "closeMenu": "Close navigation menu",
-    "announcement": "We currently only deliver to France and United States.",
-    "dismissAnnouncement": "Dismiss delivery announcement",
-    "cart": "CART"
-  },
-  "regionDialog": {
-    "title": "Are you in the right place?",
-    "description": "Please choose your shipping destination and preferred language.",
-    "note": "Orders can only be delivered within the selected destination.",
-    "countryLabel": "Country",
-    "languageLabel": "Language",
-    "continue": "Continue",
-    "close": "Close",
-    "countries": {
-      "FR": "France",
-      "US": "United States"
-    },
-    "languages": {
-      "en": "English",
-      "fr": "French"
-    }
-  },
-  "footer": {
-    "copyright": "© {year} {name}. All rights reserved.",
-    "contact": "Contact",
-    "emailLabel": "Email: contact@maisonrocheval.com",
-    "respondNote": "We will respond within 24 hrs.",
-    "enquireButton": "Enquire more",
-    "comingSoonTooltip": "Coming soon",
-    "shopComingSoon": "Shop (Coming soon)",
-    "menu": {
-      "caviar": "Our Collection",
-      "brand": "Maison Rocheval",
-      "care": "Customer Care"
-    },
-    "nav": {
-      "amour": "Amour",
-      "lexpression": "L’Expression",
-      "harmonie": "Harmonie",
-      "oscietra": "Oscietra",
-      "kaluga": "Kaluga",
-      "collection": "The Collection",
-      "shop": "Shop",
-      "about": "The Maison",
-      "faq": "FAQ",
-      "contact": "Contact",
-      "privacyPolicy": "Privacy Policy"
-    }
-  },
-  "shop": {
-    "title": "Our Collection",
-    "subtitle": "Premium Caviar Selection",
-    "addToBag": "Add to bag",
-    "filter": "Filter",
-    "sort": "Sort by",
-    "announcement": "Free shipping on orders over €150 in Metropolitan France",
-    "featured": {
-      "title": "Learn more about our caviar",
-      "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
-      "link": "About collection",
-      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
-    }
-  },
-  "products": {
-    "hero": {
-      "title": "Our Collection"
-    },
-    "catalog": {
-      "title": "Our caviar",
-      "itemCount": "{count} items",
-      "cards": {
-        "amur": {
-          "eyebrow": "Patrimoine",
-          "title": "Amur Caviar",
-          "species": "Huso Dauricus",
-          "profile": "Rich · Creamy · Long finish",
-          "description": "Exceptional dark pearls with a generous texture and a clean, lingering finish.",
-          "imageAlt": "Open Maison Rocheval Amur caviar tin"
-        },
-        "kaluga": {
-          "eyebrow": "Patrimoine",
-          "title": "Kaluga Caviar",
-          "species": "Huso Dauricus",
-          "profile": "Rich · Creamy · Long finish",
-          "description": "Large, supple pearls with warm bronze reflections, depth and a rounded marine finish.",
-          "imageAlt": "Open Maison Rocheval Kaluga caviar tin"
-        },
-        "russianHybrid": {
-          "eyebrow": "Patrimoine",
-          "title": "Russian Hybrid Caviar",
-          "species": "Acipenser Gueldenstaedtii",
-          "profile": "Silky · Clean · Fresh",
-          "description": "A refined expression with olive pearls, precise salinity and a bright, persistent finish.",
-          "imageAlt": "Open Maison Rocheval Russian Hybrid caviar tin"
-        },
-        "lexpression": {
-          "eyebrow": "Réserve",
-          "title": "L’Expression",
-          "species": "Kaluga Hybrid",
-          "profile": "Rounded · Precise · Nutty",
-          "description": "The signature expression of the Maison, selected for balance and an exceptionally clean finish.",
-          "imageAlt": "Open Maison Rocheval L’Expression caviar tin"
-        },
-        "harmonie": {
-          "eyebrow": "Assemblage",
-          "title": "Harmonie",
-          "species": "Russian Hybrid",
-          "profile": "Silky · Soft · Fruity",
-          "description": "Named for balance and defined by fruit, with a supple grain and delicate persistence.",
-          "imageAlt": "Open Maison Rocheval Harmonie caviar tin"
-        }
-      }
-    },
-    "editorial": {
-      "title": "Learn more about our caviar",
-      "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
-      "link": "About collection",
-      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "viewAll": "View all",
-      "imageAlt": "Open Maison Rocheval caviar tin",
-      "items": [
-        {
-          "question": "Which caviar should I choose?",
-          "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile."
-        },
-        {
-          "question": "Why does sturgeon maturity matter?",
-          "answer": "Maturity shapes the size, integrity and aromatic depth of the grain."
-        },
-        {
-          "question": "How is caviar salted?",
-          "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression."
-        },
-        {
-          "question": "Are the sturgeon responsibly raised?",
-          "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison."
-        },
-        {
-          "question": "How long does caviar keep after opening?",
-          "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C."
-        }
-      ]
-    }
-  },
-  "home": {
-    "hero": {
-      "title": "Maison Rocheval",
-      "imageAlt": "A gloved hand presenting an open tin of Maison Rocheval caviar"
-    },
-    "intro": {
-      "title": "From source to ritual",
-      "description": "From the waters that raise the sturgeon to the tables where caviar is served, every decision shapes the final expression.",
-      "tableImageAlt": "Maison Rocheval caviar tins set for a tasting ritual",
-      "storyTitle": "Before the Maison, there was the source",
-      "storyDescription": "Our foundations were formed at the water’s edge, alongside producers whose understanding of sturgeon husbandry runs decades deep.",
-      "learnMore": "ABOUT MAISON ROCHEVAL",
-      "chefsImageAlt": "Chefs plating a caviar course in the kitchen",
-      "tastingImageAlt": "A caviar expert examining pearls in an open tin"
-    },
-    "about": {
-      "highlight": "QUALITY IS DECIDED LONG BEFORE THE HARVEST",
-      "sturgeonImageAlt": "Sturgeon swimming in pristine dark water",
-      "caviarImageAlt": "Close view of selected Maison Rocheval caviar pearls",
-      "title": "Selected at the source",
-      "description": "Each harvest is judged on its own merit. Character leads the selection and the standard of the Maison never moves.",
-      "speciesTitle": "Five expressions. One standard.",
-      "speciesDescription": "Each expression is selected for its own character.",
-      "explore": "THE COLLECTION"
-    },
     "products": {
-      "title": "Presented by the Maison",
-      "description": "From the quiet delicacy of Amour to the depth of Kaluga, each expression is selected for a character of its own.",
-      "shopNow": "SHOP",
-      "previous": "View previous caviar",
-      "next": "View next caviar",
-      "cards": {
-        "amour": {
-          "eyebrow": "Patrimoine",
-          "title": "Amour",
-          "species": "Acipenser schrenckii",
-          "profile": "Creamy · Cheese · Delicate",
-          "description": "Named for the Amur, and for love.",
-          "imageAlt": "Open tin of Maison Rocheval Amour caviar"
-        },
-        "lexpression": {
-          "eyebrow": "Réserve",
-          "title": "L’Expression",
-          "species": "Huso dauricus × Acipenser schrenckii",
-          "profile": "Rounded · Nori · Umami",
-          "description": "The signature of the Maison",
-          "imageAlt": "Open tin of Maison Rocheval L’Expression caviar"
-        },
-        "harmonie": {
-          "eyebrow": "Assemblage",
-          "title": "Harmonie",
-          "species": "Acipenser gueldenstaedtii × Acipenser baerii",
-          "profile": "Soft · Fruity · Balanced",
-          "description": "Defined by balance and subtle fruit",
-          "imageAlt": "Open tin of Maison Rocheval Harmonie caviar"
-        },
-        "oscietra": {
-          "eyebrow": "Patrimoine",
-          "title": "Oscietra",
-          "species": "Acipenser gueldenstaedtii",
-          "profile": "Precise · Walnut · Minerality",
-          "description": "One of caviar's great classical voices",
-          "imageAlt": "Open tin of Maison Rocheval Oscietra caviar"
-        },
-        "kaluga": {
-          "eyebrow": "Patrimoine",
-          "title": "Kaluga",
-          "species": "Huso dauricus",
-          "profile": "Rich · Hazelnut · Length",
-          "description": "At the summit of the collection",
-          "imageAlt": "Open Maison Rocheval Kaluga caviar tin"
-        }
-      }
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "subtitle": "Learn more about caviar",
-      "moreQuestions": "Have more questions? Contact our experts"
-    }
-  },
-  "about": {
-    "hero": {
-      "title": "Our Heritage",
-      "description": "The pursuit of the perfect pearl. An uncompromising journey of taste."
-    },
-    "history": {
-      "title": "Born from Pure Waters",
-      "description": "Our sturgeons are raised in clean, sustainable environments. We believe that exceptional caviar starts with absolute respect for nature and species."
-    },
-    "selection": {
-      "highlight": "Selection Standards",
-      "title": "The Nine Criteria",
-      "description": "Colour, grain, texture, firmness and moisture are judged alongside salinity, aroma, maturation and the integrity of each pearl to ensure an unforgettable tasting experience."
+      "title": "The Caviar Collection",
+      "description": "Explore five Maison Rocheval caviar expressions, selected for their grain, texture and distinctive finish."
     }
   },
   "aboutBrand": {
     "hero": {
       "title": "THE MAISON",
-      "statement": "",
-      "description": "",
       "imageAlt": "Misty lake at the source of Maison Rocheval caviar"
     },
     "story": {
@@ -345,13 +86,7 @@
     "ritual": {
       "title": "THE RITUAL",
       "statement": "The final expression is in the serving",
-      "subtitle": "From Source to Ritual",
-      "paragraph1": "Caviar has always carried ceremony: the chilled tin, the turn of the key, mother-of-pearl against the grain, the first spoonful taken before anyone speaks.",
-      "paragraph2": "Maison Rocheval preserves that ceremony with restraint. Not as a performance, but because how something is served changes how it is remembered, and the finest tables understand this instinctively, whether found in a celebrated dining room or set for two at home.",
-      "collection": "About collection",
-      "heroImageAlt": "Award-winning chefs celebrating together",
-      "sourceImageAlt": "Caviar specialists inspecting a harvest at the source",
-      "serviceImageAlt": "A guest tasting caviar with a mother-of-pearl spoon"
+      "heroImageAlt": "Award-winning chefs celebrating together"
     },
     "sourceToRitual": {
       "title": "From source to ritual",
@@ -360,33 +95,6 @@
       "cta": "Discover the collection",
       "preparationAlt": "Chef preparing a tin of caviar",
       "serviceAlt": "Caviar served in a glass dish"
-    },
-    "faq": {
-      "title": "Frequently Asked Questions",
-      "viewAll": "View all",
-      "imageAlt": "Open Maison Rocheval caviar tin",
-      "items": [
-        {
-          "question": "How should caviar be stored?",
-          "answer": "Keep caviar refrigerated between 0°C and 4°C and enjoy it promptly after opening."
-        },
-        {
-          "question": "How much caviar should I serve per person?",
-          "answer": "Allow around 20 to 30 grams per guest for a tasting, or more when caviar is the centrepiece."
-        },
-        {
-          "question": "What is the best way to serve caviar?",
-          "answer": "Serve it well chilled with a mother-of-pearl spoon so its character remains pure."
-        },
-        {
-          "question": "What makes each caviar expression different?",
-          "answer": "Species, water, feed, maturity and maturation all shape the grain, texture and flavour."
-        },
-        {
-          "question": "Where does Maison Rocheval source its caviar?",
-          "answer": "We work closely with selected producers whose husbandry and harvesting standards meet those of the Maison."
-        }
-      ]
     }
   },
   "aboutProduct": {
@@ -467,64 +175,98 @@
       }
     }
   },
-  "productDetail": {
-    "sizeLabel": "SIZE",
-    "packagingLabel": "PACKAGING",
-    "perBoxLabel": "PER BOX",
-    "summaryLabel": "SUMMARY",
-    "addToCart": "Add to cart",
-    "unavailable": "Unavailable",
-    "free": "FREE",
-    "decreaseQty": "Decrease quantity",
-    "increaseQty": "Increase quantity",
-    "deliveryNote": "We offer variety of delivery options in check-out",
-    "personalizedMessage": "Personalized message included",
-    "boxOf": "{packaging} BOX OF {perBox}",
-    "perBoxFormat": "{perBox} X {size} {title} per box",
-    "packaging": {
-      "standard": {
-        "name": "STANDARD",
-        "description": "Paper bag with ice"
+  "comingSoon": {
+    "hero": {
+      "brand": "Maison Rocheval Paris",
+      "message": "Coming soon",
+      "imageAlt": "Aerial view of a sturgeon farm, its circular rearing pens set on a lake below forested mountains"
+    }
+  },
+  "header": {
+    "nav": {
+      "home": "Home",
+      "about": "The Maison",
+      "collection": "The Collection"
+    },
+    "menuLabel": "Menu",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "announcement": "We currently only deliver to France and United States.",
+    "dismissAnnouncement": "Dismiss delivery announcement"
+  },
+  "regionDialog": {
+    "title": "Are you in the right place?",
+    "description": "Please choose your shipping destination and preferred language.",
+    "note": "Orders can only be delivered within the selected destination.",
+    "countryLabel": "Country",
+    "languageLabel": "Language",
+    "continue": "Continue",
+    "close": "Close",
+    "countries": {
+      "FR": "France",
+      "US": "United States"
+    },
+    "languages": {
+      "en": "English",
+      "fr": "French"
+    }
+  },
+  "footer": {
+    "contact": "Contact",
+    "emailLabel": "Email: contact@maisonrocheval.com",
+    "enquireButton": "Enquire more",
+    "menu": {
+      "caviar": "Our Collection",
+      "brand": "Maison Rocheval",
+      "care": "Customer Care"
+    },
+    "nav": {
+      "amour": "Amour",
+      "lexpression": "L’Expression",
+      "harmonie": "Harmonie",
+      "oscietra": "Oscietra",
+      "kaluga": "Kaluga",
+      "collection": "The Collection",
+      "shop": "Shop",
+      "about": "The Maison",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "privacyPolicy": "Privacy Policy"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "introBeforeFaq": "We will get back to you in 3 to 5 working days. For general enquires, you can view more on our",
+    "faqLink": "FAQ",
+    "introAfterFaq": "page.",
+    "imageAlt": "Open Maison Rocheval caviar tin",
+    "privacyBeforeLink": "Maison Rocheval needs the contact information you provide us to contact you about our products and services. For information about our privacy practices and commitment to protecting your privacy, please review our",
+    "privacyLink": "Privacy Policy",
+    "form": {
+      "firstName": "First Name*",
+      "lastName": "Last Name*",
+      "email": "Email*",
+      "country": "Country*",
+      "countryPlaceholder": "Select a country",
+      "countryOptions": {
+        "france": "France",
+        "united_states": "United States",
+        "singapore": "Singapore"
       },
-      "premium": {
-        "name": "PREMIUM",
-        "description": "Quality cardboard box with Bolduc ribbon."
-      },
-      "luxury": {
-        "name": "LUXURY",
-        "description": "Premium wooden box with Bolduc ribbon."
+      "company": "Company Name",
+      "phone": "Phone Number",
+      "message": "How can we help you?*",
+      "wholesale": "This is a wholesale inquiry",
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "successMessage": "Thank you — your message has been sent. We will get back to you shortly.",
+      "errorMessage": "Something went wrong and your message could not be sent. Please try again.",
+      "rateLimitMessage": "You've sent too many messages recently. Please wait a few minutes and try again.",
+      "validation": {
+        "email": "Please enter a valid email address.",
+        "required": "This field is required.",
+        "selection": "Please select a country."
       }
-    },
-    "specs": {
-      "specificationTitle": "Specification",
-      "pearlSize": "Pearl Size",
-      "salt": "Salt",
-      "color": "Color",
-      "tastingNotes": "Tasting Notes",
-      "ingredients": "Ingredients",
-      "nutritionalData": "Nutritional Data per 100g",
-      "servingTitle": "Serving Info",
-      "shelfLife": "Shelf Life",
-      "storage": "Storage",
-      "recommendation": "Serving Recommendation",
-      "deliveryTitle": "Delivery Info",
-      "shipping": "Shipping",
-      "duration": "Duration",
-      "giftingTitle": "Gifting",
-      "box": "Box",
-      "message": "Message",
-      "addOns": "Add Ons",
-      "customerService": "Customer Service"
-    },
-    "assistance": {
-      "title": "Require more assistance?",
-      "description": "Our caviar specialists can help with selection, quantities and gifting.",
-      "cta": "Contact Us",
-      "imageAlt": "Maison Rocheval sturgeon sourcing landscape"
-    },
-    "related": {
-      "title": "You may also like",
-      "cta": "Go to shop"
     }
   },
   "faq": {
@@ -588,6 +330,79 @@
         "answer": "<p>None. No artificial colouring and no preservatives.</p>"
       }
     ]
+  },
+  "home": {
+    "hero": {
+      "title": "Maison Rocheval",
+      "imageAlt": "A gloved hand presenting an open tin of Maison Rocheval caviar"
+    },
+    "intro": {
+      "title": "From source to ritual",
+      "description": "From the waters that raise the sturgeon to the tables where caviar is served, every decision shapes the final expression.",
+      "tableImageAlt": "Maison Rocheval caviar tins set for a tasting ritual",
+      "storyTitle": "Before the Maison, there was the source",
+      "storyDescription": "Our foundations were formed at the water’s edge, alongside producers whose understanding of sturgeon husbandry runs decades deep.",
+      "learnMore": "ABOUT MAISON ROCHEVAL",
+      "chefsImageAlt": "Chefs plating a caviar course in the kitchen",
+      "tastingImageAlt": "A caviar expert examining pearls in an open tin"
+    },
+    "about": {
+      "highlight": "QUALITY IS DECIDED LONG BEFORE THE HARVEST",
+      "sturgeonImageAlt": "Sturgeon swimming in pristine dark water",
+      "caviarImageAlt": "Close view of selected Maison Rocheval caviar pearls",
+      "title": "Selected at the source",
+      "description": "Each harvest is judged on its own merit. Character leads the selection and the standard of the Maison never moves.",
+      "speciesTitle": "Five expressions. One standard.",
+      "speciesDescription": "Each expression is selected for its own character.",
+      "explore": "THE COLLECTION"
+    },
+    "products": {
+      "title": "Presented by the Maison",
+      "description": "From the quiet delicacy of Amour to the depth of Kaluga, each expression is selected for a character of its own.",
+      "shopNow": "SHOP",
+      "cards": {
+        "amour": {
+          "eyebrow": "Patrimoine",
+          "title": "Amour",
+          "species": "Acipenser schrenckii",
+          "profile": "Creamy · Cheese · Delicate",
+          "description": "Named for the Amur, and for love.",
+          "imageAlt": "Open tin of Maison Rocheval Amour caviar"
+        },
+        "lexpression": {
+          "eyebrow": "Réserve",
+          "title": "L’Expression",
+          "species": "Huso dauricus × Acipenser schrenckii",
+          "profile": "Rounded · Nori · Umami",
+          "description": "The signature of the Maison",
+          "imageAlt": "Open tin of Maison Rocheval L’Expression caviar"
+        },
+        "harmonie": {
+          "eyebrow": "Assemblage",
+          "title": "Harmonie",
+          "species": "Acipenser gueldenstaedtii × Acipenser baerii",
+          "profile": "Soft · Fruity · Balanced",
+          "description": "Defined by balance and subtle fruit",
+          "imageAlt": "Open tin of Maison Rocheval Harmonie caviar"
+        },
+        "oscietra": {
+          "eyebrow": "Patrimoine",
+          "title": "Oscietra",
+          "species": "Acipenser gueldenstaedtii",
+          "profile": "Precise · Walnut · Minerality",
+          "description": "One of caviar's great classical voices",
+          "imageAlt": "Open tin of Maison Rocheval Oscietra caviar"
+        },
+        "kaluga": {
+          "eyebrow": "Patrimoine",
+          "title": "Kaluga",
+          "species": "Huso dauricus",
+          "profile": "Rich · Hazelnut · Length",
+          "description": "At the summit of the collection",
+          "imageAlt": "Open Maison Rocheval Kaluga caviar tin"
+        }
+      }
+    }
   },
   "privacyPolicy": {
     "heroTitle": "Privacy Policy",
@@ -661,49 +476,91 @@
       }
     ]
   },
-  "contact": {
-    "title": "Contact Us",
-    "introBeforeFaq": "We will get back to you in 3 to 5 working days. For general enquires, you can view more on our",
-    "faqLink": "FAQ",
-    "introAfterFaq": "page.",
-    "email": "contact@maisonrocheval.com",
-    "emailLabel": "Email: contact@maisonrocheval.com",
-    "respondNote": "We will respond within 24 hrs.",
-    "imageAlt": "Open Maison Rocheval caviar tin",
-    "privacyBeforeLink": "Maison Rocheval needs the contact information you provide us to contact you about our products and services. For information about our privacy practices and commitment to protecting your privacy, please review our",
-    "privacyLink": "Privacy Policy",
-    "form": {
-      "firstName": "First Name*",
-      "lastName": "Last Name*",
-      "email": "Email*",
-      "country": "Country*",
-      "countryPlaceholder": "Select a country",
-      "countryOptions": {
-        "france": "France",
-        "united_states": "United States",
-        "singapore": "Singapore"
-      },
-      "company": "Company Name",
-      "phone": "Phone Number",
-      "message": "How can we help you?*",
-      "wholesale": "This is a wholesale inquiry",
-      "submit": "Send message",
-      "submitting": "Sending...",
-      "successMessage": "Thank you — your message has been sent. We will get back to you shortly.",
-      "errorMessage": "Something went wrong and your message could not be sent. Please try again.",
-      "rateLimitMessage": "You've sent too many messages recently. Please wait a few minutes and try again.",
-      "validation": {
-        "email": "Please enter a valid email address.",
-        "required": "This field is required.",
-        "selection": "Please select a country."
-      }
+  "productDetail": {
+    "sizeLabel": "SIZE",
+    "packagingLabel": "PACKAGING",
+    "perBoxLabel": "PER BOX",
+    "summaryLabel": "SUMMARY",
+    "addToCart": "Add to cart",
+    "unavailable": "Unavailable",
+    "free": "FREE",
+    "decreaseQty": "Decrease quantity",
+    "increaseQty": "Increase quantity",
+    "deliveryNote": "We offer variety of delivery options in check-out",
+    "personalizedMessage": "Personalized message included",
+    "boxOf": "{packaging} BOX OF {perBox}",
+    "perBoxFormat": "{perBox} X {size} {title} per box",
+    "specs": {
+      "specificationTitle": "Specification",
+      "pearlSize": "Pearl Size",
+      "salt": "Salt",
+      "color": "Color",
+      "tastingNotes": "Tasting Notes",
+      "ingredients": "Ingredients",
+      "nutritionalData": "Nutritional Data per 100g",
+      "servingTitle": "Serving Info",
+      "shelfLife": "Shelf Life",
+      "storage": "Storage",
+      "recommendation": "Serving Recommendation",
+      "deliveryTitle": "Delivery Info",
+      "shipping": "Shipping",
+      "duration": "Duration",
+      "giftingTitle": "Gifting",
+      "box": "Box",
+      "message": "Message",
+      "addOns": "Add Ons"
+    },
+    "assistance": {
+      "title": "Require more assistance?",
+      "description": "Our caviar specialists can help with selection, quantities and gifting.",
+      "cta": "Contact Us",
+      "imageAlt": "Maison Rocheval sturgeon sourcing landscape"
+    },
+    "related": {
+      "title": "You may also like",
+      "cta": "Go to shop"
     }
   },
-  "comingSoon": {
+  "products": {
     "hero": {
-      "brand": "Maison Rocheval Paris",
-      "message": "Coming soon",
-      "imageAlt": "Aerial view of a sturgeon farm, its circular rearing pens set on a lake below forested mountains"
+      "title": "Our Collection"
+    },
+    "catalog": {
+      "title": "Our caviar",
+      "itemCount": "{count} items"
+    },
+    "editorial": {
+      "title": "Learn more about our caviar",
+      "description": "From species and cultivation to selection and service, discover the journey held inside every tin.",
+      "link": "About collection",
+      "imageAlt": "Maison Rocheval caviar collection arranged on a dining table"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "viewAll": "View all",
+      "imageAlt": "Open Maison Rocheval caviar tin",
+      "items": [
+        {
+          "question": "Which caviar should I choose?",
+          "answer": "Begin with the texture and finish you enjoy; each collection page explains the defining profile."
+        },
+        {
+          "question": "Why does sturgeon maturity matter?",
+          "answer": "Maturity shapes the size, integrity and aromatic depth of the grain."
+        },
+        {
+          "question": "How is caviar salted?",
+          "answer": "Maison Rocheval uses a restrained salting process to preserve the harvest’s natural expression."
+        },
+        {
+          "question": "Are the sturgeon responsibly raised?",
+          "answer": "We select producers whose husbandry, water and harvesting standards meet those of the Maison."
+        },
+        {
+          "question": "How long does caviar keep after opening?",
+          "answer": "Enjoy an opened tin promptly and keep it refrigerated between 0°C and 4°C."
+        }
+      ]
     }
   }
 }
