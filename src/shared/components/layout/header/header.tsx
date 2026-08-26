@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
+import { CartTrigger } from "@/shared/components/cart";
 import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheval-logo";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
@@ -171,6 +172,7 @@ export function Header({ initialVariant }: HeaderProps) {
               data-plumb-id="frame-2085667020-2"
             >
               <LanguageSwitcher className={textColorClass} />
+              <CartTrigger className={textColorClass} />
             </div>
           </div>
         </div>

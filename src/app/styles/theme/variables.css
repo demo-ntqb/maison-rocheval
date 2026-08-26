@@ -20,7 +20,10 @@
   --palette-gray-icon: #606060;
   --palette-ink-soft: #333333;
   --palette-muted-text: #929292;
+  --palette-gray-mid: #888888;
+  --palette-cream: #fffcf8;
   --palette-beige-dark: #f1ebe4;
+  --palette-surface-3: #e5dfd9;
   --palette-hero-depth: #071b26;
 
   /* Layout scale extracted from the 1400px Figma canvas. */

@@ -91,7 +91,10 @@
   --color-gray-icon: var(--palette-gray-icon);
   --color-ink-soft: var(--palette-ink-soft);
   --color-muted-text: var(--palette-muted-text);
+  --color-gray-mid: var(--palette-gray-mid);
+  --color-cream: var(--palette-cream);
   --color-beige-dark: var(--palette-beige-dark);
+  --color-surface-3: var(--palette-surface-3);
   --color-canvas: var(--palette-white);
   --color-ink: var(--palette-black);
   --color-warm: var(--palette-beige);

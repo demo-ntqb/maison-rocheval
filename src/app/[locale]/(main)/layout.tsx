@@ -1,3 +1,4 @@
+import { CartDrawer, CartProvider } from "@/shared/components/cart";
 import { Footer } from "@/shared/components/layout/footer";
 import { Header } from "@/shared/components/layout/header/header";
 import { RegionPreferenceGate } from "@/shared/components/layout/region-preference-gate";
@@ -22,15 +23,24 @@ export default async function LocaleLayout({
     >
       Skip to content
     </a>
-    <NextIntlClientProvider messages={{ header: messages.header, regionDialog: messages.regionDialog }}>
-      <Header />
-      <RegionPreferenceGate />
-    </NextIntlClientProvider>
-    <NextIntlClientProvider messages={null}>
-      <main id="main-content" className="w-full flex-1">
-        {children}
-      </main>
-      <Footer locale={locale} />
-    </NextIntlClientProvider>
+    {/* CartProvider wraps both blocks below — it's plain React context, not
+        i18n, so it can sit above either NextIntlClientProvider and still let
+        product pages (rendered via `children`, outside the `cart` messages
+        scope) call useCart() to add lines and open the drawer. */}
+    <CartProvider>
+      <NextIntlClientProvider
+        messages={{ cart: messages.cart, header: messages.header, regionDialog: messages.regionDialog }}
+      >
+        <Header />
+        <CartDrawer />
+        <RegionPreferenceGate />
+      </NextIntlClientProvider>
+      <NextIntlClientProvider messages={null}>
+        <main id="main-content" className="w-full flex-1">
+          {children}
+        </main>
+        <Footer locale={locale} />
+      </NextIntlClientProvider>
+    </CartProvider>
   </>;
 }

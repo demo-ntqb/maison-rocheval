@@ -1,0 +1,23 @@
+/* Gift-message notepad — the Figma cart message dialog rules the writing area
+   into 12 equal lines, so the textarea draws them itself (background-attachment:
+   local keeps the rules pinned to the text if it ever scrolls). */
+.cart-message-lines {
+  --cart-message-line: 36px;
+
+  height: calc(var(--cart-message-line) * 12);
+  line-height: var(--cart-message-line);
+  background-attachment: local;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--cart-message-line) - 0.5px),
+    var(--palette-stone) calc(var(--cart-message-line) - 0.5px),
+    var(--palette-stone) var(--cart-message-line)
+  );
+}
+
+@media (min-width: 40rem) {
+  .cart-message-lines {
+    --cart-message-line: 33px;
+  }
+}
