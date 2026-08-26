@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import {
@@ -8,7 +7,7 @@ import {
   ProductsFaqSection,
   ProductsHeroSection,
 } from "@/screens/products";
-import { generateComingSoonMetadata, generatePageMetadata, isComingSoon } from "@/shared/lib/metadata";
+import { generatePageMetadata } from "@/shared/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -16,7 +15,6 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  if (isComingSoon()) return generateComingSoonMetadata(locale);
 
   const t = await getTranslations({ locale, namespace: "metadata.products" });
 
@@ -30,8 +28,6 @@ export default async function ProductsPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  // TODO: Tạm thời return notfound cho đến khi sẵn sàng
-  notFound();
   const { locale } = await params;
   return (
     <div className="flex w-full flex-col bg-canvas">

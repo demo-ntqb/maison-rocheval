@@ -10,11 +10,9 @@ import {
 import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
 import {
-  generateComingSoonMetadata,
   generateJsonLd,
   generatePageMetadata,
-  isComingSoon,
-  localizedPath,
+  localizedPath
 } from "@/shared/lib/metadata";
 
 const OG_IMAGE = "/images/home/hero-home-desktop.jpg";
@@ -25,7 +23,6 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  if (isComingSoon()) return generateComingSoonMetadata(locale);
 
   const t = await getTranslations({ locale, namespace: "metadata.home" });
 
