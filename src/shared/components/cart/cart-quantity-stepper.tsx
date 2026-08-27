@@ -2,7 +2,7 @@
 
 import { IconMinus, IconPlus } from "@/shared/components/icons";
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/shared/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/components/ui/tooltip";
 import { cn } from "@/shared/lib/utils";
 
 export interface CartQuantityStepperProps {
@@ -52,33 +52,31 @@ export function CartQuantityStepper({
   );
 
   return (
-    <TooltipProvider>
-      <div className="flex items-center gap-1">
-        <button
-          type="button"
-          aria-label={decreaseLabel}
-          className={buttonClassName}
-          disabled={quantity <= 1}
-          onClick={() => onChange(quantity - 1)}
-        >
-          <IconMinus aria-hidden="true" className="size-4" />
-        </button>
-        <span className="flex size-8 shrink-0 items-center justify-center text-center font-sans text-sm/[normal] font-light text-black">
-          {quantity}
-        </span>
-        {isMaxReached && notEnoughStockLabel ? (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              {plusButton}
-            </TooltipTrigger>
-            <TooltipContent side="bottom" align="center">
-              {notEnoughStockLabel}
-            </TooltipContent>
-          </Tooltip>
-        ) : (
-          plusButton
-        )}
-      </div>
-    </TooltipProvider>
+    <div className="flex items-center gap-1">
+      <button
+        type="button"
+        aria-label={decreaseLabel}
+        className={buttonClassName}
+        disabled={quantity <= 1}
+        onClick={() => onChange(quantity - 1)}
+      >
+        <IconMinus aria-hidden="true" className="size-4" />
+      </button>
+      <span className="flex size-8 shrink-0 items-center justify-center text-center font-sans text-sm/[normal] font-light text-black">
+        {quantity}
+      </span>
+      {isMaxReached && notEnoughStockLabel ? (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {plusButton}
+          </TooltipTrigger>
+          <TooltipContent side="bottom" align="center">
+            {notEnoughStockLabel}
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        plusButton
+      )}
+    </div>
   );
 }

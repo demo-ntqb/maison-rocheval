@@ -49,27 +49,6 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
         }
       }
     }
-    presentationBox: product(handle: "presentation-box") {
-      ...CatalogProductCard
-      variants(first: 10) {
-        nodes {
-          id
-          title
-          sku
-          availableForSale
-          quantityAvailable
-          price { amount currencyCode }
-          selectedOptions { name value }
-        }
-      }
-    }
-    presentationOptions: metaobjects(type: "presentation_option", first: 10) {
-      nodes {
-        type
-        handle
-        fields { key type value }
-      }
-    }
   }
   fragment CatalogProductCard on Product {
     id

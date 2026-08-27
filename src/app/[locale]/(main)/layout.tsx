@@ -2,6 +2,7 @@ import { CartDrawer, CartProvider } from "@/shared/components/cart";
 import { Footer } from "@/shared/components/layout/footer";
 import { Header } from "@/shared/components/layout/header/header";
 import { RegionPreferenceGate } from "@/shared/components/layout/region-preference-gate";
+import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Suspense } from "react";
@@ -29,21 +30,23 @@ export default async function LocaleLayout({
         product pages (rendered via `children`, outside the `cart` messages
         scope) call useCart() to add lines and open the drawer. */}
     <CartProvider>
-      <NextIntlClientProvider
-        messages={{ cart: messages.cart, header: messages.header, regionDialog: messages.regionDialog }}
-      >
-        <Header />
-        <CartDrawer />
-        <Suspense fallback={null}>
-          <RegionPreferenceGate />
-        </Suspense>
-      </NextIntlClientProvider>
-      <NextIntlClientProvider messages={null}>
-        <main id="main-content" className="w-full flex-1">
-          {children}
-        </main>
-        <Footer locale={locale} />
-      </NextIntlClientProvider>
+      <TooltipProvider>
+        <NextIntlClientProvider
+          messages={{ cart: messages.cart, header: messages.header, regionDialog: messages.regionDialog }}
+        >
+          <Header />
+          <CartDrawer />
+          <Suspense fallback={null}>
+            <RegionPreferenceGate />
+          </Suspense>
+        </NextIntlClientProvider>
+        <NextIntlClientProvider messages={null}>
+          <main id="main-content" className="w-full flex-1">
+            {children}
+          </main>
+          <Footer locale={locale} />
+        </NextIntlClientProvider>
+      </TooltipProvider>
     </CartProvider>
   </>;
 }
