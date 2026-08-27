@@ -78,47 +78,8 @@ function mapVariants(product: StorefrontProduct): CatalogVariant[] {
   }));
 }
 
-function emptyPresentationBox(): StorefrontProduct {
-  return {
-    availableForSale: false,
-    descriptionHtml: "",
-    featuredImage: null,
-    handle: "presentation-box",
-    id: "",
-    metafields: [],
-    priceRange: { minVariantPrice: { amount: "0", currencyCode: "EUR" } },
-    title: "Presentation Box",
-  };
-}
-
-function mapPackagingOption(
-  entry: StorefrontPresentationOption,
-  variantsByName: Map<string, CatalogVariant>,
-): CatalogPackagingOption {
-  const fields = metaobjectFields(entry);
-  const name = fields.get("name") || entry.handle;
-  const variant = variantsByName.get(name.toLowerCase()) ?? variantsByName.get(entry.handle.toLowerCase());
-  return {
-    availableForSale: variant?.availableForSale ?? entry.handle === "standard",
-    description: fields.get("description") || "",
-    id: entry.handle,
-    name,
-    personalizedMessage: fields.get("personalized_message") === "true",
-    priceModifier: Number(fields.get("price") || variant?.price.amount || 0),
-    variantId: variant?.id ?? null,
-  };
-}
-
-function mapPackagingOptions(entries: StorefrontPresentationOption[], box: StorefrontProduct | null) {
-  const variants = mapVariants(box ?? emptyPresentationBox());
-  const variantsByName = new Map(variants.map((variant) => [variant.optionValue.toLowerCase(), variant]));
-  return entries.map((entry) => mapPackagingOption(entry, variantsByName));
-}
-
 export function mapProductDetail(
   product: StorefrontProduct,
-  presentationOptions: StorefrontPresentationOption[],
-  presentationBox: StorefrontProduct | null,
 ): CatalogProductDetail {
   const profile = mapProductProfile(product);
   const fields = metafieldsByKey(product);
@@ -129,7 +90,7 @@ export function mapProductDetail(
     servingRichText: fields.get("serving")?.value || "",
     deliveryRichText: fields.get("delivery")?.value || "",
     giftingRichText: fields.get("gifting")?.value || "",
-    packagingOptions: mapPackagingOptions(presentationOptions, presentationBox),
+    packagingOptions: [],
     relatedProducts: mapCollectionProducts(fields.get("related_products")?.references?.nodes ?? []),
     variants: mapVariants(product),
     composition: parseStringList(fields.get("set_includes")?.value),

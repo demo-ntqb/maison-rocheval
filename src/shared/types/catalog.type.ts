@@ -152,8 +152,6 @@ export type CollectionProductsQuery = {
 };
 
 export type ProductDetailQuery = {
-  presentationBox: StorefrontProduct | null;
-  presentationOptions: { nodes: StorefrontMetaobject[] };
   product: StorefrontProduct | null;
 };
 

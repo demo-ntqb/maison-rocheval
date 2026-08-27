@@ -98,7 +98,7 @@ export async function getProductDetail(
   
   assertSuccessful(result, "CatalogProductDetail");
   if (!result.product) return null;
-  return mapProductDetail(result.product, result.presentationOptions.nodes, result.presentationBox);
+  return mapProductDetail(result.product);
 }
 
 /**
