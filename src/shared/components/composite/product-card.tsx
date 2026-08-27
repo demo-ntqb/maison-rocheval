@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { Link } from "@/i18n/navigation";
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
-import { PRODUCT_CATEGORY_TITLE_TO_HANDLE_MAP } from "@/shared/constants/catalog.constant";
+import { PRODUCT_CATEGORY_PRODUCT_TYPE_TO_HANDLE_MAP } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { cn } from "@/shared/lib/utils";
 import type { CatalogProductCard } from "@/shared/types/catalog.type";
@@ -69,7 +69,7 @@ export function ProductCard({
   className,
   ...props
 }: ProductCardProps) {
-  const category = PRODUCT_CATEGORY_TITLE_TO_HANDLE_MAP?.[product.productType] || '';
+  const category = PRODUCT_CATEGORY_PRODUCT_TYPE_TO_HANDLE_MAP?.[product.productType] || '';
 
   return (
     <article

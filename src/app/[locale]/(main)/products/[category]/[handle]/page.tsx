@@ -6,7 +6,7 @@ import {
   ProductDetailHeroSection,
   ProductDetailRelatedSection,
 } from "@/screens/product-detail";
-import { CAVIAR_HANDLES, GIFT_SET_HANDLES, isProductCategory, PRODUCT_CATEGORIES, PRODUCT_CATEGORY_HANDLE_TO_TITLE_MAP, type ProductCategory } from "@/shared/constants/catalog.constant";
+import { isProductCategory, PRODUCT_CATEGORIES, PRODUCT_CATEGORY_HANDLE_TO_PRODUCT_TYPE_MAP, type ProductCategory } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
 import { generateJsonLd, generatePageMetadata, localizedPath } from "@/shared/lib/metadata";
@@ -18,24 +18,10 @@ type Params = Promise<{ locale: string; category: string; handle: string }>;
 export async function generateStaticParams() {
   const params: { category: string; handle: string }[] = [];
   for (const category of PRODUCT_CATEGORIES) {
-    try {
-      const products = await getCollectionProducts("en", category);
-      for (const p of products) {
-        params.push({ category, handle: p.handle });
-      }
-    } catch (e) {
-      console.error(`[shopify] Failed to fetch static params for ${category}:`, e);
+    const products = await getCollectionProducts("en", category);
+    for (const p of products) {
+      params.push({ category, handle: p.handle });
     }
-  }
-  if (params.length === 0) {
-    const CAVIAR = CAVIAR_HANDLES.map(handle => ({ category: CatalogCollectionHandle.CAVIAR, handle }));
-    const GIFT_SET = GIFT_SET_HANDLES.map(handle => ({ category: CatalogCollectionHandle.GIFT_SET, handle }));
-
-    const fallbackProducts = [
-      ...CAVIAR,
-      ...GIFT_SET
-    ];
-    return fallbackProducts;
   }
   return params;
 }
@@ -46,7 +32,15 @@ export async function generateStaticParams() {
  */
 async function fetchProductDetail(locale: string, category: string, handle: string) {
   if (!isProductCategory(category)) return null;
-  return getProductDetail(locale, handle);
+  const product = await getProductDetail(locale, handle);
+  if (!product) return null;
+
+  const expectedProductType = PRODUCT_CATEGORY_HANDLE_TO_PRODUCT_TYPE_MAP[category];
+  if (product.productType !== expectedProductType) {
+    return null;
+  }
+
+  return product;
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
@@ -106,7 +100,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
       {
         "@type": "ListItem",
         position: 2,
-        name: PRODUCT_CATEGORY_HANDLE_TO_TITLE_MAP?.[category] || '',
+        name: PRODUCT_CATEGORY_HANDLE_TO_PRODUCT_TYPE_MAP?.[category] || '',
         item: new URL(
           localizedPath(locale, ROUTES.PRODUCT_CATEGORY(category)),
           SITE_URL
