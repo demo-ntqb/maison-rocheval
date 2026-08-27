@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { updateRegionPreferenceLocale } from "@/shared/lib/region-preference";
 import { cn } from "@/shared/lib/utils";
@@ -12,12 +13,15 @@ interface LanguageSwitcherProps {
 export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const locale = useLocale();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const toggleLanguage = () => {
     const nextLocale = locale === "en" ? "fr" : "en";
     updateRegionPreferenceLocale(nextLocale);
-    router.replace(pathname, { locale: nextLocale });
+    const queryString = searchParams?.toString();
+    const nextHref = queryString ? `${pathname}?${queryString}` : pathname;
+    router.replace(nextHref, { locale: nextLocale });
   };
 
   return (

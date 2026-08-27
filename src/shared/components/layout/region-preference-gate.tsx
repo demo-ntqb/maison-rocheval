@@ -2,6 +2,7 @@
 
 import { useMounted } from "@/shared/hooks/use-mounted.hook";
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useEffect, useSyncExternalStore } from "react";
 
@@ -38,6 +39,7 @@ const countryForLocale = (locale: AppLocale): ShippingCountryCode =>
 function RegionPreferenceGateInner() {
   const activeLocale = useLocale() as AppLocale;
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const snapshot = useSyncExternalStore(
@@ -61,8 +63,10 @@ function RegionPreferenceGateInner() {
     }
     markRegionRedirectedThisSession();
 
-    router.replace(pathname, { locale: preferredLocale });
-  }, [preferredLocale, activeLocale, pathname, router]);
+    const queryString = searchParams?.toString();
+    const nextHref = queryString ? `${pathname}?${queryString}` : pathname;
+    router.replace(nextHref, { locale: preferredLocale });
+  }, [preferredLocale, activeLocale, pathname, router, searchParams]);
 
   if (snapshot === null || preference || dismissed) {
     return null;
