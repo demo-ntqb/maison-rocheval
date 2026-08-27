@@ -35,9 +35,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
     product.variants.find((variant) => variant.optionValue === selectedOption) ??
     product.variants[0];
 
-  const composition = (product.composition ?? []).map((key) =>
-    t.has(`composition.${key}`) ? t(`composition.${key}`) : key,
-  );
+  const composition = product.composition ?? [];
 
   const formattedPrice = formatCatalogPrice(
     Number(activeVariant?.price.amount ?? product.price.amount),

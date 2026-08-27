@@ -27,19 +27,31 @@
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Shopify-Storefront-Private-Token", "value": "{{storefront_access_token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Shopify-Storefront-Private-Token",
+            "value": "{{storefront_access_token}}"
+          }
         ],
         "url": {
           "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
           "protocol": "https",
-          "host": ["{{store_domain}}"],
-          "path": ["api", "{{api_version}}", "graphql.json"]
+          "host": [
+            "{{store_domain}}"
+          ],
+          "path": [
+            "api",
+            "{{api_version}}",
+            "graphql.json"
+          ]
         },
         "body": {
           "mode": "graphql",
           "graphql": {
-            "query": "query CatalogProductDetail(\n  $handle: String!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  product(handle: $handle) {\n    id\n    handle\n    title\n    productType\n    availableForSale\n    descriptionHtml\n    featuredImage { url altText width height }\n    priceRange { minVariantPrice { amount currencyCode } }\n    images(first: 10) { nodes { url altText width height } }\n    variants(first: 20) {\n      nodes {\n        id\n        title\n        sku\n        availableForSale\n        price { amount currencyCode }\n        selectedOptions { name value }\n        metafield(namespace: \"custom\", key: \"title\") {\n          value\n        }\n      }\n    }\n    metafields(identifiers: [\n      { namespace: \"custom\", key: \"subtitle\" }\n      { namespace: \"custom\", key: \"notes\" }\n      { namespace: \"custom\", key: \"set_includes\" }\n      { namespace: \"custom\", key: \"short_description\" }\n      { namespace: \"custom\", key: \"product\" }\n      { namespace: \"custom\", key: \"serving\" }\n      { namespace: \"custom\", key: \"delivery\" }\n      { namespace: \"custom\", key: \"gifting\" }\n      { namespace: \"custom\", key: \"related_products\" }\n    ]) {\n      key\n      type\n      value\n      references(first: 10) {\n        nodes {\n          ... on Product {\n            id\n            handle\n            title\n            productType\n            availableForSale\n            descriptionHtml\n            featuredImage { url altText width height }\n            priceRange { minVariantPrice { amount currencyCode } }\n            metafields(identifiers: [\n              { namespace: \"custom\", key: \"subtitle\" }\n              { namespace: \"custom\", key: \"notes\" }\n              { namespace: \"custom\", key: \"short_description\" }\n            ]) {\n              key\n              type\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n  presentationBox: product(handle: \"presentation-box\") {\n    id\n    handle\n    title\n    productType\n    availableForSale\n    descriptionHtml\n    featuredImage { url altText width height }\n    priceRange { minVariantPrice { amount currencyCode } }\n    metafields(identifiers: [\n      { namespace: \"custom\", key: \"subtitle\" }\n      { namespace: \"custom\", key: \"notes\" }\n      { namespace: \"custom\", key: \"short_description\" }\n    ]) {\n      key\n      type\n      value\n    }\n    variants(first: 10) {\n      nodes {\n        id\n        title\n        sku\n        availableForSale\n        price { amount currencyCode }\n        selectedOptions { name value }\n      }\n    }\n  }\n  presentationOptions: metaobjects(type: \"presentation_option\", first: 10) {\n    nodes {\n      type\n      handle\n      fields { key type value }\n    }\n  }\n}",
+            "query": "query CatalogProductDetail(\n  $handle: String!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  product(handle: $handle) {\n    id\n    handle\n    title\n    productType\n    availableForSale\n    descriptionHtml\n    featuredImage { url altText width height }\n    priceRange { minVariantPrice { amount currencyCode } }\n    images(first: 10) { nodes { url altText width height } }\n    variants(first: 20) {\n      nodes {\n        id\n        title\n        sku\n        availableForSale\n        price { amount currencyCode }\n        selectedOptions { name value }\n        metafield(namespace: \"custom\", key: \"title\") {\n          value\n        }\n      }\n    }\n    metafields(identifiers: [\n      { namespace: \"custom\", key: \"subtitle\" }\n      { namespace: \"custom\", key: \"notes\" }\n      { namespace: \"custom\", key: \"set_includes\" }\n      { namespace: \"custom\", key: \"short_description\" }\n      { namespace: \"custom\", key: \"product_info\" }\n      { namespace: \"custom\", key: \"serving\" }\n      { namespace: \"custom\", key: \"delivery\" }\n      { namespace: \"custom\", key: \"gifting\" }\n      { namespace: \"custom\", key: \"related_products\" }\n    ]) {\n      key\n      type\n      value\n      references(first: 10) {\n        nodes {\n          ... on Product { ...CatalogProductCard }\n        }\n      }\n    }\n  }\n  presentationBox: product(handle: \"presentation-box\") {\n    ...CatalogProductCard\n    variants(first: 10) {\n      nodes {\n        id\n        title\n        sku\n        availableForSale\n        price { amount currencyCode }\n        selectedOptions { name value }\n      }\n    }\n  }\n  presentationOptions: metaobjects(type: \"presentation_option\", first: 10) {\n    nodes {\n      type\n      handle\n      fields { key type value }\n    }\n  }\n}\n\nfragment CatalogProductCard on Product {\n  id\n  handle\n  title\n  productType\n  availableForSale\n  descriptionHtml\n  featuredImage { url altText width height }\n  priceRange { minVariantPrice { amount currencyCode } }\n  metafields(identifiers: [\n    { namespace: \"custom\", key: \"subtitle\" }\n    { namespace: \"custom\", key: \"notes\" }\n    { namespace: \"custom\", key: \"short_description\" }\n  ]) {\n    key\n    type\n    value\n  }\n}",
             "variables": "{\n  \"handle\": \"amour\",\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
           }
         }
@@ -50,19 +62,31 @@
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Shopify-Storefront-Private-Token", "value": "{{storefront_access_token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Shopify-Storefront-Private-Token",
+            "value": "{{storefront_access_token}}"
+          }
         ],
         "url": {
           "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
           "protocol": "https",
-          "host": ["{{store_domain}}"],
-          "path": ["api", "{{api_version}}", "graphql.json"]
+          "host": [
+            "{{store_domain}}"
+          ],
+          "path": [
+            "api",
+            "{{api_version}}",
+            "graphql.json"
+          ]
         },
         "body": {
           "mode": "graphql",
           "graphql": {
-            "query": "query CatalogCollection(\n  $handle: String!\n  $productCount: Int!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: $handle) {\n    products(first: $productCount) {\n      nodes {\n        id\n        handle\n        title\n        productType\n        availableForSale\n        descriptionHtml\n        featuredImage { url altText width height }\n        priceRange { minVariantPrice { amount currencyCode } }\n        metafields(identifiers: [\n          { namespace: \"custom\", key: \"subtitle\" }\n          { namespace: \"custom\", key: \"notes\" }\n          { namespace: \"custom\", key: \"short_description\" }\n        ]) {\n          key\n          type\n          value\n        }\n      }\n    }\n  }\n}",
+            "query": "query CatalogCollection(\n  $handle: String!\n  $productCount: Int!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: $handle) {\n    products(first: $productCount, sortKey: CREATED, reverse: false) {\n      nodes {\n        ...CollectionProductCard\n      }\n    }\n  }\n}\n\nfragment CollectionProductCard on Product {\n  id\n  handle\n  title\n  productType\n  availableForSale\n  descriptionHtml\n  featuredImage { url altText width height }\n  priceRange { minVariantPrice { amount currencyCode } }\n  metafields(identifiers: [\n    { namespace: \"custom\", key: \"subtitle\" }\n    { namespace: \"custom\", key: \"notes\" }\n    { namespace: \"custom\", key: \"short_description\" }\n  ]) {\n    key\n    type\n    value\n  }\n}",
             "variables": "{\n  \"handle\": \"our-caviar\",\n  \"productCount\": 50,\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
           }
         }
@@ -73,19 +97,31 @@
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Shopify-Storefront-Private-Token", "value": "{{storefront_access_token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Shopify-Storefront-Private-Token",
+            "value": "{{storefront_access_token}}"
+          }
         ],
         "url": {
           "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
           "protocol": "https",
-          "host": ["{{store_domain}}"],
-          "path": ["api", "{{api_version}}", "graphql.json"]
+          "host": [
+            "{{store_domain}}"
+          ],
+          "path": [
+            "api",
+            "{{api_version}}",
+            "graphql.json"
+          ]
         },
         "body": {
           "mode": "graphql",
           "graphql": {
-            "query": "query CatalogCollectionProfiles(\n  $handle: String!\n  $productCount: Int!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: $handle) {\n    products(first: $productCount) {\n      nodes {\n        id\n        handle\n        title\n        productType\n        availableForSale\n        descriptionHtml\n        featuredImage { url altText width height }\n        images(first: 10) { nodes { url altText width height } }\n        priceRange { minVariantPrice { amount currencyCode } }\n        metafields(identifiers: [\n          { namespace: \"custom\", key: \"subtitle\" }\n          { namespace: \"custom\", key: \"notes\" }\n          { namespace: \"custom\", key: \"short_description\" }\n          { namespace: \"custom\", key: \"product\" }\n          { namespace: \"custom\", key: \"serving\" }\n          { namespace: \"custom\", key: \"delivery\" }\n          { namespace: \"custom\", key: \"gifting\" }\n        ]) {\n          key\n          type\n          value\n        }\n      }\n    }\n  }\n}",
+            "query": "query CatalogCollectionProfiles(\n  $handle: String!\n  $productCount: Int!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: $handle) {\n    products(first: $productCount, sortKey: CREATED, reverse: false) {\n      nodes {\n        id\n        handle\n        title\n        productType\n        availableForSale\n        descriptionHtml\n        featuredImage { url altText width height }\n        images(first: 10) { nodes { url altText width height } }\n        priceRange { minVariantPrice { amount currencyCode } }\n        metafields(identifiers: [\n          { namespace: \"custom\", key: \"subtitle\" }\n          { namespace: \"custom\", key: \"notes\" }\n          { namespace: \"custom\", key: \"short_description\" }\n          { namespace: \"custom\", key: \"product_info\" }\n          { namespace: \"custom\", key: \"serving\" }\n          { namespace: \"custom\", key: \"delivery\" }\n          { namespace: \"custom\", key: \"gifting\" }\n        ]) {\n          key\n          type\n          value\n        }\n      }\n    }\n  }\n}",
             "variables": "{\n  \"handle\": \"our-caviar\",\n  \"productCount\": 50,\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
           }
         }
@@ -96,19 +132,31 @@
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Shopify-Storefront-Private-Token", "value": "{{storefront_access_token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Shopify-Storefront-Private-Token",
+            "value": "{{storefront_access_token}}"
+          }
         ],
         "url": {
           "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
           "protocol": "https",
-          "host": ["{{store_domain}}"],
-          "path": ["api", "{{api_version}}", "graphql.json"]
+          "host": [
+            "{{store_domain}}"
+          ],
+          "path": [
+            "api",
+            "{{api_version}}",
+            "graphql.json"
+          ]
         },
         "body": {
           "mode": "graphql",
           "graphql": {
-            "query": "query CatalogHandles(\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: \"our-caviar\") {\n    products(first: 50) {\n      nodes { handle }\n    }\n  }\n}",
+            "query": "query CatalogHandles(\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: \"our-caviar\") {\n    products(first: 50, sortKey: CREATED, reverse: false) {\n      nodes { handle }\n    }\n  }\n}",
             "variables": "{\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
           }
         }
@@ -119,14 +167,26 @@
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Shopify-Storefront-Private-Token", "value": "{{storefront_access_token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Shopify-Storefront-Private-Token",
+            "value": "{{storefront_access_token}}"
+          }
         ],
         "url": {
           "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
           "protocol": "https",
-          "host": ["{{store_domain}}"],
-          "path": ["api", "{{api_version}}", "graphql.json"]
+          "host": [
+            "{{store_domain}}"
+          ],
+          "path": [
+            "api",
+            "{{api_version}}",
+            "graphql.json"
+          ]
         },
         "body": {
           "mode": "graphql",
