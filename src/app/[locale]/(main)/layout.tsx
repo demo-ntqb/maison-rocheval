@@ -4,6 +4,7 @@ import { Header } from "@/shared/components/layout/header/header";
 import { RegionPreferenceGate } from "@/shared/components/layout/region-preference-gate";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Suspense } from "react";
 
 export default async function LocaleLayout({
   children,
@@ -33,7 +34,9 @@ export default async function LocaleLayout({
       >
         <Header />
         <CartDrawer />
-        <RegionPreferenceGate />
+        <Suspense fallback={null}>
+          <RegionPreferenceGate />
+        </Suspense>
       </NextIntlClientProvider>
       <NextIntlClientProvider messages={null}>
         <main id="main-content" className="w-full flex-1">

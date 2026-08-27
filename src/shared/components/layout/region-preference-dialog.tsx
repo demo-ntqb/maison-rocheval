@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { usePathname, useRouter } from "@/i18n/navigation";
@@ -98,6 +99,7 @@ export function RegionPreferenceDialog({
   const t = useTranslations("regionDialog");
   const activeLocale = useLocale() as AppLocale;
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(true);
@@ -119,7 +121,9 @@ export function RegionPreferenceDialog({
     setOpen(false);
 
     if (locale !== activeLocale) {
-      router.replace(pathname, { locale });
+      const queryString = searchParams?.toString();
+      const nextHref = queryString ? `${pathname}?${queryString}` : pathname;
+      router.replace(nextHref, { locale });
     }
   };
 

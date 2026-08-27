@@ -23,6 +23,10 @@ vi.mock("@/i18n/navigation", () => ({
   useRouter: () => ({ replace }),
 }));
 
+vi.mock("next/navigation", () => ({
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 vi.mock("next/dynamic", () => ({
   default: () => function MockDialog() {
     return <div>region dialog</div>;

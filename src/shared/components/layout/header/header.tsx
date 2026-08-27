@@ -3,7 +3,7 @@
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { CartTrigger } from "@/shared/components/cart";
@@ -171,7 +171,19 @@ export function Header({ initialVariant }: HeaderProps) {
               className="flex flex-1 items-center justify-end gap-1 sm:gap-4 lg:gap-8"
               data-plumb-id="frame-2085667020-2"
             >
-              <LanguageSwitcher className={textColorClass} />
+              <Suspense fallback={
+                <button
+                  className={cn(
+                    "inline-flex min-h-12 items-center px-2 font-sans text-sm font-normal transition-colors cursor-pointer",
+                    textColorClass
+                  )}
+                  aria-label="FR / EN"
+                >
+                  <span data-plumb-id="fr-en">FR / EN</span>
+                </button>
+              }>
+                <LanguageSwitcher className={textColorClass} />
+              </Suspense>
               <CartTrigger className={textColorClass} />
             </div>
           </div>
