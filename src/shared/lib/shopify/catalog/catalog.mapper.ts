@@ -1,44 +1,41 @@
-import {
-    mapImage,
-    metafieldsByKey,
-    metaobjectFields,
-    parseStringList,
-    stripHtml,
-} from "./catalog-mapper.helper.ts";
 import type {
-    CatalogImage,
-    CatalogPackagingOption,
-    CatalogProductCard,
-    CatalogProductDetail,
-    CatalogProductProfile,
-    CatalogVariant,
-    StorefrontPresentationOption,
-    StorefrontProduct,
-    CatalogProductBaseDetail,
-    CatalogCaviarDetail,
-    CatalogGiftSetDetail,
-} from "./catalog.type.ts";
+  CatalogCaviarDetail,
+  CatalogGiftSetDetail,
+  CatalogImage,
+  CatalogPackagingOption,
+  CatalogProductBaseDetail,
+  CatalogProductCard,
+  CatalogProductDetail,
+  CatalogProductProfile,
+  CatalogVariant,
+  StorefrontPresentationOption,
+  StorefrontProduct,
+} from "../../../types/catalog.type";
+import { CatalogProductType } from "../../../types/catalog.type";
+import {
+  mapImage,
+  metafieldsByKey,
+  metaobjectFields,
+  parseStringList,
+  stripHtml,
+} from "./catalog-mapper.helper.ts";
 
 function mapProductCard(product: StorefrontProduct): CatalogProductCard {
   const fields = metafieldsByKey(product);
-  const tastingNotes = parseStringList(fields.get("tasting_notes")?.value);
-  const rawProductType = product.productType || "Caviar";
-  const productType: "Caviar" | "Gift Set" =
-    rawProductType === "Gift Set" || rawProductType === "gift-sets"
-      ? "Gift Set"
-      : "Caviar";
+  const notes = parseStringList(fields.get("notes")?.value);
+  const productType = (product.productType || CatalogProductType.CAVIAR) as CatalogProductType;
 
   return {
     productType,
     availableForSale: product.availableForSale,
-    description: fields.get("short_description")?.value || stripHtml(product.descriptionHtml),
-    eyebrow: fields.get("collection_line")?.value || "",
+    description: stripHtml(product.descriptionHtml),
+    short_description: fields.get("short_description")?.value || "",
     handle: product.handle,
     id: product.id,
     image: mapImage(product.featuredImage, product.title),
+    notes: notes.length ? notes.join(" · ") : "",
     price: product.priceRange.minVariantPrice,
-    profile: tastingNotes.join(" · "),
-    species: fields.get("species_scientific_name")?.value || "",
+    subtitle: fields.get("subtitle")?.value || "",
     title: product.title,
   };
 }
@@ -59,24 +56,10 @@ function mapGalleryImages(product: StorefrontProduct, fallback: CatalogImage | n
 
 function mapProductProfile(product: StorefrontProduct): CatalogProductProfile {
   const card = mapProductCard(product);
-  const fields = metafieldsByKey(product);
-  const speciesImageField = fields.get("species_image");
-  const speciesImage = speciesImageField?.reference?.image
-    ? mapImage(speciesImageField.reference.image, product.title)
-    : null;
 
   return {
     ...card,
     galleryImages: mapGalleryImages(product, card.image),
-    serving: fields.get("serving")?.value || "",
-    speciesDescription: fields.get("species_description")?.value || card.description,
-    speciesImage,
-    specs: {
-      color: fields.get("pearl_colour")?.value || "",
-      pearlSize: fields.get("pearl_size")?.value || "",
-      salt: fields.get("salt_content")?.value || "",
-      tastingNotes: parseStringList(fields.get("tasting_notes")?.value).join(" · "),
-    },
   };
 }
 
@@ -88,7 +71,7 @@ function mapVariants(product: StorefrontProduct): CatalogVariant[] {
   return (product.variants?.nodes ?? []).map((variant) => ({
     availableForSale: variant.availableForSale,
     id: variant.id,
-    optionValue: variant.selectedOptions[0]?.value || variant.title,
+    optionValue: variant.metafield?.value || variant.selectedOptions[0]?.value || variant.title,
     price: variant.price,
     sku: variant.sku || "",
   }));
@@ -140,38 +123,26 @@ export function mapProductDetail(
   const fields = metafieldsByKey(product);
   const baseDetail: CatalogProductBaseDetail = {
     ...profile,
-    delivery: {
-      duration: fields.get("duration")?.value || "",
-      shipping: fields.get("shipping")?.value || "",
-    },
     descriptionHtml: product.descriptionHtml,
-    gifting: {
-      addOns: fields.get("add_ons")?.value || "",
-      box: fields.get("box")?.value || "",
-      message: fields.get("message")?.value || "",
-    },
+    productRichText: fields.get("product")?.value || "",
+    servingRichText: fields.get("serving")?.value || "",
+    deliveryRichText: fields.get("delivery")?.value || "",
+    giftingRichText: fields.get("gifting")?.value || "",
     packagingOptions: mapPackagingOptions(presentationOptions, presentationBox),
     relatedProducts: mapCollectionProducts(fields.get("related_products")?.references?.nodes ?? []),
-    specs: {
-      ...profile.specs,
-      ingredients: fields.get("ingredients")?.value || "",
-      nutritionalData: fields.get("nutrition")?.value || "",
-    },
-    specsDescription: profile.speciesDescription,
-    storage: fields.get("storage")?.value || "",
-    shelfLife: fields.get("shelf_life")?.value || "",
     variants: mapVariants(product),
   };
 
-  if (profile.productType === "Gift Set") {
+  if (profile.productType === CatalogProductType.GIFT_SET) {
     return {
       ...baseDetail,
-      productType: "Gift Set",
+      productType: CatalogProductType.GIFT_SET,
+      setIncludes: fields.get("set_includes")?.value || undefined,
     } as CatalogGiftSetDetail;
   }
 
   return {
     ...baseDetail,
-    productType: "Caviar",
+    productType: CatalogProductType.CAVIAR,
   } as CatalogCaviarDetail;
 }

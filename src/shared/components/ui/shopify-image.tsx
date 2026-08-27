@@ -1,8 +1,8 @@
 import type { ComponentPropsWithoutRef } from "react";
 
-import type { CatalogImage } from "@/shared/lib/shopify/catalog-mapper";
 import { shopifyImageSrcSet, shopifyImageUrl } from "@/shared/lib/shopify/image";
 import { cn } from "@/shared/lib/utils";
+import type { CatalogImage } from "@/shared/types/catalog.type";
 
 const RESPONSIVE_WIDTHS = [200, 320, 480, 640, 800, 1000, 1200] as const;
 

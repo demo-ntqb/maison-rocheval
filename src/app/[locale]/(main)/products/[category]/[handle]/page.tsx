@@ -6,47 +6,52 @@ import {
   ProductDetailHeroSection,
   ProductDetailRelatedSection,
 } from "@/screens/product-detail";
+import { CAVIAR_HANDLES, GIFT_SET_HANDLES, isProductCategory, PRODUCT_CATEGORIES, PRODUCT_CATEGORY_HANDLE_TO_TITLE_MAP, type ProductCategory } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
-import { getMockProduct, getMockStaticParams, getProductsByCategory, isProductCategory, mapMockToCatalogCard, mapMockToProductDetail, type ProductCategory } from "@/shared/lib/catalog-mock";
 import { generateJsonLd, generatePageMetadata, localizedPath } from "@/shared/lib/metadata";
+import { getCollectionProducts, getProductDetail } from "@/shared/lib/shopify/catalog";
+import { CatalogCollectionHandle, CatalogProductType } from "@/shared/types/catalog.type";
 
 type Params = Promise<{ locale: string; category: string; handle: string }>;
 
-export function generateStaticParams() { return getMockStaticParams(); }
+export async function generateStaticParams() {
+  const params: { category: string; handle: string }[] = [];
+  for (const category of PRODUCT_CATEGORIES) {
+    try {
+      const products = await getCollectionProducts("en", category);
+      for (const p of products) {
+        params.push({ category, handle: p.handle });
+      }
+    } catch (e) {
+      console.error(`[shopify] Failed to fetch static params for ${category}:`, e);
+    }
+  }
+  if (params.length === 0) {
+    const CAVIAR = CAVIAR_HANDLES.map(handle => ({ category: CatalogCollectionHandle.CAVIAR, handle }));
+    const GIFT_SET = GIFT_SET_HANDLES.map(handle => ({ category: CatalogCollectionHandle.GIFT_SET, handle }));
 
-// --- Data Fetching Abstraction (Dành cho việc tích hợp Shopify Storefront API sau này) ---
-/**
- * Lấy thông tin chi tiết sản phẩm.
- * Sau này khi triển khai Shopify, bạn chỉ cần:
- * 1. Viết GraphQL Query lấy product detail dựa theo handle.
- * 2. Gọi client Storefront API: const { product } = await storefrontClient.query({ query: PRODUCT_DETAIL_QUERY, variables: { handle } });
- * 3. Sử dụng helper `mapProductDetail` từ `@/shared/lib/shopify/catalog-mapper` để ánh xạ thành CatalogProductDetail và trả về.
- */
-async function fetchProductDetail(category: string, handle: string) {
-  if (!isProductCategory(category)) return null;
-  const mock = getMockProduct(category as ProductCategory, handle);
-  if (!mock) return null;
-  return mapMockToProductDetail(mock);
+    const fallbackProducts = [
+      ...CAVIAR,
+      ...GIFT_SET
+    ];
+    return fallbackProducts;
+  }
+  return params;
 }
 
+// --- Data Fetching Abstraction ---
 /**
- * Lấy danh sách sản phẩm liên quan.
- * Sau này khi triển khai Shopify, bạn chỉ cần:
- * 1. Query danh sách sản phẩm cùng collection hoặc lấy danh sách ID/handle từ metafield `related_products` của sản phẩm hiện tại.
- * 2. Sử dụng `mapCollectionProducts` từ `@/shared/lib/shopify/catalog-mapper` để ánh xạ dữ liệu và trả về.
+ * Lấy thông tin chi tiết sản phẩm từ Shopify Storefront API.
  */
-async function fetchRelatedProducts(category: string, currentHandle: string) {
-  if (!isProductCategory(category)) return [];
-  return getProductsByCategory(category as ProductCategory)
-    .filter((item) => item.handle !== currentHandle)
-    .slice(0, 3)
-    .map(mapMockToCatalogCard);
+async function fetchProductDetail(locale: string, category: string, handle: string) {
+  if (!isProductCategory(category)) return null;
+  return getProductDetail(locale, handle);
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { locale, category, handle } = await params;
-  const product = await fetchProductDetail(category, handle);
+  const product = await fetchProductDetail(locale, category, handle);
   if (!product) return {};
 
   return generatePageMetadata(locale, product.title, product.description, {
@@ -59,10 +64,11 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
   const { locale, category, handle } = await params;
   if (!isProductCategory(category)) notFound();
 
-  const product = await fetchProductDetail(category, handle);
+  const product = await fetchProductDetail(locale, category, handle);
   if (!product) notFound();
 
-  const related = await fetchRelatedProducts(category, handle);
+  const related = product.relatedProducts.length > 0
+    ? product.relatedProducts : [];
 
   const path = ROUTES.PRODUCT_DETAIL(category, handle);
   const url = new URL(localizedPath(locale, path), SITE_URL).toString();
@@ -100,7 +106,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
       {
         "@type": "ListItem",
         position: 2,
-        name: category === "caviar" ? "Caviar" : "Gift sets",
+        name: PRODUCT_CATEGORY_HANDLE_TO_TITLE_MAP?.[category] || '',
         item: new URL(
           localizedPath(locale, ROUTES.PRODUCT_CATEGORY(category)),
           SITE_URL
@@ -119,7 +125,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
     <div className="flex w-full flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: productJsonLd }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: breadcrumbJsonLd }} />
-      {product.productType === "Gift Set" ? (
+      {product.productType === CatalogProductType.GIFT_SET ? (
         <ProductDetailGiftSetSection product={product} />
       ) : (
         <ProductDetailHeroSection product={product} />

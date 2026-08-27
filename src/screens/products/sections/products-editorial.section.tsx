@@ -2,9 +2,10 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { Picture } from "@/shared/components/ui/picture";
+import { ProductCategory } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 
-export async function ProductsEditorialSection({ category }: { category: "caviar" | "gift-sets" }) {
+export async function ProductsEditorialSection({ category }: { category: ProductCategory }) {
   const t = await getTranslations("products.editorial");
 
   return (

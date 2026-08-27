@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
 
 import { useCart } from "@/shared/components/cart";
 import { ROUTES } from "@/shared/constants/route.constant";
-import type { CatalogGiftSetDetail } from "@/shared/lib/shopify/catalog-mapper";
+import { CatalogCollectionHandle, type CatalogGiftSetDetail } from "@/shared/types/catalog.type";
 import { formatCatalogPrice } from "../lib/product-detail-configurator";
 import { ProductDetailPurchase } from "./product-detail-purchase";
 import { ProductDetailSummary } from "./product-detail-summary";
@@ -52,7 +52,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
 
     cart.addGiftSetUnits({
       group: {
-        addHref: ROUTES.PRODUCT_DETAIL("gift-sets", product.handle),
+        addHref: ROUTES.PRODUCT_DETAIL(CatalogCollectionHandle.GIFT_SET, product.handle),
         id: product.id,
         title: product.title,
       },
@@ -75,7 +75,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
         description={product.description}
         seeLessLabel={t("seeLess")}
         seeMoreLabel={t("seeMore")}
-        subtitle={product.profile || product.subtitle}
+        subtitle={product.subtitle || product.notes}
         title={product.title}
       />
 

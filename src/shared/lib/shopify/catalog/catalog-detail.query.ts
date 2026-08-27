@@ -22,47 +22,28 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
           availableForSale
           price { amount currencyCode }
           selectedOptions { name value }
+          metafield(namespace: "custom", key: "title") {
+            value
+          }
         }
       }
       metafields(identifiers: [
-        { namespace: "rocheval", key: "subtitle" }
-        { namespace: "rocheval", key: "short_description" }
-        { namespace: "rocheval", key: "collection_line" }
-        { namespace: "rocheval", key: "tasting_notes" }
-        { namespace: "rocheval", key: "species_scientific_name" }
-        { namespace: "rocheval", key: "species_description" }
-        { namespace: "rocheval", key: "species_image" }
-        { namespace: "rocheval", key: "pearl_size" }
-        { namespace: "rocheval", key: "salt_content" }
-        { namespace: "rocheval", key: "pearl_colour" }
-        { namespace: "rocheval", key: "ingredients" }
-        { namespace: "rocheval", key: "nutrition" }
-        { namespace: "rocheval", key: "storage" }
-        { namespace: "rocheval", key: "serving" }
-        { namespace: "rocheval", key: "shelf_life" }
-        { namespace: "rocheval", key: "shipping" }
-        { namespace: "rocheval", key: "duration" }
-        { namespace: "rocheval", key: "box" }
-        { namespace: "rocheval", key: "message" }
-        { namespace: "rocheval", key: "add_ons" }
-        { namespace: "rocheval", key: "related_products" }
+        { namespace: "custom", key: "subtitle" }
+        { namespace: "custom", key: "notes" }
+        { namespace: "custom", key: "set_includes" }
+        { namespace: "custom", key: "short_description" }
+        { namespace: "custom", key: "product" }
+        { namespace: "custom", key: "serving" }
+        { namespace: "custom", key: "delivery" }
+        { namespace: "custom", key: "gifting" }
+        { namespace: "custom", key: "related_products" }
       ]) {
         key
         type
         value
-        references(first: 3) {
+        references(first: 10) {
           nodes {
             ... on Product { ...CatalogProductCard }
-          }
-        }
-        reference {
-          ... on MediaImage {
-            image {
-              url
-              altText
-              width
-              height
-            }
           }
         }
       }
@@ -98,10 +79,9 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
     featuredImage { url altText width height }
     priceRange { minVariantPrice { amount currencyCode } }
     metafields(identifiers: [
-      { namespace: "rocheval", key: "short_description" }
-      { namespace: "rocheval", key: "collection_line" }
-      { namespace: "rocheval", key: "tasting_notes" }
-      { namespace: "rocheval", key: "species_scientific_name" }
+      { namespace: "custom", key: "subtitle" }
+      { namespace: "custom", key: "notes" }
+      { namespace: "custom", key: "short_description" }
     ]) {
       key
       type

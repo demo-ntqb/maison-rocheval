@@ -1,6 +1,6 @@
 import { RadioGroup, RadioGroupItem } from "@/shared/components/ui/radio-group";
-import type { CatalogVariant } from "@/shared/lib/shopify/catalog-mapper";
 import { cn } from "@/shared/lib/utils";
+import type { CatalogVariant } from "@/shared/types/catalog.type";
 
 /**
  * Caviar tins are short labels ("30g") and Figma lays them out as four equal

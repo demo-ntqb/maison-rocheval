@@ -2,6 +2,15 @@ import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
 
+import type {
+  CatalogHandlesQuery,
+  CatalogProductCard,
+  CatalogProductDetail,
+  CatalogProductProfile,
+  CollectionProductsQuery,
+  ProductDetailQuery,
+  StorefrontResult,
+} from "../../../types/catalog.type";
 import { getShopifyMarket } from "../config";
 import { getCatalogStorefrontClient } from "../storefront";
 import {
@@ -15,15 +24,6 @@ import {
   COLLECTION_PRODUCTS_QUERY,
   PRODUCT_DETAIL_QUERY,
 } from "./catalog.query";
-import type {
-  CatalogHandlesQuery,
-  CatalogProductCard,
-  CatalogProductDetail,
-  CatalogProductProfile,
-  CollectionProductsQuery,
-  ProductDetailQuery,
-  StorefrontResult,
-} from "./catalog.type";
 
 function assertSuccessful(result: StorefrontResult, operation: string): void {
   if (!result.errors?.length) return;

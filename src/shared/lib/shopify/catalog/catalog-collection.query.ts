@@ -23,10 +23,9 @@ export const COLLECTION_PRODUCTS_QUERY = `#graphql
     featuredImage { url altText width height }
     priceRange { minVariantPrice { amount currencyCode } }
     metafields(identifiers: [
-      { namespace: "rocheval", key: "short_description" }
-      { namespace: "rocheval", key: "collection_line" }
-      { namespace: "rocheval", key: "tasting_notes" }
-      { namespace: "rocheval", key: "species_scientific_name" }
+      { namespace: "custom", key: "subtitle" }
+      { namespace: "custom", key: "notes" }
+      { namespace: "custom", key: "short_description" }
     ]) {
       key
       type
@@ -55,30 +54,17 @@ export const COLLECTION_PRODUCT_PROFILES_QUERY = `#graphql
           images(first: 10) { nodes { url altText width height } }
           priceRange { minVariantPrice { amount currencyCode } }
           metafields(identifiers: [
-            { namespace: "rocheval", key: "short_description" }
-            { namespace: "rocheval", key: "collection_line" }
-            { namespace: "rocheval", key: "tasting_notes" }
-            { namespace: "rocheval", key: "species_scientific_name" }
-            { namespace: "rocheval", key: "species_description" }
-            { namespace: "rocheval", key: "species_image" }
-            { namespace: "rocheval", key: "pearl_size" }
-            { namespace: "rocheval", key: "salt_content" }
-            { namespace: "rocheval", key: "pearl_colour" }
-            { namespace: "rocheval", key: "serving" }
+            { namespace: "custom", key: "subtitle" }
+            { namespace: "custom", key: "notes" }
+            { namespace: "custom", key: "short_description" }
+            { namespace: "custom", key: "product" }
+            { namespace: "custom", key: "serving" }
+            { namespace: "custom", key: "delivery" }
+            { namespace: "custom", key: "gifting" }
           ]) {
             key
             type
             value
-            reference {
-              ... on MediaImage {
-                image {
-                  url
-                  altText
-                  width
-                  height
-                }
-              }
-            }
           }
         }
       }

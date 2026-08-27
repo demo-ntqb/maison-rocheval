@@ -1,9 +1,11 @@
 import { getTranslations } from "next-intl/server";
 
 import { FaqSection } from "@/shared/components/composite/faq-section";
+import { ProductCategory } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 
-export async function ProductsFaqSection({ category }: { category: "caviar" | "gift-sets" }) {
+
+export async function ProductsFaqSection({ category }: { category: ProductCategory }) {
   const t = await getTranslations("products.faq");
   const items = Array.from({ length: 5 }, (_, index) => ({
     id: `products-faq-${index + 1}`,

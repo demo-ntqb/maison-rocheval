@@ -1,3 +1,14 @@
+export const enum CatalogCollectionHandle {
+  HOME_PAGE = "home-page",
+  GIFT_SET = "gift-set",
+  CAVIAR = "caviar",
+}
+
+export const enum CatalogProductType {
+  CAVIAR = "Caviar",
+  GIFT_SET = "Gift Set",
+}
+
 type CatalogMoney = {
   amount: string;
   currencyCode: string;
@@ -11,44 +22,17 @@ export type CatalogImage = {
 };
 
 export type CatalogProductCard = {
-  productType: "Caviar" | "Gift Set";
+  productType: CatalogProductType;
   availableForSale: boolean;
   description: string;
-  eyebrow: string;
+  short_description: string | null;
   handle: string;
   id: string;
   image: CatalogImage | null;
+  notes: string;
   price: CatalogMoney;
-  profile: string;
-  species: string;
+  subtitle: string;
   title: string;
-};
-
-export type CatalogSpeciesRef = {
-  handle: string;
-  scientificName: string;
-  description: string;
-  image: CatalogImage | null;
-};
-
-export type CatalogServingRef = {
-  handle: string;
-  recommendation: string;
-  storage: string;
-  shelfLife: string;
-};
-
-export type CatalogDeliveryRef = {
-  handle: string;
-  shipping: string;
-  duration: string;
-};
-
-export type CatalogGiftingRef = {
-  handle: string;
-  box: string;
-  message: string;
-  addOns: string;
 };
 
 export type CatalogBundleComponent = {
@@ -59,15 +43,6 @@ export type CatalogBundleComponent = {
 
 export type CatalogProductProfile = CatalogProductCard & {
   galleryImages: CatalogImage[];
-  serving: string;
-  speciesDescription: string;
-  speciesImage: CatalogImage | null;
-  specs: {
-    color: string;
-    pearlSize: string;
-    salt: string;
-    tastingNotes: string;
-  };
 };
 
 export type CatalogVariant = {
@@ -89,48 +64,28 @@ export type CatalogPackagingOption = {
 };
 
 export type CatalogProductBaseDetail = CatalogProductProfile & {
-  delivery: {
-    duration: string;
-    shipping: string;
-  };
   descriptionHtml: string;
-  gifting: {
-    addOns: string;
-    box: string;
-    message: string;
-  };
+  /** Rich text content for the "Product" accordion section */
+  productRichText: string;
+  /** Rich text content for the "Serving" accordion section */
+  servingRichText: string;
+  /** Rich text content for the "Delivery" accordion section */
+  deliveryRichText: string;
+  /** Rich text content for the "Gifting" accordion section */
+  giftingRichText: string;
   packagingOptions: CatalogPackagingOption[];
   relatedProducts: CatalogProductCard[];
-  specs: CatalogProductProfile["specs"] & {
-    ingredients: string;
-    nutritionalData: string;
-  };
-  // Structured metaobjects
-  speciesRef?: CatalogSpeciesRef;
-  servingGuide?: CatalogServingRef;
-  deliveryProfile?: CatalogDeliveryRef;
-  giftingProfile?: CatalogGiftingRef;
-
-  // Additional metafields from product YAML definitions
-  pearlColour?: string; // e.g., "Dark grey to golden olive"
-  saltContent?: number; // e.g., 3.5
-  ingredients?: string; // detailed ingredient list
-  shelfLifeDays?: number; // e.g., 28
-  relatedProductsMeta?: string[]; // array of related product identifiers
-  subtitle?: string; // e.g., "Perfect for your private tasting"
-  shortDescription?: string; // short description text
-  specsDescription: string;
-  storage: string;
-  shelfLife: string;
   variants: CatalogVariant[];
 };
 
 export type CatalogCaviarDetail = CatalogProductBaseDetail & {
-  productType: "Caviar";
+  productType: CatalogProductType.CAVIAR;
 };
 
 export type CatalogGiftSetDetail = CatalogProductBaseDetail & {
-  productType: "Gift Set";
+  productType: CatalogProductType.GIFT_SET;
+  /** What the set contains, from `custom.set_includes` metafield */
+  setIncludes?: string;
   bundle?: {
     components: CatalogBundleComponent[];
   };
@@ -146,14 +101,6 @@ export type CatalogProductDetail = CatalogCaviarDetail | CatalogGiftSetDetail;
 
 export type StorefrontMetafield = {
   key: string;
-  reference?: {
-    image?: {
-      altText: string | null;
-      height: number | null;
-      url: string;
-      width: number | null;
-    } | null;
-  } | null;
   references?: { nodes: StorefrontProduct[] } | null;
   type: string;
   value: string;
@@ -192,6 +139,7 @@ export type StorefrontProduct = {
     nodes: Array<{
       availableForSale: boolean;
       id: string;
+      metafield?: { value: string } | null;
       price: CatalogMoney;
       selectedOptions: Array<{ name: string; value: string }>;
       sku: string | null;

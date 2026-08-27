@@ -9,7 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/shared/components/ui/breadcrumb";
 import { ROUTES } from "@/shared/constants/route.constant";
-import type { ProductCategory } from "@/shared/lib/catalog-mock";
+import type { ProductCategory } from "@/shared/constants/catalog.constant";
 
 /** Figma: a 24px tall row of 12px uppercase crumbs, caret-separated. */
 const CRUMB_CLASS = "flex h-6 items-center px-1 font-sans text-xs leading-5 uppercase text-black";

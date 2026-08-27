@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 
 import { ProductsCatalogSection, ProductsEditorialSection, ProductsFaqSection } from "@/screens/products";
 import { ROUTES } from "@/shared/constants/route.constant";
-import { getProductsByCategory, isProductCategory, mapMockToCatalogCard, PRODUCT_CATEGORIES, type ProductCategory } from "@/shared/lib/catalog-mock";
+import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
+import { isProductCategory, PRODUCT_CATEGORIES, type ProductCategory } from "@/shared/constants/catalog.constant";
 import { generatePageMetadata } from "@/shared/lib/metadata";
+import { CatalogCollectionHandle } from "@/shared/types/catalog.type";
 
 type Params = Promise<{ locale: string; category: string }>;
 
@@ -15,14 +17,11 @@ export function generateStaticParams() {
 
 // --- Data Fetching Abstraction (Dành cho việc tích hợp Shopify Storefront API sau này) ---
 /**
- * Lấy danh sách sản phẩm theo danh mục.
- * Sau này khi triển khai Shopify, bạn chỉ cần:
- * 1. Query danh sách sản phẩm thuộc collection tương ứng dựa theo handle (category).
- * 2. Sử dụng `mapCollectionProducts` từ `@/shared/lib/shopify/catalog-mapper` để chuyển đổi và trả về.
+ * Lấy danh sách sản phẩm theo danh mục từ Shopify Storefront API.
  */
-async function fetchCategoryProducts(category: string) {
+async function fetchCategoryProducts(locale: string, category: string) {
   if (!isProductCategory(category)) return [];
-  return getProductsByCategory(category as ProductCategory).map(mapMockToCatalogCard);
+  return getCollectionProducts(locale, category);
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
@@ -36,11 +35,11 @@ export default async function ProductCategoryPage({ params }: { params: Params }
   const { locale, category } = await params;
   if (!isProductCategory(category)) notFound();
 
-  const products = await fetchCategoryProducts(category);
+  const products = await fetchCategoryProducts(locale, category);
 
   return (
     <div
-      className={`mx-auto w-full max-w-content flex flex-col gap-[120px] px-4 pb-24 sm:px-6 lg:gap-[200px] lg:px-0 ${category === "caviar" ? "lg:pb-72" : "lg:pb-50"}`}
+      className={`mx-auto w-full max-w-content flex flex-col gap-[120px] px-4 pb-24 sm:px-6 lg:gap-[200px] lg:px-0 ${category === CatalogCollectionHandle.CAVIAR ? "lg:pb-72" : "lg:pb-50"}`}
     >
       <ProductsCatalogSection locale={locale} category={category as ProductCategory} products={products} />
       <ProductsEditorialSection category={category as ProductCategory} />

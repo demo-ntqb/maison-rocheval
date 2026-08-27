@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { ProductCard } from "@/shared/components/composite/product-card";
 import { IconButton } from "@/shared/components/ui/icon-button";
-import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
+import type { CatalogProductCard } from "@/shared/types/catalog.type";
 
 import { IconCaretLeft, IconCaretRight } from "@/shared/components/icons";
 

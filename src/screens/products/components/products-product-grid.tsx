@@ -1,6 +1,6 @@
 import { ProductCard } from "@/shared/components/composite/product-card";
-import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 import { cn } from "@/shared/lib/utils";
+import type { CatalogProductCard } from "@/shared/types/catalog.type";
 
 interface ProductsProductGridProps {
   products: readonly CatalogProductCard[];

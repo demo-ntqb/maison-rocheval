@@ -3,7 +3,7 @@ import type {
   StorefrontMetafield,
   StorefrontMetaobject,
   StorefrontProduct,
-} from "./catalog.type.ts";
+} from "../../../types/catalog.type";
 
 export function metafieldsByKey(product: StorefrontProduct): Map<string, StorefrontMetafield> {
   return new Map(

@@ -2,9 +2,9 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/shared/components/composite/product-card";
+import { ProductCategory } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
-import { ProductCategory } from "@/shared/lib/catalog-mock";
-import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
+import type { CatalogProductCard } from "@/shared/types/catalog.type";
 
 
 export interface ProductDetailRelatedSectionProps {
