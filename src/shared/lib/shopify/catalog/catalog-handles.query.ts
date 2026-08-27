@@ -4,7 +4,7 @@ export const CATALOG_HANDLES_QUERY = `#graphql
     $language: LanguageCode
   ) @inContext(country: $country, language: $language) {
     collection(handle: "our-caviar") {
-      products(first: 50) {
+      products(first: 50, sortKey: CREATED, reverse: false) {
         nodes { handle }
       }
     }

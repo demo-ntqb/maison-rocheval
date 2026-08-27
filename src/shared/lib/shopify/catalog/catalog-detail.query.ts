@@ -32,7 +32,7 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
         { namespace: "custom", key: "notes" }
         { namespace: "custom", key: "set_includes" }
         { namespace: "custom", key: "short_description" }
-        { namespace: "custom", key: "product" }
+        { namespace: "custom", key: "product_info" }
         { namespace: "custom", key: "serving" }
         { namespace: "custom", key: "delivery" }
         { namespace: "custom", key: "gifting" }

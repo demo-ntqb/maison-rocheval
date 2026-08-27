@@ -46,7 +46,7 @@ const productInfoVariants = cva(
       size: {
         sm: "p-4 h-[160px]",
         md: "p-6 h-[176px]",
-        responsive: "p-6 h-[158px] xl:h-[176px]",
+        responsive: "p-4 lg:p-6 h-[158px] xl:h-[176px]",
       },
     },
     defaultVariants: {
@@ -125,19 +125,21 @@ export function ProductCard({
           data-plumb-id="vector-1307"
         />
 
-        <div className="flex flex-col gap-1 items-center w-full" data-plumb-id="frame-2085667167">
+        <div className="flex flex-col gap-1 justify-center items-center w-full flex-1" data-plumb-id="frame-2085667167">
           <p
-            className="font-sans text-[12px] font-normal text-black truncate w-full"
+            className="font-sans text-[12px] font-normal text-black w-full"
             data-plumb-id="rich-creamy-long-finish"
           >
             {product.notes}
           </p>
-          <p
-            className="font-sans text-[12px] font-light text-gray-dark line-clamp-1 xl:line-clamp-2 w-full"
-            data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a"
-          >
-            {product.short_description}
-          </p>
+          {
+            product.short_description && <p
+              className="font-sans text-[12px] font-light text-gray-dark line-clamp-1 xl:line-clamp-2 w-full"
+              data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a"
+            >
+              {product.short_description}
+            </p>
+          }
         </div>
       </Link>
     </article>

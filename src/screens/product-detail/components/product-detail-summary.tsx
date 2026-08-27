@@ -59,7 +59,7 @@ export function ProductDetailSummary({
         ) : null}
 
         <p className="font-sans text-sm font-light leading-5 text-black">
-          {visibleDescription}
+          {`${visibleDescription} `}
           {isTruncatable ? (
             <button
               type="button"
@@ -67,7 +67,7 @@ export function ProductDetailSummary({
               onClick={() => setExpanded((current) => !current)}
               className="cursor-pointer font-medium underline-offset-2 hover:underline"
             >
-              {expanded ? ` ${seeLessLabel}` : seeMoreLabel}
+              {expanded ? seeLessLabel : seeMoreLabel}
             </button>
           ) : null}
         </p>
