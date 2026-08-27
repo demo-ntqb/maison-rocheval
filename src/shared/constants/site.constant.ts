@@ -16,14 +16,6 @@ export const SITE_URL = (
     : `https://${rawSiteOrigin}`
 ).replace(/\/+$/u, "");
 
-export const SITE_DOMAIN = (() => {
-  try {
-    return new URL(SITE_URL).hostname;
-  } catch {
-    return "maisonrocheval.com";
-  }
-})();
-
 export const businessInfo = {
   name: "Maison Rocheval",
   tagline: "",

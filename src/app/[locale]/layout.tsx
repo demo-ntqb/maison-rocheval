@@ -2,7 +2,7 @@ import { HeadAnalytics } from "@/app/(head)/analytics";
 import { routing } from "@/i18n/routing";
 import { PreventZoom } from "@/shared/components/layout/prevent-zoom";
 import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
-import { generateOrganizationJsonLd, generateRootMetadata, isComingSoon } from "@/shared/lib/metadata";
+import { generateOrganizationJsonLd, generateRootMetadata } from "@/shared/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { hasLocale } from "next-intl";
@@ -64,8 +64,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const namespace = isComingSoon() ? "metadata.comingSoon" : "metadata.root";
-  const t = await getTranslations({ locale, namespace });
+  const t = await getTranslations({ locale, namespace: "metadata.root" });
   return generateRootMetadata(locale, t("title"), t("description"));
 }
 

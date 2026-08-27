@@ -6,7 +6,7 @@ export type HeaderRouteConfig = {
   announcement?: boolean;
 };
 
-export const HEADER_ROUTE_CONFIG: Record<string, HeaderRouteConfig> = {
+const HEADER_ROUTE_CONFIG: Record<string, HeaderRouteConfig> = {
   [ROUTES.HOME]: {
     variant: "transparent",
     heroTone: "dark",
@@ -35,7 +35,7 @@ export const HEADER_ROUTE_CONFIG: Record<string, HeaderRouteConfig> = {
   },
 };
 
-export function isRouteOrChild(pathname: string, route: string) {
+function isRouteOrChild(pathname: string, route: string) {
   return pathname === route || pathname.startsWith(`${route}/`);
 }
 

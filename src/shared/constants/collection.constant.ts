@@ -37,7 +37,3 @@ export const CAVIAR_COLLECTION: readonly CaviarConfig[] = [
     hasCustomDish: false,
   },
 ] as const;
-
-export const COLLECTION_CAVIAR_IDS = CAVIAR_COLLECTION.map((c) => c.id);
-
-export type CollectionCaviarId = typeof COLLECTION_CAVIAR_IDS[number];

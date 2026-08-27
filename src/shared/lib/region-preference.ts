@@ -18,10 +18,10 @@ const REDIRECTED_KEY = "mr:region-redirected";
 /** Ký tự phân tách hai giá trị trong snapshot (không xuất hiện trong JSON). */
 const SNAPSHOT_SEPARATOR = "\u0000";
 
-export const isAppLocale = (value: unknown): value is AppLocale =>
+const isAppLocale = (value: unknown): value is AppLocale =>
   typeof value === "string" && (routing.locales as readonly string[]).includes(value);
 
-export const isShippingCountryCode = (value: unknown): value is ShippingCountryCode =>
+const isShippingCountryCode = (value: unknown): value is ShippingCountryCode =>
   typeof value === "string" && SHIPPING_COUNTRIES.some((country ) => country.code === value);
 
 /**
@@ -96,7 +96,7 @@ function parseRegionPreference(raw: string): RegionPreference | null {
 }
 
 /** Đọc lựa chọn đã lưu ngoài luồng render (event handler). */
-export function readRegionPreference(): RegionPreference | null {
+function readRegionPreference(): RegionPreference | null {
   if (typeof window === "undefined") {
     return null;
   }

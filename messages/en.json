@@ -8,10 +8,6 @@
       "title": "The Collection",
       "description": "Discover Armour, L'Expression, Harmonie, Oscietra and Kaluga — five rare caviars from Maison Rocheval, read fresh from the sturgeon, never reduced to a number."
     },
-    "comingSoon": {
-      "title": "Maison Rocheval — Coming Soon",
-      "description": "Maison Rocheval, a premium French caviar house, is launching soon. Stay tuned."
-    },
     "root": {
       "title": "Maison Rocheval — Caviar & Fine Food",
       "description": "Premium French caviar house offering exceptional Amur, Kaluga, and Russian Hybrid caviars."
@@ -215,13 +211,6 @@
       "placeholder": "Your message*",
       "linesRemaining": "{count} line(s) remaining",
       "save": "Save"
-    }
-  },
-  "comingSoon": {
-    "hero": {
-      "brand": "Maison Rocheval Paris",
-      "message": "Coming soon",
-      "imageAlt": "Aerial view of a sturgeon farm, its circular rearing pens set on a lake below forested mountains"
     }
   },
   "header": {

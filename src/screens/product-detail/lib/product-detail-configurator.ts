@@ -46,17 +46,6 @@ export function deriveProductSelection(
   };
 }
 
-export function formatProductMoney(
-  amount: number,
-  currencyCode: string,
-  locale: string,
-): string {
-  return new Intl.NumberFormat(locale === "fr" ? "fr-FR" : "en-US", {
-    currency: currencyCode,
-    style: "currency",
-  }).format(amount);
-}
-
 /**
  * The product detail design prints the amount with a trailing currency
  * symbol (`888.88€`) rather than Intl's default leading placement for en.

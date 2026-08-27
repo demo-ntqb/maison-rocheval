@@ -60,10 +60,6 @@ function mapProductProfile(product: StorefrontProduct): CatalogProductProfile {
   };
 }
 
-export function mapCollectionProductProfiles(products: StorefrontProduct[]): CatalogProductProfile[] {
-  return products.map(mapProductProfile);
-}
-
 function mapVariants(product: StorefrontProduct): CatalogVariant[] {
   return (product.variants?.nodes ?? []).map((variant) => ({
     availableForSale: variant.availableForSale,

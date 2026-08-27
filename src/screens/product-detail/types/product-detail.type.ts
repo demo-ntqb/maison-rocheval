@@ -25,22 +25,3 @@ export type ProductSelectionView = Readonly<{
   totalPrice: number;
 }>;
 
-export type ProductDetailTranslationKey =
-  | "addToCart"
-  | "boxOf"
-  | "decreaseQty"
-  | "deliveryNote"
-  | "free"
-  | "increaseQty"
-  | "packagingLabel"
-  | "perBoxFormat"
-  | "perBoxLabel"
-  | "personalizedMessage"
-  | "sizeLabel"
-  | "summaryLabel"
-  | "unavailable";
-
-export type ProductDetailTranslator = (
-  key: ProductDetailTranslationKey,
-  values?: Record<string, number | string>,
-) => string;
