@@ -31,10 +31,6 @@ Full conventions (naming, SEO, performance, accessibility, i18n) are documented 
 - `yarn lint` — ESLint
 - `yarn typecheck` — TypeScript + Hydrogen GraphQL validation
 - `yarn test:cicd` — verify Vercel GitHub Actions contract
-- `yarn test:provisioning` — unit và BDD contract cho Shopify provisioning
-- `yarn shopify:provision:plan` — đọc Shopify và in deterministic desired-state diff
-- `yarn shopify:provision:apply` — apply các create/update do manifest quản lý
-- `yarn shopify:provision:verify` — fail nếu Shopify chưa hội tụ với manifest
 
 ## Shopify Headless
 
@@ -47,38 +43,6 @@ The Storefront foundation is adapted from Shopify's Next.js Hydrogen template wh
 5. Run `yarn typecheck` to validate TypeScript and Storefront GraphQL operations against the schema bundled with the installed Hydrogen release.
 
 Without Shopify credentials, server-side catalog queries use `mock.shop`, so CI and local builds do not require production secrets. Catalog reads use the static client in `src/shared/lib/shopify/storefront.ts`; future cart/account code must use the request-scoped client from the same file so Shopify receives the buyer IP without making catalog pages dynamic.
-
-### Provision Shopify catalog
-
-Catalog seed được khai báo tại `scripts/shopify/provision/manifest.mjs`. Store đích chỉ lấy từ `SHOPIFY_ADMIN_STORE_DOMAIN` (fallback `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN`); CLI không có nhánh logic dev/production.
-
-Admin app cần các scopes sau:
-
-- `read_products`, `write_products`
-- `read_metaobjects`, `write_metaobjects`
-- `read_metaobject_definitions`, `write_metaobject_definitions`
-- `read_files`, `write_files`
-- `read_publications`, `write_publications`
-- `read_translations`, `write_translations`
-- `read_locales`
-
-Chọn một auth mode trong `.env.local`: `SHOPIFY_ADMIN_ACCESS_TOKEN`, hoặc cặp `SHOPIFY_ADMIN_CLIENT_ID` + `SHOPIFY_ADMIN_CLIENT_SECRET`. Không commit credentials.
-
-Workflow vận hành:
-
-```bash
-yarn shopify:provision:plan
-yarn shopify:provision:apply
-yarn shopify:provision:verify
-```
-
-Luôn chạy `plan` trước `apply`. `plan` và `verify` dùng read-only client; `apply` chỉ create/update resources trong manifest, không delete và không ghi inventory quantities. Sau khi apply, CLI đọc lại Shopify và chỉ thành công khi state đã hội tụ. Nếu cần rollback seed content, sửa manifest về desired state trước đó và chạy lại; tài nguyên không còn trong manifest không bị tự động xoá.
-
-`productSet` chỉ được dùng khi bootstrap product chưa tồn tại. Sau lần seed đầu,
-prices, variants và product options thuộc quyền merchant; provisioning chỉ cập nhật
-title, description, product type, vendor và status bằng `productUpdate`.
-
-Species data được lưu trực tiếp trong Product metafields `rocheval.species_scientific_name` và `rocheval.species_description`.
 
 ## Vercel CI/CD
 
