@@ -72,7 +72,7 @@ describe("product detail configurator", () => {
     const selection = createProductSelection(product);
     const derived = deriveProductSelection(product, selection);
 
-    expect(selection).toEqual({ packagingId: "standard", perBox: 1, quantity: 1, size: "30g" });
+    expect(selection).toEqual({ quantity: 1, size: "30g" });
     expect(derived.totalPrice).toBe(159);
     expect(derived.currencyCode).toBe("EUR");
   });
@@ -81,13 +81,11 @@ describe("product detail configurator", () => {
     const initial = createProductSelection(product);
     const configured = [
       { type: "select-size", size: "50g" } as const,
-      { type: "select-packaging", packagingId: "premium" } as const,
-      { type: "select-per-box", perBox: 3 } as const,
       { type: "set-quantity", quantity: 2 } as const,
     ].reduce(productSelectionReducer, initial);
 
-    expect(initial).toEqual({ packagingId: "standard", perBox: 1, quantity: 1, size: "30g" });
-    expect(deriveProductSelection(product, configured).totalPrice).toBe(1618);
+    expect(initial).toEqual({ quantity: 1, size: "30g" });
+    expect(deriveProductSelection(product, configured).totalPrice).toBe(518);
     expect(productSelectionReducer(configured, { type: "set-quantity", quantity: 0 }).quantity).toBe(1);
   });
 });
