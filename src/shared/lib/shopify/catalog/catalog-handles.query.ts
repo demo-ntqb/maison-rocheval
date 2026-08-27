@@ -3,7 +3,7 @@ export const CATALOG_HANDLES_QUERY = `#graphql
     $country: CountryCode
     $language: LanguageCode
   ) @inContext(country: $country, language: $language) {
-    collection(handle: "our-caviar") {
+    collection(handle: "caviar") {
       products(first: 50, sortKey: CREATED, reverse: false) {
         nodes { handle }
       }

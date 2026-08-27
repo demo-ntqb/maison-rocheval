@@ -2,20 +2,17 @@ import type {
   CatalogCaviarDetail,
   CatalogGiftSetDetail,
   CatalogImage,
-  CatalogPackagingOption,
   CatalogProductBaseDetail,
   CatalogProductCard,
   CatalogProductDetail,
   CatalogProductProfile,
   CatalogVariant,
-  StorefrontPresentationOption,
   StorefrontProduct,
 } from "../../../types/catalog.type";
 import { CatalogProductType } from "../../../types/catalog.type";
 import {
   mapImage,
   metafieldsByKey,
-  metaobjectFields,
   parseStringList,
   stripHtml,
 } from "./catalog-mapper.helper.ts";

@@ -107,7 +107,7 @@ export async function getProductDetail(
 export async function getCatalogHandles(): Promise<string[]> {
   "use cache";
   cacheLife("minutes");
-  cacheTag("shopify-products", "shopify-collections", "shopify-collection-our-caviar");
+  cacheTag("shopify-products", "shopify-collections", "shopify-collection-caviar");
   const market = getShopifyMarket("en");
   const result = await getCatalogStorefrontClient("en").query<CatalogHandlesQuery>(
     CATALOG_HANDLES_QUERY,
