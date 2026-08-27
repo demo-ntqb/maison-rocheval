@@ -11,7 +11,7 @@ import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
 import { generateJsonLd, generatePageMetadata, localizedPath } from "@/shared/lib/metadata";
 import { getCollectionProducts, getProductDetail } from "@/shared/lib/shopify/catalog";
-import { CatalogCollectionHandle, CatalogProductType } from "@/shared/types/catalog.type";
+import { CatalogProductType } from "@/shared/types/catalog.type";
 
 type Params = Promise<{ locale: string; category: string; handle: string }>;
 

@@ -29,7 +29,7 @@ export function ProductDetailBreadcrumb({
 }: ProductDetailBreadcrumbProps) {
   return (
     <Breadcrumb>
-      <BreadcrumbList className="gap-0">
+      <BreadcrumbList className="gap-x-1 gap-y-1.5">
         <BreadcrumbItem className="gap-0">
           <BreadcrumbLink asChild>
             <Link href={ROUTES.PRODUCTS} className={`${CRUMB_CLASS} gap-1`}>
@@ -37,7 +37,7 @@ export function ProductDetailBreadcrumb({
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator className="-ml-2 [&>svg]:size-4">
+        <BreadcrumbSeparator className="[&>svg]:size-4">
           <IconCaretRight />
         </BreadcrumbSeparator>
         <BreadcrumbItem className="gap-0">
@@ -47,11 +47,11 @@ export function ProductDetailBreadcrumb({
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator className="-ml-2 [&>svg]:size-4">
+        <BreadcrumbSeparator className="[&>svg]:size-4">
           <IconCaretRight />
         </BreadcrumbSeparator>
         <BreadcrumbItem className="gap-0">
-          <BreadcrumbPage className={`${CRUMB_CLASS} font-medium`}>{title}</BreadcrumbPage>
+          <BreadcrumbPage className={`${CRUMB_CLASS} font-medium h-auto min-h-6 py-0.5`}>{title}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

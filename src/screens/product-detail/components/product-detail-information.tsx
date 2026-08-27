@@ -24,7 +24,6 @@ const CONTENT_CLASS = "flex flex-col gap-6 py-5";
 const RICH_TEXT_CLASS = "font-sans text-xs font-light leading-relaxed text-black";
 
 export function ProductDetailInformation({ product }: { product: CatalogProductDetail }) {
-  console.log(product);
   const t = useTranslations("productDetail");
 
   const hasProduct = Boolean(product.productRichText);
