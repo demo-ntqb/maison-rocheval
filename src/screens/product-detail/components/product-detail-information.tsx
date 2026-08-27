@@ -8,8 +8,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/shared/components/ui/accordion";
-import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
-import { SpecBlock, SpecRichText, SpecRow } from "./product-detail-spec-content";
+import type { CatalogProductDetail } from "@/shared/types/catalog.type";
+import { SpecRichText } from "./product-detail-spec-content";
 
 /**
  * Figma keeps every row flush and quiet: a 20px rule, sans caps label and a
@@ -21,23 +21,15 @@ const TRIGGER_CLASS =
 
 const CONTENT_CLASS = "flex flex-col gap-6 pt-0 pb-5";
 
+const RICH_TEXT_CLASS = "font-sans text-xs font-light leading-relaxed text-black";
+
 export function ProductDetailInformation({ product }: { product: CatalogProductDetail }) {
   const t = useTranslations("productDetail");
 
-  const hasProduct = Boolean(
-    product.descriptionHtml ||
-    product.specs?.pearlSize ||
-    product.specs?.salt ||
-    product.specs?.color ||
-    product.specs?.tastingNotes ||
-    product.specs?.ingredients ||
-    product.specs?.nutritionalData,
-  );
-  const hasServing = Boolean(product.shelfLife || product.storage || product.serving);
-  const hasDelivery = Boolean(product.delivery?.shipping || product.delivery?.duration);
-  const hasGifting = Boolean(
-    product.gifting?.box || product.gifting?.message || product.gifting?.addOns,
-  );
+  const hasProduct = Boolean(product.descriptionHtml || product.productRichText);
+  const hasServing = Boolean(product.servingRichText);
+  const hasDelivery = Boolean(product.deliveryRichText);
+  const hasGifting = Boolean(product.giftingRichText);
 
   if (!hasProduct && !hasServing && !hasDelivery && !hasGifting) return null;
 
@@ -49,20 +41,11 @@ export function ProductDetailInformation({ product }: { product: CatalogProductD
             {t("information.product")}
           </AccordionTrigger>
           <AccordionContent className={CONTENT_CLASS}>
-            {product.descriptionHtml ? (
-              <SpecRichText
-                data={product.descriptionHtml}
-                className="font-sans text-xs font-light leading-relaxed text-black"
-              />
+            {product.productRichText ? (
+              <SpecRichText data={product.productRichText} className={RICH_TEXT_CLASS} />
+            ) : product.descriptionHtml ? (
+              <SpecRichText data={product.descriptionHtml} className={RICH_TEXT_CLASS} />
             ) : null}
-            <dl className="flex flex-col gap-6">
-              <SpecRow label={t("specs.pearlSize")} value={product.specs?.pearlSize} />
-              <SpecRow label={t("specs.salt")} value={product.specs?.salt} />
-              <SpecRow label={t("specs.color")} value={product.specs?.color} />
-              <SpecRow label={t("specs.tastingNotes")} value={product.specs?.tastingNotes} />
-              <SpecBlock label={t("specs.ingredients")} value={product.specs?.ingredients} />
-              <SpecBlock label={t("specs.nutritionalData")} value={product.specs?.nutritionalData} />
-            </dl>
           </AccordionContent>
         </AccordionItem>
       ) : null}
@@ -73,11 +56,7 @@ export function ProductDetailInformation({ product }: { product: CatalogProductD
             {t("information.serving")}
           </AccordionTrigger>
           <AccordionContent className={CONTENT_CLASS}>
-            <dl className="flex flex-col gap-6">
-              <SpecBlock label={t("specs.shelfLife")} value={product.shelfLife} />
-              <SpecBlock label={t("specs.storage")} value={product.storage} />
-              <SpecBlock label={t("specs.recommendation")} value={product.serving} />
-            </dl>
+            <SpecRichText data={product.servingRichText} className={RICH_TEXT_CLASS} />
           </AccordionContent>
         </AccordionItem>
       ) : null}
@@ -88,10 +67,7 @@ export function ProductDetailInformation({ product }: { product: CatalogProductD
             {t("information.delivery")}
           </AccordionTrigger>
           <AccordionContent className={CONTENT_CLASS}>
-            <dl className="flex flex-col gap-6">
-              <SpecBlock label={t("specs.shipping")} value={product.delivery?.shipping} />
-              <SpecBlock label={t("specs.duration")} value={product.delivery?.duration} />
-            </dl>
+            <SpecRichText data={product.deliveryRichText} className={RICH_TEXT_CLASS} />
           </AccordionContent>
         </AccordionItem>
       ) : null}
@@ -102,11 +78,7 @@ export function ProductDetailInformation({ product }: { product: CatalogProductD
             {t("information.gifting")}
           </AccordionTrigger>
           <AccordionContent className={CONTENT_CLASS}>
-            <dl className="flex flex-col gap-6">
-              <SpecBlock label={t("specs.box")} value={product.gifting?.box} />
-              <SpecBlock label={t("specs.message")} value={product.gifting?.message} />
-              <SpecBlock label={t("specs.addOns")} value={product.gifting?.addOns} />
-            </dl>
+            <SpecRichText data={product.giftingRichText} className={RICH_TEXT_CLASS} />
           </AccordionContent>
         </AccordionItem>
       ) : null}

@@ -1,7 +1,7 @@
 import type {
   CatalogPackagingOption,
   CatalogVariant,
-} from "@/shared/lib/shopify/catalog-mapper";
+} from "@/shared/types/catalog.type";
 
 export type ProductPerBoxOption = 1 | 2 | 3 | 4;
 

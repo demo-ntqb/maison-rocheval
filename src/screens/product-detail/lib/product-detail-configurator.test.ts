@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
+import { type CatalogProductDetail, CatalogProductType } from "@/shared/types/catalog.type";
 
 import {
   createProductSelection,
@@ -9,24 +9,17 @@ import {
 } from "./product-detail-configurator";
 
 const product: CatalogProductDetail = {
-  productType: "Caviar",
+  productType: CatalogProductType.CAVIAR,
   availableForSale: true,
-  delivery: {
-    duration: "Overnight delivery",
-    shipping: "FedEx Priority Overnight",
-  },
   description: "Kaluga description",
+  short_description: null,
   descriptionHtml: "<p>Kaluga description</p>",
-  eyebrow: "Patrimoine",
   galleryImages: [],
-  gifting: {
-    addOns: "Mother of pearl spoon",
-    box: "Bolduc ribbon box",
-    message: "Personalized card",
-  },
   handle: "kaluga",
   id: "gid://shopify/Product/kaluga",
   image: null,
+  notes: "Rich · Creamy",
+  subtitle: "Huso dauricus",
   packagingOptions: [
     {
       availableForSale: true,
@@ -48,23 +41,11 @@ const product: CatalogProductDetail = {
     },
   ],
   price: { amount: "159", currencyCode: "EUR" },
-  profile: "Rich · Creamy",
+  productRichText: "",
+  servingRichText: "",
+  deliveryRichText: "",
+  giftingRichText: "",
   relatedProducts: [],
-  serving: "Serve chilled",
-  shelfLife: "Four weeks",
-  species: "Huso dauricus",
-  speciesDescription: "Large pearls",
-  speciesImage: null,
-  specs: {
-    color: "Bronze",
-    ingredients: "Roe, salt",
-    nutritionalData: "254 kcal",
-    pearlSize: "3.2–3.8mm",
-    salt: "3.5%",
-    tastingNotes: "Rich · Creamy",
-  },
-  specsDescription: "Large pearls",
-  storage: "Keep refrigerated",
   title: "Kaluga Caviar",
   variants: [
     {

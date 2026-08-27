@@ -1,4 +1,4 @@
-import type { CatalogProductDetail } from "@/shared/lib/shopify/catalog-mapper";
+import type { CatalogProductDetail } from "@/shared/types/catalog.type";
 import type {
   ProductSelection,
   ProductSelectionAction,

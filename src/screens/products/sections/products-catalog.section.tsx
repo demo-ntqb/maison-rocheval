@@ -2,9 +2,9 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { ToggleButton } from "@/shared/components/ui/toggle-button";
+import { PRODUCT_CATEGORIES, type ProductCategory } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
-import { PRODUCT_CATEGORIES, type ProductCategory } from "@/shared/lib/catalog-mock";
-import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
+import type { CatalogProductCard } from "@/shared/types/catalog.type";
 import { ProductsProductGrid } from "../components/products-product-grid";
 
 export async function ProductsCatalogSection({
@@ -36,16 +36,11 @@ export async function ProductsCatalogSection({
         <nav aria-label={t("categoryNavLabel")} className="flex gap-3" data-plumb-id="frame-2085667292">
           {PRODUCT_CATEGORIES.map((cat) => {
             const isActive = category === cat;
-            const plumbId = cat === "gift-sets"
-              ? (category === "gift-sets" ? "component-43" : "component-43-2")
-              : (category === "caviar" ? "component-43-2" : "component-43");
-
             return (
               <ToggleButton
                 key={cat}
                 asChild
                 active={isActive}
-                data-plumb-id={plumbId}
               >
                 <Link
                   href={ROUTES.PRODUCT_CATEGORY(cat)}

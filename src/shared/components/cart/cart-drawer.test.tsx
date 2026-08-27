@@ -3,8 +3,8 @@ import { NextIntlClientProvider } from "next-intl";
 import type { ComponentProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import cartMessages from "../../../../messages/source/en/cart.json";
 import type { CartEntry } from "@/shared/types/cart.type";
+import cartMessages from "../../../../messages/source/en/cart.json";
 
 vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, ...props }: ComponentProps<"a">) => <a href={String(href)} {...props} />,
@@ -16,14 +16,14 @@ import { CartProvider } from "./cart-provider";
 const GIFT_IMAGE = {
   altText: "L’Initiation gift set",
   height: 500,
-  url: "/images/products/gift-sets/linitiation.png",
+  url: "/images/products/gift-set/linitiation.png",
   width: 500,
 };
 
 const ENTRIES: CartEntry[] = [
   {
     group: {
-      addHref: "/products/gift-sets",
+      addHref: "/products/gift-set",
       id: "gift-set-initiation",
       lines: [
         {

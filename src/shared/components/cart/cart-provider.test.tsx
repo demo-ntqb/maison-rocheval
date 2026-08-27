@@ -46,7 +46,7 @@ function Probe() {
         type="button"
         onClick={() =>
           cart.addGiftSetUnits({
-            group: { addHref: "/products/gift-sets/linitiation", id: "gift-linitiation", title: "L'Initiation" },
+            group: { addHref: "/products/gift-set/linitiation", id: "gift-linitiation", title: "L'Initiation" },
             quantity: 2,
             unit: {
               currencyCode: "EUR",

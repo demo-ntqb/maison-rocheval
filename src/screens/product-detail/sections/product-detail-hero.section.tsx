@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 
-import type { CatalogCaviarDetail } from "@/shared/lib/shopify/catalog-mapper";
+import { CatalogCollectionHandle, type CatalogCaviarDetail } from "@/shared/types/catalog.type";
 import { ProductDetailBreadcrumb } from "../components/product-detail-breadcrumb";
 import { ProductDetailCaviarPanel } from "../components/product-detail-caviar-panel";
 import { ProductDetailGallery } from "../components/product-detail-gallery";
@@ -19,7 +19,7 @@ export async function ProductDetailHeroSection({ product }: ProductDetailHeroSec
     <NextIntlClientProvider messages={{ productDetail: messages.productDetail }}>
       <section className="mx-auto w-full max-w-content px-4 pt-25 pb-50 lg:px-0">
         <ProductDetailBreadcrumb
-          category="caviar"
+          category={CatalogCollectionHandle.CAVIAR}
           categoryLabel={catalogT("categories.caviar")}
           shopLabel={catalogT("breadcrumb.shop")}
           title={product.title}

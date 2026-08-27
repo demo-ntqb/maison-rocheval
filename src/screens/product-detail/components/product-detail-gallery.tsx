@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
-import type { CatalogImage } from "@/shared/lib/shopify/catalog-mapper";
+import type { CatalogImage } from "@/shared/types/catalog.type";
 
 export interface ProductDetailGalleryProps {
   images: readonly CatalogImage[];

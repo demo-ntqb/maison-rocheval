@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
 
 import { useCart } from "@/shared/components/cart";
-import type { CatalogCaviarDetail } from "@/shared/lib/shopify/catalog-mapper";
+import type { CatalogCaviarDetail } from "@/shared/types/catalog.type";
 import { formatCatalogPrice } from "../lib/product-detail-configurator";
 import { ProductDetailPurchase } from "./product-detail-purchase";
 import { ProductDetailSummary } from "./product-detail-summary";
@@ -53,10 +53,10 @@ export function ProductDetailCaviarPanel({ product }: ProductDetailCaviarPanelPr
     <div className="flex w-full flex-col gap-8">
       <ProductDetailSummary
         description={product.description}
-        notes={product.specs.tastingNotes || product.profile}
+        notes={product.notes}
         seeLessLabel={t("seeLess")}
         seeMoreLabel={t("seeMore")}
-        subtitle={product.species || product.subtitle}
+        subtitle={product.subtitle}
         title={product.title}
       />
 

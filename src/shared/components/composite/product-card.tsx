@@ -2,9 +2,10 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { Link } from "@/i18n/navigation";
 import { ShopifyImage } from "@/shared/components/ui/shopify-image";
+import { PRODUCT_CATEGORY_TITLE_TO_HANDLE_MAP } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
-import type { CatalogProductCard } from "@/shared/lib/shopify/catalog-mapper";
 import { cn } from "@/shared/lib/utils";
+import type { CatalogProductCard } from "@/shared/types/catalog.type";
 
 const productCardVariants = cva(
   "flex flex-col border-[0.5px] border-stone rounded-[2px] bg-canvas text-center overflow-hidden shrink-0 transition-all duration-300 hover:shadow-sm hover:bg-warm",
@@ -61,11 +62,6 @@ export interface ProductCardProps
   priority?: boolean;
 }
 
-const PRODUCT_CATEGORY_MAP = {
-  "Caviar": "caviar",
-  "Gift Set": "gift-sets",
-} as const;
-
 export function ProductCard({
   product,
   priority = false,
@@ -73,7 +69,7 @@ export function ProductCard({
   className,
   ...props
 }: ProductCardProps) {
-  const category = PRODUCT_CATEGORY_MAP[product.productType];
+  const category = PRODUCT_CATEGORY_TITLE_TO_HANDLE_MAP?.[product.productType] || '';
 
   return (
     <article
@@ -120,7 +116,7 @@ export function ProductCard({
             className="font-sans text-[12px] font-light text-gray-dark not-italic truncate w-full"
             data-plumb-id="huso-duricus"
           >
-            {product.species}
+            {product.subtitle}
           </p>
         </div>
 
@@ -134,13 +130,13 @@ export function ProductCard({
             className="font-sans text-[12px] font-normal text-black truncate w-full"
             data-plumb-id="rich-creamy-long-finish"
           >
-            {product.profile}
+            {product.notes}
           </p>
           <p
             className="font-sans text-[12px] font-light text-gray-dark line-clamp-1 xl:line-clamp-2 w-full"
             data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a"
           >
-            {product.description}
+            {product.short_description}
           </p>
         </div>
       </Link>

@@ -3,6 +3,7 @@ import { permanentRedirect } from "next/navigation";
 
 import { localizedPath } from "@/shared/lib/metadata";
 import { ROUTES } from "@/shared/constants/route.constant";
+import { CatalogCollectionHandle } from "@/shared/types/catalog.type";
 
 export const metadata: Metadata = { robots: { index: false, follow: true } };
 
@@ -12,5 +13,5 @@ export default async function ProductsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  permanentRedirect(localizedPath(locale, ROUTES.PRODUCT_CATEGORY("caviar")));
+  permanentRedirect(localizedPath(locale, ROUTES.PRODUCT_CATEGORY(CatalogCollectionHandle.CAVIAR)));
 }
