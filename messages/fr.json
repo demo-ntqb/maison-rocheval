@@ -8,10 +8,6 @@
       "title": "La Collection",
       "description": "Découvrez Armour, L'Expression, Harmonie, Oscietra et Kaluga — cinq caviars rares de Maison Rocheval, lus frais à partir de l'esturgeon, jamais réduits à un chiffre."
     },
-    "comingSoon": {
-      "title": "Maison Rocheval — Bientôt disponible",
-      "description": "Maison Rocheval, une maison de caviar français haut de gamme, ouvre bientôt. Restez à l'écoute."
-    },
     "root": {
       "title": "Maison Rocheval — Caviar & Gastronomie",
       "description": "Maison française de caviar d'exception. Découvrez nos sélections exclusives d'Amur, Kaluga et Russian Hybrid."
@@ -215,13 +211,6 @@
       "placeholder": "Votre message*",
       "linesRemaining": "{count} ligne(s) restante(s)",
       "save": "Enregistrer"
-    }
-  },
-  "comingSoon": {
-    "hero": {
-      "brand": "Maison Rocheval Paris",
-      "message": "Bientôt disponible",
-      "imageAlt": "Vue aérienne d'une ferme d'esturgeons, ses bassins circulaires posés sur un lac au pied de montagnes boisées"
     }
   },
   "header": {

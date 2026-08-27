@@ -17,7 +17,8 @@
     "@next/env",
     "tailwindcss",
     "sharp",
-    "shadcn"
+    "shadcn",
+    "tw-animate-css"
   ],
   "ignoreExportsUsedInFile": {
     "interface": true,

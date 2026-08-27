@@ -102,12 +102,6 @@ export type StorefrontMetafield = {
   value: string;
 };
 
-export type StorefrontMetaobject = {
-  fields: Array<{ key: string; type: string; value: string }>;
-  handle: string;
-  type: string;
-};
-
 export type StorefrontProduct = {
   productType?: string;
   availableForSale: boolean;
@@ -145,18 +139,12 @@ export type StorefrontProduct = {
   };
 };
 
-export type StorefrontPresentationOption = StorefrontMetaobject;
-
 export type CollectionProductsQuery = {
   collection: { products: { nodes: StorefrontProduct[] } } | null;
 };
 
 export type ProductDetailQuery = {
   product: StorefrontProduct | null;
-};
-
-export type CatalogHandlesQuery = {
-  collection: { products: { nodes: Array<{ handle: string }> } } | null;
 };
 
 export type StorefrontResult = { errors?: Array<{ message: string }> };

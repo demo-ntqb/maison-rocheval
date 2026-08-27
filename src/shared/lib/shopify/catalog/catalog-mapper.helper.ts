@@ -1,7 +1,6 @@
 import type {
   CatalogImage,
   StorefrontMetafield,
-  StorefrontMetaobject,
   StorefrontProduct,
 } from "../../../types/catalog.type";
 
@@ -9,10 +8,6 @@ export function metafieldsByKey(product: StorefrontProduct): Map<string, Storefr
   return new Map(
     product.metafields.flatMap((field) => (field ? [[field.key, field] as const] : [])),
   );
-}
-
-export function metaobjectFields(reference?: StorefrontMetaobject | null): Map<string, string> {
-  return new Map(reference?.fields.map(({ key, value }) => [key, value]) ?? []);
 }
 
 export function parseStringList(value?: string): string[] {
@@ -26,23 +21,6 @@ export function parseStringList(value?: string): string[] {
     return [];
   }
 }
-
-function richTextNodeValue(node: unknown): string {
-  if (!node || typeof node !== "object") return "";
-  const record = node as { children?: unknown[]; value?: unknown };
-  if (typeof record.value === "string") return record.value;
-  return record.children?.map(richTextNodeValue).filter(Boolean).join(" ") ?? "";
-}
-
-export function richTextToPlainText(value?: string): string {
-  if (!value) return "";
-  try {
-    return richTextNodeValue(JSON.parse(value)).replace(/\s+/gu, " ").trim();
-  } catch {
-    return value;
-  }
-}
-
 
 
 export function stripHtml(value: string): string {

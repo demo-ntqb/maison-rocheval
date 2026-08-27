@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { businessInfo, seoDefaults, SITE_URL } from "@/shared/constants/site.constant";
 import { routing } from "@/i18n/routing";
-import { getTranslations } from "next-intl/server";
 
 const OG_LOCALE: Record<string, string> = {
   en: "en_US",
@@ -149,29 +148,6 @@ export function generatePageMetadata(
   };
 }
 
-/** True while the `(main)` layout is gating every route behind the coming-soon placeholder. */
-export function isComingSoon(): boolean {
-  return process.env.NEXT_PUBLIC_COMING_SOON === "true";
-}
-
-/**
- * Metadata for any route under `(main)` while coming-soon is active. Every such
- * route renders the same placeholder (see `(main)/layout.tsx`), so title/description
- * use the coming-soon copy and canonical always points at the homepage — this stops
- * search engines from treating /products, /about-the-brand, etc. as distinct pages
- * with the same body content.
- */
-export async function generateComingSoonMetadata(locale: string): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: "metadata.comingSoon" });
-  const title = t("title");
-
-  return {
-    ...generatePageMetadata(locale, title, t("description"), { canonical: "/" }),
-    // The coming-soon copy already bakes in the brand name, so bypass the root
-    // layout's `%s | Maison Rocheval` template to avoid a doubled-up <title>.
-    title: { absolute: title },
-  };
-}
 
 /**
  * Generate JSON-LD structured data

@@ -5,15 +5,6 @@ import { RichText } from "@shopify/hydrogen-react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/shared/lib/utils";
 
-export function SpecRow({ label, value }: { label: string; value?: string }) {
-  if (!value) return null;
-  return (
-    <div className="flex items-start justify-between gap-6">
-      <dt className="font-display text-xs font-normal uppercase tracking-wider text-black">{label}</dt>
-      <dd className="text-right font-sans text-xs text-black font-light">{value}</dd>
-    </div>
-  );
-}
 
 function isRichTextAst(data?: string): boolean {
   if (!data) return false;
@@ -87,22 +78,3 @@ export function SpecRichText({ data, className }: { data: string; className?: st
   return <span className={className}>{data}</span>;
 }
 
-export function SpecBlock({
-  label,
-  value,
-  children,
-}: {
-  label: string;
-  value?: string;
-  children?: React.ReactNode;
-}) {
-  if (!value && !children) return null;
-  return (
-    <div className="flex flex-col gap-2">
-      <dt className="font-display text-xs uppercase tracking-wider text-black">{label}</dt>
-      <dd className="font-sans text-xs text-black font-light leading-relaxed">
-        {children ? children : <SpecRichText data={value!} />}
-      </dd>
-    </div>
-  );
-}

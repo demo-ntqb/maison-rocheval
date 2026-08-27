@@ -3,10 +3,8 @@ import "server-only";
 import { cacheLife, cacheTag } from "next/cache";
 
 import type {
-  CatalogHandlesQuery,
   CatalogProductCard,
   CatalogProductDetail,
-  CatalogProductProfile,
   CollectionProductsQuery,
   ProductDetailQuery,
   StorefrontResult,
@@ -14,13 +12,10 @@ import type {
 import { getShopifyMarket } from "../config";
 import { getCatalogStorefrontClient } from "../storefront";
 import {
-  mapCollectionProductProfiles,
   mapCollectionProducts,
   mapProductDetail,
 } from "./catalog.mapper";
 import {
-  CATALOG_HANDLES_QUERY,
-  COLLECTION_PRODUCT_PROFILES_QUERY,
   COLLECTION_PRODUCTS_QUERY,
   PRODUCT_DETAIL_QUERY,
 } from "./catalog.query";
@@ -67,21 +62,6 @@ export async function getCollectionProducts(
   return mapCollectionProducts(result.collection?.products.nodes ?? []);
 }
 
-export async function getCollectionProductProfiles(
-  locale: string,
-  handle: string,
-  productCount = 50,
-): Promise<CatalogProductProfile[]> {
-  "use cache";
-  cacheLife("minutes");
-  tagCollection(locale, handle);
-  const result = await getCatalogStorefrontClient(locale).query<CollectionProductsQuery>(
-    COLLECTION_PRODUCT_PROFILES_QUERY,
-    { variables: collectionVariables(locale, handle, productCount) },
-  );
-  assertSuccessful(result, "CatalogCollectionProfiles");
-  return mapCollectionProductProfiles(result.collection?.products.nodes ?? []);
-}
 
 export async function getProductDetail(
   locale: string,
@@ -101,23 +81,5 @@ export async function getProductDetail(
   return mapProductDetail(result.product);
 }
 
-/**
- * Cached lookup of catalog handles.
- */
-export async function getCatalogHandles(): Promise<string[]> {
-  "use cache";
-  cacheLife("minutes");
-  cacheTag("shopify-products", "shopify-collections", "shopify-collection-caviar");
-  const market = getShopifyMarket("en");
-  const result = await getCatalogStorefrontClient("en").query<CatalogHandlesQuery>(
-    CATALOG_HANDLES_QUERY,
-    { variables: { country: market.country, language: market.language } },
-  );
-  assertSuccessful(result, "CatalogHandles");
-  const handles = result.collection?.products.nodes.map(({ handle }) => handle) ?? [];
-  if (handles.length === 0) {
-    throw new Error("[shopify] Catalog handles query returned no products.");
-  }
-  return handles;
-}
+
 
