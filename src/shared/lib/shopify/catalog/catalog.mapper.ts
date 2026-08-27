@@ -124,13 +124,14 @@ export function mapProductDetail(
   const baseDetail: CatalogProductBaseDetail = {
     ...profile,
     descriptionHtml: product.descriptionHtml,
-    productRichText: fields.get("product")?.value || "",
+    productRichText: fields.get("product_info")?.value || "",
     servingRichText: fields.get("serving")?.value || "",
     deliveryRichText: fields.get("delivery")?.value || "",
     giftingRichText: fields.get("gifting")?.value || "",
     packagingOptions: mapPackagingOptions(presentationOptions, presentationBox),
     relatedProducts: mapCollectionProducts(fields.get("related_products")?.references?.nodes ?? []),
     variants: mapVariants(product),
+    composition: parseStringList(fields.get("set_includes")?.value),
   };
 
   if (profile.productType === CatalogProductType.GIFT_SET) {

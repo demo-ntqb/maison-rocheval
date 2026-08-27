@@ -7,12 +7,13 @@ import { SplitText } from "@/shared/components/ui/split-text";
 import { TextButton } from "@/shared/components/ui/text-button";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
+import { CatalogCollectionHandle } from "@/shared/types/catalog.type";
 import { HomeProductList } from "../components/home-product-list";
 
 export async function HomeProductsSection({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "home.products" });
 
-  const products = await getCollectionProducts(locale, "home-page");
+  const products = await getCollectionProducts(locale, CatalogCollectionHandle.HOME_PAGE);
 
   return (
     <section

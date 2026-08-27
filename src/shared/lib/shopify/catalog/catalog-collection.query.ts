@@ -6,7 +6,7 @@ export const COLLECTION_PRODUCTS_QUERY = `#graphql
     $language: LanguageCode
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
-      products(first: $productCount) {
+      products(first: $productCount, sortKey: CREATED, reverse: false) {
         nodes {
           ...CollectionProductCard
         }
@@ -42,7 +42,7 @@ export const COLLECTION_PRODUCT_PROFILES_QUERY = `#graphql
     $language: LanguageCode
   ) @inContext(country: $country, language: $language) {
     collection(handle: $handle) {
-      products(first: $productCount) {
+      products(first: $productCount, sortKey: CREATED, reverse: false) {
         nodes {
           id
           handle
@@ -57,7 +57,7 @@ export const COLLECTION_PRODUCT_PROFILES_QUERY = `#graphql
             { namespace: "custom", key: "subtitle" }
             { namespace: "custom", key: "notes" }
             { namespace: "custom", key: "short_description" }
-            { namespace: "custom", key: "product" }
+            { namespace: "custom", key: "product_info" }
             { namespace: "custom", key: "serving" }
             { namespace: "custom", key: "delivery" }
             { namespace: "custom", key: "gifting" }

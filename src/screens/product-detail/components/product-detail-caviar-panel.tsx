@@ -26,6 +26,10 @@ export function ProductDetailCaviarPanel({ product }: ProductDetailCaviarPanelPr
     product.variants.find((variant) => variant.optionValue === selectedOption) ??
     product.variants[0];
 
+  const composition = (product.composition ?? []).map((key) =>
+    t.has(`composition.${key}`) ? t(`composition.${key}`) : key,
+  );
+
   const formattedPrice = formatCatalogPrice(
     Number(activeVariant?.price.amount ?? product.price.amount),
     activeVariant?.price.currencyCode ?? product.price.currencyCode,
@@ -52,6 +56,7 @@ export function ProductDetailCaviarPanel({ product }: ProductDetailCaviarPanelPr
   return (
     <div className="flex w-full flex-col gap-8">
       <ProductDetailSummary
+        composition={composition}
         description={product.description}
         notes={product.notes}
         seeLessLabel={t("seeLess")}

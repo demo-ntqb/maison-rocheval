@@ -19,14 +19,15 @@ import { SpecRichText } from "./product-detail-spec-content";
 const TRIGGER_CLASS =
   "min-h-16 items-center border-b-[0.5px] border-stone py-5 font-sans text-sm font-normal leading-normal uppercase text-black **:data-[slot=accordion-trigger-icon]:mt-0 **:data-[slot=accordion-trigger-icon]:size-4.5 **:data-[slot=accordion-trigger-icon]:text-gray-icon";
 
-const CONTENT_CLASS = "flex flex-col gap-6 pt-0 pb-5";
+const CONTENT_CLASS = "flex flex-col gap-6 py-5";
 
 const RICH_TEXT_CLASS = "font-sans text-xs font-light leading-relaxed text-black";
 
 export function ProductDetailInformation({ product }: { product: CatalogProductDetail }) {
+  console.log(product);
   const t = useTranslations("productDetail");
 
-  const hasProduct = Boolean(product.descriptionHtml || product.productRichText);
+  const hasProduct = Boolean(product.productRichText);
   const hasServing = Boolean(product.servingRichText);
   const hasDelivery = Boolean(product.deliveryRichText);
   const hasGifting = Boolean(product.giftingRichText);
@@ -41,11 +42,7 @@ export function ProductDetailInformation({ product }: { product: CatalogProductD
             {t("information.product")}
           </AccordionTrigger>
           <AccordionContent className={CONTENT_CLASS}>
-            {product.productRichText ? (
-              <SpecRichText data={product.productRichText} className={RICH_TEXT_CLASS} />
-            ) : product.descriptionHtml ? (
-              <SpecRichText data={product.descriptionHtml} className={RICH_TEXT_CLASS} />
-            ) : null}
+            <SpecRichText data={product.productRichText} className={RICH_TEXT_CLASS} />
           </AccordionContent>
         </AccordionItem>
       ) : null}
