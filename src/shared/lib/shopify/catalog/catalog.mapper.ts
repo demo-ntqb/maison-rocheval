@@ -70,6 +70,7 @@ export function mapCollectionProductProfiles(products: StorefrontProduct[]): Cat
 function mapVariants(product: StorefrontProduct): CatalogVariant[] {
   return (product.variants?.nodes ?? []).map((variant) => ({
     availableForSale: variant.availableForSale,
+    quantityAvailable: variant.quantityAvailable ?? null,
     id: variant.id,
     optionValue: variant.metafield?.value || variant.selectedOptions[0]?.value || variant.title,
     price: variant.price,

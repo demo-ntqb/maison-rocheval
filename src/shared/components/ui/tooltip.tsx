@@ -1,7 +1,7 @@
 "use client"
 
-import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+import * as React from "react"
 
 import { cn } from "@/shared/lib/utils"
 
@@ -34,7 +34,7 @@ function TooltipContent({
   className,
   sideOffset = 8,
   children,
-  hideArrow = false,
+  hideArrow = true,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content> & {
   hideArrow?: boolean

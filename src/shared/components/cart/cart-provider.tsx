@@ -18,6 +18,7 @@ export type AddCartLineInput = {
   title: string;
   unitPrice: number;
   weight: string;
+  quantityAvailable?: number | null;
 };
 
 /**
@@ -100,7 +101,15 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
 
     setEntries((current) =>
       current
-        .map((entry) => mapEntryLines(entry, (line) => (line.id === lineId ? { ...line, quantity } : line)))
+        .map((entry) =>
+          mapEntryLines(entry, (line) => {
+            if (line.id === lineId) {
+              const maxQty = line.quantityAvailable ?? 99;
+              return { ...line, quantity: Math.min(quantity, maxQty) };
+            }
+            return line;
+          }),
+        )
         .filter((entry): entry is CartEntry => entry !== null),
     );
   }, []);
@@ -129,12 +138,19 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
       if (index >= 0) {
         const existing = current[index] as Extract<CartEntry, { kind: "line" }>;
         const next = [...current];
+        
+        const maxQty = existing.line.quantityAvailable ?? 99;
+        const targetQty = Math.min(existing.line.quantity + input.quantity, maxQty);
+
         next[index] = {
           kind: "line",
-          line: { ...existing.line, quantity: existing.line.quantity + input.quantity },
+          line: { ...existing.line, quantity: targetQty },
         };
         return next;
       }
+
+      const maxQty = input.quantityAvailable ?? 99;
+      const targetQty = Math.min(input.quantity, maxQty);
 
       return [
         ...current,
@@ -144,12 +160,13 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
             currencyCode: input.currencyCode,
             id: input.id,
             image: input.image,
-            quantity: input.quantity,
+            quantity: targetQty,
             quantityEditable: true,
             supportsGiftMessage: false,
             title: input.title,
             unitPrice: input.unitPrice,
             weight: input.weight,
+            quantityAvailable: input.quantityAvailable,
           },
         },
       ];
@@ -168,7 +185,18 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
     }
 
     setEntries((current) => {
-      const newLines: CartLine[] = Array.from({ length: quantity }, () => ({
+      const index = current.findIndex((entry) => entry.kind === "group" && entry.group.id === group.id);
+      const existingCount = index >= 0 ? (current[index] as Extract<CartEntry, { kind: "group" }>).group.lines.length : 0;
+
+      const maxQty = unit.quantityAvailable ?? 99;
+      const allowedAddQty = Math.max(0, maxQty - existingCount);
+      const targetAddQty = Math.min(quantity, allowedAddQty);
+
+      if (targetAddQty < 1) {
+        return current;
+      }
+
+      const newLines: CartLine[] = Array.from({ length: targetAddQty }, () => ({
         currencyCode: unit.currencyCode,
         id: createCartLineId(),
         image: unit.image,
@@ -178,9 +206,8 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
         title: unit.title,
         unitPrice: unit.unitPrice,
         weight: unit.weight,
+        quantityAvailable: unit.quantityAvailable,
       }));
-
-      const index = current.findIndex((entry) => entry.kind === "group" && entry.group.id === group.id);
 
       if (index >= 0) {
         const existing = current[index] as Extract<CartEntry, { kind: "group" }>;

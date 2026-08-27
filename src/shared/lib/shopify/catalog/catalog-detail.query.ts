@@ -20,6 +20,7 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
           title
           sku
           availableForSale
+          quantityAvailable
           price { amount currencyCode }
           selectedOptions { name value }
           metafield(namespace: "custom", key: "title") {
@@ -56,6 +57,7 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
           title
           sku
           availableForSale
+          quantityAvailable
           price { amount currencyCode }
           selectedOptions { name value }
         }

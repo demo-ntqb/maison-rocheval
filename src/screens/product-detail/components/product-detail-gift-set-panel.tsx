@@ -26,14 +26,22 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
   const t = useTranslations("productDetail");
   const cart = useCart();
 
-  const [selectedOption, setSelectedOption] = useState(
-    product.variants[0]?.optionValue ?? "",
-  );
+  const firstAvailableVariant = product.variants.find((v) => v.availableForSale) ?? product.variants[0];
+  const [selectedOption, setSelectedOption] = useState(firstAvailableVariant?.optionValue ?? "");
   const [quantity, setQuantity] = useState(1);
 
   const activeVariant =
     product.variants.find((variant) => variant.optionValue === selectedOption) ??
     product.variants[0];
+
+  const handleVariantChange = (optionValue: string) => {
+    setSelectedOption(optionValue);
+    const targetVariant = product.variants.find((variant) => variant.optionValue === optionValue);
+    if (targetVariant) {
+      const maxQty = targetVariant.quantityAvailable ?? 99;
+      setQuantity((prev) => Math.min(prev, maxQty));
+    }
+  };
 
   const composition = product.composition ?? [];
 
@@ -61,10 +69,13 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
         title: product.title,
         unitPrice: Number(activeVariant.price.amount),
         weight: stripTitlePrefix(activeVariant.optionValue, product.title),
+        quantityAvailable: activeVariant.quantityAvailable,
       },
     });
     setQuantity(1);
   };
+
+  const maxQuantity = activeVariant?.quantityAvailable ?? 99;
 
   return (
     <div className="flex w-full flex-col gap-8">
@@ -80,7 +91,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
       {product.variants.length > 0 ? (
         <ProductDetailTinWeightSelector
           label={t("sizeLabel")}
-          onChange={setSelectedOption}
+          onChange={handleVariantChange}
           selected={selectedOption}
           variants={product.variants}
         />
@@ -97,6 +108,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
         onQuantityChange={setQuantity}
         quantity={quantity}
         unavailableLabel={t("unavailable")}
+        maxQuantity={maxQuantity}
       />
     </div>
   );

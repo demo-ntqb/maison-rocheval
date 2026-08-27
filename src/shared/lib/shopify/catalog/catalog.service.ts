@@ -27,7 +27,13 @@ import {
 
 function assertSuccessful(result: StorefrontResult, operation: string): void {
   if (!result.errors?.length) return;
-  const details = result.errors.map((error) => error.message).join("; ");
+  const realErrors = result.errors.filter(
+    (error) =>
+      !error.message.includes("quantityAvailable") &&
+      !error.message.includes("unauthenticated_read_product_inventory"),
+  );
+  if (realErrors.length === 0) return;
+  const details = realErrors.map((error) => error.message).join("; ");
   throw new Error(`[shopify] ${operation} query failed: ${details}`);
 }
 
@@ -89,25 +95,16 @@ export async function getProductDetail(
     PRODUCT_DETAIL_QUERY,
     { variables: { country: market.country, handle, language: market.language } },
   );
+  
   assertSuccessful(result, "CatalogProductDetail");
   if (!result.product) return null;
   return mapProductDetail(result.product, result.presentationOptions.nodes, result.presentationBox);
 }
 
-const DEFAULT_CATALOG_HANDLES = [
-  "amour",
-  "kaluga",
-  "russian-hybrid",
-  "lexpression",
-  "harmonie",
-];
-
 /**
- * Cached lookup of catalog handles. Only real data (or a transient error) is
- * ever cached — the fallback list lives in the uncached wrapper below, so a
- * Shopify outage never pins stale handles for the whole cacheLife window.
+ * Cached lookup of catalog handles.
  */
-async function fetchCatalogHandles(): Promise<string[]> {
+export async function getCatalogHandles(): Promise<string[]> {
   "use cache";
   cacheLife("minutes");
   cacheTag("shopify-products", "shopify-collections", "shopify-collection-our-caviar");
@@ -122,14 +119,5 @@ async function fetchCatalogHandles(): Promise<string[]> {
     throw new Error("[shopify] Catalog handles query returned no products.");
   }
   return handles;
-}
-
-export async function getCatalogHandles(): Promise<string[]> {
-  try {
-    return await fetchCatalogHandles();
-  } catch (error) {
-    console.warn("[shopify] Failed to fetch catalog handles, using fallback:", error);
-    return DEFAULT_CATALOG_HANDLES;
-  }
 }
 

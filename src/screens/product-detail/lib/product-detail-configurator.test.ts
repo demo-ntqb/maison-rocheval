@@ -50,6 +50,7 @@ const product: CatalogProductDetail = {
   variants: [
     {
       availableForSale: true,
+      quantityAvailable: null,
       id: "gid://shopify/ProductVariant/30",
       optionValue: "30g",
       price: { amount: "159", currencyCode: "EUR" },
@@ -57,6 +58,7 @@ const product: CatalogProductDetail = {
     },
     {
       availableForSale: true,
+      quantityAvailable: null,
       id: "gid://shopify/ProductVariant/50",
       optionValue: "50g",
       price: { amount: "259", currencyCode: "EUR" },
