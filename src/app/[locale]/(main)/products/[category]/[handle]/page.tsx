@@ -77,7 +77,7 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
     url,
     offers: product.variants.map((variant) => ({
       "@type": "Offer",
-      availability: product.availableForSale
+      availability: variant.availableForSale
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       price: variant.price.amount,

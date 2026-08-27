@@ -12,6 +12,7 @@ export interface ProductDetailPurchaseProps {
   onQuantityChange: (quantity: number) => void;
   quantity: number;
   unavailableLabel: string;
+  maxQuantity?: number;
 }
 
 export function ProductDetailPurchase({
@@ -25,6 +26,7 @@ export function ProductDetailPurchase({
   onQuantityChange,
   quantity,
   unavailableLabel,
+  maxQuantity,
 }: ProductDetailPurchaseProps) {
   return (
     <div className="flex w-full flex-col gap-8">
@@ -42,6 +44,7 @@ export function ProductDetailPurchase({
             increaseLabel={increaseLabel}
             onChange={onQuantityChange}
             quantity={quantity}
+            max={maxQuantity}
           />
 
           <button

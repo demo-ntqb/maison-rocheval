@@ -13,6 +13,7 @@
     "message": "Message",
     "decreaseQuantity": "Decrease quantity of {title}",
     "increaseQuantity": "Increase quantity of {title}",
+    "notEnoughStock": "Not enough stock",
     "total": "TOTAL",
     "checkout": "Check out",
     "deliveryNote": "We offer variety of delivery options in check-out",

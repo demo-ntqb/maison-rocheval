@@ -47,6 +47,7 @@ export type CatalogProductProfile = CatalogProductCard & {
 
 export type CatalogVariant = {
   availableForSale: boolean;
+  quantityAvailable: number | null;
   id: string;
   optionValue: string;
   price: CatalogMoney;
@@ -133,6 +134,7 @@ export type StorefrontProduct = {
   variants?: {
     nodes: Array<{
       availableForSale: boolean;
+      quantityAvailable: number | null;
       id: string;
       metafield?: { value: string } | null;
       price: CatalogMoney;

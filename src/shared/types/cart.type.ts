@@ -25,6 +25,7 @@ export type CartLine = {
   title: string;
   unitPrice: number;
   weight: string;
+  quantityAvailable?: number | null;
 };
 
 /** A gift set: one card holding every component line under a shared heading. */

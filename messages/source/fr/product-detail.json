@@ -15,6 +15,8 @@
     "summaryLabel": "RÉSUMÉ",
     "addToCart": "Ajouter au panier",
     "unavailable": "Indisponible",
+    "outOfStock": "Rupture de stock",
+    "notEnoughStock": "Stock insuffisant",
     "free": "OFFERT",
     "decreaseQty": "Réduire la quantité",
     "increaseQty": "Augmenter la quantité",

@@ -88,6 +88,8 @@ export function CartLineItem({
             increaseLabel={t("increaseQuantity", { title: line.title })}
             onChange={(quantity) => onQuantityChange(line.id, quantity)}
             quantity={line.quantity}
+            maxQuantity={line.quantityAvailable}
+            notEnoughStockLabel={t("notEnoughStock")}
           />
         ) : line.supportsGiftMessage ? (
           <button

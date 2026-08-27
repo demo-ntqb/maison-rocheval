@@ -37,6 +37,7 @@ function Probe() {
             title: "Amour",
             unitPrice: 75,
             weight: "30g",
+            quantityAvailable: 10,
           })
         }
       >
@@ -54,6 +55,7 @@ function Probe() {
               title: "L'Initiation",
               unitPrice: 100,
               weight: "Three 30g Tins",
+              quantityAvailable: 10,
             },
           })
         }
@@ -125,5 +127,18 @@ describe("CartProvider", () => {
 
     expect(screen.getByTestId("entries").children).toHaveLength(1);
     expect(screen.getByText("group:L'Initiation:4")).toBeInTheDocument();
+  });
+
+  it("limits quantity to quantityAvailable when adding multiple times", async () => {
+    renderProbe();
+
+    for (let i = 0; i < 12; i++) {
+      await act(async () => {
+        screen.getByRole("button", { name: "add caviar" }).click();
+      });
+    }
+
+    expect(screen.getByText("line:Amour:10")).toBeInTheDocument();
+    expect(screen.getByTestId("item-count").textContent).toBe("10");
   });
 });
