@@ -1,5 +1,6 @@
 import { HeadAnalytics } from "@/app/(head)/analytics";
 import { routing } from "@/i18n/routing";
+import { PreventZoom } from "@/shared/components/layout/prevent-zoom";
 import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
 import { generateOrganizationJsonLd, generateRootMetadata, isComingSoon } from "@/shared/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
@@ -89,7 +90,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <head>
-        <meta name="theme-color" content="#16222e" />
+        <PreventZoom />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: generateOrganizationJsonLd() }}
