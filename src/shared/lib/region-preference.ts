@@ -1,8 +1,10 @@
-import { routing } from "@/i18n/routing";
+import { APP_LOCALES } from "@/shared/constants/commerce-context.constant";
 import { SHIPPING_COUNTRIES } from "@/shared/constants/region.constant";
+import { isRouteLocale, parseCommerceContext } from "@/shared/lib/commerce-context";
 import type {
   AppLocale,
   RegionPreference,
+  RouteLocale,
   ShippingCountryCode,
 } from "@/shared/types/region.type";
 
@@ -19,10 +21,10 @@ const REDIRECTED_KEY = "mr:region-redirected";
 const SNAPSHOT_SEPARATOR = "\u0000";
 
 const isAppLocale = (value: unknown): value is AppLocale =>
-  typeof value === "string" && (routing.locales as readonly string[]).includes(value);
+  typeof value === "string" && (APP_LOCALES as readonly string[]).includes(value as AppLocale);
 
 const isShippingCountryCode = (value: unknown): value is ShippingCountryCode =>
-  typeof value === "string" && SHIPPING_COUNTRIES.some((country ) => country.code === value);
+  typeof value === "string" && SHIPPING_COUNTRIES.some((country) => country.code === value);
 
 /**
  * Snapshot của cả hai storage dưới dạng chuỗi — `useSyncExternalStore` yêu cầu
@@ -55,8 +57,8 @@ export function subscribeToRegionStorage(onStoreChange: () => void): () => void 
 
 /**
  * Tách snapshot thành lựa chọn đã lưu + cờ đã đóng popup trong phiên.
- * `preference` là `null` nếu chưa có, dữ liệu hỏng, hoặc quốc gia/ngôn ngữ đã
- * lưu không còn được hỗ trợ — khi đó popup sẽ hỏi lại.
+ * `preference` là `null` nếu chưa có, dữ liệu hỏng, hoặc context đã lưu
+ * không còn được hỗ trợ — khi đó popup sẽ hỏi lại.
  */
 export function parseRegionSnapshot(snapshot: string | null): {
   preference: RegionPreference | null;
@@ -84,19 +86,29 @@ function parseRegionPreference(raw: string): RegionPreference | null {
       return null;
     }
 
-    const { countryCode, locale } = parsed as Partial<RegionPreference>;
-    if (!isShippingCountryCode(countryCode) || !isAppLocale(locale)) {
-      return null;
+    // New schema: { routeLocale: RouteLocale }
+    const candidateRouteLocale = (parsed as Partial<RegionPreference>).routeLocale;
+    if (candidateRouteLocale && isRouteLocale(candidateRouteLocale)) {
+      return { routeLocale: candidateRouteLocale };
     }
 
-    return { countryCode, locale };
+    // Migration from old schema: { countryCode: ShippingCountryCode, locale: AppLocale }
+    const { countryCode, locale } = parsed as { countryCode?: unknown; locale?: unknown };
+    if (isShippingCountryCode(countryCode) && isAppLocale(locale)) {
+      const migratedRouteLocale = `${locale}-${countryCode.toLowerCase()}`;
+      if (isRouteLocale(migratedRouteLocale)) {
+        return { routeLocale: migratedRouteLocale as RouteLocale };
+      }
+    }
+
+    return null;
   } catch {
     return null;
   }
 }
 
 /** Đọc lựa chọn đã lưu ngoài luồng render (event handler). */
-function readRegionPreference(): RegionPreference | null {
+export function readRegionPreference(): RegionPreference | null {
   if (typeof window === "undefined") {
     return null;
   }
@@ -117,9 +129,7 @@ export function writeRegionPreference(preference: RegionPreference): void {
 }
 
 /**
- * Cập nhật riêng ngôn ngữ nếu người dùng đã có lựa chọn (ví dụ khi bấm FR / EN
- * trên header) — giữ nguyên quốc gia giao hàng đã chọn. Không tạo mới bản ghi
- * để người chưa từng thấy popup vẫn được hỏi.
+ * Cập nhật ngôn ngữ và giữ nguyên country hiện tại đã lưu.
  */
 export function updateRegionPreferenceLocale(locale: AppLocale): void {
   const stored = readRegionPreference();
@@ -127,7 +137,15 @@ export function updateRegionPreferenceLocale(locale: AppLocale): void {
     return;
   }
 
-  writeRegionPreference({ ...stored, locale });
+  try {
+    const context = parseCommerceContext(stored.routeLocale);
+    const nextRouteLocale = `${locale}-${context.country.toLowerCase()}`;
+    if (isRouteLocale(nextRouteLocale)) {
+      writeRegionPreference({ routeLocale: nextRouteLocale });
+    }
+  } catch {
+    // Stored context was invalid, do nothing
+  }
 }
 
 export function markRegionPromptDismissed(): void {

@@ -2,10 +2,11 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { PREFERENCE_KEY } from "@/shared/lib/region-preference";
+import { COMMERCE_CONTEXTS } from "@/shared/constants/commerce-context.constant";
 
 const replace = vi.fn();
-const mockPathname = "/en";
-let activeLocale = "fr";
+const mockPathname = "/products";
+let activeLocale = "en-sg";
 
 vi.mock("next-intl", () => ({
   useLocale: () => activeLocale,
@@ -13,8 +14,8 @@ vi.mock("next-intl", () => ({
 
 vi.mock("@/i18n/routing", () => ({
   routing: {
-    locales: ["en", "fr"],
-    defaultLocale: "en",
+    locales: ["en-fr", "fr-fr", "en-us", "fr-us", "en-sg", "fr-sg"],
+    defaultLocale: "en-sg",
   },
 }));
 
@@ -35,7 +36,8 @@ vi.mock("next/dynamic", () => ({
 
 import { RegionPreferenceGate } from "./region-preference-gate";
 
-const preference = JSON.stringify({ countryCode: "FR", locale: "fr" });
+const preference = JSON.stringify({ routeLocale: "fr-fr" });
+const availableContexts = Object.values(COMMERCE_CONTEXTS);
 
 function seedStorage({
   preference = "",
@@ -56,34 +58,34 @@ describe("RegionPreferenceGate", () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
     replace.mockReset();
-    activeLocale = "en";
+    activeLocale = "en-sg";
   });
 
-  it("redirect về locale đã lưu một lần khi bắt đầu phiên", async () => {
+  it("redirect về routeLocale đã lưu một lần khi bắt đầu phiên", async () => {
     seedStorage({ preference });
-    render(<RegionPreferenceGate />);
+    render(<RegionPreferenceGate availableContexts={availableContexts} />);
 
     await waitFor(() => expect(replace).toHaveBeenCalledTimes(1));
-    expect(replace).toHaveBeenCalledWith(mockPathname, { locale: "fr" });
+    expect(replace).toHaveBeenCalledWith(mockPathname, { locale: "fr-fr" });
   });
 
   it("không redirect lại lần thứ hai trong cùng phiên (không đánh bật điều hướng chủ đích)", async () => {
     seedStorage({ preference, redirected: "1" });
-    render(<RegionPreferenceGate />);
+    render(<RegionPreferenceGate availableContexts={availableContexts} />);
 
     expect(replace).not.toHaveBeenCalled();
   });
 
-  it("không redirect khi locale hiện tại khớp preference đã lưu", async () => {
-    activeLocale = "fr";
+  it("không redirect khi routeLocale hiện tại khớp preference đã lưu", async () => {
+    activeLocale = "fr-fr";
     seedStorage({ preference });
-    render(<RegionPreferenceGate />);
+    render(<RegionPreferenceGate availableContexts={availableContexts} />);
 
     expect(replace).not.toHaveBeenCalled();
   });
 
   it("hiện dialog khi chưa có lựa chọn và chưa đóng popup", () => {
-    render(<RegionPreferenceGate />);
+    render(<RegionPreferenceGate availableContexts={availableContexts} />);
 
     expect(screen.getByText("region dialog")).toBeInTheDocument();
   });

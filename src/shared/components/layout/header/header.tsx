@@ -11,6 +11,7 @@ import { IconMaisonRochevalLogo } from "@/shared/components/icons/maison-rocheva
 import { ROUTES } from "@/shared/constants/route.constant";
 import { navigation } from "@/shared/constants/site.constant";
 import { cn } from "@/shared/lib/utils";
+import type { RouteLocale } from "@/shared/types/commerce-context.type";
 
 import { AnnouncementBar } from "./announcement-bar";
 import { getHeaderRouteConfig } from "./header.config";
@@ -25,10 +26,11 @@ const MobileMenu = dynamic(
 type HeaderVariant = "transparent" | "solid";
 
 export interface HeaderProps {
+  availableRouteLocales: readonly RouteLocale[];
   initialVariant?: HeaderVariant;
 }
 
-export function Header({ initialVariant }: HeaderProps) {
+export function Header({ availableRouteLocales, initialVariant }: HeaderProps) {
   const t = useTranslations("header");
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -182,7 +184,7 @@ export function Header({ initialVariant }: HeaderProps) {
                   <span data-plumb-id="fr-en">FR / EN</span>
                 </button>
               }>
-                <LanguageSwitcher className={textColorClass} />
+                <LanguageSwitcher availableRouteLocales={availableRouteLocales} className={textColorClass} />
               </Suspense>
               <CartTrigger className={textColorClass} />
             </div>

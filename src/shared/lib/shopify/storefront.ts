@@ -6,7 +6,7 @@ import {
   type AnyStorefrontQueryString,
 } from "@shopify/hydrogen";
 
-import { getShopifyMarket } from "./config";
+import { getShopifyMarket, type I18nBase } from "./config";
 import { resolveStorefrontConfig } from "./storefront-config";
 
 const STOREFRONT_API_VERSION = "2026-04";
@@ -20,20 +20,22 @@ type StorefrontClient = {
   ): Promise<T & { errors?: GraphqlError[] }>;
 };
 
-function createCatalogClient({
+function createStorefrontClientForRequest({
   privateStorefrontToken,
   storeDomain,
+  market,
+  request,
 }: {
   privateStorefrontToken: string;
   storeDomain: string;
+  market: I18nBase;
+  request: Request | { headers: Headers };
 }): StorefrontClient {
   const client = createStorefrontClient({
     type: "private_no_buyer_context",
     requestContext: createShopifyRequestContext({
-      // Static catalog client: no request-scoped state, so a synthetic request
-      // keeps the cache owner Next.js (never calls headers()/cookies() here).
-      request: { headers: new Headers() },
-      i18n: { language: "EN", country: "FR" },
+      request,
+      i18n: { language: market.language, country: market.country },
     }),
     config: {
       storeDomain,
@@ -80,7 +82,24 @@ export function getCatalogStorefrontClient(locale: string): StorefrontClient {
   if (existingClient) return existingClient;
 
   const config = resolveStorefrontConfig();
-  const client = createCatalogClient(config);
+  const client = createStorefrontClientForRequest({
+    privateStorefrontToken: config.privateStorefrontToken,
+    storeDomain: config.storeDomain,
+    market,
+    request: { headers: new Headers() },
+  });
   catalogClients.set(cacheKey, client);
   return client;
+}
+
+/** Request-scoped client for buyer cart mutations; never use it in cached catalog paths. */
+export function getBuyerStorefrontClient(locale: string, request: Request): StorefrontClient {
+  const market = getShopifyMarket(locale);
+  const config = resolveStorefrontConfig();
+  return createStorefrontClientForRequest({
+    privateStorefrontToken: config.privateStorefrontToken,
+    storeDomain: config.storeDomain,
+    market,
+    request,
+  });
 }

@@ -1,12 +1,14 @@
 import { getRequestConfig } from "next-intl/server";
 
 import { getRouteLocale } from "./route-locale";
+import { parseCommerceContext } from "@/shared/lib/commerce-context";
 
 export default getRequestConfig(async () => {
-  const locale = await getRouteLocale();
+  const routeLocale = await getRouteLocale();
+  const { appLocale } = parseCommerceContext(routeLocale);
 
   return {
-    locale,
-    messages: (await import(`../../messages/${locale}.json`)).default,
+    locale: routeLocale,
+    messages: (await import(`../../messages/${appLocale}.json`)).default,
   };
 });

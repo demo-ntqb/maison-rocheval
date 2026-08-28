@@ -30,15 +30,18 @@ export type AddCartLineInput = {
 export type AddGiftSetInput = {
   group: { addHref?: string; id: string; title: string };
   quantity: number;
-  unit: Omit<AddCartLineInput, "id" | "quantity">;
+  unit: Omit<AddCartLineInput, "quantity">;
 };
 
 type CartContextValue = {
   addGiftSetUnits: (input: AddGiftSetInput) => void;
   addLine: (input: AddCartLineInput) => void;
+  checkout: () => void;
+  checkoutUrl: string | null;
   close: () => void;
   currencyCode: string;
   entries: CartEntry[];
+  isCheckingOut: boolean;
   isOpen: boolean;
   itemCount: number;
   open: () => void;
@@ -80,11 +83,21 @@ export interface CartProviderProps {
   /** Cart contents are supplied by the caller until the Shopify cart transport lands. */
   initialEntries?: CartEntry[];
   initialOpen?: boolean;
+  initialCheckoutUrl?: string | null;
+  routeLocale: string;
 }
 
-export function CartProvider({ children, initialEntries = [], initialOpen = false }: CartProviderProps) {
+export function CartProvider({
+  children,
+  initialEntries = [],
+  initialOpen = false,
+  initialCheckoutUrl = null,
+  routeLocale,
+}: CartProviderProps) {
   const [entries, setEntries] = useState<CartEntry[]>(initialEntries);
   const [isOpen, setOpen] = useState(initialOpen);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(initialCheckoutUrl);
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   const removeLine = useCallback((lineId: string) => {
     setEntries((current) =>
@@ -159,6 +172,7 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
           line: {
             currencyCode: input.currencyCode,
             id: input.id,
+            merchandiseId: input.id,
             image: input.image,
             quantity: targetQty,
             quantityEditable: true,
@@ -199,6 +213,7 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
       const newLines: CartLine[] = Array.from({ length: targetAddQty }, () => ({
         currencyCode: unit.currencyCode,
         id: createCartLineId(),
+        merchandiseId: unit.id,
         image: unit.image,
         quantity: 1,
         quantityEditable: false,
@@ -230,15 +245,43 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
     setOpen(true);
   }, []);
 
+  const checkout = useCallback(async () => {
+    if (typeof window === "undefined" || isCheckingOut) return;
+    setIsCheckingOut(true);
+    try {
+      const response = await fetch("/api/cart", {
+        body: JSON.stringify({
+          locale: routeLocale,
+          lines: flattenLines(entries).map((line) => ({ merchandiseId: line.merchandiseId, quantity: line.quantity })),
+        }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+      const payload: unknown = await response.json();
+      const nextCheckoutUrl =
+        typeof payload === "object" && payload !== null && "checkoutUrl" in payload && typeof payload.checkoutUrl === "string"
+          ? payload.checkoutUrl
+          : null;
+      if (!response.ok || !nextCheckoutUrl) return;
+      setCheckoutUrl(nextCheckoutUrl);
+      window.location.assign(nextCheckoutUrl);
+    } finally {
+      setIsCheckingOut(false);
+    }
+  }, [entries, isCheckingOut, routeLocale]);
+
   const value = useMemo<CartContextValue>(() => {
     const lines = flattenLines(entries);
 
     return {
       addGiftSetUnits,
       addLine,
+      checkout,
+      checkoutUrl,
       close: () => setOpen(false),
       currencyCode: lines[0]?.currencyCode ?? DEFAULT_CURRENCY,
       entries,
+      isCheckingOut,
       isOpen,
       itemCount: lines.reduce((total, line) => total + line.quantity, 0),
       open: () => setOpen(true),
@@ -248,7 +291,7 @@ export function CartProvider({ children, initialEntries = [], initialOpen = fals
       setOpen,
       totalPrice: lines.reduce((total, line) => total + line.unitPrice * line.quantity, 0),
     };
-  }, [addGiftSetUnits, addLine, entries, isOpen, removeLine, setGiftMessage, setLineQuantity]);
+  }, [addGiftSetUnits, addLine, checkout, checkoutUrl, entries, isCheckingOut, isOpen, removeLine, setGiftMessage, setLineQuantity]);
 
   return <CartContext value={value}>{children}</CartContext>;
 }

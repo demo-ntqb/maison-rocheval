@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { type CatalogProductDetail, CatalogProductType } from "@/shared/types/catalog.type";
+import {
+  type CatalogProductDetail,
+  CatalogCollectionHandle,
+  CatalogProductType,
+} from "@/shared/types/catalog.type";
 
 import {
   createProductSelection,
@@ -9,6 +13,7 @@ import {
 } from "./product-detail-configurator";
 
 const product: CatalogProductDetail = {
+  category: CatalogCollectionHandle.CAVIAR,
   productType: CatalogProductType.CAVIAR,
   availableForSale: true,
   description: "Kaluga description",

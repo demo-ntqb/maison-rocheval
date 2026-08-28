@@ -14,6 +14,11 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
       featuredImage { url altText width height }
       priceRange { minVariantPrice { amount currencyCode } }
       images(first: 10) { nodes { url altText width height } }
+      collections(first: 5) {
+        nodes {
+          handle
+        }
+      }
       variants(first: 20) {
         nodes {
           id
@@ -59,6 +64,11 @@ export const PRODUCT_DETAIL_QUERY = `#graphql
     descriptionHtml
     featuredImage { url altText width height }
     priceRange { minVariantPrice { amount currencyCode } }
+    collections(first: 5) {
+      nodes {
+        handle
+      }
+    }
     metafields(identifiers: [
       { namespace: "custom", key: "subtitle" }
       { namespace: "custom", key: "notes" }

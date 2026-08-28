@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 
-import { routing } from "@/i18n/routing";
 import { PRODUCT_CATEGORIES } from "@/shared/constants/catalog.constant";
 import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
 import { localizedPath } from "@/shared/lib/metadata";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
+import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
+import type { RouteLocale } from "@/shared/types/commerce-context.type";
 
 const STATIC_PATHS = [
   ROUTES.HOME,
@@ -20,12 +21,15 @@ function absoluteUrl(locale: string, path: string): string {
   return new URL(localizedPath(locale, path), SITE_URL).toString();
 }
 
-function sitemapEntry(path: string): MetadataRoute.Sitemap[number] {
+function sitemapEntry(path: string, locales: readonly RouteLocale[]): MetadataRoute.Sitemap[number] {
+  const canonicalLocale = locales[0];
+  if (!canonicalLocale) throw new Error("[shopify] Cannot build sitemap without a published market");
+
   return {
-    url: absoluteUrl(routing.defaultLocale, path),
+    url: absoluteUrl(canonicalLocale, path),
     alternates: {
       languages: Object.fromEntries(
-        routing.locales.map((locale) => [locale, absoluteUrl(locale, path)]),
+        locales.map((locale) => [locale, absoluteUrl(locale, path)]),
       ),
     },
     changeFrequency: "weekly",
@@ -34,9 +38,12 @@ function sitemapEntry(path: string): MetadataRoute.Sitemap[number] {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const productPaths: string[] = [];
+  const { availableRouteLocales } = await getDiscoveredMarkets();
+  const discoveryLocale = availableRouteLocales[0];
+  if (!discoveryLocale) return [];
 
   for (const category of PRODUCT_CATEGORIES) {
-    const products = await getCollectionProducts(routing.defaultLocale, category);
+    const products = await getCollectionProducts(discoveryLocale, category);
     for (const p of products) {
       productPaths.push(ROUTES.PRODUCT_DETAIL(category, p.handle));
     }
@@ -44,6 +51,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const categoryPaths = PRODUCT_CATEGORIES.map((category) => ROUTES.PRODUCT_CATEGORY(category));
   return [...STATIC_PATHS, ...categoryPaths, ...productPaths].map(
-    sitemapEntry,
+    (path) => sitemapEntry(path, availableRouteLocales),
   );
 }

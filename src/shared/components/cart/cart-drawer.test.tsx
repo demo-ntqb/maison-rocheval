@@ -29,6 +29,7 @@ const ENTRIES: CartEntry[] = [
         {
           currencyCode: "EUR",
           id: "line-1",
+          merchandiseId: "gift-variant",
           image: GIFT_IMAGE,
           quantity: 2,
           quantityEditable: false,
@@ -47,6 +48,7 @@ const ENTRIES: CartEntry[] = [
     line: {
       currencyCode: "EUR",
       id: "line-2",
+      merchandiseId: "amour-variant",
       image: null,
       quantity: 2,
       quantityEditable: true,
@@ -61,7 +63,7 @@ const ENTRIES: CartEntry[] = [
 function renderCart(entries: CartEntry[]) {
   return render(
     <NextIntlClientProvider locale="en" messages={cartMessages}>
-      <CartProvider initialEntries={entries} initialOpen>
+      <CartProvider initialEntries={entries} initialOpen routeLocale="en-sg">
         <CartDrawer />
       </CartProvider>
     </NextIntlClientProvider>,

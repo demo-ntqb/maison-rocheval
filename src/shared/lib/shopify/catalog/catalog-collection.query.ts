@@ -22,6 +22,11 @@ export const COLLECTION_PRODUCTS_QUERY = `#graphql
     descriptionHtml
     featuredImage { url altText width height }
     priceRange { minVariantPrice { amount currencyCode } }
+    collections(first: 5) {
+      nodes {
+        handle
+      }
+    }
     metafields(identifiers: [
       { namespace: "custom", key: "subtitle" }
       { namespace: "custom", key: "notes" }

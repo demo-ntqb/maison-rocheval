@@ -66,6 +66,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
       unit: {
         currencyCode: activeVariant.price.currencyCode,
         image: product.image,
+        id: activeVariant.id,
         title: product.title,
         unitPrice: Number(activeVariant.price.amount),
         weight: stripTitlePrefix(activeVariant.optionValue, product.title),

@@ -1,11 +1,10 @@
 import type { AppLocale, ShippingCountryCode } from "@/shared/types/region.type";
 
 /**
- * Các thị trường Maison Rocheval đang giao hàng — khớp với announcement bar
- * ("We currently only deliver to France and United States").
+ * Các thị trường Maison Rocheval đang giao hàng — khớp với allowlist:
+ * Singapore (SG), France (FR), United States (US).
  *
- * `defaultLocale` là ngôn ngữ gợi ý khi người dùng đổi quốc gia trong popup;
- * người dùng vẫn có thể chọn ngôn ngữ khác.
+ * `defaultLocale` là ngôn ngữ canonical gợi ý khi người dùng đổi quốc gia trong popup.
  * Tên quốc gia được dịch qua `regionDialog.countries.<code>` trong messages/*.
  */
 export const SHIPPING_COUNTRIES: ReadonlyArray<{
@@ -13,6 +12,7 @@ export const SHIPPING_COUNTRIES: ReadonlyArray<{
   flag: string;
   defaultLocale: AppLocale;
 }> = [
+  { code: "SG", flag: "🇸🇬", defaultLocale: "en" },
   { code: "FR", flag: "🇫🇷", defaultLocale: "fr" },
   { code: "US", flag: "🇺🇸", defaultLocale: "en" },
 ];
@@ -23,5 +23,5 @@ export const SHIPPING_COUNTRIES: ReadonlyArray<{
  */
 export const LANGUAGE_OPTIONS: ReadonlyArray<AppLocale> = ["en", "fr"];
 
-/** Quốc gia mặc định khi chưa có gợi ý nào từ locale hiện tại. */
-export const DEFAULT_SHIPPING_COUNTRY: ShippingCountryCode = "FR";
+/** Quốc gia mặc định cho headless channel ban đầu. */
+export const DEFAULT_SHIPPING_COUNTRY: ShippingCountryCode = "SG";

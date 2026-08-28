@@ -16,24 +16,16 @@ import {
   DialogTitle,
 } from "@/shared/components/ui/dialog";
 import {
-  DEFAULT_SHIPPING_COUNTRY,
-  LANGUAGE_OPTIONS,
-  SHIPPING_COUNTRIES
+  SHIPPING_COUNTRIES,
 } from "@/shared/constants/region.constant";
 import {
   markRegionPromptDismissed,
   writeRegionPreference,
 } from "@/shared/lib/region-preference";
 import { cn } from "@/shared/lib/utils";
-import type { AppLocale, ShippingCountryCode } from "@/shared/types/region.type";
+import type { CommerceContext } from "@/shared/types/commerce-context.type";
+import type { AppLocale, RouteLocale, ShippingCountryCode } from "@/shared/types/region.type";
 
-/**
- * Ô select theo design (node 409:18538): một `<select>` gốc phủ trong suốt lên
- * phần hiển thị. Giữ được toàn bộ a11y + picker gốc của mobile, trong khi vẫn
- * vẽ được flag 20px / nhãn 16px / caret 16px như Figma.
- *
- * Cao 48px trên mobile (chuẩn tap target) và về đúng 40px của Figma từ md trở lên.
- */
 function RegionSelectField({
   id,
   label,
@@ -89,41 +81,69 @@ function RegionSelectField({
 }
 
 export interface RegionPreferenceDialogProps {
-  /** Quốc gia gợi ý ban đầu, suy ra từ locale đang hoạt động. */
+  /** Cặp country/language hiện đang được Shopify Markets publish. */
+  availableContexts: readonly CommerceContext[];
+  /** Quốc gia gợi ý ban đầu */
   initialCountryCode?: ShippingCountryCode;
+  /** Ngôn ngữ gợi ý ban đầu */
+  initialAppLocale?: AppLocale;
 }
 
 export function RegionPreferenceDialog({
-  initialCountryCode = DEFAULT_SHIPPING_COUNTRY,
+  availableContexts,
+  initialCountryCode,
+  initialAppLocale = "en",
 }: RegionPreferenceDialogProps) {
   const t = useTranslations("regionDialog");
-  const activeLocale = useLocale() as AppLocale;
+  const activeRouteLocale = useLocale() as RouteLocale;
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(true);
-  const [countryCode, setCountryCode] = useState<ShippingCountryCode>(initialCountryCode);
-  const [locale, setLocale] = useState<AppLocale>(activeLocale);
+  const availableCountries = SHIPPING_COUNTRIES.filter((country) =>
+    availableContexts.some((context) => context.country === country.code),
+  );
+  const firstContext = availableContexts[0];
+  const initialContext = availableContexts.find(
+    (context) => context.country === initialCountryCode && context.appLocale === initialAppLocale,
+  ) ?? availableContexts.find((context) => context.country === initialCountryCode) ?? firstContext;
+  const [countryCode, setCountryCode] = useState<ShippingCountryCode>(initialContext?.country ?? "SG");
+  const [locale, setLocale] = useState<AppLocale>(initialContext?.appLocale ?? "en");
 
   const selectedCountry =
-    SHIPPING_COUNTRIES.find((country) => country.code === countryCode) ?? SHIPPING_COUNTRIES[0];
+    availableCountries.find((country) => country.code === countryCode) ?? availableCountries[0];
+  const availableLanguages = availableContexts
+    .filter((context) => context.country === countryCode)
+    .map((context) => context.appLocale);
 
-  // Đóng bằng nút X: chỉ im lặng trong phiên này, chưa ghi vào localStorage —
-  // lần truy cập sau vẫn hỏi lại vì người dùng chưa thực sự chọn.
   const handleDismiss = () => {
     markRegionPromptDismissed();
     setOpen(false);
   };
 
+  const handleCountryChange = (newCountryCode: string) => {
+    const validCountryCode = newCountryCode as ShippingCountryCode;
+    setCountryCode(validCountryCode);
+    if (!availableContexts.some((context) => context.country === validCountryCode && context.appLocale === locale)) {
+      const firstLanguage = availableContexts.find((context) => context.country === validCountryCode)?.appLocale;
+      if (firstLanguage) setLocale(firstLanguage);
+    }
+  };
+
   const handleConfirm = () => {
-    writeRegionPreference({ countryCode, locale });
+    const targetRouteLocale = availableContexts.find(
+      (context) => context.country === countryCode && context.appLocale === locale,
+    )?.routeLocale as RouteLocale | undefined;
+    if (!targetRouteLocale) return;
+
+    writeRegionPreference({ routeLocale: targetRouteLocale });
     setOpen(false);
 
-    if (locale !== activeLocale) {
+    if (targetRouteLocale !== activeRouteLocale) {
       const queryString = searchParams?.toString();
       const nextHref = queryString ? `${pathname}?${queryString}` : pathname;
-      router.replace(nextHref, { locale });
+      router.replace(nextHref, { locale: targetRouteLocale });
     }
   };
 
@@ -136,9 +156,6 @@ export function RegionPreferenceDialog({
         }
       }}
     >
-      {/* `rounded-[…]` chứ không phải `rounded-brand`: tailwind-merge không nhận ra
-          key theme tuỳ biến nên không loại được `rounded-xl` mặc định của
-          DialogContent — giá trị arbitrary thì loại được. */}
       <DialogContent
         showCloseButton={false}
         className="flex max-w-[calc(100%-2rem)] flex-col gap-8 rounded-[var(--radius-brand)] border-[0.5px] border-stroke-1 bg-white p-8 text-base ring-0 drop-shadow-[16px_16px_16px_rgba(0,0,0,0.05)] sm:max-w-[600px] lg:p-[54px]"
@@ -150,7 +167,6 @@ export function RegionPreferenceDialog({
               aria-hidden="true"
               focusable="false"
             />
-            {/* Không cần onClick: Radix tự gọi onOpenChange(false) → handleDismiss. */}
             <DialogClose className="-m-3 inline-flex size-12 items-center justify-center p-3 text-black transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2">
               <IconX className="size-6" aria-hidden="true" focusable="false" />
               <span className="sr-only">{t("close")}</span>
@@ -177,15 +193,15 @@ export function RegionPreferenceDialog({
             id="region-preference-country"
             label={t("countryLabel")}
             value={countryCode}
-            onChange={(next) => setCountryCode(next as ShippingCountryCode)}
-            options={SHIPPING_COUNTRIES.map((country) => ({
+            onChange={handleCountryChange}
+            options={availableCountries.map((country) => ({
               value: country.code,
               label: `${country.flag} ${t(`countries.${country.code}`)}`,
             }))}
             display={
               <>
-                <span className="text-xl leading-normal">{selectedCountry.flag}</span>
-                <span>{t(`countries.${selectedCountry.code}`)}</span>
+                <span className="text-xl leading-normal">{selectedCountry?.flag}</span>
+                <span>{selectedCountry ? t(`countries.${selectedCountry.code}`) : ""}</span>
               </>
             }
             className="w-full md:min-w-0 md:flex-1"
@@ -195,7 +211,7 @@ export function RegionPreferenceDialog({
             label={t("languageLabel")}
             value={locale}
             onChange={(next) => setLocale(next as AppLocale)}
-            options={LANGUAGE_OPTIONS.map((option) => ({
+            options={availableLanguages.map((option) => ({
               value: option,
               label: t(`languages.${option}`),
             }))}

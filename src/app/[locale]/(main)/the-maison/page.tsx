@@ -28,7 +28,7 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: "metadata.aboutBrand" });
 
-  return generatePageMetadata(locale, t("title"), t("description"), {
+  return await generatePageMetadata(locale, t("title"), t("description"), {
     canonical: ROUTES.ABOUT_BRAND,
     image: new URL(OG_IMAGE, SITE_URL).toString(),
   });

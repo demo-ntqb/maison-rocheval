@@ -9,7 +9,7 @@ import type {
   CatalogVariant,
   StorefrontProduct,
 } from "../../../types/catalog.type";
-import { CatalogProductType } from "../../../types/catalog.type";
+import { CatalogCollectionHandle, CatalogProductType } from "../../../types/catalog.type";
 import {
   mapImage,
   metafieldsByKey,
@@ -17,12 +17,47 @@ import {
   stripHtml,
 } from "./catalog-mapper.helper.ts";
 
+/**
+ * Resolves the stable product category ("caviar" or "gift-set")
+ * regardless of whether Shopify localized the productType string (e.g. "Gift Set" vs "Coffret Cadeau").
+ */
+export function resolveProductCategory(
+  product: StorefrontProduct | { handle?: string; productType?: string; collections?: { nodes?: Array<{ handle?: string }> } },
+): CatalogCollectionHandle.CAVIAR | CatalogCollectionHandle.GIFT_SET {
+  // 1. Check collection handles from GraphQL response
+  const collectionHandles = product.collections?.nodes?.map((c) => c.handle?.toLowerCase()) ?? [];
+  if (collectionHandles.includes(CatalogCollectionHandle.GIFT_SET)) {
+    return CatalogCollectionHandle.GIFT_SET;
+  }
+  if (collectionHandles.includes(CatalogCollectionHandle.CAVIAR)) {
+    return CatalogCollectionHandle.CAVIAR;
+  }
+
+  // 2. Fallback based on productType (supports English, French, and common variants)
+  const rawType = product.productType?.toLowerCase().trim() ?? "";
+  if (
+    rawType === "gift set" ||
+    rawType === "gift-set" ||
+    rawType === "coffret cadeau" ||
+    rawType === "coffret" ||
+    rawType.includes("gift") ||
+    rawType.includes("coffret")
+  ) {
+    return CatalogCollectionHandle.GIFT_SET;
+  }
+
+  return CatalogCollectionHandle.CAVIAR;
+}
+
 function mapProductCard(product: StorefrontProduct): CatalogProductCard {
   const fields = metafieldsByKey(product);
   const notes = parseStringList(fields.get("notes")?.value);
-  const productType = (product.productType || CatalogProductType.CAVIAR) as CatalogProductType;
+  const category = resolveProductCategory(product);
+  const isGiftSet = category === CatalogCollectionHandle.GIFT_SET;
+  const productType = isGiftSet ? CatalogProductType.GIFT_SET : CatalogProductType.CAVIAR;
 
   return {
+    category,
     productType,
     availableForSale: product.availableForSale,
     description: stripHtml(product.descriptionHtml),
@@ -89,7 +124,7 @@ export function mapProductDetail(
     composition: parseStringList(fields.get("set_includes")?.value),
   };
 
-  if (profile.productType === CatalogProductType.GIFT_SET) {
+  if (profile.category === CatalogCollectionHandle.GIFT_SET || profile.productType === CatalogProductType.GIFT_SET) {
     return {
       ...baseDetail,
       productType: CatalogProductType.GIFT_SET,
