@@ -1,5 +1,6 @@
 import { IconMinus } from "@/shared/components/icons/ic-minus";
 import { IconPlus } from "@/shared/components/icons/ic-plus";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/components/ui/tooltip";
 import { cn } from "@/shared/lib/utils";
 
 /** Figma: 40px square, 2px radius, 0.5px hairline — identical on both frames. */
@@ -13,6 +14,7 @@ export interface ProductDetailStepperProps {
   max?: number;
   onChange: (quantity: number) => void;
   quantity: number;
+  notEnoughStockLabel?: string;
 }
 
 export function ProductDetailStepper({
@@ -22,9 +24,32 @@ export function ProductDetailStepper({
   max = 99,
   onChange,
   quantity,
+  notEnoughStockLabel,
 }: ProductDetailStepperProps) {
   const canDecrease = quantity > 1;
-  const canIncrease = quantity < max;
+  const isMaxReached = quantity >= max;
+
+  const plusButton = (
+    <button
+      type="button"
+      aria-label={increaseLabel}
+      aria-disabled={isMaxReached}
+      onClick={() => {
+        if (!isMaxReached) {
+          onChange(quantity + 1);
+        }
+      }}
+      className={cn(
+        STEP_BUTTON,
+        isMaxReached && "cursor-not-allowed hover:border-stone"
+      )}
+    >
+      <IconPlus
+        aria-hidden="true"
+        className={cn("size-4 lg:size-6", !isMaxReached ? "text-black" : "text-black/30")}
+      />
+    </button>
+  );
 
   return (
     <div className={cn("flex items-center", className)}>
@@ -48,18 +73,19 @@ export function ProductDetailStepper({
         {quantity}
       </output>
 
-      <button
-        type="button"
-        aria-label={increaseLabel}
-        disabled={!canIncrease}
-        onClick={() => onChange(quantity + 1)}
-        className={STEP_BUTTON}
-      >
-        <IconPlus
-          aria-hidden="true"
-          className={cn("size-4 lg:size-6", canIncrease ? "text-black" : "text-black/30")}
-        />
-      </button>
+      {isMaxReached && notEnoughStockLabel ? (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            {plusButton}
+          </TooltipTrigger>
+          <TooltipContent side="bottom" align="center">
+            {notEnoughStockLabel}
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        plusButton
+      )}
     </div>
   );
 }
+

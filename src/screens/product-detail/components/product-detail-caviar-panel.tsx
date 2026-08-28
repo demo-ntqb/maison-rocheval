@@ -98,6 +98,7 @@ export function ProductDetailCaviarPanel({ product }: ProductDetailCaviarPanelPr
         quantity={quantity}
         unavailableLabel={t("unavailable")}
         maxQuantity={maxQuantity}
+        notEnoughStockLabel={t("notEnoughStock")}
       />
     </div>
   );
