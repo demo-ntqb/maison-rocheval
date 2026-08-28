@@ -110,6 +110,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
         quantity={quantity}
         unavailableLabel={t("unavailable")}
         maxQuantity={maxQuantity}
+        notEnoughStockLabel={t("notEnoughStock")}
       />
     </div>
   );
