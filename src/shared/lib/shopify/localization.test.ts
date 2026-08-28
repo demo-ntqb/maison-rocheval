@@ -16,6 +16,8 @@ import {
 } from "@/shared/lib/shopify/localization";
 
 describe("Dynamic Market Localization Discovery (Phase 1 & 3)", () => {
+  // TODO: Tạm ẩn test của FR và US
+  /*
   it("chỉ expose giao giữa Shopify availableCountries và allowlist [FR, US, SG]", () => {
     // Giả lập Shopify Storefront API localization trả về FR, SG và JP (JP ngoài allowlist)
     const shopifyResponse = ["FR", "SG", "JP", "GB"];
@@ -27,11 +29,25 @@ describe("Dynamic Market Localization Discovery (Phase 1 & 3)", () => {
     // US chưa được publish trong Shopify nên không được expose
     expect(filtered.availableCountries).not.toContain("US");
   });
+  */
+
+  it("chỉ expose giao giữa Shopify availableCountries và allowlist [SG]", () => {
+    // Giả lập Shopify Storefront API localization trả về FR, SG và JP (JP ngoài allowlist)
+    const shopifyResponse = ["FR", "SG", "JP", "GB"];
+    const filtered = filterAvailableMarkets(shopifyResponse, ["en", "fr"]);
+
+    expect(filtered.availableCountries).toEqual(["SG"]);
+    expect(filtered.availableCountries).not.toContain("FR");
+    expect(filtered.availableCountries).not.toContain("JP");
+    expect(filtered.availableCountries).not.toContain("GB");
+    // US chưa được publish trong Shopify nên không được expose
+    expect(filtered.availableCountries).not.toContain("US");
+  });
 
   it("chỉ expose languages mà app có message catalogs (EN, FR)", () => {
     // Giả lập Shopify trả về EN, FR, DE, JA
     const shopifyLanguages = ["en", "fr", "de", "ja"];
-    const filtered = filterAvailableMarkets(["FR"], shopifyLanguages);
+    const filtered = filterAvailableMarkets(["SG"], shopifyLanguages);
 
     expect(filtered.availableLanguages).toEqual(["EN", "FR"]);
     expect(filtered.availableLanguages).not.toContain("DE");
@@ -43,6 +59,8 @@ describe("Dynamic Market Localization Discovery (Phase 1 & 3)", () => {
     const sgOnly = buildAvailableContexts([{ country: "SG", languages: ["EN"] }]);
     expect(sgOnly.map((c) => c.routeLocale)).toEqual(["en-sg"]);
 
+    // TODO: Tạm ẩn test của FR và US
+    /*
     // SG, FR active với cả EN và FR
     const sgAndFr = buildAvailableContexts([
       { country: "SG", languages: ["EN", "FR"] },
@@ -63,6 +81,27 @@ describe("Dynamic Market Localization Discovery (Phase 1 & 3)", () => {
         { country: "FR", languages: ["FR"] },
       ]).map((context) => context.routeLocale),
     ).toEqual(["fr-fr", "en-sg"]);
+    */
+
+    // SG active với cả EN và FR
+    const sgAndFr = buildAvailableContexts([
+      { country: "SG", languages: ["EN", "FR"] },
+    ]);
+    const routeLocales = sgAndFr.map((c) => c.routeLocale);
+    expect(routeLocales).toContain("en-sg");
+    expect(routeLocales).toContain("fr-sg");
+    expect(routeLocales).not.toContain("en-fr");
+    expect(routeLocales).not.toContain("fr-fr");
+    expect(routeLocales).not.toContain("en-us");
+    expect(routeLocales).not.toContain("fr-us");
+
+    // Languages belong to each country, not to the whole localization response.
+    expect(
+      buildAvailableContexts([
+        { country: "SG", languages: ["EN"] },
+        { country: "FR", languages: ["FR"] },
+      ]).map((context) => context.routeLocale),
+    ).toEqual(["en-sg"]);
 
     // Không được bịa default market khi Shopify không publish context nào.
     const noPublishedContext = buildAvailableContexts([]);

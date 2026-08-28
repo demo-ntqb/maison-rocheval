@@ -73,6 +73,8 @@ describe("Shopify Cart Transport & Buyer Context (Phase 8)", () => {
     globalThis.fetch = originalFetch;
   });
 
+  // TODO: Tạm ẩn test của FR và US
+  /*
   it("cập nhật buyer identity khi đổi country và nhận về repriced total/currency", async () => {
     fetchMock = vi.fn().mockImplementation(() =>
       Promise.resolve(
@@ -109,6 +111,47 @@ describe("Shopify Cart Transport & Buyer Context (Phase 8)", () => {
     const payload = JSON.parse(lastCall[1].body);
     expect(payload.variables.country).toBe("US");
     expect(payload.variables.buyerIdentity.countryCode).toBe("US");
+
+    globalThis.fetch = originalFetch;
+  });
+  */
+
+  it("cập nhật buyer identity khi đổi ngôn ngữ/quốc gia và nhận về repriced total/currency", async () => {
+    fetchMock = vi.fn().mockImplementation(() =>
+      Promise.resolve(
+        new Response(
+          JSON.stringify({
+            data: {
+              cartBuyerIdentityUpdate: {
+                cart: {
+                  id: "gid://shopify/Cart/test-cart-123",
+                  checkoutUrl: "https://maison-rocheval.myshopify.com/checkouts/cn/test-cart-123-fr-sg",
+                  cost: {
+                    totalAmount: { amount: "159.00", currencyCode: "SGD" },
+                    subtotalAmount: { amount: "159.00", currencyCode: "SGD" },
+                  },
+                },
+                userErrors: [],
+              },
+            },
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    globalThis.fetch = fetchMock as unknown as typeof fetch;
+
+    const { updateShopifyCartBuyerIdentity } = await import("./cart.service");
+    const result = await updateShopifyCartBuyerIdentity("gid://shopify/Cart/test-cart-123", "SG", "FR");
+
+    expect(result).toBeDefined();
+    expect(result?.totalAmount).toBe(159);
+    expect(result?.currencyCode).toBe("SGD");
+
+    const lastCall = fetchMock.mock.calls[fetchMock.mock.calls.length - 1];
+    const payload = JSON.parse(lastCall[1].body);
+    expect(payload.variables.country).toBe("SG");
+    expect(payload.variables.buyerIdentity.countryCode).toBe("SG");
 
     globalThis.fetch = originalFetch;
   });
