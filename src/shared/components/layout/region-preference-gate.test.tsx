@@ -36,7 +36,7 @@ vi.mock("next/dynamic", () => ({
 
 import { RegionPreferenceGate } from "./region-preference-gate";
 
-const preference = JSON.stringify({ routeLocale: "fr-fr" });
+const preference = JSON.stringify({ routeLocale: "fr-sg" });
 const availableContexts = Object.values(COMMERCE_CONTEXTS);
 
 function seedStorage({
@@ -66,7 +66,7 @@ describe("RegionPreferenceGate", () => {
     render(<RegionPreferenceGate availableContexts={availableContexts} />);
 
     await waitFor(() => expect(replace).toHaveBeenCalledTimes(1));
-    expect(replace).toHaveBeenCalledWith(mockPathname, { locale: "fr-fr" });
+    expect(replace).toHaveBeenCalledWith(mockPathname, { locale: "fr-sg" });
   });
 
   it("không redirect lại lần thứ hai trong cùng phiên (không đánh bật điều hướng chủ đích)", async () => {
@@ -77,7 +77,7 @@ describe("RegionPreferenceGate", () => {
   });
 
   it("không redirect khi routeLocale hiện tại khớp preference đã lưu", async () => {
-    activeLocale = "fr-fr";
+    activeLocale = "fr-sg";
     seedStorage({ preference });
     render(<RegionPreferenceGate availableContexts={availableContexts} />);
 
