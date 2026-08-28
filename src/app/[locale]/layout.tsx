@@ -3,7 +3,7 @@ import { routing } from "@/i18n/routing";
 import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
 import { generateOrganizationJsonLd, generateRootMetadata, isComingSoon } from "@/shared/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { Space_Grotesk } from "next/font/google";
@@ -49,6 +49,13 @@ const spaceGrotesk = Space_Grotesk({
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 export async function generateMetadata({
   params,
