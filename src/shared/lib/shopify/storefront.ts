@@ -25,25 +25,45 @@ function createStorefrontClientForRequest({
   storeDomain,
   market,
   request,
+  type = "private_no_buyer_context",
 }: {
   privateStorefrontToken: string;
   storeDomain: string;
   market: I18nBase;
   request: Request | { headers: Headers };
+  type?: "private" | "private_no_buyer_context";
 }): StorefrontClient {
-  const client = createStorefrontClient({
-    type: "private_no_buyer_context",
-    requestContext: createShopifyRequestContext({
-      request,
-      i18n: { language: market.language, country: market.country },
-    }),
-    config: {
-      storeDomain,
-      privateStorefrontToken,
-      apiVersion: STOREFRONT_API_VERSION,
-      // Caching lives at the `use cache` boundary — never pass a cache here.
-    },
-  });
+  const client =
+    type === "private"
+      ? createStorefrontClient({
+          type: "private",
+          requestContext: createShopifyRequestContext({
+            request,
+            i18n: { language: market.language, country: market.country },
+            buyerIp:
+              ("headers" in request &&
+                (request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+                  request.headers.get("x-real-ip"))) ||
+              "127.0.0.1",
+          }),
+          config: {
+            storeDomain,
+            privateStorefrontToken,
+            apiVersion: STOREFRONT_API_VERSION,
+          },
+        })
+      : createStorefrontClient({
+          type: "private_no_buyer_context",
+          requestContext: createShopifyRequestContext({
+            request,
+            i18n: { language: market.language, country: market.country },
+          }),
+          config: {
+            storeDomain,
+            privateStorefrontToken,
+            apiVersion: STOREFRONT_API_VERSION,
+          },
+        });
 
   return {
     async query<T extends object>(document: string, options: QueryOptions = {}) {
@@ -87,6 +107,7 @@ export function getCatalogStorefrontClient(locale: string): StorefrontClient {
     storeDomain: config.storeDomain,
     market,
     request: { headers: new Headers() },
+    type: "private_no_buyer_context",
   });
   catalogClients.set(cacheKey, client);
   return client;
@@ -101,5 +122,6 @@ export function getBuyerStorefrontClient(locale: string, request: Request): Stor
     storeDomain: config.storeDomain,
     market,
     request,
+    type: "private",
   });
 }

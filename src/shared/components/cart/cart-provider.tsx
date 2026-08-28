@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 import type {
   CartEntry,
@@ -50,6 +50,7 @@ type CartContextValue = {
   setLineQuantity: (lineId: string, quantity: number) => void;
   setOpen: (open: boolean) => void;
   totalPrice: number;
+  cartError: "priceChanged" | "itemUnavailable" | null;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -98,6 +99,15 @@ export function CartProvider({
   const [isOpen, setOpen] = useState(initialOpen);
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(initialCheckoutUrl);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+
+  const [shopifyCart, setShopifyCart] = useState<{
+    id: string;
+    checkoutUrl: string;
+    totalAmount: number;
+    currencyCode: string;
+    lines: Array<{ id: string; quantity: number; availableForSale: boolean; merchandiseId: string }>;
+  } | null>(null);
+  const [cartError, setCartError] = useState<"priceChanged" | "itemUnavailable" | null>(null);
 
   const removeLine = useCallback((lineId: string) => {
     setEntries((current) =>
@@ -245,14 +255,101 @@ export function CartProvider({
     setOpen(true);
   }, []);
 
+  const flattenedLines = useMemo(() => flattenLines(entries), [entries]);
+
+  useEffect(() => {
+    if (flattenedLines.length === 0) {
+      setShopifyCart(null);
+      setCartError(null);
+      return;
+    }
+
+    let active = true;
+    const syncCart = async () => {
+      try {
+        const response = await fetch("/api/cart", {
+          body: JSON.stringify({
+            locale: routeLocale,
+            lines: flattenedLines.map((line) => {
+              const attrs: Array<{ key: string; value: string }> = [];
+              if (line.giftMessage) {
+                if (line.giftMessage.kind === "personal" && line.giftMessage.text) {
+                  attrs.push({ key: "Gift Message", value: line.giftMessage.text });
+                } else if (line.giftMessage.kind === "blank") {
+                  attrs.push({ key: "Gift Message", value: "Blank card" });
+                }
+              }
+              return {
+                merchandiseId: line.merchandiseId,
+                quantity: line.quantity,
+                attributes: attrs.length > 0 ? attrs : undefined,
+              };
+            }),
+          }),
+          headers: { "Content-Type": "application/json" },
+          method: "POST",
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to sync cart");
+        }
+
+        const data = await response.json();
+        if (!active) return;
+
+        setShopifyCart(data);
+
+        const unavailableItems = data.lines.filter((l: any) => !l.availableForSale);
+        if (unavailableItems.length > 0) {
+          setCartError("itemUnavailable");
+        } else {
+          const clientTotal = flattenedLines.reduce((total, line) => total + line.unitPrice * line.quantity, 0);
+          if (data.totalAmount !== clientTotal || data.currencyCode !== (flattenedLines[0]?.currencyCode ?? "EUR")) {
+            setCartError("priceChanged");
+          } else {
+            setCartError(null);
+          }
+        }
+      } catch (err) {
+        console.error("[shopify] cart sync error", err);
+      }
+    };
+
+    const timer = setTimeout(syncCart, 300);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [flattenedLines, routeLocale]);
+
   const checkout = useCallback(async () => {
     if (typeof window === "undefined" || isCheckingOut) return;
+
+    if (shopifyCart?.checkoutUrl) {
+      window.location.assign(shopifyCart.checkoutUrl);
+      return;
+    }
+
     setIsCheckingOut(true);
     try {
       const response = await fetch("/api/cart", {
         body: JSON.stringify({
           locale: routeLocale,
-          lines: flattenLines(entries).map((line) => ({ merchandiseId: line.merchandiseId, quantity: line.quantity })),
+          lines: flattenedLines.map((line) => {
+            const attrs: Array<{ key: string; value: string }> = [];
+            if (line.giftMessage) {
+              if (line.giftMessage.kind === "personal" && line.giftMessage.text) {
+                attrs.push({ key: "Gift Message", value: line.giftMessage.text });
+              } else if (line.giftMessage.kind === "blank") {
+                attrs.push({ key: "Gift Message", value: "Blank card" });
+              }
+            }
+            return {
+              merchandiseId: line.merchandiseId,
+              quantity: line.quantity,
+              attributes: attrs.length > 0 ? attrs : undefined,
+            };
+          }),
         }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
@@ -263,35 +360,47 @@ export function CartProvider({
           ? payload.checkoutUrl
           : null;
       if (!response.ok || !nextCheckoutUrl) return;
-      setCheckoutUrl(nextCheckoutUrl);
       window.location.assign(nextCheckoutUrl);
     } finally {
       setIsCheckingOut(false);
     }
-  }, [entries, isCheckingOut, routeLocale]);
+  }, [flattenedLines, isCheckingOut, routeLocale, shopifyCart]);
 
   const value = useMemo<CartContextValue>(() => {
-    const lines = flattenLines(entries);
-
     return {
       addGiftSetUnits,
       addLine,
       checkout,
-      checkoutUrl,
+      checkoutUrl: shopifyCart?.checkoutUrl ?? checkoutUrl,
       close: () => setOpen(false),
-      currencyCode: lines[0]?.currencyCode ?? DEFAULT_CURRENCY,
+      currencyCode: shopifyCart?.currencyCode ?? (flattenedLines[0]?.currencyCode ?? DEFAULT_CURRENCY),
       entries,
       isCheckingOut,
       isOpen,
-      itemCount: lines.reduce((total, line) => total + line.quantity, 0),
+      itemCount: flattenedLines.reduce((total, line) => total + line.quantity, 0),
       open: () => setOpen(true),
       removeLine,
       setGiftMessage,
       setLineQuantity,
       setOpen,
-      totalPrice: lines.reduce((total, line) => total + line.unitPrice * line.quantity, 0),
+      totalPrice: shopifyCart?.totalAmount ?? flattenedLines.reduce((total, line) => total + line.unitPrice * line.quantity, 0),
+      cartError,
     };
-  }, [addGiftSetUnits, addLine, checkout, checkoutUrl, entries, isCheckingOut, isOpen, removeLine, setGiftMessage, setLineQuantity]);
+  }, [
+    addGiftSetUnits,
+    addLine,
+    checkout,
+    checkoutUrl,
+    entries,
+    flattenedLines,
+    isCheckingOut,
+    isOpen,
+    removeLine,
+    setGiftMessage,
+    setLineQuantity,
+    shopifyCart,
+    cartError,
+  ]);
 
   return <CartContext value={value}>{children}</CartContext>;
 }

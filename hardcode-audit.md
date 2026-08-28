@@ -4,19 +4,26 @@ Dưới đây là danh sách các vị trí trong mã nguồn đang sử dụng 
 
 ---
 
-### 1. Request Context mặc định của Storefront Client
-* **Vị trí**: [`src/shared/lib/shopify/storefront.ts`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/lib/shopify/storefront.ts#L36)
-* **Chi tiết**: 
-  Trong hàm `createCatalogClient`, tham số `i18n` của request context đang được thiết lập cố định:
+### 1. Request Context mặc định của Storefront Client [ĐÃ GIẢI QUYẾT]
+* **Vị trí**: [`src/shared/lib/shopify/storefront.ts`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/lib/shopify/storefront.ts#L23-L66)
+* **Chi tiết**:
+  Trước đây, tham số `i18n` của request context bị thiết lập cố định là `{ language: "EN", country: "FR" }` trong hàm `createCatalogClient`.
+  **Trạng thái hiện tại**: Đã được thiết lập động trong hàm `createStorefrontClientForRequest` thông qua đối tượng `market: I18nBase` được truyền vào:
   ```typescript
-  i18n: { language: "EN", country: "FR" },
+  requestContext: createShopifyRequestContext({
+    request,
+    i18n: { language: market.language, country: market.country },
+  }),
   ```
-* **Mức độ ảnh hưởng**: Thấp. Đối với các truy vấn Catalog tĩnh, hệ thống sử dụng directive `@inContext` để truyền động `country` và `language` từ hàm `getShopifyMarket(locale)`. Tuy nhiên, request context mặc định này nên được đồng bộ hoặc quản lý động nếu sau này phát sinh các luồng client-side hoặc cart/checkout trực tiếp.
+  Hệ thống khởi tạo client tương ứng cho từng thị trường một cách động qua các hàm helper:
+  * `getCatalogStorefrontClient(locale)` (dòng 98) - dùng cho các catalog route tĩnh được cache.
+  * `getBuyerStorefrontClient(locale, request)` (dòng 117) - dùng cho các luồng động liên quan đến giỏ hàng của người mua.
+* **Mức độ ảnh hưởng**: Không còn ảnh hưởng. Client storefront đã hoàn toàn tích hợp cấu hình thị trường động (Multi-Market).
 
 ---
 
 ### 2. Loại tiền tệ mặc định trong Giỏ hàng (Cart)
-* **Vị trí**: [`src/shared/components/cart/cart-provider.tsx`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/components/cart/cart-provider.tsx#L54)
+* **Vị trí**: [`src/shared/components/cart/cart-provider.tsx`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/components/cart/cart-provider.tsx#L58)
 * **Chi tiết**:
   Hằng số `DEFAULT_CURRENCY` được thiết lập cứng:
   ```typescript
@@ -27,7 +34,7 @@ Dưới đây là danh sách các vị trí trong mã nguồn đang sử dụng 
 ---
 
 ### 3. Số lượng tối đa mặc định khi thiếu quyền truy cập tồn kho
-* **Vị trí**: [`src/shared/components/cart/cart-provider.tsx`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/components/cart/cart-provider.tsx#L107) (và các dòng L142, L152)
+* **Vị trí**: [`src/shared/components/cart/cart-provider.tsx`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/components/cart/cart-provider.tsx#L130) (và các dòng L165, L175, L215)
 * **Chi tiết**:
   Khi trường `quantityAvailable` từ Shopify trả về `null` (do API key thiếu scope `unauthenticated_read_product_inventory`), giỏ hàng sẽ tự động fallback giới hạn tối đa là `99`:
   ```typescript
@@ -38,7 +45,7 @@ Dưới đây là danh sách các vị trí trong mã nguồn đang sử dụng 
 ---
 
 ### 4. Loại bỏ chức năng lựa chọn hộp quà tặng (Packaging Options)
-* **Vị trí**: [`src/shared/lib/shopify/catalog/catalog.mapper.ts`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/lib/shopify/catalog/catalog.mapper.ts#L93)
+* **Vị trí**: [`src/shared/lib/shopify/catalog/catalog.mapper.ts`](file:///Users/ntqb/Desktop/workspace/freelance/maison-rocheval/src/shared/lib/shopify/catalog/catalog.mapper.ts#L121)
 * **Chi tiết**:
   Do các tính năng về hộp quà tặng (`presentationOptions` và `presentationBox`) đã được loại bỏ khỏi GraphQL query theo yêu cầu nghiệp vụ mới, trường `packagingOptions` hiện đang được map cứng thành mảng rỗng:
   ```typescript
@@ -56,3 +63,4 @@ Dưới đây là danh sách các vị trí trong mã nguồn đang sử dụng 
   const SHOPIFY_IMAGE_HOSTS = ["cdn.shopify.com", "mock.shop"];
   ```
 * **Mức độ ảnh hưởng**: Thấp. Đây là cấu hình chuẩn từ Shopify Hydrogen để lọc và định dạng lại kích thước ảnh từ CDN của Shopify.
+

@@ -17,6 +17,8 @@
     "total": "TOTAL",
     "checkout": "Passer commande",
     "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
+    "priceChanged": "Les prix ont été mis à jour en fonction du marché sélectionné.",
+    "itemUnavailable": "Certains articles ne sont pas disponibles sur le marché sélectionné et ont été retirés.",
     "empty": {
       "label": "Votre panier est vide",
       "cta": "Poursuivre vos achats"

@@ -11,6 +11,7 @@ import {
   SheetTitle,
 } from "@/shared/components/ui/sheet";
 import { formatBrandPrice } from "@/shared/lib/money";
+import { cn } from "@/shared/lib/utils";
 import type { CartGiftMessage, CartLine } from "@/shared/types/cart.type";
 
 import { CartEmpty } from "./cart-empty";
@@ -35,6 +36,7 @@ export function CartDrawer() {
     setLineQuantity,
     setOpen,
     totalPrice,
+    cartError,
   } = useCart();
 
   const [messageLine, setMessageLine] = useState<CartLine | null>(null);
@@ -94,56 +96,68 @@ export function CartDrawer() {
               entries.map((entry) =>
                 entry.kind === "group" ? (
                   <CartGroupCard
-                    key={entry.group.id}
-                    group={entry.group}
-                    locale={locale}
-                    onEditMessage={setMessageLine}
-                    onNavigate={close}
-                    onQuantityChange={setLineQuantity}
-                    onRemove={removeLine}
-                  />
-                ) : (
-                  <div
-                    key={entry.line.id}
-                    className="rounded-brand border-[0.5px] border-stone p-4"
-                  >
-                    <CartLineItem
-                      line={entry.line}
+                      key={entry.group.id}
+                      group={entry.group}
                       locale={locale}
                       onEditMessage={setMessageLine}
+                      onNavigate={close}
                       onQuantityChange={setLineQuantity}
                       onRemove={removeLine}
                     />
-                  </div>
-                ),
-              )
-            )}
-          </div>
+                  ) : (
+                    <div
+                      key={entry.line.id}
+                      className="rounded-brand border-[0.5px] border-stone p-4"
+                    >
+                      <CartLineItem
+                        line={entry.line}
+                        locale={locale}
+                        onEditMessage={setMessageLine}
+                        onQuantityChange={setLineQuantity}
+                        onRemove={removeLine}
+                      />
+                    </div>
+                  ),
+                )
+              )}
+            </div>
 
-          {entries.length > 0 ? (
-            <div className="flex shrink-0 flex-col items-center gap-4 border-t-[0.5px] border-muted-text/50 bg-white p-4">
-              <div className="flex w-full items-center justify-between gap-4 py-1">
-                <p className="font-sans text-base/[normal] font-medium text-black">{t("total")}</p>
-                <p className="font-sans text-2xl/[normal] font-medium text-black">
-                  {formatBrandPrice(totalPrice, currencyCode, locale)}
+            {entries.length > 0 ? (
+              <div className="flex shrink-0 flex-col items-center gap-4 border-t-[0.5px] border-muted-text/50 bg-white p-4 w-full">
+                {cartError ? (
+                  <div
+                    className={cn(
+                      "w-full rounded-brand p-3 text-xs border font-sans",
+                      cartError === "itemUnavailable"
+                        ? "bg-red-50 text-red-800 border-red-200"
+                        : "bg-amber-50 text-amber-800 border-amber-200"
+                    )}
+                  >
+                    {t(cartError)}
+                  </div>
+                ) : null}
+                <div className="flex w-full items-center justify-between gap-4 py-1">
+                  <p className="font-sans text-base/[normal] font-medium text-black">{t("total")}</p>
+                  <p className="font-sans text-2xl/[normal] font-medium text-black">
+                    {formatBrandPrice(totalPrice, currencyCode, locale)}
+                  </p>
+                </div>
+
+                <Button
+                  type="button"
+                  onClick={checkout}
+                  disabled={isCheckingOut || cartError === "itemUnavailable"}
+                  className="h-12 w-full bg-navy-dark px-8 text-base/[normal] cursor-pointer"
+                >
+                  {t("checkout")}
+                </Button>
+
+                <p className="flex items-center gap-2 font-sans text-sm/[normal] font-normal text-black/50">
+                  <IconShoppingCart aria-hidden="true" className="size-4 shrink-0 text-black/30" />
+                  <span>{t("deliveryNote")}</span>
                 </p>
               </div>
-
-              <Button
-                type="button"
-                onClick={checkout}
-                disabled={isCheckingOut}
-                className="h-12 w-full bg-navy-dark px-8 text-base/[normal] cursor-pointer"
-              >
-                {t("checkout")}
-              </Button>
-
-              <p className="flex items-center gap-2 font-sans text-sm/[normal] font-normal text-black/50">
-                <IconShoppingCart aria-hidden="true" className="size-4 shrink-0 text-black/30" />
-                <span>{t("deliveryNote")}</span>
-              </p>
-            </div>
-          ) : null}
+            ) : null}
         </SheetContent>
       </Sheet>
 

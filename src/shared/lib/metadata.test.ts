@@ -10,20 +10,20 @@ vi.mock("@/shared/lib/shopify/localization", () => ({
 import { generatePageMetadata, generateRootMetadata, localizedPath } from "./metadata";
 
 describe("SEO & Metadata", () => {
-  it("luôn ghi rõ locale trên URL, kể cả default market", () => {
-    expect(localizedPath("en-sg", "/")).toBe("/en-sg");
-    expect(localizedPath("en-sg", "/products")).toBe("/en-sg/products");
+  it("không ghi locale trên URL đối với default market", () => {
+    expect(localizedPath("en-sg", "/")).toBe("/");
+    expect(localizedPath("en-sg", "/products")).toBe("/products");
   });
 
   it("chỉ publish canonical và hreflang cho contexts Shopify đang publish", async () => {
     const metadata = await generateRootMetadata("en-sg", "Maison Rocheval", "Description");
 
-    expect(metadata.alternates?.canonical).toBe("https://maisonrocheval.com/en-sg");
+    expect(metadata.alternates?.canonical).toBe("https://maisonrocheval.com/");
     expect(metadata.openGraph?.locale).toBe("en_SG");
     expect(metadata.alternates?.languages).toEqual({
-      "en-sg": "https://maisonrocheval.com/en-sg",
+      "en-sg": "https://maisonrocheval.com/",
       "fr-sg": "https://maisonrocheval.com/fr-sg",
-      "x-default": "https://maisonrocheval.com/en-sg",
+      "x-default": "https://maisonrocheval.com/",
     });
   });
 

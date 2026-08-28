@@ -7,7 +7,20 @@ import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
 
 const checkoutSchema = z.object({
   locale: z.string(),
-  lines: z.array(z.object({ merchandiseId: z.string().min(1), quantity: z.number().int().min(1).max(99) })).min(1).max(50),
+  lines: z.array(
+    z.object({
+      merchandiseId: z.string().min(1),
+      quantity: z.number().int().min(1).max(99),
+      attributes: z
+        .array(
+          z.object({
+            key: z.string().min(1),
+            value: z.string(),
+          }),
+        )
+        .optional(),
+    }),
+  ).min(1).max(50),
 });
 
 /** Creates the checkout cart in the same Shopify Markets context as the current URL. */
@@ -28,5 +41,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unable to create checkout" }, { status: 502 });
   }
 
-  return NextResponse.json({ checkoutUrl: cart.checkoutUrl }, { headers: { "Cache-Control": "no-store" } });
+  return NextResponse.json(
+    {
+      id: cart.id,
+      checkoutUrl: cart.checkoutUrl,
+      totalAmount: cart.totalAmount,
+      currencyCode: cart.currencyCode,
+      lines: cart.lines,
+    },
+    { headers: { "Cache-Control": "no-store" } },
+  );
 }
