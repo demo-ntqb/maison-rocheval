@@ -36,27 +36,15 @@ export function deriveProductSelection(
   };
 }
 
+import { formatBrandPrice } from "@/shared/lib/money";
+
 /**
- * The product detail design prints the amount with a trailing currency
- * symbol (`888.88€`) rather than Intl's default leading placement for en.
+ * Format catalog price using the shared brand price formatter.
  */
 export function formatCatalogPrice(
   amount: number,
   currencyCode: string,
   locale: string,
 ): string {
-  const intlLocale = locale === "fr" ? "fr-FR" : "en-US";
-  const value = new Intl.NumberFormat(intlLocale, {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2,
-  }).format(amount);
-  const symbol = new Intl.NumberFormat(intlLocale, {
-    currency: currencyCode,
-    currencyDisplay: "narrowSymbol",
-    style: "currency",
-  })
-    .formatToParts(0)
-    .find((part) => part.type === "currency")?.value ?? currencyCode;
-
-  return locale === "fr" ? `${value} ${symbol}` : `${value}${symbol}`;
+  return formatBrandPrice(amount, currencyCode, locale);
 }

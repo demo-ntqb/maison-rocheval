@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const { locale, category } = await params;
   if (!isProductCategory(category)) return {};
   const t = await getTranslations({ locale, namespace: "metadata.products" });
-  return generatePageMetadata(locale, t(`${category}.title`), t(`${category}.description`), { canonical: ROUTES.PRODUCT_CATEGORY(category) });
+  return await generatePageMetadata(locale, t(`${category}.title`), t(`${category}.description`), { canonical: ROUTES.PRODUCT_CATEGORY(category) });
 }
 
 export default async function ProductCategoryPage({ params }: { params: Params }) {

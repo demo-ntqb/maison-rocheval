@@ -22,6 +22,7 @@ export type CatalogImage = {
 };
 
 export type CatalogProductCard = {
+  category: CatalogCollectionHandle.CAVIAR | CatalogCollectionHandle.GIFT_SET;
   productType: CatalogProductType;
   availableForSale: boolean;
   description: string;
@@ -112,6 +113,11 @@ export type StorefrontProduct = {
     url: string;
     width: number | null;
   } | null;
+  collections?: {
+    nodes: Array<{
+      handle: string;
+    }>;
+  };
   handle: string;
   id: string;
   images?: {

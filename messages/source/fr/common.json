@@ -14,7 +14,7 @@
     "menuLabel": "Menu",
     "openMenu": "Ouvrir le menu de navigation",
     "closeMenu": "Fermer le menu de navigation",
-    "announcement": "Nous livrons actuellement uniquement en France et aux États-Unis.",
+    "announcement": "Nous livrons actuellement à Singapour, en France et aux États-Unis.",
     "dismissAnnouncement": "Fermer l’annonce de livraison"
   },
   "regionDialog": {
@@ -26,6 +26,7 @@
     "continue": "Continuer",
     "close": "Fermer",
     "countries": {
+      "SG": "Singapour",
       "FR": "France",
       "US": "États-Unis"
     },

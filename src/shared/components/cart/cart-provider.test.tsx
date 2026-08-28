@@ -1,5 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { CartProvider, useCart } from "./cart-provider";
 
@@ -51,6 +51,7 @@ function Probe() {
             quantity: 2,
             unit: {
               currencyCode: "EUR",
+              id: "gift-variant",
               image: IMAGE,
               title: "L'Initiation",
               unitPrice: 100,
@@ -62,13 +63,14 @@ function Probe() {
       >
         add gift set
       </button>
+      <button type="button" onClick={cart.checkout}>checkout</button>
     </div>
   );
 }
 
 function renderProbe() {
   return render(
-    <CartProvider>
+    <CartProvider routeLocale="en-sg">
       <Probe />
     </CartProvider>,
   );
@@ -140,5 +142,28 @@ describe("CartProvider", () => {
 
     expect(screen.getByText("line:Amour:10")).toBeInTheDocument();
     expect(screen.getByTestId("item-count").textContent).toBe("10");
+  });
+
+  it("creates checkout in the market represented by the current route", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue({
+      json: async () => ({ error: "blocked in test" }),
+      ok: false,
+    } as Response);
+    renderProbe();
+
+    await act(async () => {
+      screen.getByRole("button", { name: "add caviar" }).click();
+    });
+    await act(async () => {
+      screen.getByRole("button", { name: "checkout" }).click();
+    });
+
+    expect(fetchMock).toHaveBeenCalledWith("/api/cart", expect.objectContaining({ method: "POST" }));
+    const request = fetchMock.mock.calls[0]?.[1] as RequestInit;
+    expect(JSON.parse(request.body as string)).toEqual({
+      locale: "en-sg",
+      lines: [{ merchandiseId: "amour-30", quantity: 1 }],
+    });
+    fetchMock.mockRestore();
   });
 });

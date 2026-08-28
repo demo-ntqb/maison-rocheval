@@ -14,7 +14,7 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: "metadata.contact" });
 
-  return generatePageMetadata(locale, t("title"), t("description"), {
+  return await generatePageMetadata(locale, t("title"), t("description"), {
     canonical: ROUTES.CONTACT,
   });
 }

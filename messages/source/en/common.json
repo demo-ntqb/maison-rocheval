@@ -14,7 +14,7 @@
     "menuLabel": "Menu",
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
-    "announcement": "We currently only deliver to France and United States.",
+    "announcement": "We currently deliver to Singapore, France and United States.",
     "dismissAnnouncement": "Dismiss delivery announcement"
   },
   "regionDialog": {
@@ -26,6 +26,7 @@
     "continue": "Continue",
     "close": "Close",
     "countries": {
+      "SG": "Singapore",
       "FR": "France",
       "US": "United States"
     },

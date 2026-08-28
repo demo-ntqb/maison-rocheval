@@ -17,6 +17,7 @@ export type CartLine = {
   currencyCode: string;
   giftMessage?: CartGiftMessage;
   id: string;
+  merchandiseId: string;
   image: CartLineImage | null;
   quantity: number;
   /** Gift-set components ship in a fixed composition — no stepper for those. */

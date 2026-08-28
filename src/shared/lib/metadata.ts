@@ -1,23 +1,30 @@
 import type { Metadata } from "next";
 import { businessInfo, seoDefaults, SITE_URL } from "@/shared/constants/site.constant";
 import { routing } from "@/i18n/routing";
+import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
 
 const OG_LOCALE: Record<string, string> = {
+  "en-sg": "en_SG",
+  "fr-sg": "fr_SG",
+  "en-us": "en_US",
+  "fr-us": "fr_US",
+  "en-fr": "en_FR",
+  "fr-fr": "fr_FR",
   en: "en_US",
   fr: "fr_FR",
 };
 
-/** Prefixes a path with the locale segment, except for the default locale ("as-needed" mode). */
+/** Every public URL carries its Shopify market and language context. */
 export function localizedPath(locale: string, path: string): string {
-  if (locale === routing.defaultLocale) return path;
   const suffix = path === "/" ? "" : path;
   return `/${locale}${suffix}`;
 }
 
-/** Builds `alternates.languages` (hreflang) for an unlocalized path, across every configured locale. */
-function buildLanguageAlternates(path: string): Record<string, string> {
+/** Builds `hreflang` only for country/language pairs currently published by Shopify. */
+async function buildLanguageAlternates(path: string): Promise<Record<string, string>> {
+  const { availableRouteLocales } = await getDiscoveredMarkets();
   const languages: Record<string, string> = {};
-  for (const locale of routing.locales) {
+  for (const locale of availableRouteLocales) {
     languages[locale] = new URL(localizedPath(locale, path), SITE_URL).toString();
   }
   languages["x-default"] = new URL(localizedPath(routing.defaultLocale, path), SITE_URL).toString();
@@ -27,7 +34,7 @@ function buildLanguageAlternates(path: string): Record<string, string> {
 /**
  * Generate root metadata for the site, per locale
  */
-export function generateRootMetadata(locale: string, title: string, description: string): Metadata {
+export async function generateRootMetadata(locale: string, title: string, description: string): Promise<Metadata> {
   const canonical = new URL(localizedPath(locale, "/"), SITE_URL).toString();
 
   return {
@@ -46,7 +53,7 @@ export function generateRootMetadata(locale: string, title: string, description:
       telephone: false,
       address: false,
     },
-    alternates: { canonical, languages: buildLanguageAlternates("/") },
+    alternates: { canonical, languages: await buildLanguageAlternates("/") },
     icons: {
       icon: [
         { url: "/mr-light.png", media: "(prefers-color-scheme: light)", type: "image/png", sizes: "500x500" },
@@ -97,7 +104,7 @@ export function generateRootMetadata(locale: string, title: string, description:
 /**
  * Generate metadata for a specific page, per locale
  */
-export function generatePageMetadata(
+export async function generatePageMetadata(
   locale: string,
   title: string,
   description: string,
@@ -107,7 +114,7 @@ export function generatePageMetadata(
     noindex?: boolean;
     ogType?: "website" | "article";
   }
-): Metadata {
+): Promise<Metadata> {
   const pageImage = options?.image ?? seoDefaults.image;
   const pageUrl = options?.canonical
     ? new URL(localizedPath(locale, options.canonical), SITE_URL).toString()
@@ -118,7 +125,7 @@ export function generatePageMetadata(
     description,
     alternates:
       pageUrl && options?.canonical
-        ? { canonical: pageUrl, languages: buildLanguageAlternates(options.canonical) }
+        ? { canonical: pageUrl, languages: await buildLanguageAlternates(options.canonical) }
         : undefined,
     robots: options?.noindex ? { index: false, follow: false } : undefined,
     openGraph: {
@@ -171,4 +178,3 @@ export function generateOrganizationJsonLd(): string {
     logo: new URL("/apple-icon.png", SITE_URL).toString(),
   });
 }
-

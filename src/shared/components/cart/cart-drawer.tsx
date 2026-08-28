@@ -23,9 +23,11 @@ export function CartDrawer() {
   const t = useTranslations("cart");
   const locale = useLocale();
   const {
+    checkout,
     close,
     currencyCode,
     entries,
+    isCheckingOut,
     isOpen,
     itemCount,
     removeLine,
@@ -127,7 +129,12 @@ export function CartDrawer() {
                 </p>
               </div>
 
-              <Button type="button" className="h-12 w-full bg-navy-dark px-8 text-base/[normal]">
+              <Button
+                type="button"
+                onClick={checkout}
+                disabled={isCheckingOut}
+                className="h-12 w-full bg-navy-dark px-8 text-base/[normal] cursor-pointer"
+              >
                 {t("checkout")}
               </Button>
 

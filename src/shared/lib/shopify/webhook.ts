@@ -21,6 +21,11 @@ export function shopifyWebhookTags(
   payload: ShopifyWebhookPayload,
 ): string[] {
   const normalizedTopic = topic.toLowerCase();
+
+  if (normalizedTopic.startsWith("markets/") || normalizedTopic.startsWith("locales/")) {
+    return ["shopify-localization", "shopify-market-context"];
+  }
+
   if (normalizedTopic.startsWith("products/")) {
     return [
       "shopify-products",

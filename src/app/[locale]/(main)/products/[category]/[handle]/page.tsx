@@ -11,14 +11,18 @@ import { ROUTES } from "@/shared/constants/route.constant";
 import { SITE_URL } from "@/shared/constants/site.constant";
 import { generateJsonLd, generatePageMetadata, localizedPath } from "@/shared/lib/metadata";
 import { getCollectionProducts, getProductDetail } from "@/shared/lib/shopify/catalog";
+import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
 import { CatalogProductType } from "@/shared/types/catalog.type";
 
 type Params = Promise<{ locale: string; category: string; handle: string }>;
 
 export async function generateStaticParams() {
   const params: { category: string; handle: string }[] = [];
+  const { availableRouteLocales } = await getDiscoveredMarkets();
+  const discoveryLocale = availableRouteLocales[0];
+  if (!discoveryLocale) return params;
   for (const category of PRODUCT_CATEGORIES) {
-    const products = await getCollectionProducts("en", category);
+    const products = await getCollectionProducts(discoveryLocale, category);
     for (const p of products) {
       params.push({ category, handle: p.handle });
     }
@@ -35,8 +39,7 @@ async function fetchProductDetail(locale: string, category: string, handle: stri
   const product = await getProductDetail(locale, handle);
   if (!product) return null;
 
-  const expectedProductType = PRODUCT_CATEGORY_HANDLE_TO_PRODUCT_TYPE_MAP[category];
-  if (product.productType !== expectedProductType) {
+  if (product.category !== category) {
     return null;
   }
 
@@ -48,7 +51,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const product = await fetchProductDetail(locale, category, handle);
   if (!product) return {};
 
-  return generatePageMetadata(locale, product.title, product.description, {
+  return await generatePageMetadata(locale, product.title, product.description, {
     canonical: ROUTES.PRODUCT_DETAIL(category as ProductCategory, handle),
     image: product.image?.url ?? undefined,
   });
@@ -130,4 +133,3 @@ export default async function ProductDetailPage({ params }: { params: Params }) 
     </div>
   );
 }
-

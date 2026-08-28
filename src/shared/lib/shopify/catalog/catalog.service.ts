@@ -10,6 +10,7 @@ import type {
   StorefrontResult,
 } from "../../../types/catalog.type";
 import { getShopifyMarket } from "../config";
+import { getAvailableCommerceContext } from "../localization";
 import { getCatalogStorefrontClient } from "../storefront";
 import {
   mapCollectionProducts,
@@ -37,10 +38,15 @@ function collectionVariables(locale: string, handle: string, productCount: numbe
   return { country: market.country, handle, language: market.language, productCount };
 }
 
+async function isPublishedMarket(locale: string): Promise<boolean> {
+  return Boolean(await getAvailableCommerceContext(locale));
+}
+
 function tagCollection(locale: string, handle: string): void {
   cacheTag(
     "shopify-products",
     "shopify-collections",
+    "shopify-market-context",
     `shopify-collection-${handle}`,
     `shopify-market-${locale}`,
   );
@@ -54,6 +60,7 @@ export async function getCollectionProducts(
   "use cache";
   cacheLife("minutes");
   tagCollection(locale, handle);
+  if (!(await isPublishedMarket(locale))) return [];
   const result = await getCatalogStorefrontClient(locale).query<CollectionProductsQuery>(
     COLLECTION_PRODUCTS_QUERY,
     { variables: collectionVariables(locale, handle, productCount) },
@@ -69,7 +76,14 @@ export async function getProductDetail(
 ): Promise<CatalogProductDetail | null> {
   "use cache";
   cacheLife("minutes");
-  cacheTag("shopify-products", "shopify-metaobjects", `shopify-product-${handle}`, `shopify-market-${locale}`);
+  cacheTag(
+    "shopify-products",
+    "shopify-metaobjects",
+    "shopify-market-context",
+    `shopify-product-${handle}`,
+    `shopify-market-${locale}`,
+  );
+  if (!(await isPublishedMarket(locale))) return null;
   const market = getShopifyMarket(locale);
   const result = await getCatalogStorefrontClient(locale).query<ProductDetailQuery>(
     PRODUCT_DETAIL_QUERY,
@@ -80,6 +94,4 @@ export async function getProductDetail(
   if (!result.product) return null;
   return mapProductDetail(result.product);
 }
-
-
 

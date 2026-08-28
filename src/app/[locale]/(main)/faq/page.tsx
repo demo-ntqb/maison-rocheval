@@ -14,7 +14,7 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: "metadata.faq" });
 
-  return generatePageMetadata(locale, t("title"), t("description"), {
+  return await generatePageMetadata(locale, t("title"), t("description"), {
     canonical: ROUTES.FAQ,
   });
 }

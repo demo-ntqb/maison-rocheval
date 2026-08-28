@@ -1,7 +1,8 @@
 import { HeadAnalytics } from "@/app/(head)/analytics";
-import { routing } from "@/i18n/routing";
 import { ShopifyResourceHints } from "@/shared/components/layout/shopify-resource-hints";
+import { parseCommerceContext } from "@/shared/lib/commerce-context";
 import { generateOrganizationJsonLd, generateRootMetadata } from "@/shared/lib/metadata";
+import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
@@ -46,8 +47,9 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+export async function generateStaticParams() {
+  const { availableRouteLocales } = await getDiscoveredMarkets();
+  return availableRouteLocales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({
@@ -56,7 +58,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata.root" });
+  const { availableRouteLocales } = await getDiscoveredMarkets();
+  if (!hasLocale(availableRouteLocales, locale)) {
+    return {};
+  }
+  const { appLocale } = parseCommerceContext(locale);
+  const t = await getTranslations({ locale: appLocale, namespace: "metadata.root" });
   return generateRootMetadata(locale, t("title"), t("description"));
 }
 
@@ -69,13 +76,16 @@ export default async function LocaleLayout({
 }>) {
   const { locale } = await params;
 
-  if (!hasLocale(routing.locales, locale)) {
+  const { availableRouteLocales } = await getDiscoveredMarkets();
+  if (!hasLocale(availableRouteLocales, locale)) {
     notFound();
   }
 
+  const { appLocale, country } = parseCommerceContext(locale);
+
   return (
     <html
-      lang={locale}
+      lang={`${appLocale}-${country}`}
       data-scroll-behavior="smooth"
       className={`${optima.variable} ${spaceGrotesk.variable} h-full antialiased`}
       suppressHydrationWarning

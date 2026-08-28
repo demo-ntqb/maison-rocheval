@@ -7,10 +7,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useSyncExternalStore } from "react";
 
 import { usePathname, useRouter } from "@/i18n/navigation";
-import {
-  DEFAULT_SHIPPING_COUNTRY,
-  SHIPPING_COUNTRIES,
-} from "@/shared/constants/region.constant";
+import { getCommerceContextOrDefault } from "@/shared/lib/commerce-context";
 import {
   getRegionStorageSnapshot,
   getServerRegionStorageSnapshot,
@@ -19,10 +16,9 @@ import {
   parseRegionSnapshot,
   subscribeToRegionStorage,
 } from "@/shared/lib/region-preference";
-import type { AppLocale, ShippingCountryCode } from "@/shared/types/region.type";
+import type { RouteLocale, ShippingCountryCode } from "@/shared/types/region.type";
+import type { CommerceContext } from "@/shared/types/commerce-context.type";
 
-// Radix Dialog chỉ tải khi thực sự cần hỏi — khách quay lại (đã có lựa chọn
-// trong localStorage) không phải tải thêm JS nào.
 const RegionPreferenceDialog = dynamic(
   () =>
     import("./region-preference-dialog").then(
@@ -31,13 +27,8 @@ const RegionPreferenceDialog = dynamic(
   { ssr: false },
 );
 
-/** Gợi ý quốc gia từ locale đang hoạt động (đã qua negotiation của next-intl). */
-const countryForLocale = (locale: AppLocale): ShippingCountryCode =>
-  SHIPPING_COUNTRIES.find((country) => country.defaultLocale === locale)?.code ??
-  DEFAULT_SHIPPING_COUNTRY;
-
-function RegionPreferenceGateInner() {
-  const activeLocale = useLocale() as AppLocale;
+function RegionPreferenceGateInner({ availableContexts }: { availableContexts: readonly CommerceContext[] }) {
+  const activeRouteLocale = useLocale() as RouteLocale;
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -48,16 +39,16 @@ function RegionPreferenceGateInner() {
     getServerRegionStorageSnapshot,
   );
   const { preference, dismissed } = parseRegionSnapshot(snapshot);
-  const preferredLocale = preference?.locale;
+  const preferredRouteLocale = preference?.routeLocale;
+  const hasAvailablePreference = Boolean(
+    preferredRouteLocale && availableContexts.some((context) => context.routeLocale === preferredRouteLocale),
+  );
 
   useEffect(() => {
-    if (!preferredLocale || preferredLocale === activeLocale) {
+    if (!hasAvailablePreference || !preferredRouteLocale || preferredRouteLocale === activeRouteLocale) {
       return;
     }
 
-    // Chỉ tự redirect một lần khi bắt đầu phiên (vd. vào site qua URL tiếng
-    // Anh nhưng đã lưu preference tiếng Pháp). Không đánh bật các lần điều
-    // hướng chủ đích của user sau đó (toggle FR/EN, URL trực tiếp).
     if (hasRegionRedirectedThisSession()) {
       return;
     }
@@ -65,33 +56,30 @@ function RegionPreferenceGateInner() {
 
     const queryString = searchParams?.toString();
     const nextHref = queryString ? `${pathname}?${queryString}` : pathname;
-    router.replace(nextHref, { locale: preferredLocale });
-  }, [preferredLocale, activeLocale, pathname, router, searchParams]);
+    router.replace(nextHref, { locale: preferredRouteLocale });
+  }, [hasAvailablePreference, preferredRouteLocale, activeRouteLocale, pathname, router, searchParams]);
 
-  if (snapshot === null || preference || dismissed) {
+  if (snapshot === null || (preference && hasAvailablePreference) || dismissed) {
     return null;
   }
 
-  return <RegionPreferenceDialog initialCountryCode={countryForLocale(activeLocale)} />;
+  const { country, appLocale } = getCommerceContextOrDefault(activeRouteLocale);
+
+  return (
+    <RegionPreferenceDialog
+      initialCountryCode={country as ShippingCountryCode}
+      initialAppLocale={appLocale}
+      availableContexts={availableContexts}
+    />
+  );
 }
 
-/**
- * Quyết định có hiện popup chọn vùng/ngôn ngữ hay không:
- *
- * - Chưa có lựa chọn nào trong localStorage và chưa đóng popup trong phiên này
- *   → hiện popup.
- * - Đã có lựa chọn → không hỏi lại, và nếu ngôn ngữ đang xem khác ngôn ngữ đã
- *   lưu thì chuyển sang ngôn ngữ mặc định của thiết bị này.
- *
- * Để tránh hydration mismatch hoàn toàn, gate chỉ render ở phía client sau khi đã mount.
- */
-export function RegionPreferenceGate() {
+export function RegionPreferenceGate({ availableContexts }: { availableContexts: readonly CommerceContext[] }) {
   const mounted = useMounted();
 
   if (!mounted) {
     return null;
   }
 
-  return <RegionPreferenceGateInner />;
+  return <RegionPreferenceGateInner availableContexts={availableContexts} />;
 }
-
