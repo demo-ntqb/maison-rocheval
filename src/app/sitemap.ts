@@ -7,6 +7,7 @@ import { localizedPath } from "@/shared/lib/metadata";
 import { getCollectionProducts } from "@/shared/lib/shopify/catalog";
 import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
 import type { RouteLocale } from "@/shared/types/commerce-context.type";
+import { DEFAULT_ROUTE_LOCALE } from "@/shared/constants/commerce-context.constant";
 
 const STATIC_PATHS = [
   ROUTES.HOME,
@@ -22,11 +23,8 @@ function absoluteUrl(locale: string, path: string): string {
 }
 
 function sitemapEntry(path: string, locales: readonly RouteLocale[]): MetadataRoute.Sitemap[number] {
-  const canonicalLocale = locales[0];
-  if (!canonicalLocale) throw new Error("[shopify] Cannot build sitemap without a published market");
-
   return {
-    url: absoluteUrl(canonicalLocale, path),
+    url: absoluteUrl(DEFAULT_ROUTE_LOCALE, path),
     alternates: {
       languages: Object.fromEntries(
         locales.map((locale) => [locale, absoluteUrl(locale, path)]),

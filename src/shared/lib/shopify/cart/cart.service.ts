@@ -11,6 +11,7 @@ import {
 export type ShopifyCartLineInput = {
   merchandiseId: string;
   quantity: number;
+  attributes?: Array<{ key: string; value: string }>;
 };
 
 export type ShopifyCartResult = {
@@ -22,6 +23,7 @@ export type ShopifyCartResult = {
     id: string;
     quantity: number;
     availableForSale: boolean;
+    merchandiseId: string;
   }>;
 };
 
@@ -46,7 +48,7 @@ export async function createShopifyCart(
           nodes: Array<{
             id: string;
             quantity: number;
-            merchandise: { availableForSale?: boolean } | null;
+            merchandise: { id: string; availableForSale?: boolean } | null;
           }>;
         };
       } | null;
@@ -58,7 +60,11 @@ export async function createShopifyCart(
       language,
       input: {
         buyerIdentity: { countryCode: country },
-        lines: lines.map((l) => ({ merchandiseId: l.merchandiseId, quantity: l.quantity })),
+        lines: lines.map((l) => ({
+          merchandiseId: l.merchandiseId,
+          quantity: l.quantity,
+          attributes: l.attributes,
+        })),
       },
     },
   });
@@ -75,6 +81,7 @@ export async function createShopifyCart(
       id: n.id,
       quantity: n.quantity,
       availableForSale: n.merchandise?.availableForSale ?? true,
+      merchandiseId: n.merchandise?.id ?? "",
     })),
   };
 }
@@ -132,7 +139,7 @@ export async function fetchShopifyCart(
         nodes: Array<{
           id: string;
           quantity: number;
-          merchandise: { availableForSale?: boolean } | null;
+          merchandise: { id: string; availableForSale?: boolean } | null;
         }>;
       };
     } | null;
@@ -156,6 +163,7 @@ export async function fetchShopifyCart(
       id: n.id,
       quantity: n.quantity,
       availableForSale: n.merchandise?.availableForSale ?? true,
+      merchandiseId: n.merchandise?.id ?? "",
     })),
   };
 }

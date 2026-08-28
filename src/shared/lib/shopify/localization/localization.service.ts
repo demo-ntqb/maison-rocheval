@@ -2,7 +2,7 @@ import "server-only";
 
 import { cacheLife, cacheTag } from "next/cache";
 
-import { COMMERCE_CONTEXTS, DEFAULT_ROUTE_LOCALE, SUPPORTED_COUNTRIES, SUPPORTED_LANGUAGES } from "@/shared/constants/commerce-context.constant";
+import { COMMERCE_CONTEXTS, DEFAULT_COUNTRY, DEFAULT_ROUTE_LOCALE, SUPPORTED_COUNTRIES, SUPPORTED_LANGUAGES } from "@/shared/constants/commerce-context.constant";
 import type {
   CommerceContext,
   RouteLocale,
@@ -96,32 +96,51 @@ export async function getDiscoveredMarkets(): Promise<AvailableMarketsDiscovery>
   cacheLife("minutes");
   cacheTag("shopify-localization", "shopify-market-context");
 
-  const client = getCatalogStorefrontClient(DEFAULT_ROUTE_LOCALE);
-  const result = await client.query<ShopifyLocalizationResponse>(LOCALIZATION_DISCOVERY_QUERY);
-
-  if (result.errors?.length || !result.localization) {
-    throw new Error(
-      `[shopify] Localization discovery failed: ${result.errors?.map((error) => error.message).join("; ") ?? "missing localization"}`,
-    );
-  }
-
-  const countryLanguages = result.localization.availableCountries.map((country) => ({
-    country: country.isoCode,
-    languages: country.availableLanguages.map((language) => language.isoCode),
-  }));
-  const availableContexts = buildAvailableContexts(countryLanguages);
-  const { availableCountries } = filterAvailableMarkets(
-    result.localization.availableCountries.map((country) => country.isoCode),
-    [],
-  );
-  const availableLanguages = [...new Set(availableContexts.map((context) => context.language))];
-
-  return {
-    availableCountries,
-    availableLanguages,
-    availableContexts,
-    availableRouteLocales: availableContexts.map((context) => context.routeLocale),
+  const fallback: AvailableMarketsDiscovery = {
+    availableCountries: [DEFAULT_COUNTRY],
+    availableLanguages: [COMMERCE_CONTEXTS[DEFAULT_ROUTE_LOCALE].language],
+    availableContexts: [COMMERCE_CONTEXTS[DEFAULT_ROUTE_LOCALE]],
+    availableRouteLocales: [DEFAULT_ROUTE_LOCALE],
   };
+
+  try {
+    const client = getCatalogStorefrontClient(DEFAULT_ROUTE_LOCALE);
+    const result = await client.query<ShopifyLocalizationResponse>(LOCALIZATION_DISCOVERY_QUERY);
+
+    if (result.errors?.length || !result.localization) {
+      console.warn(
+        `[shopify] Localization discovery failed: ${result.errors?.map((error) => error.message).join("; ") ?? "missing localization"}. Falling back to default market en-sg.`,
+      );
+      return fallback;
+    }
+
+    const countryLanguages = result.localization.availableCountries.map((country) => ({
+      country: country.isoCode,
+      languages: country.availableLanguages.map((language) => language.isoCode),
+    }));
+    const availableContexts = buildAvailableContexts(countryLanguages);
+    const { availableCountries } = filterAvailableMarkets(
+      result.localization.availableCountries.map((country) => country.isoCode),
+      [],
+    );
+    const availableLanguages = [...new Set(availableContexts.map((context) => context.language))];
+
+    if (availableContexts.length === 0) {
+      return fallback;
+    }
+
+    return {
+      availableCountries,
+      availableLanguages,
+      availableContexts,
+      availableRouteLocales: availableContexts.map((context) => context.routeLocale),
+    };
+  } catch (error) {
+    console.warn(
+      `[shopify] Localization discovery error: ${error instanceof Error ? error.message : String(error)}. Falling back to default market en-sg.`,
+    );
+    return fallback;
+  }
 }
 
 /** Returns a context only when Shopify Markets currently publishes that exact pair. */

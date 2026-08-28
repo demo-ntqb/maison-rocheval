@@ -16,7 +16,11 @@ const OG_LOCALE: Record<string, string> = {
 
 /** Every public URL carries its Shopify market and language context. */
 export function localizedPath(locale: string, path: string): string {
+  const isDefault = locale === routing.defaultLocale;
   const suffix = path === "/" ? "" : path;
+  if (isDefault) {
+    return suffix === "" ? "/" : suffix;
+  }
   return `/${locale}${suffix}`;
 }
 

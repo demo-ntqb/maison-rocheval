@@ -17,6 +17,8 @@
     "total": "TOTAL",
     "checkout": "Check out",
     "deliveryNote": "We offer variety of delivery options in check-out",
+    "priceChanged": "Prices have updated based on your selected market.",
+    "itemUnavailable": "Some items are not available in your selected market and were removed or disabled.",
     "empty": {
       "label": "Your cart is empty",
       "cta": "Continue shopping"
