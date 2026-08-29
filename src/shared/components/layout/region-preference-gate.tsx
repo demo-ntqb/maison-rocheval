@@ -30,7 +30,7 @@ function RegionPreferenceGateInner({ availableContexts }: { availableContexts: r
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const cart = useCart();
+  const { updateRegion } = useCart();
 
   const snapshot = useSyncExternalStore(
     subscribeToRegionStorage,
@@ -47,7 +47,7 @@ function RegionPreferenceGateInner({ availableContexts }: { availableContexts: r
     if (!hasAvailablePreference || !preferredRouteLocale) return;
     let cancelled = false;
 
-    void cart.updateRegion(preferredRouteLocale).then(() => {
+    void updateRegion(preferredRouteLocale).then(() => {
       if (cancelled || preferredRouteLocale === activeRouteLocale) return;
       if (hasRegionRedirectedThisSession()) return;
       markRegionRedirectedThisSession();
@@ -62,12 +62,12 @@ function RegionPreferenceGateInner({ availableContexts }: { availableContexts: r
     };
   }, [
     activeRouteLocale,
-    cart,
     hasAvailablePreference,
     pathname,
     preferredRouteLocale,
     router,
     searchParams,
+    updateRegion,
   ]);
 
   if (snapshot === null || (preference && hasAvailablePreference) || dismissed) return null;
