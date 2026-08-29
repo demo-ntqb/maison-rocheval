@@ -40,16 +40,24 @@ function createStorefrontClientForRequest({
     i18n: { language: market.language, country: market.country },
     ...(buyerIp ? { buyerIp } : {}),
   });
+  const config = {
+    storeDomain,
+    privateStorefrontToken,
+    apiVersion: STOREFRONT_API_VERSION,
+  } as const;
 
-  const client = createStorefrontClient({
-    type,
-    requestContext,
-    config: {
-      storeDomain,
-      privateStorefrontToken,
-      apiVersion: STOREFRONT_API_VERSION,
-    },
-  });
+  const client =
+    type === "private"
+      ? createStorefrontClient({
+          type: "private",
+          requestContext,
+          config,
+        })
+      : createStorefrontClient({
+          type: "private_no_buyer_context",
+          requestContext,
+          config,
+        });
 
   return {
     async query<T extends object>(document: string, options: QueryOptions = {}) {
