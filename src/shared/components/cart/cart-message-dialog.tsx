@@ -5,24 +5,20 @@ import { useTranslations } from "next-intl";
 
 import { IconX } from "@/shared/components/icons";
 import { Button } from "@/shared/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/shared/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/shared/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/shared/components/ui/radio-group";
+import { GIFT_MESSAGE_MAX_LINES } from "@/shared/constants/cart.constant";
 import { cn } from "@/shared/lib/utils";
 import type { CartGiftMessage, CartLine } from "@/shared/types/cart.type";
 
-const MAX_LINES = 12;
-
-/** The Figma radio is a 20px Phosphor ring with a filled core when selected. */
 const RADIO_ITEM =
   "size-5 border-black data-checked:border-black data-checked:bg-transparent [&_[data-slot=radio-group-indicator]]:size-5 [&_[data-slot=radio-group-indicator]>span]:size-[9px] [&_[data-slot=radio-group-indicator]>span]:bg-black";
 
 function clampLines(value: string): string {
   const lines = value.split("\n");
-  return lines.length <= MAX_LINES ? value : lines.slice(0, MAX_LINES).join("\n");
+  return lines.length <= GIFT_MESSAGE_MAX_LINES
+    ? value
+    : lines.slice(0, GIFT_MESSAGE_MAX_LINES).join("\n");
 }
 
 export interface CartMessageDialogProps {
@@ -34,8 +30,6 @@ export interface CartMessageDialogProps {
 export function CartMessageDialog({ line, onOpenChange, onSave }: CartMessageDialogProps) {
   return (
     <Dialog open={line !== null} onOpenChange={onOpenChange}>
-      {/* Keyed on the line so each editing session starts from that line's own
-          saved message instead of syncing state in an effect. */}
       {line ? (
         <CartMessageForm
           key={line.id}
@@ -66,7 +60,7 @@ function CartMessageForm({
   );
 
   const isPersonal = kind === "personal";
-  const linesRemaining = MAX_LINES - (text === "" ? 0 : text.split("\n").length);
+  const linesRemaining = GIFT_MESSAGE_MAX_LINES - (text === "" ? 0 : text.split("\n").length);
 
   return (
     <DialogContent
@@ -102,34 +96,21 @@ function CartMessageForm({
         >
           <div className="flex h-8 items-center gap-2">
             <RadioGroupItem value="blank" id={`${fieldId}-blank`} className={RADIO_ITEM} />
-            <label
-              htmlFor={`${fieldId}-blank`}
-              className="cursor-pointer font-sans text-base/[normal] font-normal text-black"
-            >
+            <label htmlFor={`${fieldId}-blank`} className="cursor-pointer font-sans text-base/[normal] font-normal text-black">
               {t("blankCard")}
             </label>
           </div>
           <div className="flex h-8 items-center gap-2">
             <RadioGroupItem value="personal" id={`${fieldId}-personal`} className={RADIO_ITEM} />
-            <label
-              htmlFor={`${fieldId}-personal`}
-              className="cursor-pointer font-sans text-base/[normal] font-normal text-black"
-            >
+            <label htmlFor={`${fieldId}-personal`} className="cursor-pointer font-sans text-base/[normal] font-normal text-black">
               {t("personalMessage")}
             </label>
           </div>
         </RadioGroup>
 
-        <div
-          className={cn(
-            "flex min-h-0 flex-1 flex-col justify-center gap-1 transition-opacity",
-            !isPersonal && "opacity-30",
-          )}
-        >
+        <div className={cn("flex min-h-0 flex-1 flex-col justify-center gap-1 transition-opacity", !isPersonal && "opacity-30")}>
           <p className="font-sans text-xs/[normal] font-light text-black">{t("hint")}</p>
-          <label className="sr-only" htmlFor={`${fieldId}-text`}>
-            {t("placeholder")}
-          </label>
+          <label className="sr-only" htmlFor={`${fieldId}-text`}>{t("placeholder")}</label>
           <textarea
             id={`${fieldId}-text`}
             value={text}

@@ -5,6 +5,7 @@ import { PREFERENCE_KEY } from "@/shared/lib/region-preference";
 import { COMMERCE_CONTEXTS } from "@/shared/constants/commerce-context.constant";
 
 const replace = vi.fn();
+const updateRegion = vi.fn().mockResolvedValue(undefined);
 const mockPathname = "/products";
 let activeLocale = "en-sg";
 
@@ -26,6 +27,10 @@ vi.mock("@/i18n/navigation", () => ({
 
 vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
+}));
+
+vi.mock("@/shared/components/cart", () => ({
+  useCart: () => ({ updateRegion }),
 }));
 
 vi.mock("next/dynamic", () => ({
@@ -58,6 +63,7 @@ describe("RegionPreferenceGate", () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
     replace.mockReset();
+    updateRegion.mockClear();
     activeLocale = "en-sg";
   });
 

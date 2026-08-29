@@ -1,28 +1,108 @@
-import { act, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import type { CartSnapshot } from "@/shared/types/cart.type";
+
+const cartApi = vi.hoisted(() => ({
+  addLine: vi.fn(),
+  fetchCart: vi.fn(),
+  fetchCheckout: vi.fn(),
+  removeLine: vi.fn(),
+  updateGiftMessage: vi.fn(),
+  updateQuantity: vi.fn(),
+  updateRegion: vi.fn(),
+}));
+
+vi.mock("@/shared/lib/cart/cart-api", () => cartApi);
 
 import { CartProvider, useCart } from "./cart-provider";
 
 const IMAGE = { altText: "Amour", height: 500, url: "/images/caviar/amour.png", width: 500 };
+const EMPTY: CartSnapshot = {
+  entries: [],
+  itemCount: 0,
+  subtotal: { amount: "0.00", currencyCode: "SGD" },
+  countryCode: "SG",
+  warnings: [],
+};
+
+function caviarSnapshot(quantity: number): CartSnapshot {
+  return {
+    ...EMPTY,
+    itemCount: quantity,
+    subtotal: { amount: `${75 * quantity}.00`, currencyCode: "SGD" },
+    entries: [
+      {
+        kind: "line",
+        line: {
+          id: "gid://shopify/CartLine/caviar",
+          merchandiseId: "gid://shopify/ProductVariant/amour-30",
+          productId: "gid://shopify/Product/amour",
+          kind: "caviar",
+          image: IMAGE,
+          quantity,
+          quantityAvailable: 10,
+          quantityEditable: true,
+          supportsGiftMessage: false,
+          title: "Amour",
+          weight: "30g",
+          unitPrice: { amount: "75.00", currencyCode: "SGD" },
+          subtotal: { amount: `${75 * quantity}.00`, currencyCode: "SGD" },
+          giftMessage: null,
+          unitId: null,
+        },
+      },
+    ],
+  };
+}
+
+function giftSnapshot(unitIds: string[]): CartSnapshot {
+  return {
+    ...EMPTY,
+    itemCount: unitIds.length,
+    subtotal: { amount: `${100 * unitIds.length}.00`, currencyCode: "SGD" },
+    entries: [
+      {
+        kind: "group",
+        group: {
+          id: "gid://shopify/Product/gift",
+          title: "L'Initiation",
+          lines: unitIds.map((unitId, index) => ({
+            id: `gid://shopify/CartLine/gift-${index}`,
+            merchandiseId: "gid://shopify/ProductVariant/gift-30",
+            productId: "gid://shopify/Product/gift",
+            kind: "gift_set" as const,
+            image: IMAGE,
+            quantity: 1,
+            quantityAvailable: 10,
+            quantityEditable: false,
+            supportsGiftMessage: true,
+            title: "L'Initiation",
+            weight: "Three 30g Tins",
+            unitPrice: { amount: "100.00", currencyCode: "SGD" },
+            subtotal: { amount: "100.00", currencyCode: "SGD" },
+            giftMessage: null,
+            unitId,
+          })),
+        },
+      },
+    ],
+  };
+}
 
 function Probe() {
   const cart = useCart();
-
   return (
     <div>
       <p data-testid="is-open">{String(cart.isOpen)}</p>
       <p data-testid="item-count">{cart.itemCount}</p>
-      <p data-testid="total">{cart.totalPrice}</p>
+      <p data-testid="total">{cart.subtotal.amount}</p>
       <ul data-testid="entries">
         {cart.entries.map((entry) =>
           entry.kind === "line" ? (
-            <li key={entry.line.id}>
-              line:{entry.line.title}:{entry.line.quantity}
-            </li>
+            <li key={entry.line.id}>line:{entry.line.title}:{entry.line.quantity}</li>
           ) : (
-            <li key={entry.group.id}>
-              group:{entry.group.title}:{entry.group.lines.length}
-            </li>
+            <li key={entry.group.id}>group:{entry.group.title}:{entry.group.lines.length}</li>
           ),
         )}
       </ul>
@@ -30,14 +110,16 @@ function Probe() {
         type="button"
         onClick={() =>
           cart.addLine({
-            currencyCode: "EUR",
-            id: "amour-30",
-            image: IMAGE,
+            merchandiseId: "gid://shopify/ProductVariant/amour-30",
+            productId: "gid://shopify/Product/amour",
             quantity: 1,
-            title: "Amour",
-            unitPrice: 75,
-            weight: "30g",
-            quantityAvailable: 10,
+            optimistic: {
+              image: IMAGE,
+              title: "Amour",
+              unitPrice: { amount: "75.00", currencyCode: "SGD" },
+              weight: "30g",
+              quantityAvailable: 10,
+            },
           })
         }
       >
@@ -47,14 +129,14 @@ function Probe() {
         type="button"
         onClick={() =>
           cart.addGiftSetUnits({
-            group: { addHref: "/products/gift-set/linitiation", id: "gift-linitiation", title: "L'Initiation" },
+            merchandiseId: "gid://shopify/ProductVariant/gift-30",
+            productId: "gid://shopify/Product/gift",
             quantity: 2,
-            unit: {
-              currencyCode: "EUR",
-              id: "gift-variant",
+            group: { addHref: "/products/gift-set/linitiation", title: "L'Initiation" },
+            optimistic: {
               image: IMAGE,
               title: "L'Initiation",
-              unitPrice: 100,
+              unitPrice: { amount: "100.00", currencyCode: "SGD" },
               weight: "Three 30g Tins",
               quantityAvailable: 10,
             },
@@ -63,12 +145,20 @@ function Probe() {
       >
         add gift set
       </button>
-      <button type="button" onClick={cart.checkout}>checkout</button>
+      <button type="button" onClick={() => void cart.checkout()}>checkout</button>
     </div>
   );
 }
 
 function renderProbe() {
+  return render(
+    <CartProvider initialEntries={[]} routeLocale="en-sg">
+      <Probe />
+    </CartProvider>,
+  );
+}
+
+function renderUnseededProbe() {
   return render(
     <CartProvider routeLocale="en-sg">
       <Probe />
@@ -76,94 +166,114 @@ function renderProbe() {
   );
 }
 
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((complete) => {
+    resolve = complete;
+  });
+  return { promise, resolve };
+}
+
 describe("CartProvider", () => {
-  it("adds a new standalone line and opens the drawer", async () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    cartApi.addLine.mockImplementation(async (input: { kind: string; quantity: number; unitIds?: string[] }) => ({
+      operationId: "server-operation",
+      cart: input.kind === "gift_set" ? giftSnapshot(input.unitIds ?? []) : caviarSnapshot(input.quantity),
+      warnings: [],
+    }));
+    cartApi.fetchCart.mockResolvedValue(EMPTY);
+    cartApi.fetchCheckout.mockResolvedValue({ checkoutUrl: "https://example.test/checkouts/current" });
+  });
+
+  it("opens the drawer and renders caviar optimistically before Shopify confirms", () => {
+    cartApi.addLine.mockReturnValue(new Promise(() => undefined));
     renderProbe();
 
-    await act(async () => {
-      screen.getByRole("button", { name: "add caviar" }).click();
-    });
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
 
     expect(screen.getByTestId("is-open").textContent).toBe("true");
     expect(screen.getByTestId("item-count").textContent).toBe("1");
-    expect(screen.getByTestId("total").textContent).toBe("75");
     expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
   });
 
-  it("bumps the quantity of an existing standalone line instead of duplicating it", async () => {
+  it("merges repeated caviar intent by merchandiseId in the optimistic view", () => {
+    cartApi.addLine.mockReturnValue(new Promise(() => undefined));
     renderProbe();
 
-    await act(async () => {
-      screen.getByRole("button", { name: "add caviar" }).click();
-    });
-    await act(async () => {
-      screen.getByRole("button", { name: "add caviar" }).click();
-    });
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
 
     expect(screen.getByTestId("entries").children).toHaveLength(1);
     expect(screen.getByText("line:Amour:2")).toBeInTheDocument();
-    expect(screen.getByTestId("item-count").textContent).toBe("2");
   });
 
-  it("adds one separate line per unit inside a gift-set group", async () => {
+  it("creates one optimistic row per physical gift unit", () => {
+    cartApi.addLine.mockReturnValue(new Promise(() => undefined));
     renderProbe();
 
-    await act(async () => {
-      screen.getByRole("button", { name: "add gift set" }).click();
-    });
+    fireEvent.click(screen.getByRole("button", { name: "add gift set" }));
 
     expect(screen.getByText("group:L'Initiation:2")).toBeInTheDocument();
     expect(screen.getByTestId("item-count").textContent).toBe("2");
-    expect(screen.getByTestId("total").textContent).toBe("200");
   });
 
-  it("appends new units to an existing gift-set group rather than creating a second card", async () => {
+  it("sends only cart intent fields to the add API", async () => {
     renderProbe();
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
 
     await act(async () => {
-      screen.getByRole("button", { name: "add gift set" }).click();
-    });
-    await act(async () => {
-      screen.getByRole("button", { name: "add gift set" }).click();
+      await Promise.resolve();
     });
 
-    expect(screen.getByTestId("entries").children).toHaveLength(1);
-    expect(screen.getByText("group:L'Initiation:4")).toBeInTheDocument();
+    expect(cartApi.addLine).toHaveBeenCalledWith(
+      expect.objectContaining({
+        kind: "caviar",
+        merchandiseId: "gid://shopify/ProductVariant/amour-30",
+        quantity: 1,
+        locale: "en-sg",
+        operationId: expect.any(String),
+      }),
+    );
+    expect(cartApi.addLine.mock.calls[0]?.[0]).not.toHaveProperty("price");
+    expect(cartApi.addLine.mock.calls[0]?.[0]).not.toHaveProperty("image");
+    expect(cartApi.addLine.mock.calls[0]?.[0]).not.toHaveProperty("productId");
   });
 
-  it("limits quantity to quantityAvailable when adding multiple times", async () => {
-    renderProbe();
+  it("does not let a stale hydration response overwrite a completed mutation", async () => {
+    const hydration = deferred<CartSnapshot>();
+    cartApi.fetchCart.mockReturnValue(hydration.promise);
+    renderUnseededProbe();
 
-    for (let i = 0; i < 12; i++) {
-      await act(async () => {
-        screen.getByRole("button", { name: "add caviar" }).click();
-      });
-    }
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
+    await waitFor(() => expect(cartApi.addLine).toHaveBeenCalledTimes(1));
+    expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
 
-    expect(screen.getByText("line:Amour:10")).toBeInTheDocument();
-    expect(screen.getByTestId("item-count").textContent).toBe("10");
+    await act(async () => {
+      hydration.resolve(EMPTY);
+      await hydration.promise;
+    });
+
+    expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
   });
 
-  it("creates checkout in the market represented by the current route", async () => {
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValue({
-      json: async () => ({ error: "blocked in test" }),
-      ok: false,
-    } as Response);
+  it("waits for queued mutations and coalesces double-clicked checkout", async () => {
+    const add = deferred<{ operationId: string; cart: CartSnapshot; warnings: [] }>();
+    const checkout = deferred<{ checkoutUrl: string }>();
+    cartApi.addLine.mockReturnValue(add.promise);
+    cartApi.fetchCheckout.mockReturnValue(checkout.promise);
     renderProbe();
 
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
+    fireEvent.click(screen.getByRole("button", { name: "checkout" }));
+    fireEvent.click(screen.getByRole("button", { name: "checkout" }));
+    expect(cartApi.fetchCheckout).not.toHaveBeenCalled();
+
     await act(async () => {
-      screen.getByRole("button", { name: "add caviar" }).click();
-    });
-    await act(async () => {
-      screen.getByRole("button", { name: "checkout" }).click();
+      add.resolve({ operationId: "server-operation", cart: caviarSnapshot(1), warnings: [] });
+      await add.promise;
     });
 
-    expect(fetchMock).toHaveBeenCalledWith("/api/cart", expect.objectContaining({ method: "POST" }));
-    const request = fetchMock.mock.calls[0]?.[1] as RequestInit;
-    expect(JSON.parse(request.body as string)).toEqual({
-      locale: "en-sg",
-      lines: [{ merchandiseId: "amour-30", quantity: 1 }],
-    });
-    fetchMock.mockRestore();
+    await waitFor(() => expect(cartApi.fetchCheckout).toHaveBeenCalledTimes(1));
   });
 });

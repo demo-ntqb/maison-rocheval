@@ -1,54 +1,50 @@
-import { NextResponse } from "next/server";
-import { z } from "zod";
+import { isRouteLocale } from "@/shared/lib/commerce-context";
+import { jsonNoStore, cartApiError } from "@/shared/lib/http/api-response";
+import { clearCartId, getCart, getCartId, setCartId } from "@/shared/lib/shopify/cart";
+import { getShopifyMarket } from "@/shared/lib/shopify/config";
+import type { CartSnapshot } from "@/shared/types/cart.type";
+import type { SupportedCountry } from "@/shared/types/commerce-context.type";
 
-import { isRouteLocale, parseCommerceContext } from "@/shared/lib/commerce-context";
-import { createShopifyCart } from "@/shared/lib/shopify/cart";
-import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
+function expectedCurrency(country: SupportedCountry): string {
+  // The current branch only enables Singapore. Keep this explicit until FR/US are re-enabled.
+  return country === "SG" ? "SGD" : "SGD";
+}
 
-const checkoutSchema = z.object({
-  locale: z.string(),
-  lines: z.array(
-    z.object({
-      merchandiseId: z.string().min(1),
-      quantity: z.number().int().min(1).max(99),
-      attributes: z
-        .array(
-          z.object({
-            key: z.string().min(1),
-            value: z.string(),
-          }),
-        )
-        .optional(),
-    }),
-  ).min(1).max(50),
-});
+function emptyCart(locale: string): CartSnapshot {
+  const market = getShopifyMarket(locale);
+  return {
+    entries: [],
+    itemCount: 0,
+    subtotal: { amount: "0.00", currencyCode: expectedCurrency(market.country) },
+    countryCode: market.country,
+    warnings: [],
+  };
+}
 
-/** Creates the checkout cart in the same Shopify Markets context as the current URL. */
-export async function POST(request: Request) {
-  const parsed = checkoutSchema.safeParse(await request.json().catch(() => null));
-  if (!parsed.success || !isRouteLocale(parsed.data.locale)) {
-    return NextResponse.json({ error: "Invalid checkout request" }, { status: 400 });
+export async function GET(request: Request) {
+  const locale = new URL(request.url).searchParams.get("locale");
+  if (!isRouteLocale(locale)) {
+    return jsonNoStore(
+      { error: { code: "INVALID_LOCALE", message: "Invalid cart locale", retryable: false } },
+      { status: 400 },
+    );
   }
 
-  const { availableRouteLocales } = await getDiscoveredMarkets();
-  if (!availableRouteLocales.includes(parsed.data.locale)) {
-    return NextResponse.json({ error: "Market context is not available" }, { status: 409 });
+  const cartId = await getCartId();
+  if (!cartId) {
+    return jsonNoStore({ cart: emptyCart(locale) });
   }
 
-  const context = parseCommerceContext(parsed.data.locale);
-  const cart = await createShopifyCart(context.country, context.language, parsed.data.lines, request);
-  if (!cart?.checkoutUrl) {
-    return NextResponse.json({ error: "Unable to create checkout" }, { status: 502 });
-  }
+  try {
+    const result = await getCart({ request, cartId, locale });
+    if (!result) {
+      await clearCartId();
+      return jsonNoStore({ cart: emptyCart(locale) });
+    }
 
-  return NextResponse.json(
-    {
-      id: cart.id,
-      checkoutUrl: cart.checkoutUrl,
-      totalAmount: cart.totalAmount,
-      currencyCode: cart.currencyCode,
-      lines: cart.lines,
-    },
-    { headers: { "Cache-Control": "no-store" } },
-  );
+    await setCartId(result.cartId);
+    return jsonNoStore({ cart: result.snapshot });
+  } catch (error) {
+    return cartApiError(error);
+  }
 }

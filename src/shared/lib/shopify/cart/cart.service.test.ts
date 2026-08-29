@@ -4,155 +4,200 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("server-only", () => ({}));
 
-vi.mock("../storefront-config", () => ({
-  resolveStorefrontConfig: () => ({
-    privateStorefrontToken: "shpat_test_private_token",
-    storeDomain: "maison-rocheval.myshopify.com",
-  }),
+const mocks = vi.hoisted(() => ({
+  getBuyerStorefrontClient: vi.fn(),
 }));
 
-describe("Shopify Cart Transport & Buyer Context (Phase 8)", () => {
-  const originalFetch = globalThis.fetch;
-  let fetchMock: ReturnType<typeof vi.fn>;
+vi.mock("../storefront", () => ({
+  getBuyerStorefrontClient: mocks.getBuyerStorefrontClient,
+}));
 
+function line(overrides: Record<string, unknown> = {}) {
+  return {
+    id: "gid://shopify/CartLine/1",
+    quantity: 1,
+    attributes: [{ key: "_mr_kind", value: "caviar" }],
+    cost: {
+      amountPerQuantity: { amount: "75.00", currencyCode: "SGD" },
+      subtotalAmount: { amount: "75.00", currencyCode: "SGD" },
+    },
+    merchandise: {
+      id: "gid://shopify/ProductVariant/1",
+      title: "30g",
+      availableForSale: true,
+      quantityAvailable: 10,
+      selectedOptions: [],
+      metafield: null,
+      image: null,
+      product: {
+        id: "gid://shopify/Product/1",
+        handle: "amour",
+        title: "Amour",
+        productType: "Caviar",
+      },
+    },
+    ...overrides,
+  };
+}
+
+function cart(lines: ReturnType<typeof line>[]) {
+  return {
+    id: "gid://shopify/Cart/current?key=secret",
+    totalQuantity: lines.reduce((total, item) => total + item.quantity, 0),
+    checkoutUrl: "https://example.test/checkouts/current",
+    buyerIdentity: { countryCode: "SG" },
+    cost: { subtotalAmount: { amount: "75.00", currencyCode: "SGD" } },
+    lines: { nodes: lines, pageInfo: { hasNextPage: false, endCursor: null } },
+  };
+}
+describe("Shopify cart service business inputs", () => {
   beforeEach(() => {
-    vi.resetModules();
+    vi.clearAllMocks();
   });
 
-  it("tạo Shopify Cart với đúng buyer identity country và nhận về checkoutUrl", async () => {
-    fetchMock = vi.fn().mockImplementation(() =>
-      Promise.resolve(
-        new Response(
-          JSON.stringify({
-            data: {
-              cartCreate: {
-                cart: {
-                  id: "gid://shopify/Cart/test-cart-123",
-                  checkoutUrl: "https://maison-rocheval.myshopify.com/checkouts/cn/test-cart-123",
-                  cost: {
-                    totalAmount: { amount: "159.00", currencyCode: "SGD" },
-                    subtotalAmount: { amount: "159.00", currencyCode: "SGD" },
-                  },
-                  lines: {
-                    nodes: [
-                      {
-                        id: "line-1",
-                        quantity: 1,
-                        merchandise: { availableForSale: true },
-                      },
-                    ],
-                  },
-                },
-                userErrors: [],
-              },
-            },
-          }),
-          { status: 200, headers: { "Content-Type": "application/json" } },
-        ),
-      ),
-    );
-    globalThis.fetch = fetchMock as unknown as typeof fetch;
+  it("builds one caviar line with commerce metadata", async () => {
+    const { buildInitialCartLines } = await import("./cart.service");
 
-    const { createShopifyCart } = await import("./cart.service");
-    const result = await createShopifyCart("SG", "EN", [
-      { merchandiseId: "gid://shopify/ProductVariant/1", quantity: 1 },
+    expect(
+      buildInitialCartLines({
+        kind: "caviar",
+        merchandiseId: "gid://shopify/ProductVariant/1",
+        quantity: 3,
+      }),
+    ).toEqual([
+      {
+        merchandiseId: "gid://shopify/ProductVariant/1",
+        quantity: 3,
+        attributes: [{ key: "_mr_kind", value: "caviar" }],
+      },
     ]);
-
-    expect(result).toBeDefined();
-    expect(result?.id).toBe("gid://shopify/Cart/test-cart-123");
-    expect(result?.checkoutUrl).toContain("/checkouts/");
-    expect(result?.totalAmount).toBe(159);
-    expect(result?.currencyCode).toBe("SGD");
-
-    // Verify fetch payload
-    const lastCall = fetchMock.mock.calls[fetchMock.mock.calls.length - 1];
-    const payload = JSON.parse(lastCall[1].body);
-    expect(payload.variables.country).toBe("SG");
-    expect(payload.variables.input.buyerIdentity.countryCode).toBe("SG");
-
-    globalThis.fetch = originalFetch;
   });
 
-  // TODO: Tạm ẩn test của FR và US
-  /*
-  it("cập nhật buyer identity khi đổi country và nhận về repriced total/currency", async () => {
-    fetchMock = vi.fn().mockImplementation(() =>
-      Promise.resolve(
-        new Response(
-          JSON.stringify({
-            data: {
-              cartBuyerIdentityUpdate: {
-                cart: {
-                  id: "gid://shopify/Cart/test-cart-123",
-                  checkoutUrl: "https://maison-rocheval.myshopify.com/checkouts/cn/test-cart-123-us",
-                  cost: {
-                    totalAmount: { amount: "120.00", currencyCode: "USD" },
-                    subtotalAmount: { amount: "120.00", currencyCode: "USD" },
-                  },
-                },
-                userErrors: [],
-              },
-            },
-          }),
-          { status: 200, headers: { "Content-Type": "application/json" } },
-        ),
-      ),
-    );
-    globalThis.fetch = fetchMock as unknown as typeof fetch;
+  it("builds one Shopify CartLine per physical gift unit", async () => {
+    const { buildInitialCartLines } = await import("./cart.service");
+    const lines = buildInitialCartLines({
+      kind: "gift_set",
+      merchandiseId: "gid://shopify/ProductVariant/2",
+      unitIds: ["unit-a", "unit-b", "unit-c"],
+    });
 
-    const { updateShopifyCartBuyerIdentity } = await import("./cart.service");
-    const result = await updateShopifyCartBuyerIdentity("gid://shopify/Cart/test-cart-123", "US", "EN");
-
-    expect(result).toBeDefined();
-    expect(result?.totalAmount).toBe(120);
-    expect(result?.currencyCode).toBe("USD");
-
-    const lastCall = fetchMock.mock.calls[fetchMock.mock.calls.length - 1];
-    const payload = JSON.parse(lastCall[1].body);
-    expect(payload.variables.country).toBe("US");
-    expect(payload.variables.buyerIdentity.countryCode).toBe("US");
-
-    globalThis.fetch = originalFetch;
+    expect(lines).toHaveLength(3);
+    expect(lines.every((line) => line.quantity === 1)).toBe(true);
+    expect(lines.map((line) => line.attributes)).toEqual([
+      [
+        { key: "_mr_kind", value: "gift_set" },
+        { key: "_mr_unit_id", value: "unit-a" },
+      ],
+      [
+        { key: "_mr_kind", value: "gift_set" },
+        { key: "_mr_unit_id", value: "unit-b" },
+      ],
+      [
+        { key: "_mr_kind", value: "gift_set" },
+        { key: "_mr_unit_id", value: "unit-c" },
+      ],
+    ]);
   });
-  */
 
-  it("cập nhật buyer identity khi đổi ngôn ngữ/quốc gia và nhận về repriced total/currency", async () => {
-    fetchMock = vi.fn().mockImplementation(() =>
-      Promise.resolve(
-        new Response(
-          JSON.stringify({
-            data: {
-              cartBuyerIdentityUpdate: {
-                cart: {
-                  id: "gid://shopify/Cart/test-cart-123",
-                  checkoutUrl: "https://maison-rocheval.myshopify.com/checkouts/cn/test-cart-123-fr-sg",
-                  cost: {
-                    totalAmount: { amount: "159.00", currencyCode: "SGD" },
-                    subtotalAmount: { amount: "159.00", currencyCode: "SGD" },
-                  },
-                },
-                userErrors: [],
-              },
-            },
-          }),
-          { status: 200, headers: { "Content-Type": "application/json" } },
-        ),
-      ),
-    );
-    globalThis.fetch = fetchMock as unknown as typeof fetch;
+  it("rejects quantity changes for gift-set physical units", async () => {
+    const query = vi.fn().mockResolvedValue({
+      cart: cart([
+        line({
+          attributes: [
+            { key: "_mr_kind", value: "gift_set" },
+            { key: "_mr_unit_id", value: "unit-a" },
+          ],
+        }),
+      ]),
+    });
+    mocks.getBuyerStorefrontClient.mockReturnValue({ query });
+    const { updateCartLineQuantity } = await import("./cart.service");
 
-    const { updateShopifyCartBuyerIdentity } = await import("./cart.service");
-    const result = await updateShopifyCartBuyerIdentity("gid://shopify/Cart/test-cart-123", "SG", "FR");
+    await expect(
+      updateCartLineQuantity({
+        request: new Request("https://maison.test"),
+        locale: "en-sg",
+        cartId: "gid://shopify/Cart/current?key=secret",
+        lineId: "gid://shopify/CartLine/1",
+        quantity: 2,
+      }),
+    ).rejects.toMatchObject({ code: "INVALID_INPUT" });
+    expect(query).toHaveBeenCalledTimes(1);
+  });
 
-    expect(result).toBeDefined();
-    expect(result?.totalAmount).toBe(159);
-    expect(result?.currencyCode).toBe("SGD");
+  it("adds every gift-set unit as its own quantity-one Shopify line", async () => {
+    const query = vi.fn().mockResolvedValue({
+      cartLinesAdd: { cart: cart([]), userErrors: [], warnings: [] },
+    });
+    mocks.getBuyerStorefrontClient.mockReturnValue({ query });
+    const { addGiftSet } = await import("./cart.service");
 
-    const lastCall = fetchMock.mock.calls[fetchMock.mock.calls.length - 1];
-    const payload = JSON.parse(lastCall[1].body);
-    expect(payload.variables.country).toBe("SG");
-    expect(payload.variables.buyerIdentity.countryCode).toBe("SG");
+    await addGiftSet({
+      request: new Request("https://maison.test"),
+      locale: "en-sg",
+      cartId: "gid://shopify/Cart/current?key=secret",
+      merchandiseId: "gid://shopify/ProductVariant/2",
+      unitIds: ["unit-a", "unit-b", "unit-c"],
+    });
 
-    globalThis.fetch = originalFetch;
+    const variables = query.mock.calls[0]?.[1]?.variables as { lines: Array<{ quantity: number }> };
+    expect(variables.lines).toHaveLength(3);
+    expect(variables.lines.every((item) => item.quantity === 1)).toBe(true);
+  });
+
+  it("preserves the stable unit ID when updating a gift message", async () => {
+    const giftLine = line({
+      attributes: [
+        { key: "_mr_kind", value: "gift_set" },
+        { key: "_mr_unit_id", value: "unit-a" },
+      ],
+    });
+    const query = vi
+      .fn()
+      .mockResolvedValueOnce({ cart: cart([giftLine]) })
+      .mockResolvedValueOnce({ cartLinesUpdate: { cart: cart([giftLine]), userErrors: [], warnings: [] } });
+    mocks.getBuyerStorefrontClient.mockReturnValue({ query });
+    const { updateGiftMessage } = await import("./cart.service");
+
+    await updateGiftMessage({
+      request: new Request("https://maison.test"),
+      locale: "en-sg",
+      cartId: "gid://shopify/Cart/current?key=secret",
+      lineId: "gid://shopify/CartLine/1",
+      giftMessage: { kind: "personal", text: "For you" },
+    });
+
+    expect(query.mock.calls[1]?.[1]?.variables.lines).toEqual([
+      {
+        id: "gid://shopify/CartLine/1",
+        attributes: [
+          { key: "_mr_kind", value: "gift_set" },
+          { key: "_mr_unit_id", value: "unit-a" },
+          { key: "_mr_gift_message_kind", value: "personal" },
+          { key: "_mr_gift_message", value: "For you" },
+        ],
+      },
+    ]);
+  });
+
+  it("merges caviar by merchandise ID instead of adding a second Shopify line", async () => {
+    const query = vi
+      .fn()
+      .mockResolvedValueOnce({ cart: cart([line()]) })
+      .mockResolvedValueOnce({ cartLinesUpdate: { cart: cart([line({ quantity: 3 })]), userErrors: [], warnings: [] } });
+    mocks.getBuyerStorefrontClient.mockReturnValue({ query });
+    const { addCaviar } = await import("./cart.service");
+
+    await addCaviar({
+      request: new Request("https://maison.test"),
+      locale: "en-sg",
+      cartId: "gid://shopify/Cart/current?key=secret",
+      merchandiseId: "gid://shopify/ProductVariant/1",
+      quantity: 2,
+    });
+
+    expect(query.mock.calls[1]?.[1]?.variables.lines).toEqual([
+      { id: "gid://shopify/CartLine/1", quantity: 3 },
+    ]);
   });
 });

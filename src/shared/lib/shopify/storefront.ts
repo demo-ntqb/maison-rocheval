@@ -6,6 +6,7 @@ import {
   type AnyStorefrontQueryString,
 } from "@shopify/hydrogen";
 
+import { getBuyerIp } from "@/shared/lib/request/buyer-ip";
 import { getShopifyMarket, type I18nBase } from "./config";
 import { resolveStorefrontConfig } from "./storefront-config";
 
@@ -13,7 +14,7 @@ const STOREFRONT_API_VERSION = "2026-04";
 
 type GraphqlError = { message: string };
 type QueryOptions = { variables?: Record<string, unknown> };
-type StorefrontClient = {
+export type StorefrontClient = {
   query<T extends object>(
     document: string,
     options?: QueryOptions,
@@ -33,36 +34,28 @@ function createStorefrontClientForRequest({
   request: Request | { headers: Headers };
   type?: "private" | "private_no_buyer_context";
 }): StorefrontClient {
+  const i18n = { language: market.language, country: market.country };
+  const config = {
+    storeDomain,
+    privateStorefrontToken,
+    apiVersion: STOREFRONT_API_VERSION,
+  } as const;
+
   const client =
     type === "private"
       ? createStorefrontClient({
           type: "private",
           requestContext: createShopifyRequestContext({
             request,
-            i18n: { language: market.language, country: market.country },
-            buyerIp:
-              ("headers" in request &&
-                (request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-                  request.headers.get("x-real-ip"))) ||
-              "127.0.0.1",
+            i18n,
+            buyerIp: request instanceof Request ? (getBuyerIp(request) ?? "0.0.0.0") : "0.0.0.0",
           }),
-          config: {
-            storeDomain,
-            privateStorefrontToken,
-            apiVersion: STOREFRONT_API_VERSION,
-          },
+          config,
         })
       : createStorefrontClient({
           type: "private_no_buyer_context",
-          requestContext: createShopifyRequestContext({
-            request,
-            i18n: { language: market.language, country: market.country },
-          }),
-          config: {
-            storeDomain,
-            privateStorefrontToken,
-            apiVersion: STOREFRONT_API_VERSION,
-          },
+          requestContext: createShopifyRequestContext({ request, i18n }),
+          config,
         });
 
   return {
@@ -113,7 +106,7 @@ export function getCatalogStorefrontClient(locale: string): StorefrontClient {
   return client;
 }
 
-/** Request-scoped client for buyer cart mutations; never use it in cached catalog paths. */
+/** Request-scoped client for buyer cart operations; never use it in cached catalog paths. */
 export function getBuyerStorefrontClient(locale: string, request: Request): StorefrontClient {
   const market = getShopifyMarket(locale);
   const config = resolveStorefrontConfig();

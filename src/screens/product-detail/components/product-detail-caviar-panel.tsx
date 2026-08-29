@@ -50,14 +50,16 @@ export function ProductDetailCaviarPanel({ product }: ProductDetailCaviarPanelPr
     }
 
     cart.addLine({
-      currencyCode: activeVariant.price.currencyCode,
-      id: activeVariant.id,
-      image: product.image,
+      merchandiseId: activeVariant.id,
+      productId: product.id,
       quantity,
-      title: product.title,
-      unitPrice: Number(activeVariant.price.amount),
-      weight: activeVariant.optionValue,
-      quantityAvailable: activeVariant.quantityAvailable,
+      optimistic: {
+        image: product.image,
+        title: product.title,
+        unitPrice: activeVariant.price,
+        weight: activeVariant.optionValue,
+        quantityAvailable: activeVariant.quantityAvailable,
+      },
     });
     setQuantity(1);
   };

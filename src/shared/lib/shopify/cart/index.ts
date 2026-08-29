@@ -1,12 +1,21 @@
+export { getCartId, setCartId, clearCartId } from "./cart.cookie";
+export { CartServiceError } from "./cart.error";
 export {
-  CART_BUYER_IDENTITY_UPDATE_MUTATION,
-  CART_CREATE_MUTATION,
-  CART_FETCH_QUERY,
-} from "./cart.query";
-export {
-  createShopifyCart,
-  fetchShopifyCart,
-  updateShopifyCartBuyerIdentity,
-  type ShopifyCartLineInput,
-  type ShopifyCartResult,
+  addCaviar,
+  addGiftSet,
+  buildInitialCartLines,
+  createCartWithLines,
+  getCart,
+  getCheckoutCart,
+  removeCartLine,
+  updateCartBuyerIdentity,
+  updateCartLineQuantity,
+  updateGiftMessage,
 } from "./cart.service";
+export {
+  addCartLineSchema,
+  checkoutSchema,
+  regionSchema,
+  removeCartLineSchema,
+  updateCartLineSchema,
+} from "./cart.validation";

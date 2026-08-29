@@ -20,11 +20,6 @@ export interface CartLineItemProps {
   onRemove: (lineId: string) => void;
 }
 
-/**
- * Mobile stacks the action row (message button or stepper, plus the line total)
- * under the image and details; from `sm` the design tucks it into the details
- * column, level with the bottom of the image.
- */
 export function CartLineItem({
   line,
   locale,
@@ -34,10 +29,17 @@ export function CartLineItem({
 }: CartLineItemProps) {
   const t = useTranslations("cart");
 
-  const unitPrice = formatBrandPrice(line.unitPrice, line.currencyCode, locale, {
-    minimumFractionDigits: 0,
-  });
-  const lineTotal = formatBrandPrice(line.unitPrice * line.quantity, line.currencyCode, locale);
+  const unitPrice = formatBrandPrice(
+    Number(line.unitPrice.amount),
+    line.unitPrice.currencyCode,
+    locale,
+    { minimumFractionDigits: 0 },
+  );
+  const lineTotal = formatBrandPrice(
+    Number(line.subtotal.amount),
+    line.subtotal.currencyCode,
+    locale,
+  );
   const messageCount = line.giftMessage?.kind === "personal" ? 1 : 0;
   const messageLabel = line.giftMessage ? t("message") : t("addMessage");
 
@@ -47,9 +49,9 @@ export function CartLineItem({
         {line.image ? (
           <img
             src={line.image.url}
-            alt={line.image.altText}
-            width={line.image.width}
-            height={line.image.height}
+            alt={line.image.altText ?? ""}
+            width={line.image.width ?? 1200}
+            height={line.image.height ?? 1200}
             loading="lazy"
             decoding="async"
             sizes="(max-width: 639px) 100px, 150px"

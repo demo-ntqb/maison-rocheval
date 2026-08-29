@@ -10,6 +10,16 @@ vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, ...props }: ComponentProps<"a">) => <a href={String(href)} {...props} />,
 }));
 
+vi.mock("@/shared/lib/cart/cart-api", () => ({
+  addLine: vi.fn(() => new Promise(() => undefined)),
+  fetchCart: vi.fn(() => new Promise(() => undefined)),
+  fetchCheckout: vi.fn(() => new Promise(() => undefined)),
+  removeLine: vi.fn(() => new Promise(() => undefined)),
+  updateGiftMessage: vi.fn(() => new Promise(() => undefined)),
+  updateQuantity: vi.fn(() => new Promise(() => undefined)),
+  updateRegion: vi.fn(() => new Promise(() => undefined)),
+}));
+
 import { CartDrawer } from "./cart-drawer";
 import { CartProvider } from "./cart-provider";
 
@@ -24,19 +34,41 @@ const ENTRIES: CartEntry[] = [
   {
     group: {
       addHref: "/products/gift-set",
-      id: "gift-set-initiation",
+      id: "gid://shopify/Product/gift-set-initiation",
       lines: [
         {
-          currencyCode: "EUR",
-          id: "line-1",
-          merchandiseId: "gift-variant",
+          id: "gid://shopify/CartLine/line-1",
+          merchandiseId: "gid://shopify/ProductVariant/gift-variant",
+          productId: "gid://shopify/Product/gift-set-initiation",
+          kind: "gift_set",
           image: GIFT_IMAGE,
-          quantity: 2,
+          quantity: 1,
+          quantityAvailable: 10,
           quantityEditable: false,
           supportsGiftMessage: true,
           title: "L’Initiation",
-          unitPrice: 100,
           weight: "Five 30g Tins",
+          unitPrice: { amount: "100.00", currencyCode: "EUR" },
+          subtotal: { amount: "100.00", currencyCode: "EUR" },
+          giftMessage: null,
+          unitId: "unit-1",
+        },
+        {
+          id: "gid://shopify/CartLine/line-1b",
+          merchandiseId: "gid://shopify/ProductVariant/gift-variant",
+          productId: "gid://shopify/Product/gift-set-initiation",
+          kind: "gift_set",
+          image: GIFT_IMAGE,
+          quantity: 1,
+          quantityAvailable: 10,
+          quantityEditable: false,
+          supportsGiftMessage: true,
+          title: "L’Initiation",
+          weight: "Five 30g Tins",
+          unitPrice: { amount: "100.00", currencyCode: "EUR" },
+          subtotal: { amount: "100.00", currencyCode: "EUR" },
+          giftMessage: null,
+          unitId: "unit-2",
         },
       ],
       title: "L’Initiation",
@@ -46,16 +78,21 @@ const ENTRIES: CartEntry[] = [
   {
     kind: "line",
     line: {
-      currencyCode: "EUR",
-      id: "line-2",
-      merchandiseId: "amour-variant",
+      id: "gid://shopify/CartLine/line-2",
+      merchandiseId: "gid://shopify/ProductVariant/amour-variant",
+      productId: "gid://shopify/Product/amour",
+      kind: "caviar",
       image: null,
       quantity: 2,
+      quantityAvailable: 10,
       quantityEditable: true,
       supportsGiftMessage: false,
       title: "Amour",
-      unitPrice: 100,
       weight: "30g",
+      unitPrice: { amount: "100.00", currencyCode: "EUR" },
+      subtotal: { amount: "200.00", currencyCode: "EUR" },
+      giftMessage: null,
+      unitId: null,
     },
   },
 ];
@@ -71,47 +108,45 @@ function renderCart(entries: CartEntry[]) {
 }
 
 describe("CartDrawer", () => {
-  it("prints the bag count, the line totals and the cart total", () => {
+  it("prints the physical-unit count, line totals and cart subtotal", () => {
     renderCart(ENTRIES);
 
     expect(screen.getByText("YOUR BAG (4)")).toBeInTheDocument();
-    expect(screen.getAllByText("200.00€")).toHaveLength(2);
+    expect(screen.getAllByText("100.00€")).toHaveLength(2);
+    expect(screen.getAllByText("200.00€")).toHaveLength(1);
     expect(screen.getByText("400.00€")).toBeInTheDocument();
   });
 
-  it("offers a gift message on gift-set lines and a stepper on standalone lines", () => {
+  it("offers gift messages on gift units and a stepper on caviar", () => {
     renderCart(ENTRIES);
 
-    expect(screen.getByRole("button", { name: "Add message" })).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Increase quantity of Amour" }),
-    ).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Add message" })).toHaveLength(2);
+    expect(screen.getByRole("button", { name: "Increase quantity of Amour" })).toBeInTheDocument();
   });
 
-  it("drops the whole group card once its last line is removed", () => {
+  it("removes only the selected gift unit optimistically", () => {
     renderCart(ENTRIES);
 
-    fireEvent.click(screen.getByRole("button", { name: "Remove L’Initiation" }));
+    fireEvent.click(screen.getAllByRole("button", { name: "Remove L’Initiation" })[0]!);
 
-    expect(screen.queryByRole("region", { name: "L’Initiation" })).not.toBeInTheDocument();
-    expect(screen.getByText("YOUR BAG (2)")).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "L’Initiation" })).toBeInTheDocument();
+    expect(screen.getByText("YOUR BAG (3)")).toBeInTheDocument();
   });
 
   it("steps the drawer aside while the message editor is open", () => {
     renderCart(ENTRIES);
 
-    fireEvent.click(screen.getByRole("button", { name: "Add message" }));
+    fireEvent.click(screen.getAllByRole("button", { name: "Add message" })[0]!);
     expect(screen.queryByText("YOUR BAG (4)")).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Close message editor" }));
     expect(screen.getByText("YOUR BAG (4)")).toBeInTheDocument();
   });
 
-  it("saves a personal gift message back onto the line", () => {
+  it("saves a personal gift message back onto the same unit optimistically", () => {
     renderCart(ENTRIES);
 
-    fireEvent.click(screen.getByRole("button", { name: "Add message" }));
-
+    fireEvent.click(screen.getAllByRole("button", { name: "Add message" })[0]!);
     const dialog = screen.getByRole("dialog");
     fireEvent.click(within(dialog).getByLabelText("Personal message"));
     fireEvent.change(within(dialog).getByLabelText("Your message*"), {
@@ -120,9 +155,10 @@ describe("CartDrawer", () => {
     fireEvent.click(within(dialog).getByRole("button", { name: "Save" }));
 
     expect(screen.getByRole("button", { name: "Message (1)" })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Add message" })).toHaveLength(1);
   });
 
-  it("shows the empty state instead of the totals when the bag is empty", () => {
+  it("shows the empty state instead of totals when the bag is empty", () => {
     renderCart([]);
 
     expect(screen.getByText("Your cart is empty")).toBeInTheDocument();

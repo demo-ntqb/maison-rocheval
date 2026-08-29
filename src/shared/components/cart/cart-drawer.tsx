@@ -5,11 +5,7 @@ import { useState } from "react";
 
 import { IconShoppingCart, IconX } from "@/shared/components/icons";
 import { Button } from "@/shared/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-} from "@/shared/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/shared/components/ui/sheet";
 import { formatBrandPrice } from "@/shared/lib/money";
 import { cn } from "@/shared/lib/utils";
 import type { CartGiftMessage, CartLine } from "@/shared/types/cart.type";
@@ -26,7 +22,6 @@ export function CartDrawer() {
   const {
     checkout,
     close,
-    currencyCode,
     entries,
     isCheckingOut,
     isOpen,
@@ -35,7 +30,7 @@ export function CartDrawer() {
     setGiftMessage,
     setLineQuantity,
     setOpen,
-    totalPrice,
+    subtotal,
     cartError,
   } = useCart();
 
@@ -46,11 +41,6 @@ export function CartDrawer() {
     setMessageLine(null);
   };
 
-  /**
-   * The message editor takes over the screen the way the design frames it: the
-   * drawer steps aside while it is open and comes back once it closes. The bag
-   * itself stays open behind the scenes, so `isOpen` is left untouched.
-   */
   const isDrawerVisible = isOpen && messageLine === null;
 
   return (
@@ -58,9 +48,7 @@ export function CartDrawer() {
       <Sheet
         open={isDrawerVisible}
         onOpenChange={(open) => {
-          if (open || isDrawerVisible) {
-            setOpen(open);
-          }
+          if (open || isDrawerVisible) setOpen(open);
         }}
       >
         <SheetContent
@@ -96,77 +84,68 @@ export function CartDrawer() {
               entries.map((entry) =>
                 entry.kind === "group" ? (
                   <CartGroupCard
-                      key={entry.group.id}
-                      group={entry.group}
+                    key={entry.group.id}
+                    group={entry.group}
+                    locale={locale}
+                    onEditMessage={setMessageLine}
+                    onNavigate={close}
+                    onQuantityChange={setLineQuantity}
+                    onRemove={removeLine}
+                  />
+                ) : (
+                  <div key={entry.line.id} className="rounded-brand border-[0.5px] border-stone p-4">
+                    <CartLineItem
+                      line={entry.line}
                       locale={locale}
                       onEditMessage={setMessageLine}
-                      onNavigate={close}
                       onQuantityChange={setLineQuantity}
                       onRemove={removeLine}
                     />
-                  ) : (
-                    <div
-                      key={entry.line.id}
-                      className="rounded-brand border-[0.5px] border-stone p-4"
-                    >
-                      <CartLineItem
-                        line={entry.line}
-                        locale={locale}
-                        onEditMessage={setMessageLine}
-                        onQuantityChange={setLineQuantity}
-                        onRemove={removeLine}
-                      />
-                    </div>
-                  ),
-                )
-              )}
-            </div>
-
-            {entries.length > 0 ? (
-              <div className="flex shrink-0 flex-col items-center gap-4 border-t-[0.5px] border-muted-text/50 bg-white p-4 w-full">
-                {cartError ? (
-                  <div
-                    className={cn(
-                      "w-full rounded-brand p-3 text-xs border font-sans",
-                      cartError === "itemUnavailable"
-                        ? "bg-red-50 text-red-800 border-red-200"
-                        : "bg-amber-50 text-amber-800 border-amber-200"
-                    )}
-                  >
-                    {t(cartError)}
                   </div>
-                ) : null}
-                <div className="flex w-full items-center justify-between gap-4 py-1">
-                  <p className="font-sans text-base/[normal] font-medium text-black">{t("total")}</p>
-                  <p className="font-sans text-2xl/[normal] font-medium text-black">
-                    {formatBrandPrice(totalPrice, currencyCode, locale)}
-                  </p>
-                </div>
+                ),
+              )
+            )}
+          </div>
 
-                <Button
-                  type="button"
-                  onClick={checkout}
-                  disabled={isCheckingOut || cartError === "itemUnavailable"}
-                  className="h-12 w-full bg-navy-dark px-8 text-base/[normal] cursor-pointer"
+          {entries.length > 0 ? (
+            <div className="flex w-full shrink-0 flex-col items-center gap-4 border-t-[0.5px] border-muted-text/50 bg-white p-4">
+              {cartError ? (
+                <div
+                  aria-live="polite"
+                  className={cn("w-full rounded-brand border border-red-200 bg-red-50 p-3 font-sans text-xs text-red-800")}
                 >
-                  {t("checkout")}
-                </Button>
-
-                <p className="flex items-center gap-2 font-sans text-sm/[normal] font-normal text-black/50">
-                  <IconShoppingCart aria-hidden="true" className="size-4 shrink-0 text-black/30" />
-                  <span>{t("deliveryNote")}</span>
+                  {t(cartError)}
+                </div>
+              ) : null}
+              <div className="flex w-full items-center justify-between gap-4 py-1">
+                <p className="font-sans text-base/[normal] font-medium text-black">{t("total")}</p>
+                <p className="font-sans text-2xl/[normal] font-medium text-black">
+                  {formatBrandPrice(Number(subtotal.amount), subtotal.currencyCode, locale)}
                 </p>
               </div>
-            ) : null}
+
+              <Button
+                type="button"
+                onClick={() => void checkout()}
+                disabled={isCheckingOut || cartError === "itemUnavailable"}
+                className="h-12 w-full cursor-pointer bg-navy-dark px-8 text-base/[normal]"
+              >
+                {t("checkout")}
+              </Button>
+
+              <p className="flex items-center gap-2 font-sans text-sm/[normal] font-normal text-black/50">
+                <IconShoppingCart aria-hidden="true" className="size-4 shrink-0 text-black/30" />
+                <span>{t("deliveryNote")}</span>
+              </p>
+            </div>
+          ) : null}
         </SheetContent>
       </Sheet>
 
       <CartMessageDialog
         line={messageLine}
         onOpenChange={(open) => {
-          if (!open) {
-            setMessageLine(null);
-          }
+          if (!open) setMessageLine(null);
         }}
         onSave={handleSaveMessage}
       />

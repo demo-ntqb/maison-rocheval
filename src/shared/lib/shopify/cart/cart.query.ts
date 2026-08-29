@@ -1,118 +1,36 @@
-export const CART_CREATE_MUTATION = `#graphql
-  mutation CartCreate($input: CartInput!, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    cartCreate(input: $input) {
-      cart {
-        id
-        checkoutUrl
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-          subtotalAmount {
-            amount
-            currencyCode
-          }
-        }
-        lines(first: 50) {
-          nodes {
-            id
-            quantity
-            cost {
-              totalAmount {
-                amount
-                currencyCode
-              }
-            }
-            merchandise {
-              ... on ProductVariant {
-                id
-                title
-                availableForSale
-                price {
-                  amount
-                  currencyCode
-                }
-                product {
-                  id
-                  title
-                  handle
-                }
-              }
-            }
-          }
-        }
-      }
-      userErrors {
-        code
-        field
-        message
-      }
-    }
-  }
-` as const;
-
-export const CART_BUYER_IDENTITY_UPDATE_MUTATION = `#graphql
-  mutation CartBuyerIdentityUpdate(
-    $cartId: ID!
-    $buyerIdentity: CartBuyerIdentityInput!
-    $country: CountryCode
+export const CART_QUERY = `#graphql
+  query MaisonCartQuery(
+    $id: ID!
+    $first: Int!
+    $after: String
     $language: LanguageCode
-  ) @inContext(country: $country, language: $language) {
-    cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {
-      cart {
-        id
-        checkoutUrl
-        cost {
-          totalAmount {
-            amount
-            currencyCode
-          }
-          subtotalAmount {
-            amount
-            currencyCode
-          }
-        }
-      }
-      userErrors {
-        code
-        field
-        message
-      }
-    }
-  }
-` as const;
-
-export const CART_FETCH_QUERY = `#graphql
-  query CartFetch($id: ID!, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
+  ) @inContext(language: $language) {
     cart(id: $id) {
       id
+      totalQuantity
       checkoutUrl
-      cost {
-        totalAmount {
-          amount
-          currencyCode
-        }
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-      }
-      lines(first: 50) {
+      buyerIdentity { countryCode }
+      cost { subtotalAmount { amount currencyCode } }
+      lines(first: $first, after: $after) {
+        pageInfo { hasNextPage endCursor }
         nodes {
           id
           quantity
+          attributes { key value }
+          cost {
+            amountPerQuantity { amount currencyCode }
+            subtotalAmount { amount currencyCode }
+          }
           merchandise {
             ... on ProductVariant {
               id
               title
               availableForSale
-              price {
-                amount
-                currencyCode
-              }
+              quantityAvailable
+              selectedOptions { name value }
+              metafield(namespace: "custom", key: "title") { value }
+              image { url altText width height }
+              product { id handle title productType }
             }
           }
         }
