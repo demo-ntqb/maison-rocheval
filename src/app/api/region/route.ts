@@ -1,6 +1,6 @@
 import { cartApiError, jsonNoStore } from "@/shared/lib/http/api-response";
 import { hasJsonContentType, isSameOriginRequest } from "@/shared/lib/http/same-origin";
-import { setRequestCountry } from "@/shared/lib/region/region-cookie";
+import { getRequestCountry, setRequestCountry } from "@/shared/lib/region/region-cookie";
 import {
   CartServiceError,
   clearCartId,
@@ -35,21 +35,23 @@ export async function POST(request: Request) {
 
   const { locale } = parsed.data;
   const market = getShopifyMarket(locale);
+  const previousCountry = await getRequestCountry();
+  const changed = previousCountry !== market.country;
   await setRequestCountry(market.country);
 
   const cartId = await getCartId();
   if (!cartId) {
-    return jsonNoStore({ countryCode: market.country });
+    return jsonNoStore({ changed, countryCode: market.country });
   }
 
   try {
     const result = await updateCartBuyerIdentity({ request, locale, cartId });
     await setCartId(result.cartId);
-    return jsonNoStore({ countryCode: market.country, cart: result.snapshot });
+    return jsonNoStore({ changed, countryCode: market.country, cart: result.snapshot });
   } catch (error) {
     if (error instanceof CartServiceError && error.code === "CART_NOT_FOUND") {
       await clearCartId();
-      return jsonNoStore({ countryCode: market.country });
+      return jsonNoStore({ changed, countryCode: market.country });
     }
     return cartApiError(error);
   }
