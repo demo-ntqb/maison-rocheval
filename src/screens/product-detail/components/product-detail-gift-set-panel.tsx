@@ -15,7 +15,7 @@ export interface ProductDetailGiftSetPanelProps {
   product: CatalogGiftSetDetail;
 }
 
-/** Variant labels are the full sentence shown in the radio ("L'Initiation, Three 30g Tins") — the cart line only wants the part after the product name. */
+/** Variant labels are the full sentence shown in the radio; the cart only wants the suffix. */
 function stripTitlePrefix(optionValue: string, title: string): string {
   const prefix = `${title}, `;
   return optionValue.startsWith(prefix) ? optionValue.slice(prefix.length) : optionValue;
@@ -57,18 +57,17 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
     }
 
     cart.addGiftSetUnits({
+      merchandiseId: activeVariant.id,
+      productId: product.id,
+      quantity,
       group: {
         addHref: ROUTES.PRODUCT_DETAIL(CatalogCollectionHandle.GIFT_SET, product.handle),
-        id: product.id,
         title: product.title,
       },
-      quantity,
-      unit: {
-        currencyCode: activeVariant.price.currencyCode,
+      optimistic: {
         image: product.image,
-        id: activeVariant.id,
         title: product.title,
-        unitPrice: Number(activeVariant.price.amount),
+        unitPrice: activeVariant.price,
         weight: stripTitlePrefix(activeVariant.optionValue, product.title),
         quantityAvailable: activeVariant.quantityAvailable,
       },
