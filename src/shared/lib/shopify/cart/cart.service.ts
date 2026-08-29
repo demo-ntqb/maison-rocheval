@@ -15,6 +15,7 @@ import { CartServiceError, throwForUserErrors } from "./cart.error";
 import type {
   ShopifyCart,
   ShopifyCartAttribute,
+  ShopifyCartLine,
   ShopifyCartPayload,
   ShopifyCartWarning,
 } from "./cart.type";
@@ -59,6 +60,19 @@ function normalizeResult(
     snapshot: mapShopifyCart(cart, country, warnings),
     warnings,
   };
+}
+
+function attributesToRecord(attributes: ShopifyCartAttribute[]): Record<string, string> {
+  return Object.fromEntries(attributes.map(({ key, value }) => [key, value]));
+}
+
+function isGiftSetLine(line: ShopifyCartLine): boolean {
+  const attributes = attributesToRecord(line.attributes);
+  if (attributes[CART_ATTRIBUTE.kind] === "gift_set") return true;
+  if (attributes[CART_ATTRIBUTE.kind] === "caviar") return false;
+
+  const productType = line.merchandise.product.productType.toLowerCase();
+  return productType.includes("gift") || productType.includes("coffret");
 }
 
 async function queryCartPage(
@@ -131,7 +145,12 @@ async function executeMutation(
 
   const payload = response[payloadKey];
   if (!payload) {
-    throw new CartServiceError("UPSTREAM_UNAVAILABLE", "Shopify returned an invalid cart payload", 502, true);
+    throw new CartServiceError(
+      "UPSTREAM_UNAVAILABLE",
+      "Shopify returned an invalid cart payload",
+      502,
+      true,
+    );
   }
   throwForUserErrors(payload.userErrors ?? []);
   if (!payload.cart) {
@@ -163,9 +182,10 @@ function giftLines(merchandiseId: string, unitIds: string[]): CartLineInput[] {
   }));
 }
 
-export function buildInitialCartLines(input:
-  | { kind: "caviar"; merchandiseId: string; quantity: number }
-  | { kind: "gift_set"; merchandiseId: string; unitIds: string[] },
+export function buildInitialCartLines(
+  input:
+    | { kind: "caviar"; merchandiseId: string; quantity: number }
+    | { kind: "gift_set"; merchandiseId: string; unitIds: string[] },
 ): CartLineInput[] {
   return input.kind === "caviar"
     ? [caviarLine(input.merchandiseId, input.quantity)]
@@ -225,10 +245,9 @@ export async function addCaviar({
   const current = await getFullCartWithClient(client, cartId, locale);
   if (!current) return null;
 
-  const existing = current.lines.nodes.find((line) => {
-    const attrs = Object.fromEntries(line.attributes.map(({ key, value }) => [key, value]));
-    return attrs[CART_ATTRIBUTE.kind] !== "gift_set" && line.merchandise.id === merchandiseId;
-  });
+  const existing = current.lines.nodes.find(
+    (line) => !isGiftSetLine(line) && line.merchandise.id === merchandiseId,
+  );
 
   const result = existing
     ? await executeMutation(
@@ -287,6 +306,17 @@ export async function updateCartLineQuantity({
   quantity: number;
 }): Promise<CartServiceResult> {
   const client = getBuyerStorefrontClient(locale, request);
+  const current = await getFullCartWithClient(client, cartId, locale);
+  const line = current?.lines.nodes.find((candidate) => candidate.id === lineId);
+  if (!line) throw new CartServiceError("LINE_NOT_FOUND", "Cart line not found", 404);
+  if (isGiftSetLine(line)) {
+    throw new CartServiceError(
+      "INVALID_INPUT",
+      "Gift-set physical units cannot change quantity",
+      400,
+    );
+  }
+
   const result = await executeMutation(
     client,
     CART_LINES_UPDATE,
@@ -333,16 +363,23 @@ export async function updateGiftMessage({
   const line = current?.lines.nodes.find((candidate) => candidate.id === lineId);
   if (!line) throw new CartServiceError("LINE_NOT_FOUND", "Cart line not found", 404);
 
-  const attrs = Object.fromEntries(line.attributes.map(({ key, value }) => [key, value]));
-  if (attrs[CART_ATTRIBUTE.kind] !== "gift_set") {
-    throw new CartServiceError("INVALID_INPUT", "Gift messages are only supported for gift-set units", 400);
+  const attrs = attributesToRecord(line.attributes);
+  if (!isGiftSetLine(line) || !attrs[CART_ATTRIBUTE.unitId]) {
+    throw new CartServiceError(
+      "INVALID_INPUT",
+      "Gift messages require a stable gift-set unit",
+      400,
+    );
   }
 
   const result = await executeMutation(
     client,
     CART_LINES_UPDATE,
     "cartLinesUpdate",
-    { cartId, lines: [{ id: lineId, attributes: mergeGiftAttributes(line.attributes, giftMessage) }] },
+    {
+      cartId,
+      lines: [{ id: lineId, attributes: mergeGiftAttributes(line.attributes, giftMessage) }],
+    },
     locale,
   );
   return normalizeResult(result.cart, cartVariables(locale).market.country, result.warnings);
