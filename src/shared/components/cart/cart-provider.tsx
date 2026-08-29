@@ -23,6 +23,7 @@ import { countGiftUnitsByVariant, flattenCartLines } from "@/shared/lib/cart/car
 import { sumMoney } from "@/shared/lib/cart/cart-money";
 import type { OptimisticProductData, PendingCartOperation } from "@/shared/lib/cart/cart-operation";
 import { replayCartOperations } from "@/shared/lib/cart/cart-optimistic";
+import { isOperationApplied } from "@/shared/lib/cart/cart-reconciliation";
 import { getCommerceContextOrDefault } from "@/shared/lib/commerce-context";
 import type {
   CartEntry,
@@ -64,7 +65,6 @@ type CartContextValue = {
   setOpen: (open: boolean) => void;
   subtotal: CartMoney;
   updateRegion: (locale: RouteLocale) => Promise<void>;
-  /** Existing error surface retained; only Shopify stock warnings/errors map here. */
   cartError: "itemUnavailable" | null;
 };
 
@@ -221,12 +221,15 @@ export function CartProvider({
 
   const reconcileAfterFailure = useCallback(
     async (operationId: string) => {
+      const operation = stateRef.current.pending.find((candidate) => candidate.id === operationId);
       try {
         const cart = await fetchCart(routeLocale);
+        const applied = operation ? isOperationApplied(operation, cart) : false;
         updateState((current) => ({
           ...current,
           confirmed: cart,
-          pending: current.pending.filter((operation) => operation.id !== operationId),
+          pending: current.pending.filter((candidate) => candidate.id !== operationId),
+          status: applied ? "ready" : "error",
           cartError: stockWarning(cart) ? "itemUnavailable" : null,
         }));
       } catch {
@@ -243,6 +246,12 @@ export function CartProvider({
   const addLine = useCallback(
     (input: AddCartLineInput) => {
       if (input.quantity < 1) return;
+
+      const currentLine = flattenCartLines(visibleCart.entries).find(
+        (line) => line.kind === "caviar" && line.merchandiseId === input.merchandiseId,
+      );
+      const max = input.optimistic.quantityAvailable ?? currentLine?.quantityAvailable ?? 99;
+      const targetQuantity = Math.min((currentLine?.quantity ?? 0) + input.quantity, max);
       const operationId = createId();
       const operation: PendingCartOperation = {
         id: operationId,
@@ -251,6 +260,7 @@ export function CartProvider({
         merchandiseId: input.merchandiseId,
         productId: input.productId,
         quantity: input.quantity,
+        targetQuantity,
         optimistic: input.optimistic,
       };
 
@@ -272,7 +282,14 @@ export function CartProvider({
         }
       });
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale],
+    [
+      addPending,
+      commitOperation,
+      enqueue,
+      reconcileAfterFailure,
+      routeLocale,
+      visibleCart.entries,
+    ],
   );
 
   const addGiftSetUnits = useCallback(
