@@ -18,6 +18,7 @@ export type ShopifyCartLine = {
     availableForSale: boolean;
     quantityAvailable: number | null;
     selectedOptions: Array<{ name: string; value: string }>;
+    metafield: { value: string } | null;
     image: {
       url: string;
       altText: string | null;
