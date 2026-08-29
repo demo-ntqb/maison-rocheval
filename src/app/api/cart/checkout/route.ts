@@ -8,6 +8,7 @@ import {
   getCheckoutCart,
   setCartId,
 } from "@/shared/lib/shopify/cart";
+import { logCartEvent } from "@/shared/lib/shopify/cart/cart.logger";
 
 export async function POST(request: Request) {
   if (!isSameOriginRequest(request)) {
@@ -36,6 +37,7 @@ export async function POST(request: Request) {
     return cartApiError(new CartServiceError("CART_EMPTY", "Cart is empty", 409));
   }
 
+  const startedAt = Date.now();
   try {
     const cart = await getCheckoutCart({ request, cartId, locale: parsed.data.locale });
     if (!cart) {
@@ -46,12 +48,29 @@ export async function POST(request: Request) {
       return cartApiError(new CartServiceError("CART_EMPTY", "Cart is empty", 409));
     }
     if (!cart.checkoutUrl) {
-      return cartApiError(new CartServiceError("CHECKOUT_UNAVAILABLE", "Checkout is unavailable", 502, true));
+      return cartApiError(
+        new CartServiceError("CHECKOUT_UNAVAILABLE", "Checkout is unavailable", 502, true),
+      );
     }
 
     await setCartId(cart.id);
+    logCartEvent({
+      action: "cart.checkout",
+      quantity: cart.totalQuantity,
+      country: cart.buyerIdentity.countryCode ?? undefined,
+      locale: parsed.data.locale,
+      durationMs: Date.now() - startedAt,
+      result: "success",
+    });
     return jsonNoStore({ checkoutUrl: cart.checkoutUrl });
   } catch (error) {
+    logCartEvent({
+      action: "cart.checkout",
+      locale: parsed.data.locale,
+      durationMs: Date.now() - startedAt,
+      result: "failure",
+      errorCode: error instanceof CartServiceError ? error.code : "UPSTREAM_UNAVAILABLE",
+    });
     return cartApiError(error);
   }
 }
