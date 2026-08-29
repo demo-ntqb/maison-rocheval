@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useSyncExternalStore } from "react";
 
 import { usePathname, useRouter } from "@/i18n/navigation";
+import { useCart } from "@/shared/components/cart";
 import { getCommerceContextOrDefault } from "@/shared/lib/commerce-context";
 import {
   getRegionStorageSnapshot,
@@ -20,10 +21,7 @@ import type { RouteLocale, ShippingCountryCode } from "@/shared/types/region.typ
 import type { CommerceContext } from "@/shared/types/commerce-context.type";
 
 const RegionPreferenceDialog = dynamic(
-  () =>
-    import("./region-preference-dialog").then(
-      (module) => module.RegionPreferenceDialog,
-    ),
+  () => import("./region-preference-dialog").then((module) => module.RegionPreferenceDialog),
   { ssr: false },
 );
 
@@ -32,6 +30,7 @@ function RegionPreferenceGateInner({ availableContexts }: { availableContexts: r
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const cart = useCart();
 
   const snapshot = useSyncExternalStore(
     subscribeToRegionStorage,
@@ -45,26 +44,35 @@ function RegionPreferenceGateInner({ availableContexts }: { availableContexts: r
   );
 
   useEffect(() => {
-    if (!hasAvailablePreference || !preferredRouteLocale || preferredRouteLocale === activeRouteLocale) {
-      return;
-    }
+    if (!hasAvailablePreference || !preferredRouteLocale) return;
+    let cancelled = false;
 
-    if (hasRegionRedirectedThisSession()) {
-      return;
-    }
-    markRegionRedirectedThisSession();
+    void cart.updateRegion(preferredRouteLocale).then(() => {
+      if (cancelled || preferredRouteLocale === activeRouteLocale) return;
+      if (hasRegionRedirectedThisSession()) return;
+      markRegionRedirectedThisSession();
 
-    const queryString = searchParams?.toString();
-    const nextHref = queryString ? `${pathname}?${queryString}` : pathname;
-    router.replace(nextHref, { locale: preferredRouteLocale });
-  }, [hasAvailablePreference, preferredRouteLocale, activeRouteLocale, pathname, router, searchParams]);
+      const queryString = searchParams?.toString();
+      const nextHref = queryString ? `${pathname}?${queryString}` : pathname;
+      router.replace(nextHref, { locale: preferredRouteLocale });
+    });
 
-  if (snapshot === null || (preference && hasAvailablePreference) || dismissed) {
-    return null;
-  }
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    activeRouteLocale,
+    cart,
+    hasAvailablePreference,
+    pathname,
+    preferredRouteLocale,
+    router,
+    searchParams,
+  ]);
+
+  if (snapshot === null || (preference && hasAvailablePreference) || dismissed) return null;
 
   const { country, appLocale } = getCommerceContextOrDefault(activeRouteLocale);
-
   return (
     <RegionPreferenceDialog
       initialCountryCode={country as ShippingCountryCode}
@@ -76,10 +84,6 @@ function RegionPreferenceGateInner({ availableContexts }: { availableContexts: r
 
 export function RegionPreferenceGate({ availableContexts }: { availableContexts: readonly CommerceContext[] }) {
   const mounted = useMounted();
-
-  if (!mounted) {
-    return null;
-  }
-
+  if (!mounted) return null;
   return <RegionPreferenceGateInner availableContexts={availableContexts} />;
 }
