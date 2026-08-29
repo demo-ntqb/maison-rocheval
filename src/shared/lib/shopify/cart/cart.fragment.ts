@@ -24,6 +24,7 @@ export const MAISON_CART_FRAGMENT = `#graphql
             availableForSale
             quantityAvailable
             selectedOptions { name value }
+            metafield(namespace: "custom", key: "title") { value }
             image { url altText width height }
             product { id handle title productType }
           }
