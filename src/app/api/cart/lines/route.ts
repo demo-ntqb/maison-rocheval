@@ -11,6 +11,7 @@ import {
   getCartId,
   setCartId,
 } from "@/shared/lib/shopify/cart";
+import { logCartEvent } from "@/shared/lib/shopify/cart/cart.logger";
 
 export async function POST(request: Request) {
   if (!isSameOriginRequest(request)) {
@@ -35,6 +36,7 @@ export async function POST(request: Request) {
   }
 
   const input = parsed.data;
+  const startedAt = Date.now();
   try {
     let cartId = await getCartId();
     let result;
@@ -96,12 +98,33 @@ export async function POST(request: Request) {
 
     cartId = result.cartId;
     await setCartId(cartId);
+    logCartEvent({
+      action: "cart.lines.add",
+      operationId: input.operationId,
+      kind: input.kind,
+      quantity: input.quantity,
+      country: result.snapshot.countryCode,
+      locale: input.locale,
+      durationMs: Date.now() - startedAt,
+      warningCodes: result.snapshot.warnings.map((warning) => warning.code),
+      result: "success",
+    });
     return jsonNoStore({
       operationId: input.operationId,
       cart: result.snapshot,
       warnings: result.snapshot.warnings,
     });
   } catch (error) {
+    logCartEvent({
+      action: "cart.lines.add",
+      operationId: input.operationId,
+      kind: input.kind,
+      quantity: input.quantity,
+      locale: input.locale,
+      durationMs: Date.now() - startedAt,
+      result: "failure",
+      errorCode: error instanceof CartServiceError ? error.code : "UPSTREAM_UNAVAILABLE",
+    });
     return cartApiError(error, input.operationId);
   }
 }
