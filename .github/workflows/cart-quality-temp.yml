@@ -1,0 +1,51 @@
+name: Cart Quality Temp
+
+on:
+  push:
+    branches: [feat/shop]
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "24.16.0"
+  ALLOW_MOCK_CATALOG: "true"
+
+jobs:
+  quality:
+    name: Cart quality gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Typecheck and Shopify GraphQL validation
+        run: yarn typecheck
+
+      - name: Unit tests
+        run: yarn test:unit
+
+      - name: Build
+        run: yarn build
+
+      - name: React Router dependency audit
+        run: yarn why react-router
+
+      - name: Vue dependency audit
+        run: yarn why vue
+
+      - name: Yarn security audit
+        run: yarn audit
