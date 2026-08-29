@@ -1,169 +1,421 @@
 import "server-only";
 
-import type { SupportedCountry, SupportedLanguage } from "@/shared/types/commerce-context.type";
-import { getBuyerStorefrontClient, getCatalogStorefrontClient } from "../storefront";
+import { getShopifyMarket } from "../config";
+import { getBuyerStorefrontClient, type StorefrontClient } from "../storefront";
+import { CART_ATTRIBUTE, mapShopifyCart } from "./cart.mapper";
 import {
-  CART_BUYER_IDENTITY_UPDATE_MUTATION,
-  CART_CREATE_MUTATION,
-  CART_FETCH_QUERY,
-} from "./cart.query";
+  CART_BUYER_IDENTITY_UPDATE,
+  CART_CREATE,
+  CART_LINES_ADD,
+  CART_LINES_REMOVE,
+  CART_LINES_UPDATE,
+} from "./cart.mutation";
+import { CART_QUERY } from "./cart.query";
+import { CartServiceError, throwForUserErrors } from "./cart.error";
+import type {
+  ShopifyCart,
+  ShopifyCartAttribute,
+  ShopifyCartPayload,
+  ShopifyCartWarning,
+} from "./cart.type";
+import type { CartGiftMessage, CartSnapshot } from "@/shared/types/cart.type";
+import type { RouteLocale, SupportedCountry } from "@/shared/types/commerce-context.type";
 
-export type ShopifyCartLineInput = {
+const CART_PAGE_SIZE = 100;
+
+type CartServiceResult = {
+  cartId: string;
+  rawCart: ShopifyCart;
+  snapshot: CartSnapshot;
+  warnings: ShopifyCartWarning[];
+};
+
+type CartLineInput = {
   merchandiseId: string;
   quantity: number;
   attributes?: Array<{ key: string; value: string }>;
 };
 
-export type ShopifyCartResult = {
-  id: string;
-  checkoutUrl: string;
-  totalAmount: number;
-  currencyCode: string;
-  lines: Array<{
-    id: string;
-    quantity: number;
-    availableForSale: boolean;
-    merchandiseId: string;
-  }>;
-};
+function cartVariables(locale: RouteLocale) {
+  const market = getShopifyMarket(locale);
+  return { market, language: market.language };
+}
 
-export async function createShopifyCart(
+function assertTransport<T extends object>(result: T & { errors?: Array<{ message: string }> }): T {
+  if (result.errors?.length) {
+    throw new CartServiceError("UPSTREAM_UNAVAILABLE", "Shopify cart request failed", 502, true);
+  }
+  return result;
+}
+
+function normalizeResult(
+  cart: ShopifyCart,
   country: SupportedCountry,
-  language: SupportedLanguage,
-  lines: ShopifyCartLineInput[] = [],
-  request?: Request,
-): Promise<ShopifyCartResult | null> {
-  const routeLocale = `${language.toLowerCase()}-${country.toLowerCase()}`;
-  const client = request
-    ? getBuyerStorefrontClient(routeLocale, request)
-    : getCatalogStorefrontClient(routeLocale);
+  warnings: ShopifyCartWarning[] = [],
+): CartServiceResult {
+  return {
+    cartId: cart.id,
+    rawCart: cart,
+    snapshot: mapShopifyCart(cart, country, warnings),
+    warnings,
+  };
+}
 
-  const response = await client.query<{
-    cartCreate: {
-      cart: {
-        id: string;
-        checkoutUrl: string;
-        cost: { totalAmount: { amount: string; currencyCode: string } };
-        lines: {
-          nodes: Array<{
-            id: string;
-            quantity: number;
-            merchandise: { id: string; availableForSale?: boolean } | null;
-          }>;
-        };
-      } | null;
-      userErrors: Array<{ message: string }>;
-    };
-  }>(CART_CREATE_MUTATION, {
-    variables: {
-      country,
-      language,
-      input: {
-        buyerIdentity: { countryCode: country },
-        lines: lines.map((l) => ({
-          merchandiseId: l.merchandiseId,
-          quantity: l.quantity,
-          attributes: l.attributes,
-        })),
+async function queryCartPage(
+  client: StorefrontClient,
+  cartId: string,
+  locale: RouteLocale,
+  after?: string,
+): Promise<ShopifyCart | null> {
+  const { language } = cartVariables(locale);
+  const response = assertTransport(
+    await client.query<{ cart: ShopifyCart | null }>(CART_QUERY, {
+      variables: {
+        id: cartId,
+        first: CART_PAGE_SIZE,
+        after: after ?? null,
+        language,
       },
-    },
-  });
+    }),
+  );
+  return response.cart;
+}
 
-  const cart = response?.cartCreate?.cart;
-  if (!cart) return null;
+async function getFullCartWithClient(
+  client: StorefrontClient,
+  cartId: string,
+  locale: RouteLocale,
+): Promise<ShopifyCart | null> {
+  const first = await queryCartPage(client, cartId, locale);
+  if (!first) return null;
+
+  const nodes = [...first.lines.nodes];
+  let pageInfo = first.lines.pageInfo;
+
+  while (pageInfo.hasNextPage && pageInfo.endCursor) {
+    const page = await queryCartPage(client, cartId, locale, pageInfo.endCursor);
+    if (!page) return null;
+    nodes.push(...page.lines.nodes);
+    pageInfo = page.lines.pageInfo;
+  }
+
+  return { ...first, lines: { nodes, pageInfo } };
+}
+
+async function completeMutationCart(
+  client: StorefrontClient,
+  cart: ShopifyCart,
+  locale: RouteLocale,
+): Promise<ShopifyCart> {
+  if (!cart.lines.pageInfo.hasNextPage) return cart;
+  return (await getFullCartWithClient(client, cart.id, locale)) ?? cart;
+}
+
+async function executeMutation(
+  client: StorefrontClient,
+  document: string,
+  payloadKey: string,
+  variables: Record<string, unknown>,
+  locale: RouteLocale,
+): Promise<{ cart: ShopifyCart; warnings: ShopifyCartWarning[] }> {
+  const response = assertTransport(
+    await client.query<Record<string, ShopifyCartPayload>>(document, {
+      variables: {
+        ...variables,
+        first: CART_PAGE_SIZE,
+        after: null,
+        language: cartVariables(locale).language,
+      },
+    }),
+  );
+
+  const payload = response[payloadKey];
+  if (!payload) {
+    throw new CartServiceError("UPSTREAM_UNAVAILABLE", "Shopify returned an invalid cart payload", 502, true);
+  }
+  throwForUserErrors(payload.userErrors ?? []);
+  if (!payload.cart) {
+    throw new CartServiceError("CART_NOT_FOUND", "Cart is unavailable", 404);
+  }
 
   return {
-    id: cart.id,
-    checkoutUrl: cart.checkoutUrl,
-    totalAmount: Number.parseFloat(cart.cost.totalAmount.amount) || 0,
-    currencyCode: cart.cost.totalAmount.currencyCode,
-    lines: cart.lines.nodes.map((n) => ({
-      id: n.id,
-      quantity: n.quantity,
-      availableForSale: n.merchandise?.availableForSale ?? true,
-      merchandiseId: n.merchandise?.id ?? "",
-    })),
+    cart: await completeMutationCart(client, payload.cart, locale),
+    warnings: payload.warnings ?? [],
   };
 }
 
-export async function updateShopifyCartBuyerIdentity(
-  cartId: string,
-  country: SupportedCountry,
-  language: SupportedLanguage,
-): Promise<{ checkoutUrl: string; totalAmount: number; currencyCode: string } | null> {
-  const routeLocale = `${language.toLowerCase()}-${country.toLowerCase()}`;
-  const client = getCatalogStorefrontClient(routeLocale);
-
-  const response = await client.query<{
-    cartBuyerIdentityUpdate: {
-      cart: {
-        id: string;
-        checkoutUrl: string;
-        cost: { totalAmount: { amount: string; currencyCode: string } };
-      } | null;
-      userErrors: Array<{ message: string }>;
-    };
-  }>(CART_BUYER_IDENTITY_UPDATE_MUTATION, {
-    variables: {
-      cartId,
-      country,
-      language,
-      buyerIdentity: { countryCode: country },
-    },
-  });
-
-  const cart = response?.cartBuyerIdentityUpdate?.cart;
-  if (!cart) return null;
-
+function caviarLine(merchandiseId: string, quantity: number): CartLineInput {
   return {
-    checkoutUrl: cart.checkoutUrl,
-    totalAmount: Number.parseFloat(cart.cost.totalAmount.amount) || 0,
-    currencyCode: cart.cost.totalAmount.currencyCode,
+    merchandiseId,
+    quantity,
+    attributes: [{ key: CART_ATTRIBUTE.kind, value: "caviar" }],
   };
 }
 
-export async function fetchShopifyCart(
-  cartId: string,
-  country: SupportedCountry,
-  language: SupportedLanguage,
-): Promise<ShopifyCartResult | null> {
-  const routeLocale = `${language.toLowerCase()}-${country.toLowerCase()}`;
-  const client = getCatalogStorefrontClient(routeLocale);
+function giftLines(merchandiseId: string, unitIds: string[]): CartLineInput[] {
+  return unitIds.map((unitId) => ({
+    merchandiseId,
+    quantity: 1,
+    attributes: [
+      { key: CART_ATTRIBUTE.kind, value: "gift_set" },
+      { key: CART_ATTRIBUTE.unitId, value: unitId },
+    ],
+  }));
+}
 
-  const response = await client.query<{
-    cart: {
-      id: string;
-      checkoutUrl: string;
-      cost: { totalAmount: { amount: string; currencyCode: string } };
-      lines: {
-        nodes: Array<{
-          id: string;
-          quantity: number;
-          merchandise: { id: string; availableForSale?: boolean } | null;
-        }>;
-      };
-    } | null;
-  }>(CART_FETCH_QUERY, {
-    variables: {
-      id: cartId,
-      country,
-      language,
-    },
+export function buildInitialCartLines(input:
+  | { kind: "caviar"; merchandiseId: string; quantity: number }
+  | { kind: "gift_set"; merchandiseId: string; unitIds: string[] },
+): CartLineInput[] {
+  return input.kind === "caviar"
+    ? [caviarLine(input.merchandiseId, input.quantity)]
+    : giftLines(input.merchandiseId, input.unitIds);
+}
+
+export async function getCart({
+  request,
+  cartId,
+  locale,
+}: {
+  request: Request;
+  cartId: string;
+  locale: RouteLocale;
+}): Promise<CartServiceResult | null> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const cart = await getFullCartWithClient(client, cartId, locale);
+  if (!cart) return null;
+  return normalizeResult(cart, cartVariables(locale).market.country);
+}
+
+export async function createCartWithLines({
+  request,
+  locale,
+  lines,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  lines: CartLineInput[];
+}): Promise<CartServiceResult> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const { market } = cartVariables(locale);
+  const result = await executeMutation(
+    client,
+    CART_CREATE,
+    "cartCreate",
+    { input: { buyerIdentity: { countryCode: market.country }, lines } },
+    locale,
+  );
+  return normalizeResult(result.cart, market.country, result.warnings);
+}
+
+export async function addCaviar({
+  request,
+  locale,
+  cartId,
+  merchandiseId,
+  quantity,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  cartId: string;
+  merchandiseId: string;
+  quantity: number;
+}): Promise<CartServiceResult | null> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const current = await getFullCartWithClient(client, cartId, locale);
+  if (!current) return null;
+
+  const existing = current.lines.nodes.find((line) => {
+    const attrs = Object.fromEntries(line.attributes.map(({ key, value }) => [key, value]));
+    return attrs[CART_ATTRIBUTE.kind] !== "gift_set" && line.merchandise.id === merchandiseId;
   });
 
-  const cart = response?.cart;
+  const result = existing
+    ? await executeMutation(
+        client,
+        CART_LINES_UPDATE,
+        "cartLinesUpdate",
+        { cartId, lines: [{ id: existing.id, quantity: existing.quantity + quantity }] },
+        locale,
+      )
+    : await executeMutation(
+        client,
+        CART_LINES_ADD,
+        "cartLinesAdd",
+        { cartId, lines: [caviarLine(merchandiseId, quantity)] },
+        locale,
+      );
+
+  return normalizeResult(result.cart, cartVariables(locale).market.country, result.warnings);
+}
+
+export async function addGiftSet({
+  request,
+  locale,
+  cartId,
+  merchandiseId,
+  unitIds,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  cartId: string;
+  merchandiseId: string;
+  unitIds: string[];
+}): Promise<CartServiceResult> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const result = await executeMutation(
+    client,
+    CART_LINES_ADD,
+    "cartLinesAdd",
+    { cartId, lines: giftLines(merchandiseId, unitIds) },
+    locale,
+  );
+  return normalizeResult(result.cart, cartVariables(locale).market.country, result.warnings);
+}
+
+export async function updateCartLineQuantity({
+  request,
+  locale,
+  cartId,
+  lineId,
+  quantity,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  cartId: string;
+  lineId: string;
+  quantity: number;
+}): Promise<CartServiceResult> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const result = await executeMutation(
+    client,
+    CART_LINES_UPDATE,
+    "cartLinesUpdate",
+    { cartId, lines: [{ id: lineId, quantity }] },
+    locale,
+  );
+  return normalizeResult(result.cart, cartVariables(locale).market.country, result.warnings);
+}
+
+function mergeGiftAttributes(
+  attributes: ShopifyCartAttribute[],
+  giftMessage: CartGiftMessage | null,
+): ShopifyCartAttribute[] {
+  const next = new Map(attributes.map(({ key, value }) => [key, value]));
+  next.delete(CART_ATTRIBUTE.giftMessageKind);
+  next.delete(CART_ATTRIBUTE.giftMessage);
+
+  if (giftMessage?.kind === "blank") {
+    next.set(CART_ATTRIBUTE.giftMessageKind, "blank");
+  } else if (giftMessage?.kind === "personal") {
+    next.set(CART_ATTRIBUTE.giftMessageKind, "personal");
+    next.set(CART_ATTRIBUTE.giftMessage, giftMessage.text);
+  }
+
+  return Array.from(next, ([key, value]) => ({ key, value }));
+}
+
+export async function updateGiftMessage({
+  request,
+  locale,
+  cartId,
+  lineId,
+  giftMessage,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  cartId: string;
+  lineId: string;
+  giftMessage: CartGiftMessage | null;
+}): Promise<CartServiceResult> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const current = await getFullCartWithClient(client, cartId, locale);
+  const line = current?.lines.nodes.find((candidate) => candidate.id === lineId);
+  if (!line) throw new CartServiceError("LINE_NOT_FOUND", "Cart line not found", 404);
+
+  const attrs = Object.fromEntries(line.attributes.map(({ key, value }) => [key, value]));
+  if (attrs[CART_ATTRIBUTE.kind] !== "gift_set") {
+    throw new CartServiceError("INVALID_INPUT", "Gift messages are only supported for gift-set units", 400);
+  }
+
+  const result = await executeMutation(
+    client,
+    CART_LINES_UPDATE,
+    "cartLinesUpdate",
+    { cartId, lines: [{ id: lineId, attributes: mergeGiftAttributes(line.attributes, giftMessage) }] },
+    locale,
+  );
+  return normalizeResult(result.cart, cartVariables(locale).market.country, result.warnings);
+}
+
+export async function removeCartLine({
+  request,
+  locale,
+  cartId,
+  lineId,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  cartId: string;
+  lineId: string;
+}): Promise<CartServiceResult> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const result = await executeMutation(
+    client,
+    CART_LINES_REMOVE,
+    "cartLinesRemove",
+    { cartId, lineIds: [lineId] },
+    locale,
+  );
+  return normalizeResult(result.cart, cartVariables(locale).market.country, result.warnings);
+}
+
+export async function updateCartBuyerIdentity({
+  request,
+  locale,
+  cartId,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  cartId: string;
+}): Promise<CartServiceResult> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const { market } = cartVariables(locale);
+  const result = await executeMutation(
+    client,
+    CART_BUYER_IDENTITY_UPDATE,
+    "cartBuyerIdentityUpdate",
+    { cartId, buyerIdentity: { countryCode: market.country } },
+    locale,
+  );
+  return normalizeResult(result.cart, market.country, result.warnings);
+}
+
+export async function getCheckoutCart({
+  request,
+  locale,
+  cartId,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  cartId: string;
+}): Promise<ShopifyCart | null> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const { market } = cartVariables(locale);
+  let cart = await getFullCartWithClient(client, cartId, locale);
   if (!cart) return null;
 
-  return {
-    id: cart.id,
-    checkoutUrl: cart.checkoutUrl,
-    totalAmount: Number.parseFloat(cart.cost.totalAmount.amount) || 0,
-    currencyCode: cart.cost.totalAmount.currencyCode,
-    lines: cart.lines.nodes.map((n) => ({
-      id: n.id,
-      quantity: n.quantity,
-      availableForSale: n.merchandise?.availableForSale ?? true,
-      merchandiseId: n.merchandise?.id ?? "",
-    })),
-  };
+  if (cart.buyerIdentity.countryCode !== market.country) {
+    cart = (
+      await executeMutation(
+        client,
+        CART_BUYER_IDENTITY_UPDATE,
+        "cartBuyerIdentityUpdate",
+        { cartId, buyerIdentity: { countryCode: market.country } },
+        locale,
+      )
+    ).cart;
+  }
+
+  return cart;
 }
