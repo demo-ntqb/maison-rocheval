@@ -1,416 +1,516 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
+import {
+  addLine as addLineRequest,
+  fetchCart,
+  fetchCheckout,
+  removeLine as removeLineRequest,
+  updateGiftMessage as updateGiftMessageRequest,
+  updateQuantity as updateQuantityRequest,
+  updateRegion as updateRegionRequest,
+} from "@/shared/lib/cart/cart-api";
+import { countGiftUnitsByVariant, flattenCartLines } from "@/shared/lib/cart/cart-entry";
+import { sumMoney } from "@/shared/lib/cart/cart-money";
+import type { OptimisticProductData, PendingCartOperation } from "@/shared/lib/cart/cart-operation";
+import { replayCartOperations } from "@/shared/lib/cart/cart-optimistic";
+import { getCommerceContextOrDefault } from "@/shared/lib/commerce-context";
 import type {
   CartEntry,
   CartGiftMessage,
   CartLine,
-  CartLineImage,
+  CartMoney,
+  CartSnapshot,
 } from "@/shared/types/cart.type";
+import type { RouteLocale } from "@/shared/types/commerce-context.type";
 
-/** What the product detail "Add to cart" button sends for a standalone item (caviar). */
 export type AddCartLineInput = {
-  currencyCode: string;
-  id: string;
-  image: CartLineImage | null;
+  merchandiseId: string;
+  productId: string;
   quantity: number;
-  title: string;
-  unitPrice: number;
-  weight: string;
-  quantityAvailable?: number | null;
+  optimistic: OptimisticProductData;
 };
 
-/**
- * What the product detail "Add to cart" button sends for a gift set. Each unit
- * of `quantity` becomes its own line inside the group so every physical box
- * can carry its own gift message — matching how the design lists two separate
- * "L'Initiation" lines under one heading rather than a single line at qty 2.
- */
 export type AddGiftSetInput = {
-  group: { addHref?: string; id: string; title: string };
+  merchandiseId: string;
+  productId: string;
   quantity: number;
-  unit: Omit<AddCartLineInput, "quantity">;
+  group: { addHref?: string; title: string };
+  optimistic: OptimisticProductData;
 };
 
 type CartContextValue = {
   addGiftSetUnits: (input: AddGiftSetInput) => void;
   addLine: (input: AddCartLineInput) => void;
-  checkout: () => void;
-  checkoutUrl: string | null;
+  checkout: () => Promise<void>;
   close: () => void;
-  currencyCode: string;
   entries: CartEntry[];
   isCheckingOut: boolean;
   isOpen: boolean;
   itemCount: number;
   open: () => void;
   removeLine: (lineId: string) => void;
-  setGiftMessage: (lineId: string, giftMessage: CartGiftMessage | undefined) => void;
+  setGiftMessage: (lineId: string, giftMessage: CartGiftMessage | null | undefined) => void;
   setLineQuantity: (lineId: string, quantity: number) => void;
   setOpen: (open: boolean) => void;
-  totalPrice: number;
-  cartError: "priceChanged" | "itemUnavailable" | null;
+  subtotal: CartMoney;
+  updateRegion: (locale: RouteLocale) => Promise<void>;
+  /** Existing error surface retained; only Shopify stock warnings/errors map here. */
+  cartError: "itemUnavailable" | null;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-const DEFAULT_CURRENCY = "EUR";
+type CartProviderState = {
+  confirmed: CartSnapshot;
+  pending: PendingCartOperation[];
+  status: "hydrating" | "ready" | "error";
+  cartError: "itemUnavailable" | null;
+};
 
-function createCartLineId(): string {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-    return crypto.randomUUID();
-  }
-
-  return `line-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+function createId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
+  return `operation-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-function mapEntryLines(entry: CartEntry, map: (line: CartLine) => CartLine | null): CartEntry | null {
-  if (entry.kind === "line") {
-    const line = map(entry.line);
-    return line ? { kind: "line", line } : null;
-  }
-
-  const lines = entry.group.lines.map(map).filter((line): line is CartLine => line !== null);
-  return lines.length > 0 ? { group: { ...entry.group, lines }, kind: "group" } : null;
+function createEmptySnapshot(routeLocale: RouteLocale): CartSnapshot {
+  const context = getCommerceContextOrDefault(routeLocale);
+  return {
+    entries: [],
+    itemCount: 0,
+    subtotal: { amount: "0.00", currencyCode: context.country === "SG" ? "SGD" : "SGD" },
+    countryCode: context.country,
+    warnings: [],
+  };
 }
 
-function flattenLines(entries: CartEntry[]): CartLine[] {
-  return entries.flatMap((entry) => (entry.kind === "line" ? [entry.line] : entry.group.lines));
+function snapshotFromEntries(routeLocale: RouteLocale, entries: CartEntry[]): CartSnapshot {
+  const empty = createEmptySnapshot(routeLocale);
+  const lines = flattenCartLines(entries);
+  return {
+    ...empty,
+    entries,
+    itemCount: lines.reduce((total, line) => total + line.quantity, 0),
+    subtotal: sumMoney(lines.map((line) => line.subtotal), empty.subtotal.currencyCode),
+  };
+}
+
+function stockWarning(cart: CartSnapshot): boolean {
+  return cart.warnings.some((warning) => warning.code.toUpperCase().includes("STOCK"));
+}
+
+function resolveConfirmedLine(
+  cart: CartSnapshot,
+  reference: { lineId: string; merchandiseId: string; unitId: string | null },
+): CartLine | undefined {
+  const lines = flattenCartLines(cart.entries);
+  return (
+    lines.find((line) => line.id === reference.lineId) ??
+    (reference.unitId ? lines.find((line) => line.unitId === reference.unitId) : undefined) ??
+    lines.find(
+      (line) =>
+        line.kind === "caviar" &&
+        reference.unitId === null &&
+        line.merchandiseId === reference.merchandiseId,
+    )
+  );
 }
 
 export interface CartProviderProps {
   children: React.ReactNode;
-  /** Cart contents are supplied by the caller until the Shopify cart transport lands. */
   initialEntries?: CartEntry[];
   initialOpen?: boolean;
-  initialCheckoutUrl?: string | null;
   routeLocale: string;
 }
 
 export function CartProvider({
   children,
-  initialEntries = [],
+  initialEntries,
   initialOpen = false,
-  initialCheckoutUrl = null,
-  routeLocale,
+  routeLocale: routeLocaleProp,
 }: CartProviderProps) {
-  const [entries, setEntries] = useState<CartEntry[]>(initialEntries);
+  const routeLocale = routeLocaleProp as RouteLocale;
+  const seeded = initialEntries !== undefined;
+  const initialConfirmed = seeded
+    ? snapshotFromEntries(routeLocale, initialEntries)
+    : createEmptySnapshot(routeLocale);
+
+  const [state, setState] = useState<CartProviderState>({
+    confirmed: initialConfirmed,
+    pending: [],
+    status: seeded ? "ready" : "hydrating",
+    cartError: null,
+  });
+  const stateRef = useRef(state);
   const [isOpen, setOpen] = useState(initialOpen);
-  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(initialCheckoutUrl);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const checkoutPendingRef = useRef(false);
+  const queueRef = useRef<Promise<void>>(Promise.resolve());
 
-  const [shopifyCart, setShopifyCart] = useState<{
-    id: string;
-    checkoutUrl: string;
-    totalAmount: number;
-    currencyCode: string;
-    lines: Array<{ id: string; quantity: number; availableForSale: boolean; merchandiseId: string }>;
-  } | null>(null);
-  const [cartError, setCartError] = useState<"priceChanged" | "itemUnavailable" | null>(null);
-
-  const removeLine = useCallback((lineId: string) => {
-    setEntries((current) =>
-      current
-        .map((entry) => mapEntryLines(entry, (line) => (line.id === lineId ? null : line)))
-        .filter((entry): entry is CartEntry => entry !== null),
-    );
-  }, []);
-
-  const setLineQuantity = useCallback((lineId: string, quantity: number) => {
-    if (quantity < 1) {
-      return;
-    }
-
-    setEntries((current) =>
-      current
-        .map((entry) =>
-          mapEntryLines(entry, (line) => {
-            if (line.id === lineId) {
-              const maxQty = line.quantityAvailable ?? 99;
-              return { ...line, quantity: Math.min(quantity, maxQty) };
-            }
-            return line;
-          }),
-        )
-        .filter((entry): entry is CartEntry => entry !== null),
-    );
-  }, []);
-
-  const setGiftMessage = useCallback((lineId: string, giftMessage: CartGiftMessage | undefined) => {
-    setEntries((current) =>
-      current
-        .map((entry) => mapEntryLines(entry, (line) => (line.id === lineId ? { ...line, giftMessage } : line)))
-        .filter((entry): entry is CartEntry => entry !== null),
-    );
-  }, []);
-
-  /**
-   * Caviar lines are quantity-editable and stack: adding the same SKU again
-   * bumps the existing line instead of duplicating it, same as any standard
-   * cart.
-   */
-  const addLine = useCallback((input: AddCartLineInput) => {
-    if (input.quantity < 1) {
-      return;
-    }
-
-    setEntries((current) => {
-      const index = current.findIndex((entry) => entry.kind === "line" && entry.line.id === input.id);
-
-      if (index >= 0) {
-        const existing = current[index] as Extract<CartEntry, { kind: "line" }>;
-        const next = [...current];
-        
-        const maxQty = existing.line.quantityAvailable ?? 99;
-        const targetQty = Math.min(existing.line.quantity + input.quantity, maxQty);
-
-        next[index] = {
-          kind: "line",
-          line: { ...existing.line, quantity: targetQty },
-        };
-        return next;
-      }
-
-      const maxQty = input.quantityAvailable ?? 99;
-      const targetQty = Math.min(input.quantity, maxQty);
-
-      return [
-        ...current,
-        {
-          kind: "line",
-          line: {
-            currencyCode: input.currencyCode,
-            id: input.id,
-            merchandiseId: input.id,
-            image: input.image,
-            quantity: targetQty,
-            quantityEditable: true,
-            supportsGiftMessage: false,
-            title: input.title,
-            unitPrice: input.unitPrice,
-            weight: input.weight,
-            quantityAvailable: input.quantityAvailable,
-          },
-        },
-      ];
+  const updateState = useCallback((updater: (current: CartProviderState) => CartProviderState) => {
+    setState((current) => {
+      const next = updater(current);
+      stateRef.current = next;
+      return next;
     });
-    setOpen(true);
   }, []);
 
-  /**
-   * Gift sets are not quantity-editable per line — each unit gets its own row
-   * (and its own gift message) inside a shared group card, appending to an
-   * existing group for the same product if one is already in the bag.
-   */
-  const addGiftSetUnits = useCallback(({ group, quantity, unit }: AddGiftSetInput) => {
-    if (quantity < 1) {
-      return;
-    }
-
-    setEntries((current) => {
-      const index = current.findIndex((entry) => entry.kind === "group" && entry.group.id === group.id);
-      const existingCount = index >= 0 ? (current[index] as Extract<CartEntry, { kind: "group" }>).group.lines.length : 0;
-
-      const maxQty = unit.quantityAvailable ?? 99;
-      const allowedAddQty = Math.max(0, maxQty - existingCount);
-      const targetAddQty = Math.min(quantity, allowedAddQty);
-
-      if (targetAddQty < 1) {
-        return current;
-      }
-
-      const newLines: CartLine[] = Array.from({ length: targetAddQty }, () => ({
-        currencyCode: unit.currencyCode,
-        id: createCartLineId(),
-        merchandiseId: unit.id,
-        image: unit.image,
-        quantity: 1,
-        quantityEditable: false,
-        supportsGiftMessage: true,
-        title: unit.title,
-        unitPrice: unit.unitPrice,
-        weight: unit.weight,
-        quantityAvailable: unit.quantityAvailable,
-      }));
-
-      if (index >= 0) {
-        const existing = current[index] as Extract<CartEntry, { kind: "group" }>;
-        const next = [...current];
-        next[index] = {
-          group: { ...existing.group, lines: [...existing.group.lines, ...newLines] },
-          kind: "group",
-        };
-        return next;
-      }
-
-      return [
-        ...current,
-        {
-          group: { addHref: group.addHref, id: group.id, lines: newLines, title: group.title },
-          kind: "group",
-        },
-      ];
-    });
-    setOpen(true);
+  const enqueue = useCallback((task: () => Promise<void>): Promise<void> => {
+    const next = queueRef.current.then(task, task);
+    queueRef.current = next.catch(() => undefined);
+    return next;
   }, []);
-
-  const flattenedLines = useMemo(() => flattenLines(entries), [entries]);
 
   useEffect(() => {
-    if (flattenedLines.length === 0) {
-      setShopifyCart(null);
-      setCartError(null);
-      return;
-    }
+    if (seeded) return;
+    let cancelled = false;
 
-    let active = true;
-    const syncCart = async () => {
-      try {
-        const response = await fetch("/api/cart", {
-          body: JSON.stringify({
-            locale: routeLocale,
-            lines: flattenedLines.map((line) => {
-              const attrs: Array<{ key: string; value: string }> = [];
-              if (line.giftMessage) {
-                if (line.giftMessage.kind === "personal" && line.giftMessage.text) {
-                  attrs.push({ key: "Gift Message", value: line.giftMessage.text });
-                } else if (line.giftMessage.kind === "blank") {
-                  attrs.push({ key: "Gift Message", value: "Blank card" });
-                }
-              }
-              return {
-                merchandiseId: line.merchandiseId,
-                quantity: line.quantity,
-                attributes: attrs.length > 0 ? attrs : undefined,
-              };
-            }),
-          }),
-          headers: { "Content-Type": "application/json" },
-          method: "POST",
-        });
+    void fetchCart(routeLocale)
+      .then((cart) => {
+        if (cancelled) return;
+        updateState((current) => ({
+          ...current,
+          confirmed: cart,
+          status: "ready",
+          cartError: stockWarning(cart) ? "itemUnavailable" : null,
+        }));
+      })
+      .catch(() => {
+        if (cancelled) return;
+        updateState((current) => ({ ...current, status: "error" }));
+      });
 
-        if (!response.ok) {
-          throw new Error("Failed to sync cart");
-        }
-
-        const data = await response.json();
-        if (!active) return;
-
-        setShopifyCart(data);
-
-        const unavailableItems = data.lines.filter((l: any) => !l.availableForSale);
-        if (unavailableItems.length > 0) {
-          setCartError("itemUnavailable");
-        } else {
-          const clientTotal = flattenedLines.reduce((total, line) => total + line.unitPrice * line.quantity, 0);
-          if (data.totalAmount !== clientTotal || data.currencyCode !== (flattenedLines[0]?.currencyCode ?? "EUR")) {
-            setCartError("priceChanged");
-          } else {
-            setCartError(null);
-          }
-        }
-      } catch (err) {
-        console.error("[shopify] cart sync error", err);
-      }
-    };
-
-    const timer = setTimeout(syncCart, 300);
     return () => {
-      active = false;
-      clearTimeout(timer);
+      cancelled = true;
     };
-  }, [flattenedLines, routeLocale]);
+  }, [routeLocale, seeded, updateState]);
+
+  const visibleCart = useMemo(
+    () => replayCartOperations(state.confirmed, state.pending),
+    [state.confirmed, state.pending],
+  );
+
+  const addPending = useCallback(
+    (operation: PendingCartOperation) => {
+      updateState((current) => ({ ...current, pending: [...current.pending, operation] }));
+    },
+    [updateState],
+  );
+
+  const commitOperation = useCallback(
+    (operationId: string, cart: CartSnapshot) => {
+      updateState((current) => ({
+        ...current,
+        confirmed: cart,
+        pending: current.pending.filter((operation) => operation.id !== operationId),
+        status: "ready",
+        cartError: stockWarning(cart) ? "itemUnavailable" : null,
+      }));
+    },
+    [updateState],
+  );
+
+  const reconcileAfterFailure = useCallback(
+    async (operationId: string) => {
+      try {
+        const cart = await fetchCart(routeLocale);
+        updateState((current) => ({
+          ...current,
+          confirmed: cart,
+          pending: current.pending.filter((operation) => operation.id !== operationId),
+          cartError: stockWarning(cart) ? "itemUnavailable" : null,
+        }));
+      } catch {
+        updateState((current) => ({
+          ...current,
+          pending: current.pending.filter((operation) => operation.id !== operationId),
+          status: "error",
+        }));
+      }
+    },
+    [routeLocale, updateState],
+  );
+
+  const addLine = useCallback(
+    (input: AddCartLineInput) => {
+      if (input.quantity < 1) return;
+      const operationId = createId();
+      const operation: PendingCartOperation = {
+        id: operationId,
+        type: "add_caviar",
+        createdAt: Date.now(),
+        merchandiseId: input.merchandiseId,
+        productId: input.productId,
+        quantity: input.quantity,
+        optimistic: input.optimistic,
+      };
+
+      addPending(operation);
+      setOpen(true);
+
+      void enqueue(async () => {
+        try {
+          const result = await addLineRequest({
+            kind: "caviar",
+            merchandiseId: input.merchandiseId,
+            quantity: input.quantity,
+            operationId,
+            locale: routeLocale,
+          });
+          commitOperation(operationId, result.cart);
+        } catch {
+          await reconcileAfterFailure(operationId);
+        }
+      });
+    },
+    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale],
+  );
+
+  const addGiftSetUnits = useCallback(
+    (input: AddGiftSetInput) => {
+      if (input.quantity < 1) return;
+      const existingVariantCount = countGiftUnitsByVariant(visibleCart.entries, input.merchandiseId);
+      const available = input.optimistic.quantityAvailable ?? 99;
+      const quantity = Math.min(input.quantity, Math.max(0, available - existingVariantCount));
+      if (quantity < 1) return;
+
+      const operationId = createId();
+      const unitIds = Array.from({ length: quantity }, () => createId());
+      const operation: PendingCartOperation = {
+        id: operationId,
+        type: "add_gift",
+        createdAt: Date.now(),
+        merchandiseId: input.merchandiseId,
+        productId: input.productId,
+        units: unitIds.map((unitId) => ({ unitId })),
+        group: input.group,
+        optimistic: input.optimistic,
+      };
+
+      addPending(operation);
+      setOpen(true);
+
+      void enqueue(async () => {
+        try {
+          const result = await addLineRequest({
+            kind: "gift_set",
+            merchandiseId: input.merchandiseId,
+            quantity,
+            unitIds,
+            operationId,
+            locale: routeLocale,
+          });
+          commitOperation(operationId, result.cart);
+        } catch {
+          await reconcileAfterFailure(operationId);
+        }
+      });
+    },
+    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+  );
+
+  const setLineQuantity = useCallback(
+    (lineId: string, quantity: number) => {
+      if (quantity < 1) return;
+      const line = flattenCartLines(visibleCart.entries).find((candidate) => candidate.id === lineId);
+      if (!line || line.kind !== "caviar") return;
+
+      const target = Math.min(quantity, line.quantityAvailable ?? 99);
+      const operationId = createId();
+      const operation: PendingCartOperation = {
+        id: operationId,
+        type: "set_quantity",
+        createdAt: Date.now(),
+        lineId,
+        merchandiseId: line.merchandiseId,
+        quantity: target,
+      };
+      addPending(operation);
+
+      void enqueue(async () => {
+        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, {
+          lineId,
+          merchandiseId: line.merchandiseId,
+          unitId: null,
+        });
+        if (!confirmedLine) {
+          await reconcileAfterFailure(operationId);
+          return;
+        }
+        try {
+          const result = await updateQuantityRequest({
+            lineId: confirmedLine.id,
+            quantity: target,
+            operationId,
+            locale: routeLocale,
+          });
+          commitOperation(operationId, result.cart);
+        } catch {
+          await reconcileAfterFailure(operationId);
+        }
+      });
+    },
+    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+  );
+
+  const removeLine = useCallback(
+    (lineId: string) => {
+      const line = flattenCartLines(visibleCart.entries).find((candidate) => candidate.id === lineId);
+      if (!line) return;
+      const operationId = createId();
+      const operation: PendingCartOperation = {
+        id: operationId,
+        type: "remove",
+        createdAt: Date.now(),
+        lineId,
+        merchandiseId: line.merchandiseId,
+        unitId: line.unitId,
+      };
+      addPending(operation);
+
+      void enqueue(async () => {
+        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, operation);
+        if (!confirmedLine) {
+          updateState((current) => ({
+            ...current,
+            pending: current.pending.filter((candidate) => candidate.id !== operationId),
+          }));
+          return;
+        }
+        try {
+          const result = await removeLineRequest({
+            lineId: confirmedLine.id,
+            operationId,
+            locale: routeLocale,
+          });
+          commitOperation(operationId, result.cart);
+        } catch {
+          await reconcileAfterFailure(operationId);
+        }
+      });
+    },
+    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, updateState, visibleCart.entries],
+  );
+
+  const setGiftMessage = useCallback(
+    (lineId: string, giftMessage: CartGiftMessage | null | undefined) => {
+      const line = flattenCartLines(visibleCart.entries).find((candidate) => candidate.id === lineId);
+      if (!line || line.kind !== "gift_set") return;
+      const operationId = createId();
+      const operation: PendingCartOperation = {
+        id: operationId,
+        type: "gift_message",
+        createdAt: Date.now(),
+        lineId,
+        merchandiseId: line.merchandiseId,
+        unitId: line.unitId,
+        giftMessage: giftMessage ?? null,
+      };
+      addPending(operation);
+
+      void enqueue(async () => {
+        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, operation);
+        if (!confirmedLine) {
+          await reconcileAfterFailure(operationId);
+          return;
+        }
+        try {
+          const result = await updateGiftMessageRequest({
+            lineId: confirmedLine.id,
+            giftMessage: giftMessage ?? null,
+            operationId,
+            locale: routeLocale,
+          });
+          commitOperation(operationId, result.cart);
+        } catch {
+          await reconcileAfterFailure(operationId);
+        }
+      });
+    },
+    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+  );
+
+  const updateRegion = useCallback(
+    async (locale: RouteLocale) => {
+      await enqueue(async () => {
+        const result = await updateRegionRequest(locale);
+        if (result.cart) {
+          updateState((current) => ({
+            ...current,
+            confirmed: result.cart as CartSnapshot,
+            cartError: stockWarning(result.cart as CartSnapshot) ? "itemUnavailable" : null,
+          }));
+        }
+      });
+    },
+    [enqueue, updateState],
+  );
 
   const checkout = useCallback(async () => {
-    if (typeof window === "undefined" || isCheckingOut) return;
-
-    if (shopifyCart?.checkoutUrl) {
-      window.location.assign(shopifyCart.checkoutUrl);
-      return;
-    }
-
+    if (typeof window === "undefined" || checkoutPendingRef.current) return;
+    checkoutPendingRef.current = true;
     setIsCheckingOut(true);
+
     try {
-      const response = await fetch("/api/cart", {
-        body: JSON.stringify({
-          locale: routeLocale,
-          lines: flattenedLines.map((line) => {
-            const attrs: Array<{ key: string; value: string }> = [];
-            if (line.giftMessage) {
-              if (line.giftMessage.kind === "personal" && line.giftMessage.text) {
-                attrs.push({ key: "Gift Message", value: line.giftMessage.text });
-              } else if (line.giftMessage.kind === "blank") {
-                attrs.push({ key: "Gift Message", value: "Blank card" });
-              }
-            }
-            return {
-              merchandiseId: line.merchandiseId,
-              quantity: line.quantity,
-              attributes: attrs.length > 0 ? attrs : undefined,
-            };
-          }),
-        }),
-        headers: { "Content-Type": "application/json" },
-        method: "POST",
-      });
-      const payload: unknown = await response.json();
-      const nextCheckoutUrl =
-        typeof payload === "object" && payload !== null && "checkoutUrl" in payload && typeof payload.checkoutUrl === "string"
-          ? payload.checkoutUrl
-          : null;
-      if (!response.ok || !nextCheckoutUrl) return;
-      window.location.assign(nextCheckoutUrl);
+      await queueRef.current;
+      const { checkoutUrl } = await fetchCheckout(routeLocale);
+      window.location.assign(checkoutUrl);
     } finally {
+      checkoutPendingRef.current = false;
       setIsCheckingOut(false);
     }
-  }, [flattenedLines, isCheckingOut, routeLocale, shopifyCart]);
+  }, [routeLocale]);
 
-  const value = useMemo<CartContextValue>(() => {
-    return {
+  const value = useMemo<CartContextValue>(
+    () => ({
       addGiftSetUnits,
       addLine,
       checkout,
-      checkoutUrl: shopifyCart?.checkoutUrl ?? checkoutUrl,
       close: () => setOpen(false),
-      currencyCode: shopifyCart?.currencyCode ?? (flattenedLines[0]?.currencyCode ?? DEFAULT_CURRENCY),
-      entries,
+      entries: visibleCart.entries,
       isCheckingOut,
       isOpen,
-      itemCount: flattenedLines.reduce((total, line) => total + line.quantity, 0),
+      itemCount: visibleCart.itemCount,
       open: () => setOpen(true),
       removeLine,
       setGiftMessage,
       setLineQuantity,
       setOpen,
-      totalPrice: shopifyCart?.totalAmount ?? flattenedLines.reduce((total, line) => total + line.unitPrice * line.quantity, 0),
-      cartError,
-    };
-  }, [
-    addGiftSetUnits,
-    addLine,
-    checkout,
-    checkoutUrl,
-    entries,
-    flattenedLines,
-    isCheckingOut,
-    isOpen,
-    removeLine,
-    setGiftMessage,
-    setLineQuantity,
-    shopifyCart,
-    cartError,
-  ]);
+      subtotal: visibleCart.subtotal,
+      updateRegion,
+      cartError: state.cartError,
+    }),
+    [
+      addGiftSetUnits,
+      addLine,
+      checkout,
+      isCheckingOut,
+      isOpen,
+      removeLine,
+      setGiftMessage,
+      setLineQuantity,
+      state.cartError,
+      updateRegion,
+      visibleCart.entries,
+      visibleCart.itemCount,
+      visibleCart.subtotal,
+    ],
+  );
 
   return <CartContext value={value}>{children}</CartContext>;
 }
 
 export function useCart(): CartContextValue {
   const context = useContext(CartContext);
-
-  if (!context) {
-    throw new Error("useCart must be used inside a <CartProvider>");
-  }
-
+  if (!context) throw new Error("useCart must be used inside a <CartProvider>");
   return context;
 }
