@@ -10,6 +10,16 @@ vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, ...props }: ComponentProps<"a">) => <a href={String(href)} {...props} />,
 }));
 
+vi.mock("@/shared/lib/cart/cart-api", () => ({
+  addLine: vi.fn(() => new Promise(() => undefined)),
+  fetchCart: vi.fn(() => new Promise(() => undefined)),
+  fetchCheckout: vi.fn(() => new Promise(() => undefined)),
+  removeLine: vi.fn(() => new Promise(() => undefined)),
+  updateGiftMessage: vi.fn(() => new Promise(() => undefined)),
+  updateQuantity: vi.fn(() => new Promise(() => undefined)),
+  updateRegion: vi.fn(() => new Promise(() => undefined)),
+}));
+
 import { CartDrawer } from "./cart-drawer";
 import { CartProvider } from "./cart-provider";
 
