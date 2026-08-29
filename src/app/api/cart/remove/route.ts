@@ -7,6 +7,7 @@ import {
   removeCartLineSchema,
   setCartId,
 } from "@/shared/lib/shopify/cart";
+import { logCartEvent } from "@/shared/lib/shopify/cart/cart.logger";
 
 export async function POST(request: Request) {
   if (!isSameOriginRequest(request)) {
@@ -39,6 +40,7 @@ export async function POST(request: Request) {
     );
   }
 
+  const startedAt = Date.now();
   try {
     const result = await removeCartLine({
       request,
@@ -47,12 +49,29 @@ export async function POST(request: Request) {
       lineId: input.lineId,
     });
     await setCartId(result.cartId);
+    logCartEvent({
+      action: "cart.line.remove",
+      operationId: input.operationId,
+      country: result.snapshot.countryCode,
+      locale: input.locale,
+      durationMs: Date.now() - startedAt,
+      warningCodes: result.snapshot.warnings.map((warning) => warning.code),
+      result: "success",
+    });
     return jsonNoStore({
       operationId: input.operationId,
       cart: result.snapshot,
       warnings: result.snapshot.warnings,
     });
   } catch (error) {
+    logCartEvent({
+      action: "cart.line.remove",
+      operationId: input.operationId,
+      locale: input.locale,
+      durationMs: Date.now() - startedAt,
+      result: "failure",
+      errorCode: error instanceof CartServiceError ? error.code : "UPSTREAM_UNAVAILABLE",
+    });
     return cartApiError(error, input.operationId);
   }
 }
