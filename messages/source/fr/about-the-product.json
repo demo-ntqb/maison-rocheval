@@ -2,22 +2,22 @@
   "metadata": {
     "aboutProduct": {
       "title": "La Collection",
-      "description": "Découvrez Armour, L'Expression, Harmonie, Oscietra et Kaluga — cinq caviars rares de Maison Rocheval, lus frais à partir de l'esturgeon, jamais réduits à un chiffre."
+      "description": "Découvrez Amour, L'Expression, Harmonie, Oscietra et Kaluga — cinq caviars rares de Maison Rocheval, lus frais à partir de l'esturgeon, jamais réduits à un chiffre."
     }
   },
   "aboutProduct": {
     "hero": {
-      "title": "NOTRE COLLECTION",
+      "title": "LA COLLECTION",
       "imageAlt": "Boîtes de caviar Maison Rocheval disposées sur une table avec blinis, crème fraîche et condiments"
     },
     "origin": {
-      "title": "Tout commence par l’esturgeon",
-      "description": "Bien avant qu’une récolte ne soit sélectionnée, son caractère se forme déjà. L’espèce, l’eau, l’alimentation, la maturité et le temps laissent chacun leur empreinte sur le caviar qui en naîtra.",
+      "title": "Au commencement, l’esturgeon",
+      "description": "Bien avant qu'une récolte ne soit sélectionnée, son caractère se façonne en amont. Espèce, eau, alimentation, maturité et temps — chacun laisse son empreinte sur le caviar qui en résulte.",
       "imageAlt": "Esturgeons nageant dans l’eau turquoise et limpide d’un bassin d’élevage"
     },
     "collection": {
-      "title": "Comprendre notre collection",
-      "description": "Produit vivant, son grain, sa texture et sa saveur se lisent à chaque sélection plutôt qu’ils ne se réduisent à un chiffre. Un chiffre ne peut contenir ce qui change chaque semaine.",
+      "title": "Apprecier notre Collection",
+      "description": "En tant que produit, son grain, sa texture et sa saveur sont appréciés à neuf à chaque sélection, plutôt que réduits à un chiffre. Un chiffre ne saurait contenir ce qui évolue de semaine en semaine.",
       "shop": "BOUTIQUE",
       "tinAlt": "Boîte de caviar Maison Rocheval ouverte, posée sur son couvercle",
       "selectorLabel": "Choisissez un caviar de la collection",
@@ -26,24 +26,24 @@
       "atTable": "À table",
       "products": {
         "amour": {
-          "name": "Armour",
+          "name": "Amour",
           "latinName": "Acipenser schrenckii",
-          "note": "Fromage",
-          "tastingNotes": "Crémeux · Délicat · Savoureux",
-          "description": "Armour s’ouvre sur la crème, puis le beurre, suivis d’une douce chaleur lactée qui s’attarde plutôt qu’elle ne s’élève. La salinité s’efface presque, laissant le caviar évoquer un fromage affiné plus que la mer.",
-          "descriptionSecondary": "C’est le caviar le plus tendre de la collection, et souvent le plus convaincant.",
-          "atTable": "Blinis tièdes, crème fraîche, œuf mollet, pomme de terre. Armour aime la richesse et la simplicité : assez de profondeur pour lui répondre, sans écraser son caractère discret. Acidité et fumé avec retenue.",
-          "tinAlt": "Boîte de caviar Armour ouverte à côté de son couvercle",
-          "dishAlt": "Blini garni de caviar Armour, servi sur une assiette de cuivre"
+          "note": "Crémeux",
+          "tastingNotes": "Crémeux · Fromage · Délicat",
+          "description": "Amour s'ouvre sur la crème, puis le beurre, suivis d'une douce chaleur lactique qui persiste plutôt qu'elle ne s'élève. La salinité n'est presque qu'une pensée seconde, laissant le caviar se rapprocher davantage d'un fromage affiné que de la mer.",
+          "descriptionSecondary": "C'est le plus doux caviar de la Collection, et souvent le plus convaincant.",
+          "atTable": "Blinis chauds, crème fraîche, œuf mollet, pomme de terre. Amour se prête à la richesse et à la simplicité, ou à tout ce qui possède assez de gras pour venir à sa rencontre. L'acidité et le fumé doivent être employés avec retenue, pour laisser parler son caractère discret.",
+          "tinAlt": "Boîte de caviar Amour ouverte à côté de son couvercle",
+          "dishAlt": "Blini garni de caviar Amour, servi sur une assiette de cuivre"
         },
         "lexpression": {
           "name": "L’Expression",
           "latinName": "Huso dauricus × Acipenser schrenckii",
           "note": "Nori",
-          "tastingNotes": "Ample · Nori · Umami",
-          "description": "L’Expression naît des deux lignées qui structurent cette collection : le côté noisette du Kaluga, la crème de l’Armour. Aucune ne s’impose. Ce qui émerge est marin et profondément savoureux : algue, nori, une salinité ample qui s’approfondit en umami et porte toute la finale.",
-          "descriptionSecondary": "Il naît des deux pôles de la maison et ne ressemble à aucun des deux. C’est précisément pour cela que L’Expression occupe le cœur de la Maison.",
-          "atTable": "Dashi, riz vinaigré, poisson mariné, beurre noisette et tout ce qui se construit sur l’umami. L’Expression a la profondeur nécessaire pour entrer dans un plat plutôt que de le surplomber : un caviar autour duquel bâtir, et non une simple finition.",
+          "tastingNotes": "Rond · Nori · Umami",
+          "description": "L'Expression est issue des deux mêmes lignées qui ancrent cette Collection : la noisette du Kaluga, la crème d'Amour. Ni l'une ni l'autre ne transparaît. Ce qui émerge est marin et profondément savoureux : kelp, nori, une salinité ronde qui s'approfondit en umami et se prolonge jusqu'en finale.",
+          "descriptionSecondary": "Il est issu des deux pôles mêmes de la Maison, et ne ressemble à aucun des deux. C'est précisément pour cela que L'Expression occupe le cœur de la Maison.",
+          "atTable": "Dashi, riz assaisonné, poisson mariné, beurre noisette, et tout ce qui repose sur l'umami. L'Expression a la profondeur nécessaire pour entrer dans un plat plutôt que de le surplomber, ce qui en fait le caviar autour duquel construire.",
           "tinAlt": "Boîte de caviar L’Expression ouverte à côté de son couvercle",
           "dishAlt": "Poisson mariné en bouillon dashi relevé de caviar L’Expression"
         },
@@ -51,10 +51,10 @@
           "name": "Harmonie",
           "latinName": "Acipenser gueldenstaedtii × Acipenser baerii",
           "note": "Fruité",
-          "tastingNotes": "Souple · Fruité · Équilibré",
-          "description": "Harmonie s’ouvre avec éclat, sur une douceur fruitée inattendue qui rappelle la délicatesse du raisin Koshu, portée par une salinité souple et une finale nette et savoureuse. Avec le temps en boîte, le fruit se mue en quelque chose de plus profond et de plus fumé. Les deux sont Harmonie. Ils appartiennent simplement à des semaines différentes.",
-          "descriptionSecondary": "C’est le caviar le moins semblable aux autres de la collection. Parce que ces semaines offrent des qualités véritablement différentes, il est sans doute le plus adaptable des cinq.",
-          "atTable": "Coquillages, sauces au beurre et tout ce qui navigue entre le sucré et le salé. Son caractère évolue avec le temps : il mérite d’être goûté avant de rejoindre l’assiette.",
+          "tastingNotes": "Doux · Fruité · Équilibré",
+          "description": "Harmonie s'ouvre avec éclat, sur une douceur fruitée inhabituelle rappelant la délicatesse du raisin Koshu, portée par une salinité douce et une finale nette et savoureuse. Avec le temps passé dans la boîte, le fruit se mue en quelque chose de plus profond et de plus fumé. Les deux sont Harmonie. Ils appartiennent simplement à des semaines différentes.",
+          "descriptionSecondary": "C'est le caviar le plus unique de la Collection rendu possible grâce à ces différentes semaines qui offrent des qualités véritablement distinctes.",
+          "atTable": "Fruits de mer, sauces au beurre, et tout ce qui navigue entre le sucré et le salé. Son caractère évolue avec l'âge, il mérite donc d'être goûté avant d'arriver dans l'assiette.",
           "tinAlt": "Boîte de caviar Harmonie ouverte à côté de son couvercle",
           "dishAlt": "Poisson et légumes dressés, relevés de caviar Harmonie"
         },
@@ -62,10 +62,10 @@
           "name": "Oscietra",
           "latinName": "Acipenser gueldenstaedtii",
           "note": "Noix",
-          "tastingNotes": "Précis · Noix · Minéralité",
-          "description": "Précis et incontestablement Oscietra. L’iode d’abord, suivi de la noix et d’une minéralité fine et élancée. Le grain tient sa structure en bouche avant de se libérer lentement dans une finale qui ne demande rien d’autre que de l’attention.",
-          "descriptionSecondary": "C’est le caviar auquel la plupart des autres se mesurent encore : le profil qui définit l’Oscietra depuis que l’on écrit sur le caviar.",
-          "atTable": "Frais, à la nacre. Le service traditionnel, et toujours le bon. Huîtres, poisson cru, coquillages froids, ou l’Oscietra entièrement seul. Il demande à être goûté, non habillé.",
+          "tastingNotes": "Précis · Noisette · Minéralité",
+          "description": "Précis et incontestablement l’osciètre. L'iode d'abord, suivie de la noisette et d'une minéralité fine et aérienne. Le grain conserve sa structure sur la langue avant de se relâcher lentement vers une finale qui ne demande rien d'autre que de l'attention.",
+          "descriptionSecondary": "C'est le caviar à l'aune duquel la plupart des autres sont encore mesurés : le profil qui définit l’osciètre depuis que l'on écrit sur le caviar.",
+          "atTable": "Bien frais, sur nacre. Le service traditionnel, et toujours le bon. Huîtres, poisson cru, fruits de mer froids, ou l’osciètre tout simplement seul. Il demande à être goûté, non à être habillé.",
           "tinAlt": "Boîte de caviar Oscietra ouverte à côté de son couvercle",
           "dishAlt": "Poisson et légumes dressés, relevés de caviar Oscietra"
         },
@@ -74,9 +74,9 @@
           "latinName": "Huso dauricus",
           "note": "Noisette",
           "tastingNotes": "Riche · Noisette · Longueur",
-          "description": "Le plus gros grain de la maison, et le plus patient en bouche. Ce qui s’impose d’abord, c’est la présence : beurre, crème et une richesse qui s’annonce avant toute note précise. La noisette torréfiée suit, puis une salinité retenue qui rassemble le tout dans une finale plus longue que toutes les autres de la gamme.",
-          "descriptionSecondary": "Son ampleur n’a d’égale que sa retenue. La richesse ne devient jamais lourdeur, et son caractère continue de se révéler bien après la première cuillère.",
-          "atTable": "Kaluga demande très peu. Frais, à la nacre, et rien d’autre pour lui disputer l’attention. Laissez le grain, la texture et la longueur faire le travail.",
+          "description": "Bien frais, sur nacre. Le service traditionnel, et toujours le bon. Huîtres, poisson cru, fruits de mer froids, ou l’osciètre tout simplement seul. Il demande à être goûté, non à être habillé.",
+          "descriptionSecondary": "Son ampleur est égalée par sa retenue. La richesse ne devient jamais lourdeur, et son caractère continue de se révéler bien après la première cuillère.",
+          "atTable": "Kaluga ne demande presque rien. Bien frais, sur nacre, sans rien d'autre venant lui disputer l'attention. Laissez le grain, la texture et la longueur faire le travail.",
           "tinAlt": "Boîte de caviar Kaluga ouverte à côté de son couvercle",
           "dishAlt": "Poisson et légumes dressés, relevés de caviar Kaluga"
         }

@@ -8,39 +8,39 @@
   "home": {
     "hero": {
       "title": "Maison Rocheval",
-      "imageAlt": "Grains de caviar dans une présentation Maison Rocheval"
+      "imageAlt": "Boîte de caviar Oscietra Maison Rocheval, 100g, posée sur une surface réfléchissante"
     },
     "intro": {
       "title": "De la Source au Rituel",
-      "description": "Des eaux qui élèvent l’esturgeon aux tables où le caviar est servi,\nchaque décision façonne l’expression ultime.",
+      "description": "Des eaux qui élèvent l’esturgeon aux tables où le caviar est servi, chaque décision façonne l’expression finale.",
       "tableImageAlt": "Boîtes de caviar Maison Rocheval dressées pour un rituel de dégustation",
-      "storyTitle": "Avant la Maison, il y avait la source",
-      "storyDescription": "Nos fondations se sont formées au bord de l’eau, auprès de producteurs dont la connaissance de l’élevage de l’esturgeon s’étend sur plusieurs décennies.",
+      "storyTitle": "Avant la Maison Rocheval, il y avait la Source.",
+      "storyDescription": "Nos fondations se sont formées des années auparavant, au bord de l’eau, aux côtés de producteurs dont la compréhension de l’élevage de l’esturgeon se nourrit de décennies d’expérience.",
       "learnMore": "DÉCOUVRIR MAISON ROCHEVAL",
       "chefsImageAlt": "Des chefs dressent un plat de caviar en cuisine",
       "tastingImageAlt": "Un expert examine les grains de caviar dans une boîte ouverte"
     },
     "about": {
-      "highlight": "LA QUALITÉ SE DÉCIDE\nBIEN AVANT\nLA RÉCOLTE",
+      "highlight": "La qualité se\ndécide bien\navant la récolte.",
       "sturgeonImageAlt": "Esturgeons nageant dans une eau sombre et pure",
       "caviarImageAlt": "Vue rapprochée des grains de caviar Maison Rocheval",
-      "title": "Sélectionné à la source",
-      "description": "Chaque récolte est jugée selon sa propre valeur. Le caractère guide la sélection et l’exigence de la Maison demeure.",
-      "speciesTitle": "Cinq expressions. Un standard.",
+      "title": "Sélectionné à la Source",
+      "description": "Chaque récolte est unique, et est jugée selon son propre mérite. Le caractère guide la sélection, et l’exigence de la Maison ne varie jamais.",
+      "speciesTitle": "Cinq expressions. Une seule exigence.",
       "speciesDescription": "Chaque expression est choisie pour son caractère propre.",
       "explore": "LA COLLECTION"
     },
     "products": {
       "title": "Présenté par la Maison",
-      "description": "De la délicatesse d’Armour à la profondeur de Kaluga,\nchaque expression est choisie pour son caractère propre.",
+      "description": "De la délicatesse discrète d’Amour à la profondeur de Kaluga, chaque expression est sélectionnée pour son caractère unique.",
       "shopNow": "BOUTIQUE",
       "cards": {
         "amour": {
           "eyebrow": "Patrimoine",
           "title": "Amour",
           "species": "Acipenser schrenckii",
-          "profile": "Crémeux · Fromager · Délicat",
-          "description": "Nommé pour l’Amour, et pour l’amour.",
+          "profile": "Crémeux · Fromage · Délicat",
+          "description": "Nommé d’après l’Amour, et pour l’Amour.",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
         },
         "lexpression": {
@@ -56,15 +56,15 @@
           "title": "Harmonie",
           "species": "Acipenser gueldenstaedtii × Acipenser baerii",
           "profile": "Doux · Fruité · Équilibré",
-          "description": "Défini par l’équilibre et un fruit subtil",
+          "description": "Définie par l'équilibre et une fruité subtile",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Harmonie"
         },
         "oscietra": {
           "eyebrow": "Patrimoine",
           "title": "Oscietra",
           "species": "Acipenser gueldenstaedtii",
-          "profile": "Précis · Noix · Minéralité",
-          "description": "L’une des grandes voix classiques du caviar",
+          "profile": "Précis · Noisette · Minéralité",
+          "description": "Une des grandes voix classiques du caviar",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Oscietra"
         },
         "kaluga": {
@@ -72,7 +72,7 @@
           "title": "Kaluga",
           "species": "Huso dauricus",
           "profile": "Riche · Noisette · Longueur",
-          "description": "Au sommet de la collection",
+          "description": "Au sommet de la Collection",
           "imageAlt": "Boîte ouverte de caviar Kaluga Maison Rocheval"
         }
       }

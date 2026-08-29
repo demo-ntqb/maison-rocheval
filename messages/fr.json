@@ -6,7 +6,7 @@
     },
     "aboutProduct": {
       "title": "La Collection",
-      "description": "Découvrez Armour, L'Expression, Harmonie, Oscietra et Kaluga — cinq caviars rares de Maison Rocheval, lus frais à partir de l'esturgeon, jamais réduits à un chiffre."
+      "description": "Découvrez Amour, L'Expression, Harmonie, Oscietra et Kaluga — cinq caviars rares de Maison Rocheval, lus frais à partir de l'esturgeon, jamais réduits à un chiffre."
     },
     "root": {
       "title": "Maison Rocheval — Caviar & Gastronomie",
@@ -44,76 +44,87 @@
   "aboutBrand": {
     "hero": {
       "title": "LA MAISON",
-      "imageAlt": "Lac brumeux à la source du caviar Maison Rocheval"
+      "imageAlt": "Étang et maison en pierre nichés au cœur des collines, à la source du caviar Maison Rocheval"
     },
     "story": {
       "title": "Le nom est venu plus tard",
-      "eyebrow": "Avant la Maison, il y avait la source",
-      "paragraph1": "Nos fondations se sont formées des années auparavant, au bord de l’eau, auprès de producteurs dont la connaissance de l’élevage de l’esturgeon s’étend sur plusieurs décennies.",
-      "paragraph2": "Cette proximité nous a appris que le caviar se décide bien avant la boîte : dans l’eau, l’alimentation, les années accordées au poisson et le moment précis de la récolte.",
-      "paragraph3": "Maison Rocheval rassemble ce savoir : un profond respect pour tout ce qui précède la récolte et une conviction claire sur ce qui mérite de porter le nom de la Maison.",
-      "imageAlt": "Le fondateur de Maison Rocheval devant une table et une peinture classique"
+      "eyebrow": "Avant la Maison Rocheval, il y avait la Source.",
+      "paragraph1": "Nos fondations se sont formées des années auparavant, au bord de l'eau, aux côtés de producteurs dont la compréhension de l'élevage de l'esturgeon se nourrit de décennies d'expérience.",
+      "paragraph2": "Cette intimité nous a appris à considérer le caviar comme le fruit de décisions prises bien avant le produit final : dans l'eau qui élève le poisson, dans l'alimentation qui lui est donnée, dans les années qui lui sont accordées, et dans l'instant où il est enfin prélevé. Chaque décision était affinée bien avant que le caviar ne soit, en définitive, servi.",
+      "paragraph3": "Maison Rocheval existe pour rassembler ce savoir. Un profond respect pour tout ce qui se joue avant la récolte, et une conviction claire quant à ce qui mérite de porter le nom.",
+      "imageAlt": "Blason illustré de Maison Rocheval orné d’esturgeons, sur fond bleu nuit"
     },
     "venues": {
       "title": "À table",
-      "intro": "Avec le temps, ce savoir a trouvé sa place sur les tables des chefs et des hôtes privés. Chaque service a précisé un peu plus ce que pourrait être la prochaine génération de caviar.",
+      "intro": "Avec le temps, ce savoir a trouvé son chemin jusqu'aux tables des chefs et des hôtes privés. Chaque service a affiné un peu plus la même idée : ce que pourrait être la prochaine génération de caviar.",
       "willow": {
         "name": "Willow | Chef Nicolas Tam",
         "city": "Singapore",
         "stars": "1",
-        "description": "Le chef Nicolas Tam fait de la précision, de la technique et de l’héritage les maîtres-mots de son plat signature, l'Amadai aux écailles croustillantes.",
-        "imageAlt": "Restaurant blanc entouré de végétation tropicale"
+        "description": "Le chef Nicolas Tam met en valeur précision, technique et héritage dans son plat signature : l'amadai aux écailles croustillantes.",
+        "imageAlt": "Restaurant blanc entouré de végétation tropicale",
+        "cta": "DÉCOUVRIR WILLOW"
       },
       "alliance": {
         "name": "Alliance | Chef Toshitaka Omiya",
         "city": "Paris",
         "stars": "2",
-        "description": "La cuisine du chef Toshitaka Omiya se définit par la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.",
-        "imageAlt": "Salle du restaurant Alliance à Paris"
+        "description": "La cuisine du chef Toshitaka Omiya se distingue par sa retenue et par son instinct de laisser s'exprimer des produits d'exception.",
+        "imageAlt": "Salle du restaurant Alliance à Paris",
+        "cta": "DÉCOUVRIR ALLIANCE"
       },
       "sushiSakuta": {
         "name": "Sushi Sakuta | Chef Yoshio Sakuta",
         "city": "Singapour",
         "stars": "2",
-        "description": "Le processus de préparation du chef Yoshio Sakuta est méticuleusement calculé pour garantir que chaque convive déguste les ingrédients à leur apogée.",
-        "imageAlt": "Entrée de restaurant illuminée la nuit"
+        "description": "Le processus de préparation du chef Yoshio Sakuta est calculé avec minutie afin que chaque convive découvre les ingrédients à leur apogée.",
+        "imageAlt": "Entrée de restaurant illuminée la nuit",
+        "cta": "DÉCOUVRIR SUSHI SAKUTA"
+      },
+      "potong": {
+        "name": "POTONG | Chef Pichaya Soontornyanakij",
+        "city": "Bangkok",
+        "stars": "1",
+        "description": "Au restaurant Potong, à Bangkok, la cheffe Pichaya « Pam » Soontornyanakij intègre avec maîtrise le caviar de luxe dans ses menus dégustation thaï-chinois avant-gardistes.",
+        "imageAlt": "Salle du restaurant Potong à Bangkok",
+        "cta": "DÉCOUVRIR POTONG"
       }
     },
     "selection": {
-      "title": "Le temps fait partie de la récolte",
-      "description": "La sélection commence en amont : l’élevage de l’esturgeon, son alimentation et le moment choisi pour la récolte.",
+      "title": "Le temps fait partie de la récolte.",
+      "description": "La sélection commence en amont : comment l’esturgeon est élevé, ce dont il est nourri, et l’instant choisi et précis pour la récolte.",
       "imageAlt": "Producteur sélectionnant un esturgeon lors de la récolte",
-      "caption": "Le caviar se lit comme un tout",
-      "detail1": "Couleur, grain, texture, fermeté et humidité sont jugés avec la salinité, l’arôme, la maturation et l’intégrité de chaque grain.",
-      "detail2": "En bouche, la saveur se déploie par strates — noix, algue, fumée, champignon — et le caractère le plus vrai apparaît souvent dans la finale."
+      "caption": "Le caviar est appréhendé dans son ensemble",
+      "detail1": "Couleur, grain, texture, fermeté et humidité sont jugés au même titre que la salinité, l'arôme, la maturation et l'intégrité de chaque perle",
+      "detail2": "En bouche, les saveurs se déploient en strates. Ce qui apparaît en premier compte, mais ce qui demeure compte tout autant : la profondeur, la longueur et le caractère de la finale."
     },
     "ritual": {
       "title": "LE RITUEL",
-      "statement": "L’expression finale se trouve dans le service",
-      "heroImageAlt": "Des chefs primés célèbrent ensemble"
+      "statement": "L’expression finale se joue dans le service.",
+      "heroImageAlt": "Table dressée en plein air avec caviar, huîtres, blinis et vin blanc"
     },
     "sourceToRitual": {
       "title": "De la source au rituel",
-      "intro": "Le caviar porte depuis toujours sa cérémonie : la boîte glacée, le tour de clé, la nacre contre le grain, la première cuillerée avant que quiconque ne parle.",
-      "description": "Maison Rocheval préserve cette cérémonie avec retenue, car la manière de servir transforme le souvenir — à une grande table comme lors d’un dîner à deux.",
+      "intro": "Le caviar a toujours porté en lui une cérémonie : la boîte tenue au frais, le tour de clé, la nacre contre le grain, la première cuillerée prise avant que quiconque ne parle.",
+      "description": "Maison Rocheval préserve cette cérémonie avec sobriété. Non pas comme une mise en scène, mais parce que la manière dont une chose est servie change la manière dont elle est mémorisée — et les tables les plus raffinées le comprennent instinctivement, qu'elles se trouvent dans une salle à manger célébrée ou dressées pour deux, à la maison.",
       "cta": "Découvrir la collection",
-      "preparationAlt": "Chef préparant une boîte de caviar",
-      "serviceAlt": "Caviar servi dans une coupe en verre"
+      "preparationAlt": "Coffret de deux boîtes de caviar Maison Rocheval avec cuillère de nacre et clé à caviar",
+      "serviceAlt": "Boîte de caviar Maison Rocheval ouverte à l’aide d’une clé à caviar, tenue à la main au-dessus de glace pilée"
     }
   },
   "aboutProduct": {
     "hero": {
-      "title": "NOTRE COLLECTION",
+      "title": "LA COLLECTION",
       "imageAlt": "Boîtes de caviar Maison Rocheval disposées sur une table avec blinis, crème fraîche et condiments"
     },
     "origin": {
-      "title": "Tout commence par l’esturgeon",
-      "description": "Bien avant qu’une récolte ne soit sélectionnée, son caractère se forme déjà. L’espèce, l’eau, l’alimentation, la maturité et le temps laissent chacun leur empreinte sur le caviar qui en naîtra.",
+      "title": "Au commencement, l’esturgeon",
+      "description": "Bien avant qu'une récolte ne soit sélectionnée, son caractère se façonne en amont. Espèce, eau, alimentation, maturité et temps — chacun laisse son empreinte sur le caviar qui en résulte.",
       "imageAlt": "Esturgeons nageant dans l’eau turquoise et limpide d’un bassin d’élevage"
     },
     "collection": {
-      "title": "Comprendre notre collection",
-      "description": "Produit vivant, son grain, sa texture et sa saveur se lisent à chaque sélection plutôt qu’ils ne se réduisent à un chiffre. Un chiffre ne peut contenir ce qui change chaque semaine.",
+      "title": "Apprecier notre Collection",
+      "description": "En tant que produit, son grain, sa texture et sa saveur sont appréciés à neuf à chaque sélection, plutôt que réduits à un chiffre. Un chiffre ne saurait contenir ce qui évolue de semaine en semaine.",
       "shop": "BOUTIQUE",
       "tinAlt": "Boîte de caviar Maison Rocheval ouverte, posée sur son couvercle",
       "selectorLabel": "Choisissez un caviar de la collection",
@@ -122,24 +133,24 @@
       "atTable": "À table",
       "products": {
         "amour": {
-          "name": "Armour",
+          "name": "Amour",
           "latinName": "Acipenser schrenckii",
-          "note": "Fromage",
-          "tastingNotes": "Crémeux · Délicat · Savoureux",
-          "description": "Armour s’ouvre sur la crème, puis le beurre, suivis d’une douce chaleur lactée qui s’attarde plutôt qu’elle ne s’élève. La salinité s’efface presque, laissant le caviar évoquer un fromage affiné plus que la mer.",
-          "descriptionSecondary": "C’est le caviar le plus tendre de la collection, et souvent le plus convaincant.",
-          "atTable": "Blinis tièdes, crème fraîche, œuf mollet, pomme de terre. Armour aime la richesse et la simplicité : assez de profondeur pour lui répondre, sans écraser son caractère discret. Acidité et fumé avec retenue.",
-          "tinAlt": "Boîte de caviar Armour ouverte à côté de son couvercle",
-          "dishAlt": "Blini garni de caviar Armour, servi sur une assiette de cuivre"
+          "note": "Crémeux",
+          "tastingNotes": "Crémeux · Fromage · Délicat",
+          "description": "Amour s'ouvre sur la crème, puis le beurre, suivis d'une douce chaleur lactique qui persiste plutôt qu'elle ne s'élève. La salinité n'est presque qu'une pensée seconde, laissant le caviar se rapprocher davantage d'un fromage affiné que de la mer.",
+          "descriptionSecondary": "C'est le plus doux caviar de la Collection, et souvent le plus convaincant.",
+          "atTable": "Blinis chauds, crème fraîche, œuf mollet, pomme de terre. Amour se prête à la richesse et à la simplicité, ou à tout ce qui possède assez de gras pour venir à sa rencontre. L'acidité et le fumé doivent être employés avec retenue, pour laisser parler son caractère discret.",
+          "tinAlt": "Boîte de caviar Amour ouverte à côté de son couvercle",
+          "dishAlt": "Blini garni de caviar Amour, servi sur une assiette de cuivre"
         },
         "lexpression": {
           "name": "L’Expression",
           "latinName": "Huso dauricus × Acipenser schrenckii",
           "note": "Nori",
-          "tastingNotes": "Ample · Nori · Umami",
-          "description": "L’Expression naît des deux lignées qui structurent cette collection : le côté noisette du Kaluga, la crème de l’Armour. Aucune ne s’impose. Ce qui émerge est marin et profondément savoureux : algue, nori, une salinité ample qui s’approfondit en umami et porte toute la finale.",
-          "descriptionSecondary": "Il naît des deux pôles de la maison et ne ressemble à aucun des deux. C’est précisément pour cela que L’Expression occupe le cœur de la Maison.",
-          "atTable": "Dashi, riz vinaigré, poisson mariné, beurre noisette et tout ce qui se construit sur l’umami. L’Expression a la profondeur nécessaire pour entrer dans un plat plutôt que de le surplomber : un caviar autour duquel bâtir, et non une simple finition.",
+          "tastingNotes": "Rond · Nori · Umami",
+          "description": "L'Expression est issue des deux mêmes lignées qui ancrent cette Collection : la noisette du Kaluga, la crème d'Amour. Ni l'une ni l'autre ne transparaît. Ce qui émerge est marin et profondément savoureux : kelp, nori, une salinité ronde qui s'approfondit en umami et se prolonge jusqu'en finale.",
+          "descriptionSecondary": "Il est issu des deux pôles mêmes de la Maison, et ne ressemble à aucun des deux. C'est précisément pour cela que L'Expression occupe le cœur de la Maison.",
+          "atTable": "Dashi, riz assaisonné, poisson mariné, beurre noisette, et tout ce qui repose sur l'umami. L'Expression a la profondeur nécessaire pour entrer dans un plat plutôt que de le surplomber, ce qui en fait le caviar autour duquel construire.",
           "tinAlt": "Boîte de caviar L’Expression ouverte à côté de son couvercle",
           "dishAlt": "Poisson mariné en bouillon dashi relevé de caviar L’Expression"
         },
@@ -147,10 +158,10 @@
           "name": "Harmonie",
           "latinName": "Acipenser gueldenstaedtii × Acipenser baerii",
           "note": "Fruité",
-          "tastingNotes": "Souple · Fruité · Équilibré",
-          "description": "Harmonie s’ouvre avec éclat, sur une douceur fruitée inattendue qui rappelle la délicatesse du raisin Koshu, portée par une salinité souple et une finale nette et savoureuse. Avec le temps en boîte, le fruit se mue en quelque chose de plus profond et de plus fumé. Les deux sont Harmonie. Ils appartiennent simplement à des semaines différentes.",
-          "descriptionSecondary": "C’est le caviar le moins semblable aux autres de la collection. Parce que ces semaines offrent des qualités véritablement différentes, il est sans doute le plus adaptable des cinq.",
-          "atTable": "Coquillages, sauces au beurre et tout ce qui navigue entre le sucré et le salé. Son caractère évolue avec le temps : il mérite d’être goûté avant de rejoindre l’assiette.",
+          "tastingNotes": "Doux · Fruité · Équilibré",
+          "description": "Harmonie s'ouvre avec éclat, sur une douceur fruitée inhabituelle rappelant la délicatesse du raisin Koshu, portée par une salinité douce et une finale nette et savoureuse. Avec le temps passé dans la boîte, le fruit se mue en quelque chose de plus profond et de plus fumé. Les deux sont Harmonie. Ils appartiennent simplement à des semaines différentes.",
+          "descriptionSecondary": "C'est le caviar le plus unique de la Collection rendu possible grâce à ces différentes semaines qui offrent des qualités véritablement distinctes.",
+          "atTable": "Fruits de mer, sauces au beurre, et tout ce qui navigue entre le sucré et le salé. Son caractère évolue avec l'âge, il mérite donc d'être goûté avant d'arriver dans l'assiette.",
           "tinAlt": "Boîte de caviar Harmonie ouverte à côté de son couvercle",
           "dishAlt": "Poisson et légumes dressés, relevés de caviar Harmonie"
         },
@@ -158,10 +169,10 @@
           "name": "Oscietra",
           "latinName": "Acipenser gueldenstaedtii",
           "note": "Noix",
-          "tastingNotes": "Précis · Noix · Minéralité",
-          "description": "Précis et incontestablement Oscietra. L’iode d’abord, suivi de la noix et d’une minéralité fine et élancée. Le grain tient sa structure en bouche avant de se libérer lentement dans une finale qui ne demande rien d’autre que de l’attention.",
-          "descriptionSecondary": "C’est le caviar auquel la plupart des autres se mesurent encore : le profil qui définit l’Oscietra depuis que l’on écrit sur le caviar.",
-          "atTable": "Frais, à la nacre. Le service traditionnel, et toujours le bon. Huîtres, poisson cru, coquillages froids, ou l’Oscietra entièrement seul. Il demande à être goûté, non habillé.",
+          "tastingNotes": "Précis · Noisette · Minéralité",
+          "description": "Précis et incontestablement l’osciètre. L'iode d'abord, suivie de la noisette et d'une minéralité fine et aérienne. Le grain conserve sa structure sur la langue avant de se relâcher lentement vers une finale qui ne demande rien d'autre que de l'attention.",
+          "descriptionSecondary": "C'est le caviar à l'aune duquel la plupart des autres sont encore mesurés : le profil qui définit l’osciètre depuis que l'on écrit sur le caviar.",
+          "atTable": "Bien frais, sur nacre. Le service traditionnel, et toujours le bon. Huîtres, poisson cru, fruits de mer froids, ou l’osciètre tout simplement seul. Il demande à être goûté, non à être habillé.",
           "tinAlt": "Boîte de caviar Oscietra ouverte à côté de son couvercle",
           "dishAlt": "Poisson et légumes dressés, relevés de caviar Oscietra"
         },
@@ -170,9 +181,9 @@
           "latinName": "Huso dauricus",
           "note": "Noisette",
           "tastingNotes": "Riche · Noisette · Longueur",
-          "description": "Le plus gros grain de la maison, et le plus patient en bouche. Ce qui s’impose d’abord, c’est la présence : beurre, crème et une richesse qui s’annonce avant toute note précise. La noisette torréfiée suit, puis une salinité retenue qui rassemble le tout dans une finale plus longue que toutes les autres de la gamme.",
-          "descriptionSecondary": "Son ampleur n’a d’égale que sa retenue. La richesse ne devient jamais lourdeur, et son caractère continue de se révéler bien après la première cuillère.",
-          "atTable": "Kaluga demande très peu. Frais, à la nacre, et rien d’autre pour lui disputer l’attention. Laissez le grain, la texture et la longueur faire le travail.",
+          "description": "Bien frais, sur nacre. Le service traditionnel, et toujours le bon. Huîtres, poisson cru, fruits de mer froids, ou l’osciètre tout simplement seul. Il demande à être goûté, non à être habillé.",
+          "descriptionSecondary": "Son ampleur est égalée par sa retenue. La richesse ne devient jamais lourdeur, et son caractère continue de se révéler bien après la première cuillère.",
+          "atTable": "Kaluga ne demande presque rien. Bien frais, sur nacre, sans rien d'autre venant lui disputer l'attention. Laissez le grain, la texture et la longueur faire le travail.",
           "tinAlt": "Boîte de caviar Kaluga ouverte à côté de son couvercle",
           "dishAlt": "Poisson et légumes dressés, relevés de caviar Kaluga"
         }
@@ -228,7 +239,7 @@
     "dismissAnnouncement": "Fermer l’annonce de livraison"
   },
   "regionDialog": {
-    "title": "Êtes-vous au bon endroit ?",
+    "title": "Êtes-vous au bon endroit?",
     "description": "Veuillez choisir votre destination de livraison et votre langue préférée.",
     "note": "Les commandes ne peuvent être livrées que dans la destination sélectionnée.",
     "countryLabel": "Pays",
@@ -255,22 +266,22 @@
       "care": "Service Client"
     },
     "nav": {
-      "amour": "Armour",
+      "amour": "Amour",
       "lexpression": "L’Expression",
       "harmonie": "Harmonie",
       "oscietra": "Oscietra",
       "kaluga": "Kaluga",
       "collection": "La Collection",
       "shop": "Boutique",
-      "about": "À propos de Maison Rocheval",
+      "about": "La Maison",
       "faq": "FAQ",
       "contact": "Contact",
       "privacyPolicy": "Politique de confidentialité"
     }
   },
   "contact": {
-    "title": "Nous contacter",
-    "introBeforeFaq": "Nous vous répondrons sous 3 à 5 jours ouvrés. Pour toute question générale, consultez notre",
+    "title": "Contactez-nous",
+    "introBeforeFaq": "Nous vous répondrons dans un délai de 24 heures. Pour toute demande générale, vous pouvez consulter notre page",
     "faqLink": "FAQ",
     "introAfterFaq": ".",
     "imageAlt": "Boîte de caviar Maison Rocheval ouverte",
@@ -289,7 +300,7 @@
       },
       "company": "Nom de l’entreprise",
       "phone": "Numéro de téléphone",
-      "message": "Comment pouvons-nous vous aider ?*",
+      "message": "Comment pouvons-nous vous aider?*",
       "wholesale": "Il s’agit d’une demande professionnelle",
       "submit": "Envoyer le message",
       "submitting": "Envoi en cours...",
@@ -305,62 +316,62 @@
   },
   "faq": {
     "heroTitle": "Questions fréquentes",
-    "heroIntro": "Pour toute assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons sous 24 heures.",
+    "heroIntro": "Si vous avez besoin d’une assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons dans un délai de 24 heures.",
     "items": [
       {
-        "question": "Qu’est-ce que le caviar ?",
-        "answer": "<p>Des œufs d’esturgeon (famille des Acipenseridae) salés à sec. Les œufs d’autres poissons — saumon, truite — ne sont pas du caviar.</p>"
+        "question": "Qu’est-ce que le caviar?",
+        "answer": "<p>Salt-cured roe from sturgeon (family Acipenseridae). Roe from other fish — salmon, trout — isn’t caviar.</p>"
       },
       {
-        "question": "Quelle est la différence entre le caviar et les œufs de poisson ?",
-        "answer": "<p>Les œufs peuvent provenir de n’importe quel poisson ; le caviar ne vient que de l’esturgeon.</p>"
+        "question": "Quelle est la différence entre le caviar et les œufs de poisson?",
+        "answer": "<p>Les œufs peuvent provenir de n'importe quel poisson ; le caviar, lui, provient uniquement de l'esturgeon.</p>"
       },
       {
-        "question": "Quels caviars propose Maison Rocheval ?",
-        "answer": "<p>Cinq, classés du plus délicat au plus généreux :</p><ul><li><strong>Amour</strong> <span class='text-stone'>(<em>Acipenser schrenckii</em>)</span> : crème et beurre, à peine salin ; le plus doux de la collection. Avec des blinis tièdes, de la crème fraîche, un œuf mollet.</li><li><strong>L’Expression</strong> <span class='text-stone'>(<em>Huso dauricus × A. schrenckii</em>)</span> : la signature de la maison ; marin et savoureux, avec des notes de kelp et de nori qui s’approfondissent en umami. Avec du dashi, du riz assaisonné, du poisson séché.</li><li><strong>Harmonie</strong> <span class='text-stone'>(<em>A. gueldenstaedtii × A. baerii</em>)</span> : une douceur fruitée et lumineuse qui se fait plus fumée avec le temps. Avec des sauces aux crustacés et au beurre.</li><li><strong>Oscietra</strong> <span class='text-stone'>(<em>A. gueldenstaedtii</em>)</span> : la référence classique ; iode, noix et fine minéralité. Frais, sur nacre, ou seul.</li><li><strong>Kaluga</strong> <span class='text-stone'>(<em>Huso dauricus</em>)</span> : le grain le plus gros ; beurre, crème, noisette grillée et une longue finale. Frais, sur nacre.</li></ul>"
+        "question": "Quels caviars Maison Rocheval propose-t-elle?",
+        "answer": "<p>Cinq, classés du plus délicat au plus intense :</p><ul><li><strong>Amour</strong> <span class='text-stone'>(<em>Acipenser schrenckii</em>)</span> :  crème et beurre, legerement salin ; le plus doux de la collection. Avec blinis chauds, crème fraîche, œuf mollet.</li><li><strong>L’Expression</strong> <span class='text-stone'>(<em>Huso dauricus × A. schrenckii</em>)</span> : la signature de la maison ; marin et savoureux, kelp et nori s'approfondissant en umami. Avec dashi, riz assaisonné, poisson mariné.</li><li><strong>Harmonie</strong> <span class='text-stone'>(<em>A. gueldenstaedtii × A. baerii</em>)</span> : une douceur fruitée éclatante qui se fait plus fumée avec l'âge. Avec fruits de mer et sauces au beurre.</li><li><strong>Oscietra</strong> <span class='text-stone'>(<em>A. gueldenstaedtii</em>)</span> : la référence classique ; iode, noisette et minéralité fine. Bien frais, sur nacre, ou seul.</li><li><strong>Kaluga</strong> <span class='text-stone'>(<em>Huso dauricus</em>)</span> : le plus grand grain ; beurre, crème, noisette grillée et une longue finale. Bien frais, sur nacre.</li></ul>"
       },
       {
-        "question": "Comment notez-vous votre caviar ?",
-        "answer": "<p>Nous n’utilisons pas de grades numérotés. Chaque récolte est jugée à l’état frais et dans sa globalité — couleur, grain, texture, salinité, arôme et finale.</p>"
+        "question": "Comment évaluez-vous votre caviar?",
+        "answer": "<p>Nous n'utilisons pas de notation chiffrée. Chaque récolte est jugée à neuf et dans son ensemble — couleur, grain, texture, salinité, arôme et finale.</p>"
       },
       {
-        "question": "Que signifie « malossol » ?",
-        "answer": "<p>Du russe, « peu salé ». Notre caviar est traité malossol — sel minimal pour que la saveur des œufs s’exprime pleinement.</p>"
+        "question": "Que signifie «malossol»?",
+        "answer": "<p>Russe pour « peu salé ». Notre caviar est préparé malossol — un salage minimal, qui laisse la saveur de l'œuf s'exprimer pleinement.</p>"
       },
       {
-        "question": "Comment le conserver avant ouverture ?",
-        "answer": "<p>Gardez la boîte fermée dans la partie la plus froide du réfrigérateur (−2 à +3°C). Ne pas congéler. Elle se conserve jusqu’à 3 mois — vérifiez toujours la date de péremption.</p>"
+        "question": "Comment le conserver avant ouverture?",
+        "answer": "<p>Conservez la boîte non ouverte dans la partie la plus froide du réfrigérateur (–2 à +3°C). Ne pas congeler. Elle se conserve jusqu'à 3 mois — vérifiez toujours la date limite de consommation.</p>"
       },
       {
-        "question": "Combien de temps se conserve-t-il après ouverture ?",
-        "answer": "<p>Idéalement dans les 24 heures. Refermez, chassez l’air et maintenez au frais.</p>"
+        "question": "Combien de temps se conserve-t-il une fois ouvert?",
+        "answer": "<p>De préférence dans les 24 heures. Refermez, chassez l'air, et gardez au frais.</p>"
       },
       {
-        "question": "Peut-on congéler le caviar ?",
-        "answer": "<p>Non — la congélation fait éclater les grains et détruit la texture et le goût.</p>"
+        "question": "Peut-on congeler le caviar?",
+        "answer": "<p>Non — la congélation rompt les grains et altère la texture et la saveur.</p>"
       },
       {
-        "question": "Pourquoi une cuillère en nacre et non en métal ?",
-        "answer": "<p>Le métal réagit avec le caviar et lui ajoute un goût métallique. Utilisez de la nacre, de l’os ou de la corne.</p>"
+        "question": "Pourquoi une cuillère en nacre, et non en métal?",
+        "answer": "<p>Le métal réagit avec le caviar et lui donne un goût métallique. Utilisez la nacre, l'os ou la corne.</p>"
       },
       {
-        "question": "Comment le servir ?",
-        "answer": "<p>Directement depuis la boîte réfrigérée, ou sur des blinis avec de la crème fraîche. Servez froid, la boîte posée sur de la glace.</p>"
+        "question": "Comment le servir?",
+        "answer": "<p>À même la boîte tenue au frais, ou sur blini avec crème fraîche. Servir froid, la boîte reposant sur glace.</p>"
       },
       {
-        "question": "Quelles boissons accompagnent le caviar ?",
-        "answer": "<p>Champagne ou vin effervescent sec, vodka froide, ou un blanc sec et vif comme un Chablis.</p>"
+        "question": "Quelles boissons accompagnent le caviar?",
+        "answer": "<p>Champagne ou vin effervescent sec, vodka bien fraîche, ou un blanc sec et vif tel qu'un Chablis.</p>"
       },
       {
-        "question": "Le caviar est-il bon pour la santé ?",
-        "answer": "<p>Il est riche en protéines, en vitamine B12 et en oméga-3, et contient beaucoup de sodium — c’est pourquoi il se consomme en petites portions.</p>"
+        "question": "Le caviar est-il bon pour la santé?",
+        "answer": "<p>Il est riche en protéines, en vitamine B12 et en oméga-3, et riche en sodium.</p>"
       },
       {
-        "question": "Votre caviar est-il durable ?",
-        "answer": "<p>Oui — élevé en ferme plutôt que sauvage, et certifié CITES.</p>"
+        "question": "Votre caviar est-il durable?",
+        "answer": "<p>Oui — issu de l'élevage plutôt que de la pêche sauvage, et certifié CITES.</p>"
       },
       {
-        "question": "Contient-il des additifs ?",
+        "question": "Contient-il des additifs?",
         "answer": "<p>Aucun. Ni colorant artificiel, ni conservateur.</p>"
       }
     ]
@@ -368,39 +379,39 @@
   "home": {
     "hero": {
       "title": "Maison Rocheval",
-      "imageAlt": "Grains de caviar dans une présentation Maison Rocheval"
+      "imageAlt": "Boîte de caviar Oscietra Maison Rocheval, 100g, posée sur une surface réfléchissante"
     },
     "intro": {
       "title": "De la Source au Rituel",
-      "description": "Des eaux qui élèvent l’esturgeon aux tables où le caviar est servi,\nchaque décision façonne l’expression ultime.",
+      "description": "Des eaux qui élèvent l’esturgeon aux tables où le caviar est servi, chaque décision façonne l’expression finale.",
       "tableImageAlt": "Boîtes de caviar Maison Rocheval dressées pour un rituel de dégustation",
-      "storyTitle": "Avant la Maison, il y avait la source",
-      "storyDescription": "Nos fondations se sont formées au bord de l’eau, auprès de producteurs dont la connaissance de l’élevage de l’esturgeon s’étend sur plusieurs décennies.",
+      "storyTitle": "Avant la Maison Rocheval, il y avait la Source.",
+      "storyDescription": "Nos fondations se sont formées des années auparavant, au bord de l’eau, aux côtés de producteurs dont la compréhension de l’élevage de l’esturgeon se nourrit de décennies d’expérience.",
       "learnMore": "DÉCOUVRIR MAISON ROCHEVAL",
       "chefsImageAlt": "Des chefs dressent un plat de caviar en cuisine",
       "tastingImageAlt": "Un expert examine les grains de caviar dans une boîte ouverte"
     },
     "about": {
-      "highlight": "LA QUALITÉ SE DÉCIDE\nBIEN AVANT\nLA RÉCOLTE",
+      "highlight": "La qualité se\ndécide bien\navant la récolte.",
       "sturgeonImageAlt": "Esturgeons nageant dans une eau sombre et pure",
       "caviarImageAlt": "Vue rapprochée des grains de caviar Maison Rocheval",
-      "title": "Sélectionné à la source",
-      "description": "Chaque récolte est jugée selon sa propre valeur. Le caractère guide la sélection et l’exigence de la Maison demeure.",
-      "speciesTitle": "Cinq expressions. Un standard.",
+      "title": "Sélectionné à la Source",
+      "description": "Chaque récolte est unique, et est jugée selon son propre mérite. Le caractère guide la sélection, et l’exigence de la Maison ne varie jamais.",
+      "speciesTitle": "Cinq expressions. Une seule exigence.",
       "speciesDescription": "Chaque expression est choisie pour son caractère propre.",
       "explore": "LA COLLECTION"
     },
     "products": {
       "title": "Présenté par la Maison",
-      "description": "De la délicatesse d’Armour à la profondeur de Kaluga,\nchaque expression est choisie pour son caractère propre.",
+      "description": "De la délicatesse discrète d’Amour à la profondeur de Kaluga, chaque expression est sélectionnée pour son caractère unique.",
       "shopNow": "BOUTIQUE",
       "cards": {
         "amour": {
           "eyebrow": "Patrimoine",
           "title": "Amour",
           "species": "Acipenser schrenckii",
-          "profile": "Crémeux · Fromager · Délicat",
-          "description": "Nommé pour l’Amour, et pour l’amour.",
+          "profile": "Crémeux · Fromage · Délicat",
+          "description": "Nommé d’après l’Amour, et pour l’Amour.",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Amour"
         },
         "lexpression": {
@@ -416,15 +427,15 @@
           "title": "Harmonie",
           "species": "Acipenser gueldenstaedtii × Acipenser baerii",
           "profile": "Doux · Fruité · Équilibré",
-          "description": "Défini par l’équilibre et un fruit subtil",
+          "description": "Définie par l'équilibre et une fruité subtile",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Harmonie"
         },
         "oscietra": {
           "eyebrow": "Patrimoine",
           "title": "Oscietra",
           "species": "Acipenser gueldenstaedtii",
-          "profile": "Précis · Noix · Minéralité",
-          "description": "L’une des grandes voix classiques du caviar",
+          "profile": "Précis · Noisette · Minéralité",
+          "description": "Une des grandes voix classiques du caviar",
           "imageAlt": "Boîte ouverte de caviar Maison Rocheval Oscietra"
         },
         "kaluga": {
@@ -432,7 +443,7 @@
           "title": "Kaluga",
           "species": "Huso dauricus",
           "profile": "Riche · Noisette · Longueur",
-          "description": "Au sommet de la collection",
+          "description": "Au sommet de la Collection",
           "imageAlt": "Boîte ouverte de caviar Kaluga Maison Rocheval"
         }
       }

@@ -8,61 +8,72 @@
   "aboutBrand": {
     "hero": {
       "title": "LA MAISON",
-      "imageAlt": "Lac brumeux à la source du caviar Maison Rocheval"
+      "imageAlt": "Étang et maison en pierre nichés au cœur des collines, à la source du caviar Maison Rocheval"
     },
     "story": {
       "title": "Le nom est venu plus tard",
-      "eyebrow": "Avant la Maison, il y avait la source",
-      "paragraph1": "Nos fondations se sont formées des années auparavant, au bord de l’eau, auprès de producteurs dont la connaissance de l’élevage de l’esturgeon s’étend sur plusieurs décennies.",
-      "paragraph2": "Cette proximité nous a appris que le caviar se décide bien avant la boîte : dans l’eau, l’alimentation, les années accordées au poisson et le moment précis de la récolte.",
-      "paragraph3": "Maison Rocheval rassemble ce savoir : un profond respect pour tout ce qui précède la récolte et une conviction claire sur ce qui mérite de porter le nom de la Maison.",
-      "imageAlt": "Le fondateur de Maison Rocheval devant une table et une peinture classique"
+      "eyebrow": "Avant la Maison Rocheval, il y avait la Source.",
+      "paragraph1": "Nos fondations se sont formées des années auparavant, au bord de l'eau, aux côtés de producteurs dont la compréhension de l'élevage de l'esturgeon se nourrit de décennies d'expérience.",
+      "paragraph2": "Cette intimité nous a appris à considérer le caviar comme le fruit de décisions prises bien avant le produit final : dans l'eau qui élève le poisson, dans l'alimentation qui lui est donnée, dans les années qui lui sont accordées, et dans l'instant où il est enfin prélevé. Chaque décision était affinée bien avant que le caviar ne soit, en définitive, servi.",
+      "paragraph3": "Maison Rocheval existe pour rassembler ce savoir. Un profond respect pour tout ce qui se joue avant la récolte, et une conviction claire quant à ce qui mérite de porter le nom.",
+      "imageAlt": "Blason illustré de Maison Rocheval orné d’esturgeons, sur fond bleu nuit"
     },
     "venues": {
       "title": "À table",
-      "intro": "Avec le temps, ce savoir a trouvé sa place sur les tables des chefs et des hôtes privés. Chaque service a précisé un peu plus ce que pourrait être la prochaine génération de caviar.",
+      "intro": "Avec le temps, ce savoir a trouvé son chemin jusqu'aux tables des chefs et des hôtes privés. Chaque service a affiné un peu plus la même idée : ce que pourrait être la prochaine génération de caviar.",
       "willow": {
         "name": "Willow | Chef Nicolas Tam",
         "city": "Singapore",
         "stars": "1",
-        "description": "Le chef Nicolas Tam fait de la précision, de la technique et de l’héritage les maîtres-mots de son plat signature, l'Amadai aux écailles croustillantes.",
-        "imageAlt": "Restaurant blanc entouré de végétation tropicale"
+        "description": "Le chef Nicolas Tam met en valeur précision, technique et héritage dans son plat signature : l'amadai aux écailles croustillantes.",
+        "imageAlt": "Restaurant blanc entouré de végétation tropicale",
+        "cta": "DÉCOUVRIR WILLOW"
       },
       "alliance": {
         "name": "Alliance | Chef Toshitaka Omiya",
         "city": "Paris",
         "stars": "2",
-        "description": "La cuisine du chef Toshitaka Omiya se définit par la retenue et l’instinct de laisser les ingrédients d’exception s’exprimer.",
-        "imageAlt": "Salle du restaurant Alliance à Paris"
+        "description": "La cuisine du chef Toshitaka Omiya se distingue par sa retenue et par son instinct de laisser s'exprimer des produits d'exception.",
+        "imageAlt": "Salle du restaurant Alliance à Paris",
+        "cta": "DÉCOUVRIR ALLIANCE"
       },
       "sushiSakuta": {
         "name": "Sushi Sakuta | Chef Yoshio Sakuta",
         "city": "Singapour",
         "stars": "2",
-        "description": "Le processus de préparation du chef Yoshio Sakuta est méticuleusement calculé pour garantir que chaque convive déguste les ingrédients à leur apogée.",
-        "imageAlt": "Entrée de restaurant illuminée la nuit"
+        "description": "Le processus de préparation du chef Yoshio Sakuta est calculé avec minutie afin que chaque convive découvre les ingrédients à leur apogée.",
+        "imageAlt": "Entrée de restaurant illuminée la nuit",
+        "cta": "DÉCOUVRIR SUSHI SAKUTA"
+      },
+      "potong": {
+        "name": "POTONG | Chef Pichaya Soontornyanakij",
+        "city": "Bangkok",
+        "stars": "1",
+        "description": "Au restaurant Potong, à Bangkok, la cheffe Pichaya « Pam » Soontornyanakij intègre avec maîtrise le caviar de luxe dans ses menus dégustation thaï-chinois avant-gardistes.",
+        "imageAlt": "Salle du restaurant Potong à Bangkok",
+        "cta": "DÉCOUVRIR POTONG"
       }
     },
     "selection": {
-      "title": "Le temps fait partie de la récolte",
-      "description": "La sélection commence en amont : l’élevage de l’esturgeon, son alimentation et le moment choisi pour la récolte.",
+      "title": "Le temps fait partie de la récolte.",
+      "description": "La sélection commence en amont : comment l’esturgeon est élevé, ce dont il est nourri, et l’instant choisi et précis pour la récolte.",
       "imageAlt": "Producteur sélectionnant un esturgeon lors de la récolte",
-      "caption": "Le caviar se lit comme un tout",
-      "detail1": "Couleur, grain, texture, fermeté et humidité sont jugés avec la salinité, l’arôme, la maturation et l’intégrité de chaque grain.",
-      "detail2": "En bouche, la saveur se déploie par strates — noix, algue, fumée, champignon — et le caractère le plus vrai apparaît souvent dans la finale."
+      "caption": "Le caviar est appréhendé dans son ensemble",
+      "detail1": "Couleur, grain, texture, fermeté et humidité sont jugés au même titre que la salinité, l'arôme, la maturation et l'intégrité de chaque perle",
+      "detail2": "En bouche, les saveurs se déploient en strates. Ce qui apparaît en premier compte, mais ce qui demeure compte tout autant : la profondeur, la longueur et le caractère de la finale."
     },
     "ritual": {
       "title": "LE RITUEL",
-      "statement": "L’expression finale se trouve dans le service",
-      "heroImageAlt": "Des chefs primés célèbrent ensemble"
+      "statement": "L’expression finale se joue dans le service.",
+      "heroImageAlt": "Table dressée en plein air avec caviar, huîtres, blinis et vin blanc"
     },
     "sourceToRitual": {
       "title": "De la source au rituel",
-      "intro": "Le caviar porte depuis toujours sa cérémonie : la boîte glacée, le tour de clé, la nacre contre le grain, la première cuillerée avant que quiconque ne parle.",
-      "description": "Maison Rocheval préserve cette cérémonie avec retenue, car la manière de servir transforme le souvenir — à une grande table comme lors d’un dîner à deux.",
+      "intro": "Le caviar a toujours porté en lui une cérémonie : la boîte tenue au frais, le tour de clé, la nacre contre le grain, la première cuillerée prise avant que quiconque ne parle.",
+      "description": "Maison Rocheval préserve cette cérémonie avec sobriété. Non pas comme une mise en scène, mais parce que la manière dont une chose est servie change la manière dont elle est mémorisée — et les tables les plus raffinées le comprennent instinctivement, qu'elles se trouvent dans une salle à manger célébrée ou dressées pour deux, à la maison.",
       "cta": "Découvrir la collection",
-      "preparationAlt": "Chef préparant une boîte de caviar",
-      "serviceAlt": "Caviar servi dans une coupe en verre"
+      "preparationAlt": "Coffret de deux boîtes de caviar Maison Rocheval avec cuillère de nacre et clé à caviar",
+      "serviceAlt": "Boîte de caviar Maison Rocheval ouverte à l’aide d’une clé à caviar, tenue à la main au-dessus de glace pilée"
     }
   }
 }

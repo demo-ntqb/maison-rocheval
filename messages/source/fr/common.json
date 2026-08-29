@@ -18,7 +18,7 @@
     "dismissAnnouncement": "Fermer l’annonce de livraison"
   },
   "regionDialog": {
-    "title": "Êtes-vous au bon endroit ?",
+    "title": "Êtes-vous au bon endroit?",
     "description": "Veuillez choisir votre destination de livraison et votre langue préférée.",
     "note": "Les commandes ne peuvent être livrées que dans la destination sélectionnée.",
     "countryLabel": "Pays",
@@ -45,14 +45,14 @@
       "care": "Service Client"
     },
     "nav": {
-      "amour": "Armour",
+      "amour": "Amour",
       "lexpression": "L’Expression",
       "harmonie": "Harmonie",
       "oscietra": "Oscietra",
       "kaluga": "Kaluga",
       "collection": "La Collection",
       "shop": "Boutique",
-      "about": "À propos de Maison Rocheval",
+      "about": "La Maison",
       "faq": "FAQ",
       "contact": "Contact",
       "privacyPolicy": "Politique de confidentialité"

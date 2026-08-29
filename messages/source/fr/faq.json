@@ -7,62 +7,62 @@
   },
   "faq": {
     "heroTitle": "Questions fréquentes",
-    "heroIntro": "Pour toute assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons sous 24 heures.",
+    "heroIntro": "Si vous avez besoin d’une assistance supplémentaire, vous pouvez nous contacter <link>ici</link>. Nous vous répondrons dans un délai de 24 heures.",
     "items": [
       {
-        "question": "Qu’est-ce que le caviar ?",
-        "answer": "<p>Des œufs d’esturgeon (famille des Acipenseridae) salés à sec. Les œufs d’autres poissons — saumon, truite — ne sont pas du caviar.</p>"
+        "question": "Qu’est-ce que le caviar?",
+        "answer": "<p>Salt-cured roe from sturgeon (family Acipenseridae). Roe from other fish — salmon, trout — isn’t caviar.</p>"
       },
       {
-        "question": "Quelle est la différence entre le caviar et les œufs de poisson ?",
-        "answer": "<p>Les œufs peuvent provenir de n’importe quel poisson ; le caviar ne vient que de l’esturgeon.</p>"
+        "question": "Quelle est la différence entre le caviar et les œufs de poisson?",
+        "answer": "<p>Les œufs peuvent provenir de n'importe quel poisson ; le caviar, lui, provient uniquement de l'esturgeon.</p>"
       },
       {
-        "question": "Quels caviars propose Maison Rocheval ?",
-        "answer": "<p>Cinq, classés du plus délicat au plus généreux :</p><ul><li><strong>Amour</strong> <span class='text-stone'>(<em>Acipenser schrenckii</em>)</span> : crème et beurre, à peine salin ; le plus doux de la collection. Avec des blinis tièdes, de la crème fraîche, un œuf mollet.</li><li><strong>L’Expression</strong> <span class='text-stone'>(<em>Huso dauricus × A. schrenckii</em>)</span> : la signature de la maison ; marin et savoureux, avec des notes de kelp et de nori qui s’approfondissent en umami. Avec du dashi, du riz assaisonné, du poisson séché.</li><li><strong>Harmonie</strong> <span class='text-stone'>(<em>A. gueldenstaedtii × A. baerii</em>)</span> : une douceur fruitée et lumineuse qui se fait plus fumée avec le temps. Avec des sauces aux crustacés et au beurre.</li><li><strong>Oscietra</strong> <span class='text-stone'>(<em>A. gueldenstaedtii</em>)</span> : la référence classique ; iode, noix et fine minéralité. Frais, sur nacre, ou seul.</li><li><strong>Kaluga</strong> <span class='text-stone'>(<em>Huso dauricus</em>)</span> : le grain le plus gros ; beurre, crème, noisette grillée et une longue finale. Frais, sur nacre.</li></ul>"
+        "question": "Quels caviars Maison Rocheval propose-t-elle?",
+        "answer": "<p>Cinq, classés du plus délicat au plus intense :</p><ul><li><strong>Amour</strong> <span class='text-stone'>(<em>Acipenser schrenckii</em>)</span> :  crème et beurre, legerement salin ; le plus doux de la collection. Avec blinis chauds, crème fraîche, œuf mollet.</li><li><strong>L’Expression</strong> <span class='text-stone'>(<em>Huso dauricus × A. schrenckii</em>)</span> : la signature de la maison ; marin et savoureux, kelp et nori s'approfondissant en umami. Avec dashi, riz assaisonné, poisson mariné.</li><li><strong>Harmonie</strong> <span class='text-stone'>(<em>A. gueldenstaedtii × A. baerii</em>)</span> : une douceur fruitée éclatante qui se fait plus fumée avec l'âge. Avec fruits de mer et sauces au beurre.</li><li><strong>Oscietra</strong> <span class='text-stone'>(<em>A. gueldenstaedtii</em>)</span> : la référence classique ; iode, noisette et minéralité fine. Bien frais, sur nacre, ou seul.</li><li><strong>Kaluga</strong> <span class='text-stone'>(<em>Huso dauricus</em>)</span> : le plus grand grain ; beurre, crème, noisette grillée et une longue finale. Bien frais, sur nacre.</li></ul>"
       },
       {
-        "question": "Comment notez-vous votre caviar ?",
-        "answer": "<p>Nous n’utilisons pas de grades numérotés. Chaque récolte est jugée à l’état frais et dans sa globalité — couleur, grain, texture, salinité, arôme et finale.</p>"
+        "question": "Comment évaluez-vous votre caviar?",
+        "answer": "<p>Nous n'utilisons pas de notation chiffrée. Chaque récolte est jugée à neuf et dans son ensemble — couleur, grain, texture, salinité, arôme et finale.</p>"
       },
       {
-        "question": "Que signifie « malossol » ?",
-        "answer": "<p>Du russe, « peu salé ». Notre caviar est traité malossol — sel minimal pour que la saveur des œufs s’exprime pleinement.</p>"
+        "question": "Que signifie «malossol»?",
+        "answer": "<p>Russe pour « peu salé ». Notre caviar est préparé malossol — un salage minimal, qui laisse la saveur de l'œuf s'exprimer pleinement.</p>"
       },
       {
-        "question": "Comment le conserver avant ouverture ?",
-        "answer": "<p>Gardez la boîte fermée dans la partie la plus froide du réfrigérateur (−2 à +3°C). Ne pas congéler. Elle se conserve jusqu’à 3 mois — vérifiez toujours la date de péremption.</p>"
+        "question": "Comment le conserver avant ouverture?",
+        "answer": "<p>Conservez la boîte non ouverte dans la partie la plus froide du réfrigérateur (–2 à +3°C). Ne pas congeler. Elle se conserve jusqu'à 3 mois — vérifiez toujours la date limite de consommation.</p>"
       },
       {
-        "question": "Combien de temps se conserve-t-il après ouverture ?",
-        "answer": "<p>Idéalement dans les 24 heures. Refermez, chassez l’air et maintenez au frais.</p>"
+        "question": "Combien de temps se conserve-t-il une fois ouvert?",
+        "answer": "<p>De préférence dans les 24 heures. Refermez, chassez l'air, et gardez au frais.</p>"
       },
       {
-        "question": "Peut-on congéler le caviar ?",
-        "answer": "<p>Non — la congélation fait éclater les grains et détruit la texture et le goût.</p>"
+        "question": "Peut-on congeler le caviar?",
+        "answer": "<p>Non — la congélation rompt les grains et altère la texture et la saveur.</p>"
       },
       {
-        "question": "Pourquoi une cuillère en nacre et non en métal ?",
-        "answer": "<p>Le métal réagit avec le caviar et lui ajoute un goût métallique. Utilisez de la nacre, de l’os ou de la corne.</p>"
+        "question": "Pourquoi une cuillère en nacre, et non en métal?",
+        "answer": "<p>Le métal réagit avec le caviar et lui donne un goût métallique. Utilisez la nacre, l'os ou la corne.</p>"
       },
       {
-        "question": "Comment le servir ?",
-        "answer": "<p>Directement depuis la boîte réfrigérée, ou sur des blinis avec de la crème fraîche. Servez froid, la boîte posée sur de la glace.</p>"
+        "question": "Comment le servir?",
+        "answer": "<p>À même la boîte tenue au frais, ou sur blini avec crème fraîche. Servir froid, la boîte reposant sur glace.</p>"
       },
       {
-        "question": "Quelles boissons accompagnent le caviar ?",
-        "answer": "<p>Champagne ou vin effervescent sec, vodka froide, ou un blanc sec et vif comme un Chablis.</p>"
+        "question": "Quelles boissons accompagnent le caviar?",
+        "answer": "<p>Champagne ou vin effervescent sec, vodka bien fraîche, ou un blanc sec et vif tel qu'un Chablis.</p>"
       },
       {
-        "question": "Le caviar est-il bon pour la santé ?",
-        "answer": "<p>Il est riche en protéines, en vitamine B12 et en oméga-3, et contient beaucoup de sodium — c’est pourquoi il se consomme en petites portions.</p>"
+        "question": "Le caviar est-il bon pour la santé?",
+        "answer": "<p>Il est riche en protéines, en vitamine B12 et en oméga-3, et riche en sodium.</p>"
       },
       {
-        "question": "Votre caviar est-il durable ?",
-        "answer": "<p>Oui — élevé en ferme plutôt que sauvage, et certifié CITES.</p>"
+        "question": "Votre caviar est-il durable?",
+        "answer": "<p>Oui — issu de l'élevage plutôt que de la pêche sauvage, et certifié CITES.</p>"
       },
       {
-        "question": "Contient-il des additifs ?",
+        "question": "Contient-il des additifs?",
         "answer": "<p>Aucun. Ni colorant artificiel, ni conservateur.</p>"
       }
     ]

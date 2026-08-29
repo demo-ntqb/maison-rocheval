@@ -20,7 +20,7 @@ export async function HomeIntroSection() {
         {/* First block: From source to ritual */}
         <div className="flex w-full flex-col items-center gap-[54px]" data-plumb-id="component-6">
           <div className="flex w-full max-w-[640px] flex-col items-center gap-4 px-8 text-center lg:px-0" data-plumb-id="component-7">
-            <div className="flex flex-col items-center gap-4" data-plumb-id="frame-2085667118">
+            <div className="flex flex-col items-center gap-4 w-full" data-plumb-id="frame-2085667118">
               <div data-plumb-id="lorem-ipsum-dolor">
                 <SplitText
                   as="h2"
@@ -33,10 +33,10 @@ export async function HomeIntroSection() {
                   {t("title")}
                 </SplitText>
               </div>
-              <div className="flex flex-col items-center" data-plumb-id="frame-2085667119">
+              <div className="flex flex-col items-center w-full" data-plumb-id="frame-2085667119">
                 <SplitText
                   as="p"
-                  className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line"
+                  className="font-sans text-sm leading-[18px] text-ink whitespace-pre-line w-full"
                   data-plumb-id="lorem-ipsum-dolor-sit-amet-consectetur-a"
                   by="words"
                   stagger={10}

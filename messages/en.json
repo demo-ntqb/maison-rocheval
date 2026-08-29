@@ -62,21 +62,32 @@
         "city": "Singapore",
         "stars": "1",
         "description": "Chef Nicolas Tam showcases precision, technique, and heritage in his signature dish of Amadai with crispy scales.",
-        "imageAlt": "White restaurant building surrounded by tropical greenery"
+        "imageAlt": "White restaurant building surrounded by tropical greenery",
+        "cta": "DISCOVER WILLOW"
       },
       "alliance": {
         "name": "Alliance | Chef Toshitaka Omiya",
         "city": "Paris",
         "stars": "2",
         "description": "Chef Toshitaka Omiya's cuisine is defined by restraint and an instinct for letting exceptional ingredients speak for themselves.",
-        "imageAlt": "Dining room at Alliance restaurant in Paris"
+        "imageAlt": "Dining room at Alliance restaurant in Paris",
+        "cta": "DISCOVER ALLIANCE"
       },
       "sushiSakuta": {
         "name": "Sushi Sakuta | Chef Yoshio Sakuta",
         "city": "Singapore",
         "stars": "2",
         "description": "Chef Yoshio Sakuta’s preparation process is meticulously calculated to ensure that every guest taste the ingredients at their best.",
-        "imageAlt": "Illuminated restaurant entrance at night"
+        "imageAlt": "Illuminated restaurant entrance at night",
+        "cta": "DISCOVER SUSHI SAKUTA"
+      },
+      "potong": {
+        "name": "POTONG | Chef Pichaya Soontornyanakij",
+        "city": "Bangkok",
+        "stars": "1",
+        "description": "At Bangkok’s Restaurant Potong, Chef Pichaya \"Pam\" Soontornyanakij masterfully weaves luxury caviar into her progressive Thai-Chinese tasting menus.",
+        "imageAlt": "Dining room at Potong restaurant in Bangkok",
+        "cta": "DISCOVER POTONG"
       }
     },
     "selection": {

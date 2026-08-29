@@ -6,8 +6,8 @@
     }
   },
   "contact": {
-    "title": "Nous contacter",
-    "introBeforeFaq": "Nous vous répondrons sous 3 à 5 jours ouvrés. Pour toute question générale, consultez notre",
+    "title": "Contactez-nous",
+    "introBeforeFaq": "Nous vous répondrons dans un délai de 24 heures. Pour toute demande générale, vous pouvez consulter notre page",
     "faqLink": "FAQ",
     "introAfterFaq": ".",
     "imageAlt": "Boîte de caviar Maison Rocheval ouverte",
@@ -26,7 +26,7 @@
       },
       "company": "Nom de l’entreprise",
       "phone": "Numéro de téléphone",
-      "message": "Comment pouvons-nous vous aider ?*",
+      "message": "Comment pouvons-nous vous aider?*",
       "wholesale": "Il s’agit d’une demande professionnelle",
       "submit": "Envoyer le message",
       "submitting": "Envoi en cours...",

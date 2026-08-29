@@ -20,6 +20,7 @@ type Venue = {
   plumbId: string;
   stars: number;
   url: string;
+  ctaLabel: string;
 };
 
 export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
@@ -111,13 +112,13 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
                     </div>
                   </div>
                   <div>
-                    <TextButton asChild className="min-h-11 inline-flex items-center">
+                    <TextButton asChild className="min-h-11 inline-flex items-center uppercase">
                       <a
                         href={venue.url}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Discover {venue.name.split(" | ")[0]}
+                        {venue.ctaLabel}
                       </a>
                     </TextButton>
                   </div>

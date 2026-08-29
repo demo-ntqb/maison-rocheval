@@ -23,11 +23,17 @@ const VENUE_META: Record<string, { assetId: string; imageBasePath: string; plumb
     plumbId: "frame-2085667157",
     url: "https://www.sushi-sakuta.com/",
   },
+  potong: {
+    assetId: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+    imageBasePath: "/images/about-brand/venue-potong",
+    plumbId: "frame-2085667158",
+    url: "https://www.restaurantpotong.com/",
+  },
 };
 
 export async function AboutVenuesSection() {
   const t = await getTranslations("aboutBrand.venues");
-  const venues = (["willow", "alliance", "sushiSakuta"] as const).map((key) => {
+  const venues = (["willow", "alliance", "sushiSakuta", "potong"] as const).map((key) => {
     const meta = VENUE_META[key];
     return {
       alt: t(`${key}.imageAlt`),
@@ -39,6 +45,7 @@ export async function AboutVenuesSection() {
       plumbId: meta.plumbId,
       stars: Number(t(`${key}.stars`)),
       url: meta.url,
+      ctaLabel: t(`${key}.cta`),
     };
   });
 
