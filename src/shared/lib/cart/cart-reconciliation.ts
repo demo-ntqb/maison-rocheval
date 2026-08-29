@@ -63,5 +63,8 @@ export function isOperationApplied(
       );
       return Boolean(line && sameGiftMessage(line.giftMessage, operation.giftMessage));
     }
+
+    default:
+      return false;
   }
 }
