@@ -6,6 +6,7 @@ import {
   type AnyStorefrontQueryString,
 } from "@shopify/hydrogen";
 
+import { getBuyerIp } from "@/shared/lib/request/buyer-ip";
 import { getShopifyMarket, type I18nBase } from "./config";
 import { resolveStorefrontConfig } from "./storefront-config";
 
@@ -13,7 +14,7 @@ const STOREFRONT_API_VERSION = "2026-04";
 
 type GraphqlError = { message: string };
 type QueryOptions = { variables?: Record<string, unknown> };
-type StorefrontClient = {
+export type StorefrontClient = {
   query<T extends object>(
     document: string,
     options?: QueryOptions,
@@ -33,37 +34,22 @@ function createStorefrontClientForRequest({
   request: Request | { headers: Headers };
   type?: "private" | "private_no_buyer_context";
 }): StorefrontClient {
-  const client =
-    type === "private"
-      ? createStorefrontClient({
-          type: "private",
-          requestContext: createShopifyRequestContext({
-            request,
-            i18n: { language: market.language, country: market.country },
-            buyerIp:
-              ("headers" in request &&
-                (request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-                  request.headers.get("x-real-ip"))) ||
-              "127.0.0.1",
-          }),
-          config: {
-            storeDomain,
-            privateStorefrontToken,
-            apiVersion: STOREFRONT_API_VERSION,
-          },
-        })
-      : createStorefrontClient({
-          type: "private_no_buyer_context",
-          requestContext: createShopifyRequestContext({
-            request,
-            i18n: { language: market.language, country: market.country },
-          }),
-          config: {
-            storeDomain,
-            privateStorefrontToken,
-            apiVersion: STOREFRONT_API_VERSION,
-          },
-        });
+  const buyerIp = request instanceof Request ? getBuyerIp(request) : undefined;
+  const requestContext = createShopifyRequestContext({
+    request,
+    i18n: { language: market.language, country: market.country },
+    ...(buyerIp ? { buyerIp } : {}),
+  });
+
+  const client = createStorefrontClient({
+    type,
+    requestContext,
+    config: {
+      storeDomain,
+      privateStorefrontToken,
+      apiVersion: STOREFRONT_API_VERSION,
+    },
+  });
 
   return {
     async query<T extends object>(document: string, options: QueryOptions = {}) {
@@ -113,7 +99,7 @@ export function getCatalogStorefrontClient(locale: string): StorefrontClient {
   return client;
 }
 
-/** Request-scoped client for buyer cart mutations; never use it in cached catalog paths. */
+/** Request-scoped client for buyer cart operations; never use it in cached catalog paths. */
 export function getBuyerStorefrontClient(locale: string, request: Request): StorefrontClient {
   const market = getShopifyMarket(locale);
   const config = resolveStorefrontConfig();
