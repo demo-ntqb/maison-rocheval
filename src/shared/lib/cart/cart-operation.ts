@@ -15,6 +15,8 @@ export type AddCaviarOperation = {
   merchandiseId: string;
   productId: string;
   quantity: number;
+  /** Absolute quantity expected after this explicit Add transaction. */
+  targetQuantity: number;
   optimistic: OptimisticProductData;
 };
 
