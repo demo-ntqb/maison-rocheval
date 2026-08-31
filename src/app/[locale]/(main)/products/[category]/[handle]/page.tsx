@@ -12,22 +12,24 @@ import { SITE_URL } from "@/shared/constants/site.constant";
 import { generateJsonLd, generatePageMetadata, localizedPath } from "@/shared/lib/metadata";
 import { getCollectionProducts, getProductDetail } from "@/shared/lib/shopify/catalog";
 import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
-import { CatalogProductType } from "@/shared/types/catalog.type";
+import { CatalogCollectionHandle, CatalogProductType } from "@/shared/types/catalog.type";
 
 type Params = Promise<{ locale: string; category: string; handle: string }>;
 
 export async function generateStaticParams() {
+  // ponytail: placeholder validates empty-catalog builds; use seeded CI data for full product rendering validation.
+  const placeholder = [{ category: CatalogCollectionHandle.GIFT_SET, handle: "__placeholder__" }];
   const params: { category: string; handle: string }[] = [];
   const { availableRouteLocales } = await getDiscoveredMarkets();
   const discoveryLocale = availableRouteLocales[0];
-  if (!discoveryLocale) return params;
+  if (!discoveryLocale) return placeholder;
   for (const category of PRODUCT_CATEGORIES) {
     const products = await getCollectionProducts(discoveryLocale, category);
     for (const p of products) {
       params.push({ category, handle: p.handle });
     }
   }
-  return params;
+  return params.length > 0 ? params : placeholder;
 }
 
 // --- Data Fetching Abstraction ---
