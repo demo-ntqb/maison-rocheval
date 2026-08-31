@@ -1,3 +1,16 @@
+export const CART_MERCHANDISE_QUERY = `#graphql
+  query MaisonCartMerchandise($id: ID!) {
+    node(id: $id) {
+      __typename
+      ... on ProductVariant {
+        id
+        requiresComponents
+        product { productType }
+      }
+    }
+  }
+` as const;
+
 export const CART_QUERY = `#graphql
   query MaisonCartQuery(
     $id: ID!
@@ -25,6 +38,7 @@ export const CART_QUERY = `#graphql
             ... on ProductVariant {
               id
               title
+              requiresComponents
               availableForSale
               quantityAvailable
               selectedOptions { name value }

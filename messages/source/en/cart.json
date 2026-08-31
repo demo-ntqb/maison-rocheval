@@ -19,6 +19,9 @@
     "deliveryNote": "We offer variety of delivery options in check-out",
     "priceChanged": "Prices have updated based on your selected market.",
     "itemUnavailable": "Some items are not available in your selected market and were removed or disabled.",
+    "mutationFailed": "We couldn't update your bag. Your confirmed bag has been restored. Please try again.",
+    "checkoutFailed": "We couldn't start checkout. Please try again.",
+    "serviceUnavailable": "The cart service is temporarily unavailable. Please try again.",
     "empty": {
       "label": "Your cart is empty",
       "cta": "Continue shopping"

@@ -9,6 +9,7 @@ import {
   clearCartId,
   createCartWithLines,
   getCartId,
+  resolveCartMerchandise,
   setCartId,
 } from "@/shared/lib/shopify/cart";
 import { logCartEvent } from "@/shared/lib/shopify/cart/cart.logger";
@@ -37,7 +38,32 @@ export async function POST(request: Request) {
 
   const input = parsed.data;
   const startedAt = Date.now();
+  let resolvedKind: "caviar" | "gift_set" | undefined;
+
   try {
+    const merchandise = await resolveCartMerchandise({
+      request,
+      locale: input.locale,
+      merchandiseId: input.merchandiseId,
+    });
+    resolvedKind = merchandise.kind;
+
+    const giftUnitIds = input.unitIds ?? [];
+    if (merchandise.kind === "gift_set" && giftUnitIds.length === 0) {
+      throw new CartServiceError(
+        "INVALID_INPUT",
+        "Gift-set physical units require stable unit IDs",
+        400,
+      );
+    }
+    if (merchandise.kind === "caviar" && input.unitIds !== undefined) {
+      throw new CartServiceError(
+        "INVALID_INPUT",
+        "Gift unit IDs are not valid for this merchandise",
+        400,
+      );
+    }
+
     let cartId = await getCartId();
     let result;
 
@@ -46,17 +72,25 @@ export async function POST(request: Request) {
         request,
         locale: input.locale,
         lines: buildInitialCartLines(
-          input.kind === "caviar"
-            ? { kind: "caviar", merchandiseId: input.merchandiseId, quantity: input.quantity }
-            : { kind: "gift_set", merchandiseId: input.merchandiseId, unitIds: input.unitIds },
+          merchandise.kind === "gift_set"
+            ? {
+                kind: "gift_set",
+                merchandiseId: merchandise.merchandiseId,
+                unitIds: giftUnitIds,
+              }
+            : {
+                kind: "caviar",
+                merchandiseId: merchandise.merchandiseId,
+                quantity: input.quantity,
+              },
         ),
       });
-    } else if (input.kind === "caviar") {
+    } else if (merchandise.kind === "caviar") {
       result = await addCaviar({
         request,
         locale: input.locale,
         cartId,
-        merchandiseId: input.merchandiseId,
+        merchandiseId: merchandise.merchandiseId,
         quantity: input.quantity,
       });
 
@@ -67,7 +101,7 @@ export async function POST(request: Request) {
           locale: input.locale,
           lines: buildInitialCartLines({
             kind: "caviar",
-            merchandiseId: input.merchandiseId,
+            merchandiseId: merchandise.merchandiseId,
             quantity: input.quantity,
           }),
         });
@@ -78,8 +112,8 @@ export async function POST(request: Request) {
           request,
           locale: input.locale,
           cartId,
-          merchandiseId: input.merchandiseId,
-          unitIds: input.unitIds,
+          merchandiseId: merchandise.merchandiseId,
+          unitIds: giftUnitIds,
         });
       } catch (error) {
         if (!(error instanceof CartServiceError) || error.code !== "CART_NOT_FOUND") throw error;
@@ -89,8 +123,8 @@ export async function POST(request: Request) {
           locale: input.locale,
           lines: buildInitialCartLines({
             kind: "gift_set",
-            merchandiseId: input.merchandiseId,
-            unitIds: input.unitIds,
+            merchandiseId: merchandise.merchandiseId,
+            unitIds: giftUnitIds,
           }),
         });
       }
@@ -101,7 +135,7 @@ export async function POST(request: Request) {
     logCartEvent({
       action: "cart.lines.add",
       operationId: input.operationId,
-      kind: input.kind,
+      kind: merchandise.kind,
       quantity: input.quantity,
       country: result.snapshot.countryCode,
       locale: input.locale,
@@ -118,7 +152,7 @@ export async function POST(request: Request) {
     logCartEvent({
       action: "cart.lines.add",
       operationId: input.operationId,
-      kind: input.kind,
+      kind: resolvedKind,
       quantity: input.quantity,
       locale: input.locale,
       durationMs: Date.now() - startedAt,

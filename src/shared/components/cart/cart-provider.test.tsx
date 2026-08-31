@@ -13,7 +13,18 @@ const cartApi = vi.hoisted(() => ({
   updateRegion: vi.fn(),
 }));
 
-vi.mock("@/shared/lib/cart/cart-api", () => cartApi);
+vi.mock("@/shared/lib/cart/cart-api", () => ({
+  ...cartApi,
+  CartClientError: class CartClientError extends Error {
+    constructor(
+      public readonly code: string,
+      message: string,
+      public readonly retryable: boolean,
+    ) {
+      super(message);
+    }
+  },
+}));
 
 import { CartProvider, useCart } from "./cart-provider";
 
@@ -97,6 +108,7 @@ function Probe() {
       <p data-testid="is-open">{String(cart.isOpen)}</p>
       <p data-testid="item-count">{cart.itemCount}</p>
       <p data-testid="total">{cart.subtotal.amount}</p>
+      <p data-testid="cart-error">{cart.cartError ?? "none"}</p>
       <ul data-testid="entries">
         {cart.entries.map((entry) =>
           entry.kind === "line" ? (
@@ -168,18 +180,20 @@ function renderUnseededProbe() {
 
 function deferred<T>() {
   let resolve!: (value: T) => void;
-  const promise = new Promise<T>((complete) => {
+  let reject!: (reason: unknown) => void;
+  const promise = new Promise<T>((complete, fail) => {
     resolve = complete;
+    reject = fail;
   });
-  return { promise, resolve };
+  return { promise, reject, resolve };
 }
 
 describe("CartProvider", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    cartApi.addLine.mockImplementation(async (input: { kind: string; quantity: number; unitIds?: string[] }) => ({
+    cartApi.addLine.mockImplementation(async (input: { quantity: number; unitIds?: string[] }) => ({
       operationId: "server-operation",
-      cart: input.kind === "gift_set" ? giftSnapshot(input.unitIds ?? []) : caviarSnapshot(input.quantity),
+      cart: input.unitIds ? giftSnapshot(input.unitIds) : caviarSnapshot(input.quantity),
       warnings: [],
     }));
     cartApi.fetchCart.mockResolvedValue(EMPTY);
@@ -218,7 +232,7 @@ describe("CartProvider", () => {
     expect(screen.getByTestId("item-count").textContent).toBe("2");
   });
 
-  it("sends only cart intent fields to the add API", async () => {
+  it("sends only cart intent fields and never browser commerce kind", async () => {
     renderProbe();
     fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
 
@@ -228,13 +242,13 @@ describe("CartProvider", () => {
 
     expect(cartApi.addLine).toHaveBeenCalledWith(
       expect.objectContaining({
-        kind: "caviar",
         merchandiseId: "gid://shopify/ProductVariant/amour-30",
         quantity: 1,
         locale: "en-sg",
         operationId: expect.any(String),
       }),
     );
+    expect(cartApi.addLine.mock.calls[0]?.[0]).not.toHaveProperty("kind");
     expect(cartApi.addLine.mock.calls[0]?.[0]).not.toHaveProperty("price");
     expect(cartApi.addLine.mock.calls[0]?.[0]).not.toHaveProperty("image");
     expect(cartApi.addLine.mock.calls[0]?.[0]).not.toHaveProperty("productId");
@@ -257,6 +271,24 @@ describe("CartProvider", () => {
     expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
   });
 
+  it("does not let a stale hydration rejection overwrite a completed mutation", async () => {
+    const hydration = deferred<CartSnapshot>();
+    cartApi.fetchCart.mockReturnValue(hydration.promise);
+    renderUnseededProbe();
+
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
+    await waitFor(() => expect(cartApi.addLine).toHaveBeenCalledTimes(1));
+    expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
+
+    await act(async () => {
+      hydration.reject(new Error("stale hydration failed"));
+      await hydration.promise.catch(() => undefined);
+    });
+
+    expect(screen.getByTestId("cart-error").textContent).toBe("none");
+    expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
+  });
+
   it("waits for queued mutations and coalesces double-clicked checkout", async () => {
     const add = deferred<{ operationId: string; cart: CartSnapshot; warnings: [] }>();
     const checkout = deferred<{ checkoutUrl: string }>();
@@ -275,5 +307,30 @@ describe("CartProvider", () => {
     });
 
     await waitFor(() => expect(cartApi.fetchCheckout).toHaveBeenCalledTimes(1));
+  });
+
+  it("shows mutationFailed after reconciliation proves an optimistic mutation was not applied", async () => {
+    cartApi.addLine.mockRejectedValueOnce(new Error("network failed"));
+    cartApi.fetchCart.mockResolvedValue(EMPTY);
+    renderProbe();
+
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
+
+    await waitFor(() => expect(screen.getByTestId("cart-error").textContent).toBe("mutationFailed"));
+    expect(screen.getByTestId("item-count").textContent).toBe("0");
+  });
+
+  it("shows checkoutFailed and allows the buyer to retry when checkout fails", async () => {
+    const retryCheckout = new Promise<{ checkoutUrl: string }>(() => undefined);
+    cartApi.fetchCheckout
+      .mockRejectedValueOnce(new Error("checkout failed"))
+      .mockReturnValueOnce(retryCheckout);
+    renderProbe();
+
+    fireEvent.click(screen.getByRole("button", { name: "checkout" }));
+    await waitFor(() => expect(screen.getByTestId("cart-error").textContent).toBe("checkoutFailed"));
+
+    fireEvent.click(screen.getByRole("button", { name: "checkout" }));
+    await waitFor(() => expect(cartApi.fetchCheckout).toHaveBeenCalledTimes(2));
   });
 });

@@ -5,7 +5,7 @@ import type { SupportedCountry } from "@/shared/types/commerce-context.type";
 import type { ShopifyCart, ShopifyCartAttribute, ShopifyCartLine, ShopifyCartWarning } from "./cart.type";
 
 export const CART_ATTRIBUTE = {
-  kind: "_mr_kind",
+  legacyKind: "_mr_kind",
   unitId: "_mr_unit_id",
   giftMessageKind: "_mr_gift_message_kind",
   giftMessage: "_mr_gift_message",
@@ -15,12 +15,20 @@ function attributesToRecord(attributes: ShopifyCartAttribute[]): Record<string, 
   return Object.fromEntries(attributes.map(({ key, value }) => [key, value]));
 }
 
-function resolveKind(line: ShopifyCartLine, attributes: Record<string, string>): CartLine["kind"] {
-  if (attributes[CART_ATTRIBUTE.kind] === "gift_set") return "gift_set";
-  if (attributes[CART_ATTRIBUTE.kind] === "caviar") return "caviar";
+function isGiftSetProductType(productType: string): boolean {
+  const normalized = productType.trim().toLowerCase();
+  return normalized.includes("gift") || normalized.includes("coffret");
+}
 
-  const productType = line.merchandise.product.productType.toLowerCase();
-  return productType.includes("gift") || productType.includes("coffret") ? "gift_set" : "caviar";
+export function isGiftSetMerchandise(merchandise: {
+  requiresComponents: boolean;
+  product: { productType: string };
+}): boolean {
+  return merchandise.requiresComponents && isGiftSetProductType(merchandise.product.productType);
+}
+
+function resolveKind(line: ShopifyCartLine): CartLine["kind"] {
+  return isGiftSetMerchandise(line.merchandise) ? "gift_set" : "caviar";
 }
 
 function mapGiftMessage(attributes: Record<string, string>): CartGiftMessage | null {
@@ -42,7 +50,7 @@ function resolveVariantLabel(line: ShopifyCartLine): string {
 
 export function mapShopifyCartLine(line: ShopifyCartLine): CartLine {
   const attributes = attributesToRecord(line.attributes);
-  const kind = resolveKind(line, attributes);
+  const kind = resolveKind(line);
 
   return {
     id: line.id,
@@ -52,7 +60,7 @@ export function mapShopifyCartLine(line: ShopifyCartLine): CartLine {
     image: line.merchandise.image,
     quantity: line.quantity,
     quantityAvailable: line.merchandise.quantityAvailable,
-    quantityEditable: kind === "caviar",
+    quantityEditable: !line.merchandise.requiresComponents,
     supportsGiftMessage: kind === "gift_set",
     title: line.merchandise.product.title,
     weight: resolveVariantLabel(line),

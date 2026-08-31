@@ -7,7 +7,7 @@ function line(overrides: Partial<ShopifyCartLine> = {}): ShopifyCartLine {
   return {
     id: "gid://shopify/CartLine/1",
     quantity: 1,
-    attributes: [{ key: "_mr_kind", value: "caviar" }],
+    attributes: [],
     cost: {
       amountPerQuantity: { amount: "75.00", currencyCode: "SGD" },
       subtotalAmount: { amount: "75.00", currencyCode: "SGD" },
@@ -15,6 +15,7 @@ function line(overrides: Partial<ShopifyCartLine> = {}): ShopifyCartLine {
     merchandise: {
       id: "gid://shopify/ProductVariant/1",
       title: "30g",
+      requiresComponents: false,
       availableForSale: true,
       quantityAvailable: 10,
       selectedOptions: [{ name: "Tin weight", value: "30g" }],
@@ -29,6 +30,24 @@ function line(overrides: Partial<ShopifyCartLine> = {}): ShopifyCartLine {
     },
     ...overrides,
   };
+}
+
+function giftLine(overrides: Partial<ShopifyCartLine> = {}): ShopifyCartLine {
+  const base = line();
+  return line({
+    merchandise: {
+      ...base.merchandise,
+      id: "gid://shopify/ProductVariant/gift-30",
+      requiresComponents: true,
+      product: {
+        id: "gid://shopify/Product/gift",
+        handle: "linitiation",
+        title: "L'Initiation",
+        productType: "Gift Set",
+      },
+    },
+    ...overrides,
+  });
 }
 
 function cart(lines: ShopifyCartLine[]): ShopifyCart {
@@ -53,12 +72,11 @@ describe("cart mapper", () => {
     expect(mapped.quantityEditable).toBe(true);
   });
 
-  it("maps gift metadata to stable unit identity and message", () => {
+  it("maps authoritative Gift Set metadata to stable unit identity and message", () => {
     const mapped = mapShopifyCartLine(
-      line({
+      giftLine({
         id: "gid://shopify/CartLine/gift-a",
         attributes: [
-          { key: "_mr_kind", value: "gift_set" },
           { key: "_mr_unit_id", value: "unit-a" },
           { key: "_mr_gift_message_kind", value: "personal" },
           { key: "_mr_gift_message", value: "A" },
@@ -72,32 +90,51 @@ describe("cart mapper", () => {
     expect(mapped.quantityEditable).toBe(false);
   });
 
+  it("does not let forged legacy _mr_kind override authoritative Gift Set metadata", () => {
+    const mapped = mapShopifyCartLine(
+      giftLine({
+        attributes: [
+          { key: "_mr_kind", value: "caviar" },
+          { key: "_mr_unit_id", value: "unit-a" },
+        ],
+      }),
+    );
+
+    expect(mapped.kind).toBe("gift_set");
+    expect(mapped.unitId).toBe("unit-a");
+  });
+
+  it("does not let legacy _mr_kind turn caviar into a Gift Set", () => {
+    const mapped = mapShopifyCartLine(
+      line({ attributes: [{ key: "_mr_kind", value: "gift_set" }] }),
+    );
+
+    expect(mapped.kind).toBe("caviar");
+    expect(mapped.quantityEditable).toBe(true);
+    expect(mapped.unitId).toBeNull();
+  });
+
   it("groups gift variants by Shopify Product.id while preserving unit messages", () => {
-    const giftProduct = {
-      id: "gid://shopify/Product/gift",
-      handle: "linitiation",
-      title: "L'Initiation",
-      productType: "Gift Set",
-    };
-    const giftA = line({
+    const giftA = giftLine({
       id: "gid://shopify/CartLine/a",
       attributes: [
-        { key: "_mr_kind", value: "gift_set" },
         { key: "_mr_unit_id", value: "unit-a" },
         { key: "_mr_gift_message_kind", value: "personal" },
         { key: "_mr_gift_message", value: "A" },
       ],
-      merchandise: { ...line().merchandise, id: "gid://shopify/ProductVariant/gift-30", product: giftProduct },
     });
-    const giftC = line({
+    const giftCBase = giftLine();
+    const giftC = giftLine({
       id: "gid://shopify/CartLine/c",
       attributes: [
-        { key: "_mr_kind", value: "gift_set" },
         { key: "_mr_unit_id", value: "unit-c" },
         { key: "_mr_gift_message_kind", value: "personal" },
         { key: "_mr_gift_message", value: "C" },
       ],
-      merchandise: { ...line().merchandise, id: "gid://shopify/ProductVariant/gift-50", product: giftProduct },
+      merchandise: {
+        ...giftCBase.merchandise,
+        id: "gid://shopify/ProductVariant/gift-50",
+      },
     });
 
     const snapshot = mapShopifyCart(cart([giftA, giftC]), "SG");

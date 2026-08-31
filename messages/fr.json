@@ -210,6 +210,9 @@
     "deliveryNote": "Nous proposons plusieurs options de livraison lors du paiement",
     "priceChanged": "Les prix ont été mis à jour en fonction du marché sélectionné.",
     "itemUnavailable": "Certains articles ne sont pas disponibles sur le marché sélectionné et ont été retirés.",
+    "mutationFailed": "Nous n’avons pas pu mettre à jour votre panier. Le panier confirmé a été restauré. Veuillez réessayer.",
+    "checkoutFailed": "Nous n’avons pas pu démarrer le paiement. Veuillez réessayer.",
+    "serviceUnavailable": "Le service du panier est temporairement indisponible. Veuillez réessayer.",
     "empty": {
       "label": "Votre panier est vide",
       "cta": "Poursuivre vos achats"

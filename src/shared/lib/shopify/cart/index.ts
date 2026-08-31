@@ -8,10 +8,12 @@ export {
   getCart,
   getCheckoutCart,
   removeCartLine,
+  resolveCartMerchandise,
   updateCartBuyerIdentity,
   updateCartLineQuantity,
   updateGiftMessage,
 } from "./cart.service";
+export type { ResolvedCartMerchandise } from "./cart.service";
 export {
   addCartLineSchema,
   checkoutSchema,

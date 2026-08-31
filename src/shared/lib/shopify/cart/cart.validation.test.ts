@@ -7,7 +7,6 @@ describe("cart validation", () => {
   it("rejects non-ProductVariant merchandise IDs", () => {
     expect(
       addCartLineSchema.safeParse({
-        kind: "caviar",
         merchandiseId: "gid://shopify/Product/1",
         quantity: 1,
         operationId: "op",
@@ -19,7 +18,6 @@ describe("cart validation", () => {
   it.each([0, -1, 1.5])("rejects invalid quantity %s", (quantity) => {
     expect(
       addCartLineSchema.safeParse({
-        kind: "caviar",
         merchandiseId: "gid://shopify/ProductVariant/1",
         quantity,
         operationId: "op",
@@ -28,10 +26,23 @@ describe("cart validation", () => {
     ).toBe(false);
   });
 
-  it("requires gift unit IDs to be unique and match physical quantity", () => {
+  it("accepts structural add intent without browser commerce kind", () => {
+    const parsed = addCartLineSchema.safeParse({
+      kind: "caviar",
+      merchandiseId: "gid://shopify/ProductVariant/1",
+      quantity: 1,
+      operationId: "op",
+      locale: "en-sg",
+    });
+
+    expect(parsed.success).toBe(true);
+    if (!parsed.success) return;
+    expect(parsed.data).not.toHaveProperty("kind");
+  });
+
+  it("requires supplied gift unit IDs to be unique and match physical quantity", () => {
     expect(
       addCartLineSchema.safeParse({
-        kind: "gift_set",
         merchandiseId: "gid://shopify/ProductVariant/1",
         quantity: 2,
         unitIds: ["same", "same"],

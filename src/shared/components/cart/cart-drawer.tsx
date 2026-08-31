@@ -107,16 +107,19 @@ export function CartDrawer() {
             )}
           </div>
 
+          {cartError ? (
+            <div className="shrink-0 px-4 pb-4">
+              <div
+                aria-live="polite"
+                className={cn("w-full rounded-brand border border-red-200 bg-red-50 p-3 font-sans text-xs text-red-800")}
+              >
+                {t(cartError)}
+              </div>
+            </div>
+          ) : null}
+
           {entries.length > 0 ? (
             <div className="flex w-full shrink-0 flex-col items-center gap-4 border-t-[0.5px] border-muted-text/50 bg-white p-4">
-              {cartError ? (
-                <div
-                  aria-live="polite"
-                  className={cn("w-full rounded-brand border border-red-200 bg-red-50 p-3 font-sans text-xs text-red-800")}
-                >
-                  {t(cartError)}
-                </div>
-              ) : null}
               <div className="flex w-full items-center justify-between gap-4 py-1">
                 <p className="font-sans text-base/[normal] font-medium text-black">{t("total")}</p>
                 <p className="font-sans text-2xl/[normal] font-medium text-black">

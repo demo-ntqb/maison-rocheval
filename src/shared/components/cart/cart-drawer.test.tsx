@@ -11,6 +11,7 @@ vi.mock("@/i18n/navigation", () => ({
 }));
 
 vi.mock("@/shared/lib/cart/cart-api", () => ({
+  CartClientError: class CartClientError extends Error {},
   addLine: vi.fn(() => new Promise(() => undefined)),
   fetchCart: vi.fn(() => new Promise(() => undefined)),
   fetchCheckout: vi.fn(() => new Promise(() => undefined)),

@@ -4,6 +4,13 @@ export type ShopifyCartAttribute = { key: string; value: string };
 export type ShopifyCartWarning = { code: string; target?: string | null; message: string };
 export type ShopifyCartUserError = { code?: string | null; field?: string[] | null; message: string };
 
+export type ShopifyCartMerchandiseNode = {
+  __typename: string;
+  id?: string;
+  requiresComponents?: boolean;
+  product?: { productType: string };
+};
+
 export type ShopifyCartLine = {
   id: string;
   quantity: number;
@@ -15,6 +22,7 @@ export type ShopifyCartLine = {
   merchandise: {
     id: string;
     title: string;
+    requiresComponents: boolean;
     availableForSale: boolean;
     quantityAvailable: number | null;
     selectedOptions: Array<{ name: string; value: string }>;

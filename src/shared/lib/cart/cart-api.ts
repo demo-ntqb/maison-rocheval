@@ -7,7 +7,7 @@ export type CartMutationResponse = {
   warnings: CartWarning[];
 };
 
-class CartClientError extends Error {
+export class CartClientError extends Error {
   constructor(
     public readonly code: string,
     message: string,
@@ -52,23 +52,13 @@ export async function fetchCart(locale: RouteLocale): Promise<CartSnapshot> {
   return payload.cart;
 }
 
-export async function addLine(input:
-  | {
-      kind: "caviar";
-      merchandiseId: string;
-      quantity: number;
-      operationId: string;
-      locale: RouteLocale;
-    }
-  | {
-      kind: "gift_set";
-      merchandiseId: string;
-      quantity: number;
-      unitIds: string[];
-      operationId: string;
-      locale: RouteLocale;
-    },
-): Promise<CartMutationResponse> {
+export async function addLine(input: {
+  merchandiseId: string;
+  quantity: number;
+  unitIds?: string[];
+  operationId: string;
+  locale: RouteLocale;
+}): Promise<CartMutationResponse> {
   return requestJson("/api/cart/lines", {
     method: "POST",
     headers: JSON_HEADERS,

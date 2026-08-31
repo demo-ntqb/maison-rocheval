@@ -11,7 +11,7 @@ export const CART_CREATE = `#graphql
             id quantity attributes { key value }
             cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }
             merchandise { ... on ProductVariant {
-              id title availableForSale quantityAvailable selectedOptions { name value }
+              id title requiresComponents availableForSale quantityAvailable selectedOptions { name value }
               metafield(namespace: "custom", key: "title") { value }
               image { url altText width height }
               product { id handle title productType }
@@ -38,7 +38,7 @@ export const CART_LINES_ADD = `#graphql
             id quantity attributes { key value }
             cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }
             merchandise { ... on ProductVariant {
-              id title availableForSale quantityAvailable selectedOptions { name value }
+              id title requiresComponents availableForSale quantityAvailable selectedOptions { name value }
               metafield(namespace: "custom", key: "title") { value }
               image { url altText width height }
               product { id handle title productType }
@@ -65,7 +65,7 @@ export const CART_LINES_UPDATE = `#graphql
             id quantity attributes { key value }
             cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }
             merchandise { ... on ProductVariant {
-              id title availableForSale quantityAvailable selectedOptions { name value }
+              id title requiresComponents availableForSale quantityAvailable selectedOptions { name value }
               metafield(namespace: "custom", key: "title") { value }
               image { url altText width height }
               product { id handle title productType }
@@ -92,7 +92,7 @@ export const CART_LINES_REMOVE = `#graphql
             id quantity attributes { key value }
             cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }
             merchandise { ... on ProductVariant {
-              id title availableForSale quantityAvailable selectedOptions { name value }
+              id title requiresComponents availableForSale quantityAvailable selectedOptions { name value }
               metafield(namespace: "custom", key: "title") { value }
               image { url altText width height }
               product { id handle title productType }
@@ -119,7 +119,34 @@ export const CART_BUYER_IDENTITY_UPDATE = `#graphql
             id quantity attributes { key value }
             cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }
             merchandise { ... on ProductVariant {
-              id title availableForSale quantityAvailable selectedOptions { name value }
+              id title requiresComponents availableForSale quantityAvailable selectedOptions { name value }
+              metafield(namespace: "custom", key: "title") { value }
+              image { url altText width height }
+              product { id handle title productType }
+            } }
+          }
+        }
+      }
+      userErrors { code field message }
+      warnings { code target message }
+    }
+  }
+` as const;
+
+export const CART_NOTE_UPDATE = `#graphql
+  mutation MaisonCartNoteUpdate($cartId: ID!, $note: String!, $first: Int!, $after: String, $language: LanguageCode)
+  @inContext(language: $language) {
+    cartNoteUpdate(cartId: $cartId, note: $note) {
+      cart {
+        id totalQuantity checkoutUrl buyerIdentity { countryCode }
+        cost { subtotalAmount { amount currencyCode } }
+        lines(first: $first, after: $after) {
+          pageInfo { hasNextPage endCursor }
+          nodes {
+            id quantity attributes { key value }
+            cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }
+            merchandise { ... on ProductVariant {
+              id title requiresComponents availableForSale quantityAvailable selectedOptions { name value }
               metafield(namespace: "custom", key: "title") { value }
               image { url altText width height }
               product { id handle title productType }

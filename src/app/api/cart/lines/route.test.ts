@@ -11,6 +11,7 @@ const mocks = vi.hoisted(() => ({
   createCartWithLines: vi.fn(),
   addCaviar: vi.fn(),
   addGiftSet: vi.fn(),
+  resolveCartMerchandise: vi.fn(),
   logCartEvent: vi.fn(),
 }));
 
@@ -24,6 +25,7 @@ vi.mock("@/shared/lib/shopify/cart", async (importOriginal) => {
     createCartWithLines: mocks.createCartWithLines,
     addCaviar: mocks.addCaviar,
     addGiftSet: mocks.addGiftSet,
+    resolveCartMerchandise: mocks.resolveCartMerchandise,
   };
 });
 
@@ -64,10 +66,16 @@ describe("POST /api/cart/lines", () => {
     });
   });
 
-  it("lazily creates a gift cart with one line per physical unit and never returns cart ID", async () => {
+  it("ignores forged legacy kind and creates one line per authoritative Gift Set unit", async () => {
+    mocks.resolveCartMerchandise.mockResolvedValue({
+      merchandiseId: "gid://shopify/ProductVariant/123",
+      kind: "gift_set",
+      requiresComponents: true,
+    });
+
     const response = await POST(
       request({
-        kind: "gift_set",
+        kind: "caviar",
         merchandiseId: "gid://shopify/ProductVariant/123",
         quantity: 3,
         unitIds: ["unit-a", "unit-b", "unit-c"],
@@ -81,6 +89,8 @@ describe("POST /api/cart/lines", () => {
     const input = mocks.createCartWithLines.mock.calls[0]?.[0] as { lines: Array<Record<string, unknown>> };
     expect(input.lines).toHaveLength(3);
     expect(input.lines.every((line) => line.quantity === 1)).toBe(true);
+    expect(JSON.stringify(input.lines)).not.toContain("_mr_kind");
+    expect(mocks.addCaviar).not.toHaveBeenCalled();
     expect(mocks.setCartId).toHaveBeenCalledWith("gid://shopify/Cart/secret?key=do-not-expose");
 
     const body = await response.json();
@@ -90,10 +100,16 @@ describe("POST /api/cart/lines", () => {
     expect(body.operationId).toBe("operation-1");
   });
 
-  it("rejects browser-authoritative product payloads only by ignoring unsupported fields", async () => {
+  it("ignores browser commerce fields and builds authoritative Caviar intent without _mr_kind", async () => {
+    mocks.resolveCartMerchandise.mockResolvedValue({
+      merchandiseId: "gid://shopify/ProductVariant/123",
+      kind: "caviar",
+      requiresComponents: false,
+    });
+
     const response = await POST(
       request({
-        kind: "caviar",
+        kind: "gift_set",
         merchandiseId: "gid://shopify/ProductVariant/123",
         quantity: 1,
         operationId: "operation-2",
@@ -111,12 +127,54 @@ describe("POST /api/cart/lines", () => {
       {
         merchandiseId: "gid://shopify/ProductVariant/123",
         quantity: 1,
-        attributes: [{ key: "_mr_kind", value: "caviar" }],
       },
     ]);
   });
 
-  it("rejects cross-origin mutations before touching Shopify", async () => {
+  it("rejects authoritative Gift Set merchandise when unit IDs are missing", async () => {
+    mocks.resolveCartMerchandise.mockResolvedValue({
+      merchandiseId: "gid://shopify/ProductVariant/123",
+      kind: "gift_set",
+      requiresComponents: true,
+    });
+
+    const response = await POST(
+      request({
+        merchandiseId: "gid://shopify/ProductVariant/123",
+        quantity: 2,
+        operationId: "operation-3",
+        locale: "en-sg",
+      }),
+    );
+
+    expect(response.status).toBe(400);
+    expect(mocks.createCartWithLines).not.toHaveBeenCalled();
+    expect(mocks.addGiftSet).not.toHaveBeenCalled();
+  });
+
+  it("rejects unit IDs for authoritative Caviar merchandise", async () => {
+    mocks.resolveCartMerchandise.mockResolvedValue({
+      merchandiseId: "gid://shopify/ProductVariant/123",
+      kind: "caviar",
+      requiresComponents: false,
+    });
+
+    const response = await POST(
+      request({
+        merchandiseId: "gid://shopify/ProductVariant/123",
+        quantity: 1,
+        unitIds: ["unit-a"],
+        operationId: "operation-4",
+        locale: "en-sg",
+      }),
+    );
+
+    expect(response.status).toBe(400);
+    expect(mocks.createCartWithLines).not.toHaveBeenCalled();
+    expect(mocks.addCaviar).not.toHaveBeenCalled();
+  });
+
+  it("rejects cross-origin mutations before resolving Shopify merchandise", async () => {
     const crossOrigin = new Request("https://maison.test/api/cart/lines", {
       method: "POST",
       headers: {
@@ -124,16 +182,16 @@ describe("POST /api/cart/lines", () => {
         origin: "https://evil.test",
       },
       body: JSON.stringify({
-        kind: "caviar",
         merchandiseId: "gid://shopify/ProductVariant/123",
         quantity: 1,
-        operationId: "operation-3",
+        operationId: "operation-5",
         locale: "en-sg",
       }),
     });
 
     const response = await POST(crossOrigin);
     expect(response.status).toBe(403);
+    expect(mocks.resolveCartMerchandise).not.toHaveBeenCalled();
     expect(mocks.createCartWithLines).not.toHaveBeenCalled();
   });
 });

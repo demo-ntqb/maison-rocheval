@@ -8,6 +8,7 @@ const operationIdSchema = z.string().min(1).max(128);
 const merchandiseIdSchema = z.string().startsWith("gid://shopify/ProductVariant/");
 const lineIdSchema = z.string().startsWith("gid://shopify/CartLine/");
 const quantitySchema = z.number().int().min(1).max(CART_QUANTITY_MAX);
+const unitIdsSchema = z.array(z.string().min(1).max(128)).min(1).max(CART_QUANTITY_MAX);
 
 const giftMessageSchema = z
   .discriminatedUnion("kind", [
@@ -24,27 +25,20 @@ const giftMessageSchema = z
     }
   });
 
-export const addCartLineSchema = z.discriminatedUnion("kind", [
-  z.object({
-    kind: z.literal("caviar"),
+export const addCartLineSchema = z
+  .object({
     merchandiseId: merchandiseIdSchema,
     quantity: quantitySchema,
+    unitIds: unitIdsSchema.optional(),
     operationId: operationIdSchema,
     locale: routeLocaleSchema,
-  }),
-  z.object({
-    kind: z.literal("gift_set"),
-    merchandiseId: merchandiseIdSchema,
-    quantity: quantitySchema,
-    unitIds: z.array(z.string().min(1).max(128)).min(1).max(CART_QUANTITY_MAX),
-    operationId: operationIdSchema,
-    locale: routeLocaleSchema,
-  }).superRefine((value, context) => {
+  })
+  .superRefine((value, context) => {
+    if (!value.unitIds) return;
     if (value.unitIds.length !== value.quantity || new Set(value.unitIds).size !== value.unitIds.length) {
       context.addIssue({ code: "custom", message: "Gift unit IDs must be unique and match quantity" });
     }
-  }),
-]);
+  });
 
 export const updateCartLineSchema = z.discriminatedUnion("action", [
   z.object({

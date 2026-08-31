@@ -12,6 +12,7 @@ import {
 
 import {
   addLine as addLineRequest,
+  CartClientError,
   fetchCart,
   fetchCheckout,
   removeLine as removeLineRequest,
@@ -49,6 +50,13 @@ export type AddGiftSetInput = {
   optimistic: OptimisticProductData;
 };
 
+export type CartUiError =
+  | "itemUnavailable"
+  | "mutationFailed"
+  | "checkoutFailed"
+  | "serviceUnavailable"
+  | null;
+
 type CartContextValue = {
   addGiftSetUnits: (input: AddGiftSetInput) => void;
   addLine: (input: AddCartLineInput) => void;
@@ -65,7 +73,7 @@ type CartContextValue = {
   setOpen: (open: boolean) => void;
   subtotal: CartMoney;
   updateRegion: (locale: RouteLocale) => Promise<void>;
-  cartError: "itemUnavailable" | null;
+  cartError: CartUiError;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -74,7 +82,7 @@ type CartProviderState = {
   confirmed: CartSnapshot;
   pending: PendingCartOperation[];
   status: "hydrating" | "ready" | "error";
-  cartError: "itemUnavailable" | null;
+  cartError: CartUiError;
 };
 
 function createId(): string {
@@ -106,6 +114,20 @@ function snapshotFromEntries(routeLocale: RouteLocale, entries: CartEntry[]): Ca
 
 function stockWarning(cart: CartSnapshot): boolean {
   return cart.warnings.some((warning) => warning.code.toUpperCase().includes("STOCK"));
+}
+
+function mutationUiError(error: unknown): Exclude<CartUiError, null | "checkoutFailed"> {
+  if (error instanceof CartClientError) {
+    if (error.code === "OUT_OF_STOCK") return "itemUnavailable";
+    if (error.code === "UPSTREAM_UNAVAILABLE") return "serviceUnavailable";
+  }
+  return "mutationFailed";
+}
+
+function checkoutUiError(error: unknown): "checkoutFailed" | "serviceUnavailable" {
+  return error instanceof CartClientError && error.code === "UPSTREAM_UNAVAILABLE"
+    ? "serviceUnavailable"
+    : "checkoutFailed";
 }
 
 function resolveConfirmedLine(
@@ -187,8 +209,12 @@ export function CartProvider({
         }));
       })
       .catch(() => {
-        if (cancelled) return;
-        updateState((current) => ({ ...current, status: "error" }));
+        if (cancelled || snapshotVersion !== snapshotVersionRef.current) return;
+        updateState((current) => ({
+          ...current,
+          status: "error",
+          cartError: "serviceUnavailable",
+        }));
       });
 
     return () => {
@@ -223,7 +249,7 @@ export function CartProvider({
   );
 
   const reconcileAfterFailure = useCallback(
-    async (operationId: string) => {
+    async (operationId: string, failure: unknown) => {
       const operation = stateRef.current.pending.find((candidate) => candidate.id === operationId);
       try {
         const cart = await fetchCart(routeLocale);
@@ -233,13 +259,18 @@ export function CartProvider({
           confirmed: cart,
           pending: current.pending.filter((candidate) => candidate.id !== operationId),
           status: applied ? "ready" : "error",
-          cartError: stockWarning(cart) ? "itemUnavailable" : null,
+          cartError: stockWarning(cart)
+            ? "itemUnavailable"
+            : applied
+              ? null
+              : mutationUiError(failure),
         }));
       } catch {
         updateState((current) => ({
           ...current,
           pending: current.pending.filter((operation) => operation.id !== operationId),
           status: "error",
+          cartError: "serviceUnavailable",
         }));
       }
     },
@@ -273,15 +304,14 @@ export function CartProvider({
       void enqueue(async () => {
         try {
           const result = await addLineRequest({
-            kind: "caviar",
             merchandiseId: input.merchandiseId,
             quantity: input.quantity,
             operationId,
             locale: routeLocale,
           });
           commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
+        } catch (error) {
+          await reconcileAfterFailure(operationId, error);
         }
       });
     },
@@ -322,7 +352,6 @@ export function CartProvider({
       void enqueue(async () => {
         try {
           const result = await addLineRequest({
-            kind: "gift_set",
             merchandiseId: input.merchandiseId,
             quantity,
             unitIds,
@@ -330,8 +359,8 @@ export function CartProvider({
             locale: routeLocale,
           });
           commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
+        } catch (error) {
+          await reconcileAfterFailure(operationId, error);
         }
       });
     },
@@ -363,7 +392,7 @@ export function CartProvider({
           unitId: null,
         });
         if (!confirmedLine) {
-          await reconcileAfterFailure(operationId);
+          await reconcileAfterFailure(operationId, new Error("Confirmed cart line is unavailable"));
           return;
         }
         try {
@@ -374,8 +403,8 @@ export function CartProvider({
             locale: routeLocale,
           });
           commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
+        } catch (error) {
+          await reconcileAfterFailure(operationId, error);
         }
       });
     },
@@ -413,8 +442,8 @@ export function CartProvider({
             locale: routeLocale,
           });
           commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
+        } catch (error) {
+          await reconcileAfterFailure(operationId, error);
         }
       });
     },
@@ -440,7 +469,7 @@ export function CartProvider({
       void enqueue(async () => {
         const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, operation);
         if (!confirmedLine) {
-          await reconcileAfterFailure(operationId);
+          await reconcileAfterFailure(operationId, new Error("Confirmed gift-set unit is unavailable"));
           return;
         }
         try {
@@ -451,8 +480,8 @@ export function CartProvider({
             locale: routeLocale,
           });
           commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
+        } catch (error) {
+          await reconcileAfterFailure(operationId, error);
         }
       });
     },
@@ -480,16 +509,23 @@ export function CartProvider({
     if (typeof window === "undefined" || checkoutPendingRef.current) return;
     checkoutPendingRef.current = true;
     setIsCheckingOut(true);
+    updateState((current) =>
+      current.cartError === "checkoutFailed" || current.cartError === "serviceUnavailable"
+        ? { ...current, cartError: null }
+        : current,
+    );
 
     try {
       await queueRef.current;
       const { checkoutUrl } = await fetchCheckout(routeLocale);
       window.location.assign(checkoutUrl);
+    } catch (error) {
+      updateState((current) => ({ ...current, cartError: checkoutUiError(error) }));
     } finally {
       checkoutPendingRef.current = false;
       setIsCheckingOut(false);
     }
-  }, [routeLocale]);
+  }, [routeLocale, updateState]);
 
   const value = useMemo<CartContextValue>(
     () => ({

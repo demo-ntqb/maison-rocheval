@@ -2,20 +2,23 @@ import "server-only";
 
 import { getShopifyMarket } from "../config";
 import { getBuyerStorefrontClient, type StorefrontClient } from "../storefront";
-import { CART_ATTRIBUTE, mapShopifyCart } from "./cart.mapper";
+import { buildCartOrderNote } from "./cart.order-note";
+import { CART_ATTRIBUTE, isGiftSetMerchandise, mapShopifyCart } from "./cart.mapper";
 import {
   CART_BUYER_IDENTITY_UPDATE,
   CART_CREATE,
   CART_LINES_ADD,
   CART_LINES_REMOVE,
   CART_LINES_UPDATE,
+  CART_NOTE_UPDATE,
 } from "./cart.mutation";
-import { CART_QUERY } from "./cart.query";
+import { CART_MERCHANDISE_QUERY, CART_QUERY } from "./cart.query";
 import { CartServiceError, throwForUserErrors } from "./cart.error";
 import type {
   ShopifyCart,
   ShopifyCartAttribute,
   ShopifyCartLine,
+  ShopifyCartMerchandiseNode,
   ShopifyCartPayload,
   ShopifyCartWarning,
 } from "./cart.type";
@@ -35,6 +38,12 @@ type CartLineInput = {
   merchandiseId: string;
   quantity: number;
   attributes?: Array<{ key: string; value: string }>;
+};
+
+export type ResolvedCartMerchandise = {
+  merchandiseId: string;
+  kind: "caviar" | "gift_set";
+  requiresComponents: boolean;
 };
 
 function cartVariables(locale: RouteLocale) {
@@ -66,13 +75,55 @@ function attributesToRecord(attributes: ShopifyCartAttribute[]): Record<string, 
   return Object.fromEntries(attributes.map(({ key, value }) => [key, value]));
 }
 
-function isGiftSetLine(line: ShopifyCartLine): boolean {
-  const attributes = attributesToRecord(line.attributes);
-  if (attributes[CART_ATTRIBUTE.kind] === "gift_set") return true;
-  if (attributes[CART_ATTRIBUTE.kind] === "caviar") return false;
+function isGiftSetProductType(productType: string): boolean {
+  const normalized = productType.trim().toLowerCase();
+  return normalized.includes("gift") || normalized.includes("coffret");
+}
 
-  const productType = line.merchandise.product.productType.toLowerCase();
-  return productType.includes("gift") || productType.includes("coffret");
+function isComponentizedLine(line: ShopifyCartLine): boolean {
+  return line.merchandise.requiresComponents;
+}
+
+export async function resolveCartMerchandise({
+  request,
+  locale,
+  merchandiseId,
+}: {
+  request: Request;
+  locale: RouteLocale;
+  merchandiseId: string;
+}): Promise<ResolvedCartMerchandise> {
+  const client = getBuyerStorefrontClient(locale, request);
+  const response = assertTransport(
+    await client.query<{ node: ShopifyCartMerchandiseNode | null }>(CART_MERCHANDISE_QUERY, {
+      variables: { id: merchandiseId },
+    }),
+  );
+  const node = response.node;
+  if (
+    !node ||
+    node.__typename !== "ProductVariant" ||
+    typeof node.id !== "string" ||
+    typeof node.requiresComponents !== "boolean" ||
+    !node.product
+  ) {
+    throw new CartServiceError("INVALID_INPUT", "Cart merchandise is unavailable", 400);
+  }
+
+  const giftProductType = isGiftSetProductType(node.product.productType);
+  if (node.requiresComponents !== giftProductType) {
+    throw new CartServiceError(
+      "INVALID_INPUT",
+      "Cart merchandise has an unsupported bundle configuration",
+      400,
+    );
+  }
+
+  return {
+    merchandiseId: node.id,
+    kind: giftProductType ? "gift_set" : "caviar",
+    requiresComponents: node.requiresComponents,
+  };
 }
 
 async function queryCartPage(
@@ -164,21 +215,14 @@ async function executeMutation(
 }
 
 function caviarLine(merchandiseId: string, quantity: number): CartLineInput {
-  return {
-    merchandiseId,
-    quantity,
-    attributes: [{ key: CART_ATTRIBUTE.kind, value: "caviar" }],
-  };
+  return { merchandiseId, quantity };
 }
 
 function giftLines(merchandiseId: string, unitIds: string[]): CartLineInput[] {
   return unitIds.map((unitId) => ({
     merchandiseId,
     quantity: 1,
-    attributes: [
-      { key: CART_ATTRIBUTE.kind, value: "gift_set" },
-      { key: CART_ATTRIBUTE.unitId, value: unitId },
-    ],
+    attributes: [{ key: CART_ATTRIBUTE.unitId, value: unitId }],
   }));
 }
 
@@ -246,7 +290,7 @@ export async function addCaviar({
   if (!current) return null;
 
   const existing = current.lines.nodes.find(
-    (line) => !isGiftSetLine(line) && line.merchandise.id === merchandiseId,
+    (line) => !isComponentizedLine(line) && line.merchandise.id === merchandiseId,
   );
 
   const result = existing
@@ -309,10 +353,10 @@ export async function updateCartLineQuantity({
   const current = await getFullCartWithClient(client, cartId, locale);
   const line = current?.lines.nodes.find((candidate) => candidate.id === lineId);
   if (!line) throw new CartServiceError("LINE_NOT_FOUND", "Cart line not found", 404);
-  if (isGiftSetLine(line)) {
+  if (isComponentizedLine(line)) {
     throw new CartServiceError(
       "INVALID_INPUT",
-      "Gift-set physical units cannot change quantity",
+      "Componentized physical units cannot change quantity",
       400,
     );
   }
@@ -332,6 +376,7 @@ function mergeGiftAttributes(
   giftMessage: CartGiftMessage | null,
 ): ShopifyCartAttribute[] {
   const next = new Map(attributes.map(({ key, value }) => [key, value]));
+  next.delete(CART_ATTRIBUTE.legacyKind);
   next.delete(CART_ATTRIBUTE.giftMessageKind);
   next.delete(CART_ATTRIBUTE.giftMessage);
 
@@ -364,7 +409,7 @@ export async function updateGiftMessage({
   if (!line) throw new CartServiceError("LINE_NOT_FOUND", "Cart line not found", 404);
 
   const attrs = attributesToRecord(line.attributes);
-  if (!isGiftSetLine(line) || !attrs[CART_ATTRIBUTE.unitId]) {
+  if (!isGiftSetMerchandise(line.merchandise) || !attrs[CART_ATTRIBUTE.unitId]) {
     throw new CartServiceError(
       "INVALID_INPUT",
       "Gift messages require a stable gift-set unit",
@@ -453,6 +498,16 @@ export async function getCheckoutCart({
       )
     ).cart;
   }
+
+  cart = (
+    await executeMutation(
+      client,
+      CART_NOTE_UPDATE,
+      "cartNoteUpdate",
+      { cartId, note: buildCartOrderNote(cart) },
+      locale,
+    )
+  ).cart;
 
   return cart;
 }
