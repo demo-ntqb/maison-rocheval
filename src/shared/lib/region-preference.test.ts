@@ -14,15 +14,13 @@ describe("Region Preference Storage & Migration (Phase 4)", () => {
   });
 
   it("parse thành công schema mới dạng { routeLocale }", () => {
-    const raw = JSON.stringify({ routeLocale: "fr-sg" });
+    const raw = JSON.stringify({ routeLocale: "fr-fr" });
     const { preference } = parseRegionSnapshot(`${raw}\u00000`);
 
-    expect(preference).toEqual({ routeLocale: "fr-sg" });
+    expect(preference).toEqual({ routeLocale: "fr-fr" });
   });
 
   it("migrate an toàn schema cũ dạng { countryCode, locale }", () => {
-    // TODO: Tạm ẩn test của FR và US
-    /*
     // Schema cũ: France + English -> en-fr
     const rawOldFrEn = JSON.stringify({ countryCode: "FR", locale: "en" });
     expect(parseRegionSnapshot(`${rawOldFrEn}\u00000`).preference).toEqual({
@@ -40,7 +38,6 @@ describe("Region Preference Storage & Migration (Phase 4)", () => {
     expect(parseRegionSnapshot(`${rawOldUsEn}\u00000`).preference).toEqual({
       routeLocale: "en-us",
     });
-    */
 
     // Schema cũ: Singapore + English -> en-sg
     const rawOldSgEn = JSON.stringify({ countryCode: "SG", locale: "en" });
@@ -67,19 +64,10 @@ describe("Region Preference Storage & Migration (Phase 4)", () => {
   });
 
   it("updateRegionPreferenceLocale cập nhật ngôn ngữ và giữ nguyên country hiện tại", () => {
-    // TODO: Tạm ẩn test của FR và US
-    /*
     writeRegionPreference({ routeLocale: "en-us" });
     updateRegionPreferenceLocale("fr");
 
     const stored = JSON.parse(window.localStorage.getItem(PREFERENCE_KEY) ?? "{}");
     expect(stored).toEqual({ routeLocale: "fr-us" });
-    */
-
-    writeRegionPreference({ routeLocale: "en-sg" });
-    updateRegionPreferenceLocale("fr");
-
-    const stored = JSON.parse(window.localStorage.getItem(PREFERENCE_KEY) ?? "{}");
-    expect(stored).toEqual({ routeLocale: "fr-sg" });
   });
 });

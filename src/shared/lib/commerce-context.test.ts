@@ -10,23 +10,21 @@ import { getShopifyMarket } from "@/shared/lib/shopify/config";
 
 describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
   const EXPECTED_ROUTE_LOCALES = [
-    // "en-fr",
-    // "fr-fr",
-    // "en-us",
-    // "fr-us",
+    "en-fr",
+    "fr-fr",
+    "en-us",
+    "fr-us",
     "en-sg",
     "fr-sg",
   ] as const;
 
-  it("routing.locales phải hỗ trợ đầy đủ 2 BCP-47 route combinations cho Singapore", () => {
+  it("routing.locales phải hỗ trợ đầy đủ 6 BCP-47 route combinations", () => {
     for (const locale of EXPECTED_ROUTE_LOCALES) {
       expect(routing.locales).toContain(locale);
     }
   });
 
-  describe("Shopify market resolution cho commerce context combinations", () => {
-    // TODO: Tạm ẩn test của FR và US
-    /*
+  describe("Shopify market resolution cho 6 commerce context combinations", () => {
     it("giải quyết đúng context cho France (en-fr và fr-fr)", () => {
       const enFr = getShopifyMarket("en-fr");
       expect(enFr).toEqual({ country: "FR", language: "EN" });
@@ -42,7 +40,6 @@ describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
       const frUs = getShopifyMarket("fr-us");
       expect(frUs).toEqual({ country: "US", language: "FR" });
     });
-    */
 
     it("giải quyết đúng context cho Singapore (en-sg và fr-sg)", () => {
       const enSg = getShopifyMarket("en-sg");
@@ -54,18 +51,8 @@ describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
   });
 
   describe("Validation và rejection cho country/language ngoài allowlist", () => {
-    it("từ chối các route ngoài allowlist nước SG", () => {
-      const invalidCountryRoutes = [
-        "en-fr",
-        "fr-fr",
-        "en-us",
-        "fr-us",
-        "en-gb",
-        "de-de",
-        "es-es",
-        "ja-jp",
-        "fr-ca",
-      ];
+    it("từ chối các route ngoài allowlist các nước FR, US, SG", () => {
+      const invalidCountryRoutes = ["en-gb", "de-de", "es-es", "ja-jp", "fr-ca"];
 
       for (const route of invalidCountryRoutes) {
         expect((routing.locales as readonly string[]).includes(route)).toBe(false);
@@ -83,8 +70,6 @@ describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
 
   describe("parseCommerceContext & getCommerceContextOrDefault", () => {
     it("parse đúng commerce context cho từng routeLocale", () => {
-      // TODO: Tạm ẩn test của FR và US
-      /*
       expect(parseCommerceContext("en-us")).toEqual({
         routeLocale: "en-us",
         appLocale: "en",
@@ -98,7 +83,6 @@ describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
         country: "FR",
         language: "FR",
       });
-      */
 
       expect(parseCommerceContext("en-sg")).toEqual({
         routeLocale: "en-sg",
@@ -114,8 +98,6 @@ describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
         language: "FR",
       });
 
-      // TODO: Tạm ẩn test của FR và US
-      /*
       expect(parseCommerceContext("en-fr")).toEqual({
         routeLocale: "en-fr",
         appLocale: "en",
@@ -129,7 +111,6 @@ describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
         country: "US",
         language: "FR",
       });
-      */
     });
 
     it("fallback an toàn về default context en-sg khi input rỗng hoặc invalid", () => {
@@ -156,4 +137,3 @@ describe("Commerce Context & Route Contract (Phase 1 & 2)", () => {
     });
   });
 });
-

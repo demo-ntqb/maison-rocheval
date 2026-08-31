@@ -62,8 +62,6 @@ describe("Shopify Storefront Client — Outgoing Variables at Fetch Boundary (Ph
     return JSON.parse(requestOptions.body as string);
   }
 
-  // TODO: Tạm ẩn test của FR và US
-  /*
   it("gửi country=FR và language=FR ở fetch boundary cho fr-fr route", async () => {
     const { getCatalogStorefrontClient } = await import("./storefront");
     const client = getCatalogStorefrontClient("fr-fr");
@@ -72,7 +70,6 @@ describe("Shopify Storefront Client — Outgoing Variables at Fetch Boundary (Ph
     const payload = getOutgoingPayloadFromFetch();
     expect(payload).toBeDefined();
     // Expected contract: fr-fr -> country: "FR", language: "FR"
-    // Currently fails: returns country: "FR", language: "EN"
     expect(payload?.variables?.country).toBe("FR");
     expect(payload?.variables?.language).toBe("FR");
   });
@@ -85,11 +82,9 @@ describe("Shopify Storefront Client — Outgoing Variables at Fetch Boundary (Ph
     const payload = getOutgoingPayloadFromFetch();
     expect(payload).toBeDefined();
     // Expected contract: en-us -> country: "US", language: "EN"
-    // Currently fails: returns country: "FR", language: "EN"
     expect(payload?.variables?.country).toBe("US");
     expect(payload?.variables?.language).toBe("EN");
   });
-  */
 
   it("gửi country=SG và language=FR ở fetch boundary cho fr-sg route", async () => {
     const { getCatalogStorefrontClient } = await import("./storefront");

@@ -7,15 +7,14 @@ import type { AppLocale, ShippingCountryCode } from "@/shared/types/region.type"
  * `defaultLocale` là ngôn ngữ canonical gợi ý khi người dùng đổi quốc gia trong popup.
  * Tên quốc gia được dịch qua `regionDialog.countries.<code>` trong messages/*.
  */
-// TODO: Tạm ẩn 2 quốc gia FR và US
 export const SHIPPING_COUNTRIES: ReadonlyArray<{
   code: ShippingCountryCode;
   flag: string;
   defaultLocale: AppLocale;
 }> = [
   { code: "SG", flag: "🇸🇬", defaultLocale: "en" },
-  // { code: "FR", flag: "🇫🇷", defaultLocale: "fr" },
-  // { code: "US", flag: "🇺🇸", defaultLocale: "en" },
+  { code: "FR", flag: "🇫🇷", defaultLocale: "fr" },
+  { code: "US", flag: "🇺🇸", defaultLocale: "en" },
 ];
 
 /**
