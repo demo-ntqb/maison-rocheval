@@ -1,341 +1,426 @@
 {
   "info": {
     "name": "Maison Rocheval — Storefront API",
-    "description": "Storefront API queries for Maison Rocheval catalog. Configure the collection variables before running.",
+    "description": "Storefront API GraphQL queries and mutations for Maison Rocheval catalog and cart. Configure collection variables (store_domain, storefront_access_token, api_version) before running.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "store_domain",
       "value": "eu4yxr-1x.myshopify.com",
-      "description": "Shopify store domain"
+      "description": "Shopify store domain (e.g. eu4yxr-1x.myshopify.com or dev store)"
     },
     {
       "key": "storefront_access_token",
       "value": "",
-      "description": "Private Storefront API access token (from Shopify admin > Apps > Headless)"
+      "description": "Private Storefront API access token (Shopify admin > Apps > Headless / PRIVATE_STOREFRONT_API_TOKEN)"
     },
     {
       "key": "api_version",
       "value": "2026-04",
-      "description": "Storefront API version"
+      "description": "Shopify Storefront API version"
     }
   ],
   "item": [
     {
-      "name": "Localization Discovery",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
-          }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
-        },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "query LocalizationDiscovery {\n  localization {\n    availableCountries {\n      isoCode\n      name\n      availableLanguages {\n        isoCode\n        name\n      }\n      currency {\n        isoCode\n        symbol\n      }\n    }\n  }\n}",
-            "variables": "{}"
+      "name": "Localization",
+      "item": [
+        {
+          "name": "Localization Discovery",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query LocalizationDiscovery {\n  localization {\n    availableCountries {\n      isoCode\n      name\n      availableLanguages {\n        isoCode\n        name\n      }\n      currency {\n        isoCode\n        symbol\n      }\n    }\n  }\n}",
+                "variables": "{}"
+              }
+            }
           }
         }
-      }
+      ]
     },
     {
-      "name": "Product Detail",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
+      "name": "Catalog",
+      "item": [
+        {
+          "name": "Collection Products",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query CatalogCollection(\n  $handle: String!\n  $productCount: Int!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: $handle) {\n    products(first: $productCount, sortKey: CREATED, reverse: false) {\n      nodes {\n        ...CollectionProductCard\n      }\n    }\n  }\n}\nfragment CollectionProductCard on Product {\n  id\n  handle\n  title\n  productType\n  availableForSale\n  descriptionHtml\n  featuredImage { url altText width height }\n  priceRange { minVariantPrice { amount currencyCode } }\n  collections(first: 5) {\n    nodes {\n      handle\n    }\n  }\n  metafields(identifiers: [\n    { namespace: \"custom\", key: \"subtitle\" }\n    { namespace: \"custom\", key: \"notes\" }\n    { namespace: \"custom\", key: \"short_description\" }\n  ]) {\n    key\n    type\n    value\n  }\n}",
+                "variables": "{\n  \"handle\": \"our-caviar\",\n  \"productCount\": 50,\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
+              }
+            }
           }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
         },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "query CatalogProductDetail(\n  $handle: String!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  product(handle: $handle) {\n    id\n    handle\n    title\n    productType\n    availableForSale\n    descriptionHtml\n    featuredImage { url altText width height }\n    priceRange { minVariantPrice { amount currencyCode } }\n    images(first: 10) { nodes { url altText width height } }\n    collections(first: 5) {\n      nodes {\n        handle\n      }\n    }\n    variants(first: 20) {\n      nodes {\n        id\n        title\n        sku\n        availableForSale\n        quantityAvailable\n        price { amount currencyCode }\n        selectedOptions { name value }\n        metafield(namespace: \"custom\", key: \"title\") {\n          value\n        }\n      }\n    }\n    metafields(identifiers: [\n      { namespace: \"custom\", key: \"subtitle\" }\n      { namespace: \"custom\", key: \"notes\" }\n      { namespace: \"custom\", key: \"set_includes\" }\n      { namespace: \"custom\", key: \"short_description\" }\n      { namespace: \"custom\", key: \"product_info\" }\n      { namespace: \"custom\", key: \"serving\" }\n      { namespace: \"custom\", key: \"delivery\" }\n      { namespace: \"custom\", key: \"gifting\" }\n      { namespace: \"custom\", key: \"related_products\" }\n    ]) {\n      key\n      type\n      value\n      references(first: 10) {\n        nodes {\n          ... on Product { ...CatalogProductCard }\n        }\n      }\n    }\n  }\n}\n\nfragment CatalogProductCard on Product {\n  id\n  handle\n  title\n  productType\n  availableForSale\n  descriptionHtml\n  featuredImage { url altText width height }\n  priceRange { minVariantPrice { amount currencyCode } }\n  collections(first: 5) {\n    nodes {\n      handle\n    }\n  }\n  metafields(identifiers: [\n    { namespace: \"custom\", key: \"subtitle\" }\n    { namespace: \"custom\", key: \"notes\" }\n    { namespace: \"custom\", key: \"short_description\" }\n  ]) {\n    key\n    type\n    value\n  }\n}",
-            "variables": "{\n  \"handle\": \"amour\",\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
+        {
+          "name": "Product Detail",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query CatalogProductDetail(\n  $handle: String!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  product(handle: $handle) {\n    id\n    handle\n    title\n    productType\n    availableForSale\n    descriptionHtml\n    featuredImage { url altText width height }\n    priceRange { minVariantPrice { amount currencyCode } }\n    images(first: 10) { nodes { url altText width height } }\n    collections(first: 5) {\n      nodes {\n        handle\n      }\n    }\n    variants(first: 20) {\n      nodes {\n        id\n        title\n        sku\n        availableForSale\n        quantityAvailable\n        price { amount currencyCode }\n        selectedOptions { name value }\n        metafield(namespace: \"custom\", key: \"title\") {\n          value\n        }\n      }\n    }\n    metafields(identifiers: [\n      { namespace: \"custom\", key: \"subtitle\" }\n      { namespace: \"custom\", key: \"notes\" }\n      { namespace: \"custom\", key: \"set_includes\" }\n      { namespace: \"custom\", key: \"short_description\" }\n      { namespace: \"custom\", key: \"product_info\" }\n      { namespace: \"custom\", key: \"serving\" }\n      { namespace: \"custom\", key: \"delivery\" }\n      { namespace: \"custom\", key: \"gifting\" }\n      { namespace: \"custom\", key: \"related_products\" }\n    ]) {\n      key\n      type\n      value\n      references(first: 10) {\n        nodes {\n          ... on Product { ...CatalogProductCard }\n        }\n      }\n    }\n  }\n}\nfragment CatalogProductCard on Product {\n  id\n  handle\n  title\n  productType\n  availableForSale\n  descriptionHtml\n  featuredImage { url altText width height }\n  priceRange { minVariantPrice { amount currencyCode } }\n  collections(first: 5) {\n    nodes {\n      handle\n    }\n  }\n  metafields(identifiers: [\n    { namespace: \"custom\", key: \"subtitle\" }\n    { namespace: \"custom\", key: \"notes\" }\n    { namespace: \"custom\", key: \"short_description\" }\n  ]) {\n    key\n    type\n    value\n  }\n}",
+                "variables": "{\n  \"handle\": \"amour\",\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Catalog Handles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query CatalogHandles(\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: \"our-caviar\") {\n    products(first: 50, sortKey: CREATED, reverse: false) {\n      nodes { handle }\n    }\n  }\n}",
+                "variables": "{\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Shop Info",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetShopInfo {\n  shop {\n    id\n    name\n    brand {\n      logo { image { url } }\n      slogan\n      shortDescription\n    }\n    description\n    primaryDomain { host url }\n    paymentSettings {\n      countryCode\n      currencyCode\n    }\n  }\n}",
+                "variables": "{}"
+              }
+            }
           }
         }
-      }
+      ]
     },
     {
-      "name": "Collection Products",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Cart Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation MaisonCartCreate($input: CartInput!, $first: Int!, $after: String, $language: LanguageCode)\n@inContext(language: $language) {\n  cartCreate(input: $input) {\n    cart {\n      id totalQuantity checkoutUrl buyerIdentity { countryCode }\n      cost { subtotalAmount { amount currencyCode } }\n      lines(first: $first, after: $after) {\n        pageInfo { hasNextPage endCursor }\n        nodes {\n          id quantity attributes { key value }\n          cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }\n          merchandise { ... on ProductVariant {\n            id title availableForSale quantityAvailable selectedOptions { name value }\n            metafield(namespace: \"custom\", key: \"title\") { value }\n            image { url altText width height }\n            product { id handle title productType }\n          } }\n        }\n      }\n    }\n    userErrors { code field message }\n    warnings { code target message }\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"buyerIdentity\": {\n      \"countryCode\": \"FR\"\n    },\n    \"lines\": [\n      {\n        \"merchandiseId\": \"gid://shopify/ProductVariant/YOUR_VARIANT_ID_HERE\",\n        \"quantity\": 1,\n        \"attributes\": [\n          {\n            \"key\": \"_kind\",\n            \"value\": \"caviar\"\n          }\n        ]\n      }\n    ]\n  },\n  \"first\": 50,\n  \"after\": null,\n  \"language\": \"EN\"\n}"
+              }
+            }
           }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
         },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "query CatalogCollection(\n  $handle: String!\n  $productCount: Int!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: $handle) {\n    products(first: $productCount, sortKey: CREATED, reverse: false) {\n      nodes {\n        ...CollectionProductCard\n      }\n    }\n  }\n}\n\nfragment CollectionProductCard on Product {\n  id\n  handle\n  title\n  productType\n  availableForSale\n  descriptionHtml\n  featuredImage { url altText width height }\n  priceRange { minVariantPrice { amount currencyCode } }\n  collections(first: 5) {\n    nodes {\n      handle\n    }\n  }\n  metafields(identifiers: [\n    { namespace: \"custom\", key: \"subtitle\" }\n    { namespace: \"custom\", key: \"notes\" }\n    { namespace: \"custom\", key: \"short_description\" }\n  ]) {\n    key\n    type\n    value\n  }\n}",
-            "variables": "{\n  \"handle\": \"our-caviar\",\n  \"productCount\": 50,\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
+        {
+          "name": "Cart Fetch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query MaisonCartQuery(\n  $id: ID!\n  $first: Int!\n  $after: String\n  $language: LanguageCode\n) @inContext(language: $language) {\n  cart(id: $id) {\n    id\n    totalQuantity\n    checkoutUrl\n    buyerIdentity { countryCode }\n    cost { subtotalAmount { amount currencyCode } }\n    lines(first: $first, after: $after) {\n      pageInfo { hasNextPage endCursor }\n      nodes {\n        id\n        quantity\n        attributes { key value }\n        cost {\n          amountPerQuantity { amount currencyCode }\n          subtotalAmount { amount currencyCode }\n        }\n        merchandise {\n          ... on ProductVariant {\n            id\n            title\n            availableForSale\n            quantityAvailable\n            selectedOptions { name value }\n            metafield(namespace: \"custom\", key: \"title\") { value }\n            image { url altText width height }\n            product { id handle title productType }\n          }\n        }\n      }\n    }\n  }\n}",
+                "variables": "{\n  \"id\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"first\": 50,\n  \"after\": null,\n  \"language\": \"EN\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Cart Lines Add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation MaisonCartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!, $first: Int!, $after: String, $language: LanguageCode)\n@inContext(language: $language) {\n  cartLinesAdd(cartId: $cartId, lines: $lines) {\n    cart {\n      id totalQuantity checkoutUrl buyerIdentity { countryCode }\n      cost { subtotalAmount { amount currencyCode } }\n      lines(first: $first, after: $after) {\n        pageInfo { hasNextPage endCursor }\n        nodes {\n          id quantity attributes { key value }\n          cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }\n          merchandise { ... on ProductVariant {\n            id title availableForSale quantityAvailable selectedOptions { name value }\n            metafield(namespace: \"custom\", key: \"title\") { value }\n            image { url altText width height }\n            product { id handle title productType }\n          } }\n        }\n      }\n    }\n    userErrors { code field message }\n    warnings { code target message }\n  }\n}",
+                "variables": "{\n  \"cartId\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"lines\": [\n    {\n      \"merchandiseId\": \"gid://shopify/ProductVariant/YOUR_VARIANT_ID_HERE\",\n      \"quantity\": 1,\n      \"attributes\": [\n        {\n          \"key\": \"_kind\",\n          \"value\": \"caviar\"\n        }\n      ]\n    }\n  ],\n  \"first\": 50,\n  \"after\": null,\n  \"language\": \"EN\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Cart Lines Update",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation MaisonCartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!, $first: Int!, $after: String, $language: LanguageCode)\n@inContext(language: $language) {\n  cartLinesUpdate(cartId: $cartId, lines: $lines) {\n    cart {\n      id totalQuantity checkoutUrl buyerIdentity { countryCode }\n      cost { subtotalAmount { amount currencyCode } }\n      lines(first: $first, after: $after) {\n        pageInfo { hasNextPage endCursor }\n        nodes {\n          id quantity attributes { key value }\n          cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }\n          merchandise { ... on ProductVariant {\n            id title availableForSale quantityAvailable selectedOptions { name value }\n            metafield(namespace: \"custom\", key: \"title\") { value }\n            image { url altText width height }\n            product { id handle title productType }\n          } }\n        }\n      }\n    }\n    userErrors { code field message }\n    warnings { code target message }\n  }\n}",
+                "variables": "{\n  \"cartId\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"lines\": [\n    {\n      \"id\": \"gid://shopify/CartLine/YOUR_CART_LINE_ID_HERE\",\n      \"quantity\": 2\n    }\n  ],\n  \"first\": 50,\n  \"after\": null,\n  \"language\": \"EN\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Cart Lines Remove",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation MaisonCartLinesRemove($cartId: ID!, $lineIds: [ID!]!, $first: Int!, $after: String, $language: LanguageCode)\n@inContext(language: $language) {\n  cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {\n    cart {\n      id totalQuantity checkoutUrl buyerIdentity { countryCode }\n      cost { subtotalAmount { amount currencyCode } }\n      lines(first: $first, after: $after) {\n        pageInfo { hasNextPage endCursor }\n        nodes {\n          id quantity attributes { key value }\n          cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }\n          merchandise { ... on ProductVariant {\n            id title availableForSale quantityAvailable selectedOptions { name value }\n            metafield(namespace: \"custom\", key: \"title\") { value }\n            image { url altText width height }\n            product { id handle title productType }\n          } }\n        }\n      }\n    }\n    userErrors { code field message }\n    warnings { code target message }\n  }\n}",
+                "variables": "{\n  \"cartId\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"lineIds\": [\n    \"gid://shopify/CartLine/YOUR_CART_LINE_ID_HERE\"\n  ],\n  \"first\": 50,\n  \"after\": null,\n  \"language\": \"EN\"\n}"
+              }
+            }
+          }
+        },
+        {
+          "name": "Cart Buyer Identity Update",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Shopify-Storefront-Private-Token",
+                "value": "{{storefront_access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
+              "protocol": "https",
+              "host": [
+                "{{store_domain}}"
+              ],
+              "path": [
+                "api",
+                "{{api_version}}",
+                "graphql.json"
+              ]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation MaisonCartBuyerIdentityUpdate($cartId: ID!, $buyerIdentity: CartBuyerIdentityInput!, $first: Int!, $after: String, $language: LanguageCode)\n@inContext(language: $language) {\n  cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {\n    cart {\n      id totalQuantity checkoutUrl buyerIdentity { countryCode }\n      cost { subtotalAmount { amount currencyCode } }\n      lines(first: $first, after: $after) {\n        pageInfo { hasNextPage endCursor }\n        nodes {\n          id quantity attributes { key value }\n          cost { amountPerQuantity { amount currencyCode } subtotalAmount { amount currencyCode } }\n          merchandise { ... on ProductVariant {\n            id title availableForSale quantityAvailable selectedOptions { name value }\n            metafield(namespace: \"custom\", key: \"title\") { value }\n            image { url altText width height }\n            product { id handle title productType }\n          } }\n        }\n      }\n    }\n    userErrors { code field message }\n    warnings { code target message }\n  }\n}",
+                "variables": "{\n  \"cartId\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"buyerIdentity\": {\n    \"countryCode\": \"FR\"\n  },\n  \"first\": 50,\n  \"after\": null,\n  \"language\": \"FR\"\n}"
+              }
+            }
           }
         }
-      }
-    },
-    {
-      "name": "Collection Product Profiles",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
-          }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
-        },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "query CatalogCollectionProfiles(\n  $handle: String!\n  $productCount: Int!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: $handle) {\n    products(first: $productCount, sortKey: CREATED, reverse: false) {\n      nodes {\n        id\n        handle\n        title\n        productType\n        availableForSale\n        descriptionHtml\n        featuredImage { url altText width height }\n        images(first: 10) { nodes { url altText width height } }\n        priceRange { minVariantPrice { amount currencyCode } }\n        collections(first: 5) {\n          nodes {\n            handle\n          }\n        }\n        metafields(identifiers: [\n          { namespace: \"custom\", key: \"subtitle\" }\n          { namespace: \"custom\", key: \"notes\" }\n          { namespace: \"custom\", key: \"short_description\" }\n          { namespace: \"custom\", key: \"product_info\" }\n          { namespace: \"custom\", key: \"serving\" }\n          { namespace: \"custom\", key: \"delivery\" }\n          { namespace: \"custom\", key: \"gifting\" }\n        ]) {\n          key\n          type\n          value\n        }\n      }\n    }\n  }\n}",
-            "variables": "{\n  \"handle\": \"our-caviar\",\n  \"productCount\": 50,\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
-          }
-        }
-      }
-    },
-    {
-      "name": "Catalog Handles",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
-          }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
-        },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "query CatalogHandles(\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  collection(handle: \"our-caviar\") {\n    products(first: 50, sortKey: CREATED, reverse: false) {\n      nodes { handle }\n    }\n  }\n}",
-            "variables": "{\n  \"country\": \"FR\",\n  \"language\": \"EN\"\n}"
-          }
-        }
-      }
-    },
-    {
-      "name": "Get Shop Info",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
-          }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
-        },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "query GetShopInfo {\n  shop {\n    id\n    name\n    brand {\n      logo { image { url } }\n      slogan\n      shortDescription\n    }\n    description\n    primaryDomain { host url }\n    paymentSettings {\n      countryCode\n      currencyCode\n    }\n  }\n}",
-            "variables": "{}"
-          }
-        }
-      }
-    },
-    {
-      "name": "Cart Create",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
-          }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
-        },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "mutation CartCreate($input: CartInput!, $country: CountryCode, $language: LanguageCode)\n@inContext(country: $country, language: $language) {\n  cartCreate(input: $input) {\n    cart {\n      id\n      checkoutUrl\n      cost {\n        totalAmount {\n          amount\n          currencyCode\n        }\n        subtotalAmount {\n          amount\n          currencyCode\n        }\n      }\n      lines(first: 50) {\n        nodes {\n          id\n          quantity\n          cost {\n            totalAmount {\n              amount\n              currencyCode\n            }\n          }\n          merchandise {\n            ... on ProductVariant {\n              id\n              title\n              availableForSale\n              price {\n                amount\n                currencyCode\n              }\n              product {\n                id\n                title\n                handle\n              }\n            }\n          }\n        }\n      }\n    }\n    userErrors {\n      code\n      field\n      message\n    }\n  }\n}",
-            "variables": "{\n  \"input\": {\n    \"lines\": [\n      {\n        \"merchandiseId\": \"gid://shopify/ProductVariant/YOUR_VARIANT_ID_HERE\",\n        \"quantity\": 1\n      }\n    ]\n  },\n  \"country\": \"SG\",\n  \"language\": \"EN\"\n}"
-          }
-        }
-      }
-    },
-    {
-      "name": "Cart Fetch",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
-          }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
-        },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "query CartFetch($id: ID!, $country: CountryCode, $language: LanguageCode)\n@inContext(country: $country, language: $language) {\n  cart(id: $id) {\n    id\n    checkoutUrl\n    cost {\n      totalAmount {\n        amount\n        currencyCode\n      }\n      subtotalAmount {\n        amount\n        currencyCode\n      }\n    }\n    lines(first: 50) {\n      nodes {\n        id\n        quantity\n        merchandise {\n          ... on ProductVariant {\n            id\n            title\n            availableForSale\n            price {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n    }\n  }\n}",
-            "variables": "{\n  \"id\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"country\": \"SG\",\n  \"language\": \"EN\"\n}"
-          }
-        }
-      }
-    },
-    {
-      "name": "Cart Buyer Identity Update",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "Shopify-Storefront-Private-Token",
-            "value": "{{storefront_access_token}}"
-          }
-        ],
-        "url": {
-          "raw": "https://{{store_domain}}/api/{{api_version}}/graphql.json",
-          "protocol": "https",
-          "host": [
-            "{{store_domain}}"
-          ],
-          "path": [
-            "api",
-            "{{api_version}}",
-            "graphql.json"
-          ]
-        },
-        "body": {
-          "mode": "graphql",
-          "graphql": {
-            "query": "mutation CartBuyerIdentityUpdate(\n  $cartId: ID!\n  $buyerIdentity: CartBuyerIdentityInput!\n  $country: CountryCode\n  $language: LanguageCode\n) @inContext(country: $country, language: $language) {\n  cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {\n    cart {\n      id\n      checkoutUrl\n      cost {\n        totalAmount {\n          amount\n          currencyCode\n        }\n        subtotalAmount {\n          amount\n          currencyCode\n        }\n      }\n    }\n    userErrors {\n      code\n      field\n      message\n    }\n  }\n}",
-            "variables": "{\n  \"cartId\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"buyerIdentity\": {\n    \"countryCode\": \"FR\"\n  },\n  \"country\": \"FR\",\n  \"language\": \"FR\"\n}"
-          }
-        }
-      }
+      ]
     }
   ]
 }

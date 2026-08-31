@@ -59,11 +59,10 @@ export function ProductDetailTinWeightSelector({
                 className={cn(
                   "flex w-full items-center rounded-[2px] font-sans text-base leading-normal transition-colors peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-navy-darker",
                   isRow ? "h-10 justify-center px-4 py-1" : "h-12 px-6",
-                  isSelected
-                    ? "bg-navy-darker text-white cursor-default"
-                    : isOutOfStock
+                  isOutOfStock
                     ? "border-[0.5px] border-[#d8d8d8] text-[#9c9c9c] opacity-50 cursor-not-allowed"
-                    : "border-[0.5px] border-line text-black hover:border-navy-darker cursor-pointer",
+                    : isSelected
+                      ? "bg-navy-darker text-white cursor-default" : "border-[0.5px] border-line text-black hover:border-navy-darker cursor-pointer",
                 )}
               >
                 {variant.optionValue}

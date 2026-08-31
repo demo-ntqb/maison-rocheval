@@ -1,4 +1,5 @@
 import { IconShoppingCart } from "@/shared/components/icons/ic-shopping-cart";
+import { Button } from "@/shared/components/ui/button";
 import { ProductDetailStepper } from "./product-detail-stepper";
 
 export interface ProductDetailPurchaseProps {
@@ -50,15 +51,15 @@ export function ProductDetailPurchase({
             notEnoughStockLabel={notEnoughStockLabel}
           />
 
-          <button
+          <Button
             type="button"
             disabled={!available}
             onClick={onAddToCart}
-            className="flex h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-[2px] bg-navy-darker px-8 font-sans text-base text-white transition-colors hover:bg-navy-hover active:bg-navy-press focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-darker disabled:cursor-not-allowed disabled:bg-navy-dark disabled:text-navy-disabled-text lg:h-10 lg:flex-1 lg:gap-1 lg:px-5 lg:text-sm"
+            className="h-12 w-full cursor-pointer gap-2 px-8 text-base lg:h-10 lg:flex-1 lg:gap-1 lg:px-5 lg:text-sm border-[0.5px] border-stone"
           >
             <IconShoppingCart aria-hidden="true" className="size-6 shrink-0 lg:size-5" />
             <span>{available ? addToCartLabel : unavailableLabel}</span>
-          </button>
+          </Button>
         </div>
 
         {/* Figma shows the delivery reassurance on the mobile frame only. */}
