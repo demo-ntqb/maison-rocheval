@@ -58,7 +58,7 @@ export function ProductDetailPurchase({
             className="h-12 w-full cursor-pointer gap-2 px-8 text-base lg:h-10 lg:flex-1 lg:gap-1 lg:px-5 lg:text-sm border-[0.5px] border-stone"
           >
             <IconShoppingCart aria-hidden="true" className="size-6 shrink-0 lg:size-5" />
-            <span>{available ? addToCartLabel : unavailableLabel}</span>
+            <span>{addToCartLabel}</span>
           </Button>
         </div>
 

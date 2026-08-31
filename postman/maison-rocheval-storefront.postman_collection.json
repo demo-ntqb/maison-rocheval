@@ -6,6 +6,16 @@
   },
   "variable": [
     {
+      "key": "app_url",
+      "value": "http://localhost:3000",
+      "description": "Next.js application URL (e.g. http://localhost:3000 or production domain)"
+    },
+    {
+      "key": "revalidate_secret",
+      "value": "",
+      "description": "Secret token for on-demand cache revalidation (REVALIDATE_SECRET_TOKEN or SHOPIFY_ADMIN_CLIENT_SECRET)"
+    },
+    {
       "key": "store_domain",
       "value": "eu4yxr-1x.myshopify.com",
       "description": "Shopify store domain (e.g. eu4yxr-1x.myshopify.com or dev store)"
@@ -418,6 +428,185 @@
                 "variables": "{\n  \"cartId\": \"gid://shopify/Cart/YOUR_CART_ID_HERE\",\n  \"buyerIdentity\": {\n    \"countryCode\": \"FR\"\n  },\n  \"first\": 50,\n  \"after\": null,\n  \"language\": \"FR\"\n}"
               }
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cache Revalidation",
+      "item": [
+        {
+          "name": "Revalidate All Catalog Tags",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{revalidate_secret}}"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/api/revalidate",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "api",
+                "revalidate"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Revalidate all default catalog tags (shopify-products, shopify-collections, shopify-metaobjects)"
+          }
+        },
+        {
+          "name": "Revalidate by Tag",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{revalidate_secret}}"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/api/revalidate",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "api",
+                "revalidate"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tag\": \"shopify-products\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Revalidate a specific cache tag (or array of tags via {\"tags\": [...]})"
+          }
+        },
+        {
+          "name": "Revalidate Product Handle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{revalidate_secret}}"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/api/revalidate",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "api",
+                "revalidate"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"handle\": \"amour\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Revalidate a specific product by handle (revalidates shopify-products and shopify-product-[handle])"
+          }
+        },
+        {
+          "name": "Revalidate Collection Handle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{revalidate_secret}}"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/api/revalidate",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "api",
+                "revalidate"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"collection\": \"our-caviar\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Revalidate a specific collection by handle (revalidates shopify-collections and shopify-collection-[collection])"
+          }
+        },
+        {
+          "name": "Revalidate via GET",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-revalidate-secret",
+                "value": "{{revalidate_secret}}"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/api/revalidate?tag=shopify-products",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "api",
+                "revalidate"
+              ],
+              "query": [
+                {
+                  "key": "tag",
+                  "value": "shopify-products",
+                  "description": "Specific tag (or use handle=..., collection=...)"
+                }
+              ]
+            },
+            "description": "Revalidate via GET query params with x-revalidate-secret header"
           }
         }
       ]
