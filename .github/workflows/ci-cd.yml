@@ -47,6 +47,9 @@ jobs:
       - name: Typecheck
         run: yarn typecheck
 
+      - name: Focused cart tests
+        run: yarn test:unit cart
+
       - name: Verify CI/CD contract
         run: yarn test:cicd
 
