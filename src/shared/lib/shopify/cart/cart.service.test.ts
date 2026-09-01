@@ -200,4 +200,28 @@ describe("Shopify cart service business inputs", () => {
       { id: "gid://shopify/CartLine/1", quantity: 3 },
     ]);
   });
+
+  it("syncs business order summary note when checking out if note differs", async () => {
+    const rawCart = cart([line()]);
+    const updatedCart = { ...rawCart, note: "Maison Rocheval · Order Summary\n\nIndividual items\n\nAmour                            × 1" };
+    const query = vi
+      .fn()
+      .mockResolvedValueOnce({ cart: rawCart })
+      .mockResolvedValueOnce({ cartNoteUpdate: { cart: updatedCart, userErrors: [], warnings: [] } });
+    mocks.getBuyerStorefrontClient.mockReturnValue({ query });
+    const { getCheckoutCart } = await import("./cart.service");
+
+    const result = await getCheckoutCart({
+      request: new Request("https://maison.test"),
+      locale: "en-sg",
+      cartId: "gid://shopify/Cart/current?key=secret",
+    });
+
+    expect(result?.note).toBe(updatedCart.note);
+    expect(query).toHaveBeenCalledTimes(2);
+    expect(query.mock.calls[1]?.[1]?.variables).toMatchObject({
+      cartId: "gid://shopify/Cart/current?key=secret",
+      note: expect.stringContaining("Maison Rocheval · Order Summary"),
+    });
+  });
 });

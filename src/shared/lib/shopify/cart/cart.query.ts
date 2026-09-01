@@ -7,6 +7,7 @@ export const CART_QUERY = `#graphql
   ) @inContext(language: $language) {
     cart(id: $id) {
       id
+      note
       totalQuantity
       checkoutUrl
       buyerIdentity { countryCode }

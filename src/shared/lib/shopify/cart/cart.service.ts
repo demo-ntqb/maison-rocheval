@@ -9,7 +9,9 @@ import {
   CART_LINES_ADD,
   CART_LINES_REMOVE,
   CART_LINES_UPDATE,
+  CART_NOTE_UPDATE,
 } from "./cart.mutation";
+import { buildBusinessOrderNote } from "./cart.note";
 import { CART_QUERY } from "./cart.query";
 import { CartServiceError, throwForUserErrors } from "./cart.error";
 import type {
@@ -449,6 +451,20 @@ export async function getCheckoutCart({
         CART_BUYER_IDENTITY_UPDATE,
         "cartBuyerIdentityUpdate",
         { cartId, buyerIdentity: { countryCode: market.country } },
+        locale,
+      )
+    ).cart;
+  }
+
+  const snapshot = mapShopifyCart(cart, market.country);
+  const businessNote = buildBusinessOrderNote(snapshot);
+  if (businessNote && cart.note !== businessNote) {
+    cart = (
+      await executeMutation(
+        client,
+        CART_NOTE_UPDATE,
+        "cartNoteUpdate",
+        { cartId, note: businessNote },
         locale,
       )
     ).cart;

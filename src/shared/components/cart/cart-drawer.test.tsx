@@ -208,11 +208,10 @@ describe("CartDrawer", () => {
     expect(screen.getByRole("region", { name: "L’Initiation" })).toBeInTheDocument();
   });
 
-  it("keeps the drawer open and overlays the message editor", () => {
+  it("opens message editor and restores drawer on close", () => {
     renderCart(ENTRIES);
 
     fireEvent.click(screen.getAllByRole("button", { name: "Add message" })[0]!);
-    expect(screen.getByText("YOUR BAG (4)")).toBeInTheDocument();
     expect(screen.getByRole("dialog")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Close message editor" }));

@@ -36,6 +36,7 @@ export type ShopifyCartLine = {
 
 export type ShopifyCart = {
   id: string;
+  note?: string | null;
   totalQuantity: number;
   checkoutUrl: string;
   buyerIdentity: { countryCode: string | null };
