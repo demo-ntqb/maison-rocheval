@@ -24,27 +24,14 @@ type Venue = {
 };
 
 export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
-  const [isWide, setIsWide] = useState(false);
+  const [ref, api] = useEmblaCarousel({
+    align: "center",
+    containScroll: "trimSnaps",
+    dragFree: true,
+    loop: false,
+    startIndex: 0,
+  });
 
-  useEffect(() => {
-    const checkSize = () => {
-      setIsWide(window.innerWidth >= 1564);
-    };
-    checkSize();
-    window.addEventListener("resize", checkSize);
-    return () => window.removeEventListener("resize", checkSize);
-  }, []);
-
-  const [ref, api] = useEmblaCarousel(
-    {
-      align: "center",
-      containScroll: "trimSnaps",
-      dragFree: true,
-      loop: false,
-      active: !isWide,
-      startIndex: 1,
-    }
-  );
   const [canScroll, setCanScroll] = useState([false, false]);
   const sync = useCallback(
     () =>
@@ -65,10 +52,12 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
     };
   }, [api, sync]);
 
+  const hasControls = venues.length > 1 && (canScroll[0] || canScroll[1]);
+
   return (
     <div role="region" aria-roledescription="carousel" aria-label="Restaurant partners">
       <div ref={ref} className="overflow-visible">
-        <div className="flex gap-6 will-change-transform md:gap-8 min-[1564px]:justify-center">
+        <div className="flex gap-6 will-change-transform md:gap-8">
           {venues.map((venue) => (
             <article
               key={venue.name}
@@ -128,11 +117,11 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
           ))}
         </div>
       </div>
-      {venues.length > 1 && (
-        <div className="mt-13 flex justify-center gap-4 min-[1564px]:hidden">
+      {hasControls && (
+        <div className="mt-13 flex justify-center gap-4">
           <IconButton
             onClick={() => api?.scrollPrev()}
-            disabled={!canScroll[0] || isWide}
+            disabled={!canScroll[0]}
             className="flex"
             aria-label="Previous restaurant"
             data-plumb-id="icon-button"
@@ -141,7 +130,7 @@ export function AboutVenuesCarousel({ venues }: { venues: Venue[] }) {
           </IconButton>
           <IconButton
             onClick={() => api?.scrollNext()}
-            disabled={!canScroll[1] || isWide}
+            disabled={!canScroll[1]}
             className="flex"
             aria-label="Next restaurant"
             data-plumb-id="icon-button-2"

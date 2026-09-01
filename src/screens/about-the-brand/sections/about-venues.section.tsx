@@ -57,7 +57,7 @@ export async function AboutVenuesSection() {
     >
       <div
         data-plumb-id="frame-2085667314"
-        className="mx-auto flex w-full flex-col max-w-content gap-13.5 px-4 lg:px-0"
+        className="flex w-full flex-col gap-13.5 px-4 lg:px-6"
       >
         <div className="w-full flex flex-col items-center gap-4 text-center max-w-160 mx-auto">
           <SplitText
