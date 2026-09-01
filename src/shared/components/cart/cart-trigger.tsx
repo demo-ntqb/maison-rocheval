@@ -22,11 +22,11 @@ export function CartTrigger({ className }: CartTriggerProps) {
       onClick={open}
       aria-label={t("openBag", { count: itemCount })}
       className={cn(
-        "relative inline-flex size-12 cursor-pointer items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2",
+        "relative inline-flex size-11 cursor-pointer items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 lg:size-12",
         className,
       )}
     >
-      <Handbag aria-hidden="true" className="size-6 transition-transform hover:scale-105" strokeWidth={1.5} />
+      <Handbag aria-hidden="true" className="size-5 transition-transform hover:scale-105 lg:size-6" strokeWidth={1.5} />
 
       {itemCount > 0 && (
         <span

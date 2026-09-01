@@ -25,6 +25,10 @@ const HEADER_ROUTE_CONFIG: Record<string, HeaderRouteConfig> = {
     heroTone: "light",
     announcement: true,
   },
+  [ROUTES.SHOP]: {
+    variant: "transparent",
+    heroTone: "light",
+  },
   [ROUTES.CONTACT]: {
     variant: "transparent",
     heroTone: "light",

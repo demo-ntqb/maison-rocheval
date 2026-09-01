@@ -23,7 +23,7 @@ export function CartEmpty({ onContinue }: CartEmptyProps) {
           asChild
           className="mt-3.5 h-8 w-40 max-w-full bg-black px-4 font-sans text-xs font-normal uppercase tracking-[0.12em] text-white hover:bg-ink-soft"
         >
-          <Link href={ROUTES.PRODUCTS} onClick={onContinue}>
+          <Link href={ROUTES.PRODUCT_CATEGORY('gift-set')} onClick={onContinue}>
             {t("cta")}
           </Link>
         </Button>

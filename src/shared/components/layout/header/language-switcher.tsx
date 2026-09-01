@@ -1,12 +1,12 @@
 "use client";
 
-import { useLocale } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { parseCommerceContext } from "@/shared/lib/commerce-context";
 import { updateRegionPreferenceLocale } from "@/shared/lib/region-preference";
 import { cn } from "@/shared/lib/utils";
 import type { RouteLocale } from "@/shared/types/region.type";
+import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 interface LanguageSwitcherProps {
   availableRouteLocales: readonly RouteLocale[];

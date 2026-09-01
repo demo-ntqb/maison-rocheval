@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "accessGate": {
+      "title": "Accès prioritaire | Maison Rocheval",
+      "description": "Saisissez votre code d’accès prioritaire pour commander les produits Maison Rocheval."
+    }
+  },
+  "accessGate": {
+    "title": "Accès prioritaire",
+    "description": {
+      "desktop": {
+        "before": "Vous bénéficiez d’un accès prioritaire pour précommander les produits Maison Rocheval. Pour plus d’informations, contactez-nous"
+      },
+      "mobile": {
+        "before": "Un code est actuellement nécessaire pour commander les produits Maison Rocheval. Pour plus d’informations, contactez-nous"
+      },
+      "link": "ici",
+      "contactLabel": "Contacter Maison Rocheval",
+      "contactLinkSuffix": "pour contacter Maison Rocheval",
+      "after": "."
+    },
+    "form": {
+      "placeholder": "Saisissez votre code",
+      "submit": "Entrer",
+      "error": "Le code est incorrect"
+    }
+  }
+}

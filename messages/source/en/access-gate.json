@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "accessGate": {
+      "title": "Priority Access | Maison Rocheval",
+      "description": "Enter your priority access code to order Maison Rocheval products."
+    }
+  },
+  "accessGate": {
+    "title": "Priority Access",
+    "description": {
+      "desktop": {
+        "before": "You have priority access to pre-order Maison Rocheval’s products. For more information, contact us"
+      },
+      "mobile": {
+        "before": "You require a pin to order Maison Rocheval’s products currently. For more information, contact us"
+      },
+      "link": "here",
+      "contactLabel": "Contact Maison Rocheval",
+      "contactLinkSuffix": "to contact Maison Rocheval",
+      "after": "."
+    },
+    "form": {
+      "placeholder": "Enter your code",
+      "submit": "Enter",
+      "error": "Code was incorrect"
+    }
+  }
+}

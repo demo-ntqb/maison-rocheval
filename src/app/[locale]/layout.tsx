@@ -48,6 +48,8 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const isVercelDeployment = process.env.VERCEL === "1";
+
 export async function generateStaticParams() {
   const { availableRouteLocales } = await getDiscoveredMarkets();
   return availableRouteLocales.map((locale) => ({ locale }));
@@ -112,7 +114,7 @@ export default async function LocaleLayout({
         className="flex min-h-full flex-col items-center bg-canvas font-sans"
       >
         {children}
-        <Analytics />
+        {isVercelDeployment && <Analytics />}
       </body>
     </html>
   );
