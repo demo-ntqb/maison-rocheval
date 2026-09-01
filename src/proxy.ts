@@ -63,6 +63,7 @@ export function proxy(request: NextRequest) {
   if (pin !== null) {
     const isValidPin = isAccessGatePinValid(pin);
     const url = localizedUrl(request, routeLocale, isValidPin ? ROUTES.PRODUCTS : ROUTES.SHOP);
+    if (!isValidPin) url.searchParams.set("access", "invalid");
 
     const response = NextResponse.redirect(url);
     const grant = createAccessGateGrant();
