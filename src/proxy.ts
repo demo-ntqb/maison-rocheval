@@ -5,6 +5,8 @@ import { ROUTES } from "./shared/constants/route.constant";
 import { DEFAULT_ROUTE_LOCALE } from "./shared/constants/commerce-context.constant";
 import {
   ACCESS_GATE_COOKIE,
+  createAccessGateGrant,
+  hasAccessGateGrant,
   isAccessGatePinValid,
   shouldShowAccessGate,
 } from "./shared/lib/access-gate";
@@ -50,7 +52,7 @@ export function proxy(request: NextRequest) {
       : i18nResponse;
   }
 
-  const hasAccess = isAccessGatePinValid(request.cookies.get(ACCESS_GATE_COOKIE)?.value ?? null);
+  const hasAccess = hasAccessGateGrant(request.cookies.get(ACCESS_GATE_COOKIE)?.value);
   if (isCatalogRoute(routePath) && !hasAccess) {
     return NextResponse.redirect(localizedUrl(request, routeLocale, ROUTES.SHOP));
   }
@@ -63,8 +65,9 @@ export function proxy(request: NextRequest) {
     const url = localizedUrl(request, routeLocale, isValidPin ? ROUTES.PRODUCTS : ROUTES.SHOP);
 
     const response = NextResponse.redirect(url);
-    if (isValidPin) {
-      response.cookies.set(ACCESS_GATE_COOKIE, pin, {
+    const grant = createAccessGateGrant();
+    if (isValidPin && grant) {
+      response.cookies.set(ACCESS_GATE_COOKIE, grant, {
         httpOnly: true,
         path: "/",
         sameSite: "lax",

@@ -1,3 +1,5 @@
+import { createHmac, timingSafeEqual } from "node:crypto";
+
 import type { SupportedCountry } from "@/shared/types/commerce-context.type";
 
 export const ACCESS_GATE_COOKIE = "mr_us_access";
@@ -11,4 +13,21 @@ export function shouldShowAccessGate(country: SupportedCountry): boolean {
 export function isAccessGatePinValid(value: string | null): boolean {
   const pin = process.env.ACCESS_GATE_PIN_US?.trim();
   return Boolean(pin && value === pin);
+}
+
+export function createAccessGateGrant(): string | null {
+  const pin = process.env.ACCESS_GATE_PIN_US?.trim();
+  const secret = process.env.ACCESS_GATE_SECRET?.trim();
+  if (!pin || !secret) return null;
+
+  return createHmac("sha256", secret).update(`access-gate:${pin}`).digest("base64url");
+}
+
+export function hasAccessGateGrant(value: string | undefined): boolean {
+  const grant = createAccessGateGrant();
+  if (!grant || !value) return false;
+
+  const expected = Buffer.from(grant);
+  const received = Buffer.from(value);
+  return expected.length === received.length && timingSafeEqual(expected, received);
 }
