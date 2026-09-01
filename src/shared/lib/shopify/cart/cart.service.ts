@@ -2,7 +2,7 @@ import "server-only";
 
 import { getShopifyMarket } from "../config";
 import { getBuyerStorefrontClient, type StorefrontClient } from "../storefront";
-import { CART_ATTRIBUTE, mapShopifyCart } from "./cart.mapper";
+import { CART_ATTRIBUTE, formatGiftMessageAttribute, mapShopifyCart } from "./cart.mapper";
 import {
   CART_BUYER_IDENTITY_UPDATE,
   CART_CREATE,
@@ -341,7 +341,7 @@ function mergeGiftAttributes(
     next.set(CART_ATTRIBUTE.giftMessageKind, "blank");
   } else if (giftMessage?.kind === "personal") {
     next.set(CART_ATTRIBUTE.giftMessageKind, "personal");
-    next.set(CART_ATTRIBUTE.giftMessage, giftMessage.text);
+    next.set(CART_ATTRIBUTE.giftMessage, formatGiftMessageAttribute(giftMessage.text));
   }
 
   return Array.from(next, ([key, value]) => ({ key, value }));
@@ -459,15 +459,19 @@ export async function getCheckoutCart({
   const snapshot = mapShopifyCart(cart, market.country);
   const businessNote = buildBusinessOrderNote(snapshot);
   if (businessNote && cart.note !== businessNote) {
-    cart = (
-      await executeMutation(
-        client,
-        CART_NOTE_UPDATE,
-        "cartNoteUpdate",
-        { cartId, note: businessNote },
-        locale,
-      )
-    ).cart;
+    try {
+      cart = (
+        await executeMutation(
+          client,
+          CART_NOTE_UPDATE,
+          "cartNoteUpdate",
+          { cartId, note: businessNote },
+          locale,
+        )
+      ).cart;
+    } catch {
+      // Non-blocking fallback: avoid breaking checkout if Shopify note update fails
+    }
   }
 
   return cart;

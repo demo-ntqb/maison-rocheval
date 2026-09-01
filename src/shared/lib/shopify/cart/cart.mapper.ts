@@ -23,11 +23,20 @@ function resolveKind(line: ShopifyCartLine, attributes: Record<string, string>):
   return productType.includes("gift") || productType.includes("coffret") ? "gift_set" : "caviar";
 }
 
+export function formatGiftMessageAttribute(text: string): string {
+  return text.split(/\r?\n/).join(" ↵\n");
+}
+
+function parseGiftMessageAttribute(raw: string): string {
+  return raw.replace(/ ↵\r?\n| ↵ /g, "\n");
+}
+
 function mapGiftMessage(attributes: Record<string, string>): CartGiftMessage | null {
   const kind = attributes[CART_ATTRIBUTE.giftMessageKind];
   if (kind === "blank") return { kind: "blank" };
   if (kind === "personal") {
-    return { kind: "personal", text: attributes[CART_ATTRIBUTE.giftMessage] ?? "" };
+    const raw = attributes[CART_ATTRIBUTE.giftMessage] ?? "";
+    return { kind: "personal", text: parseGiftMessageAttribute(raw) };
   }
   return null;
 }

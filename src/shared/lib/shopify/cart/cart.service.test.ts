@@ -164,7 +164,7 @@ describe("Shopify cart service business inputs", () => {
       locale: "en-sg",
       cartId: "gid://shopify/Cart/current?key=secret",
       lineId: "gid://shopify/CartLine/1",
-      giftMessage: { kind: "personal", text: "For you" },
+      giftMessage: { kind: "personal", text: "For you\nWith love" },
     });
 
     expect(query.mock.calls[1]?.[1]?.variables.lines).toEqual([
@@ -174,7 +174,7 @@ describe("Shopify cart service business inputs", () => {
           { key: "_mr_kind", value: "gift_set" },
           { key: "_mr_unit_id", value: "unit-a" },
           { key: "_mr_gift_message_kind", value: "personal" },
-          { key: "_mr_gift_message", value: "For you" },
+          { key: "_mr_gift_message", value: "For you ↵\nWith love" },
         ],
       },
     ]);

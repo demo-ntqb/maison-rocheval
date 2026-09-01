@@ -61,14 +61,14 @@ describe("cart mapper", () => {
           { key: "_mr_kind", value: "gift_set" },
           { key: "_mr_unit_id", value: "unit-a" },
           { key: "_mr_gift_message_kind", value: "personal" },
-          { key: "_mr_gift_message", value: "A" },
+          { key: "_mr_gift_message", value: "Line 1 ↵\nLine 2" },
         ],
       }),
     );
 
     expect(mapped.kind).toBe("gift_set");
     expect(mapped.unitId).toBe("unit-a");
-    expect(mapped.giftMessage).toEqual({ kind: "personal", text: "A" });
+    expect(mapped.giftMessage).toEqual({ kind: "personal", text: "Line 1\nLine 2" });
     expect(mapped.quantityEditable).toBe(false);
   });
 

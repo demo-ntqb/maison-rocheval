@@ -1,35 +1,15 @@
 import { describe, expect, it } from "vitest";
 import type { CartSnapshot } from "@/shared/types/cart.type";
-import { buildBusinessOrderNote } from "./cart.note";
+import { buildBusinessOrderNote, MAX_ORDER_NOTE_LENGTH } from "./cart.note";
 
 describe("buildBusinessOrderNote", () => {
-  it("formats order summary matching user example", () => {
+  it("formats order summary using gift set unit ID and message summary", () => {
     const snapshot: CartSnapshot = {
       countryCode: "SG",
       itemCount: 4,
       subtotal: { amount: "1000.00", currencyCode: "SGD" },
       warnings: [],
       entries: [
-        {
-          kind: "line",
-          line: {
-            id: "gid://shopify/CartLine/1",
-            merchandiseId: "gid://shopify/ProductVariant/1",
-            productId: "gid://shopify/Product/1",
-            kind: "caviar",
-            image: null,
-            quantity: 1,
-            quantityAvailable: 10,
-            quantityEditable: true,
-            supportsGiftMessage: false,
-            title: "Kaluga",
-            weight: "30g",
-            unitPrice: { amount: "250.00", currencyCode: "SGD" },
-            subtotal: { amount: "250.00", currencyCode: "SGD" },
-            giftMessage: null,
-            unitId: null,
-          },
-        },
         {
           kind: "group",
           group: {
@@ -50,7 +30,7 @@ describe("buildBusinessOrderNote", () => {
                 weight: "Set",
                 unitPrice: { amount: "250.00", currencyCode: "SGD" },
                 subtotal: { amount: "250.00", currencyCode: "SGD" },
-                giftMessage: { kind: "personal", text: "123213123" },
+                giftMessage: { kind: "personal", text: "Happy Birthday" },
                 unitId: "unit-1",
               },
             ],
@@ -76,7 +56,7 @@ describe("buildBusinessOrderNote", () => {
                 weight: "Set",
                 unitPrice: { amount: "250.00", currencyCode: "SGD" },
                 subtotal: { amount: "250.00", currencyCode: "SGD" },
-                giftMessage: { kind: "personal", text: "312312321" },
+                giftMessage: { kind: "blank" },
                 unitId: "unit-2",
               },
               {
@@ -93,10 +73,30 @@ describe("buildBusinessOrderNote", () => {
                 weight: "Set",
                 unitPrice: { amount: "250.00", currencyCode: "SGD" },
                 subtotal: { amount: "250.00", currencyCode: "SGD" },
-                giftMessage: { kind: "personal", text: "312321313" },
+                giftMessage: { kind: "personal", text: "Warm wishes" },
                 unitId: "unit-3",
               },
             ],
+          },
+        },
+        {
+          kind: "line",
+          line: {
+            id: "gid://shopify/CartLine/1",
+            merchandiseId: "gid://shopify/ProductVariant/1",
+            productId: "gid://shopify/Product/1",
+            kind: "caviar",
+            image: null,
+            quantity: 2,
+            quantityAvailable: 10,
+            quantityEditable: true,
+            supportsGiftMessage: false,
+            title: "Kaluga",
+            weight: "30g",
+            unitPrice: { amount: "250.00", currencyCode: "SGD" },
+            subtotal: { amount: "500.00", currencyCode: "SGD" },
+            giftMessage: null,
+            unitId: null,
           },
         },
       ],
@@ -106,28 +106,59 @@ describe("buildBusinessOrderNote", () => {
 
     const expected = `Maison Rocheval · Order Summary
 
-Individual items
-
-Kaluga                            × 1
-
-
 Gift sets
-
 L'Excellence                      × 1
-
-Gift #1
-123213123
-
+• Gift #1 (ID: unit-1) — Personal message
 
 L'Initiation                      × 2
+• Gift #1 (ID: unit-2) — Blank card
+• Gift #2 (ID: unit-3) — Personal message
 
-Gift #1
-312312321
-
-Gift #2
-312321313`;
+Individual items
+Kaluga                            × 2`;
 
     expect(note).toBe(expected);
+  });
+
+  it("safely truncates if note exceeds MAX_ORDER_NOTE_LENGTH", () => {
+    const hugeLines = Array.from({ length: 300 }, (_, i) => ({
+      id: `gid://shopify/CartLine/${i}`,
+      merchandiseId: `gid://shopify/ProductVariant/${i}`,
+      productId: "gid://shopify/Product/huge",
+      kind: "gift_set" as const,
+      image: null,
+      quantity: 1,
+      quantityAvailable: 10,
+      quantityEditable: false,
+      supportsGiftMessage: true,
+      title: "Extremely Long Title For A Luxury Gift Set",
+      weight: "Set",
+      unitPrice: { amount: "250.00", currencyCode: "SGD" },
+      subtotal: { amount: "250.00", currencyCode: "SGD" },
+      giftMessage: { kind: "personal" as const, text: "Some message" },
+      unitId: `unit-long-identifier-${i}`,
+    }));
+
+    const snapshot: CartSnapshot = {
+      countryCode: "SG",
+      itemCount: 300,
+      subtotal: { amount: "75000.00", currencyCode: "SGD" },
+      warnings: [],
+      entries: [
+        {
+          kind: "group",
+          group: {
+            id: "gid://shopify/Product/huge",
+            title: "Extremely Long Title For A Luxury Gift Set",
+            lines: hugeLines,
+          },
+        },
+      ],
+    };
+
+    const note = buildBusinessOrderNote(snapshot);
+    expect(note.length).toBeLessThanOrEqual(MAX_ORDER_NOTE_LENGTH);
+    expect(note.endsWith("...")).toBe(true);
   });
 
   it("handles empty / blank cases gracefully", () => {
