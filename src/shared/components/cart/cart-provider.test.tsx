@@ -1,7 +1,8 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { useQuery } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { CartSnapshot } from "@/shared/types/cart.type";
+import type { CartEntry, CartSnapshot } from "@/shared/types/cart.type";
 
 const cartApi = vi.hoisted(() => ({
   addLine: vi.fn(),
@@ -103,10 +104,20 @@ function giftSnapshot(unitIds: string[]): CartSnapshot {
 
 function Probe() {
   const cart = useCart();
+  const confirmed = useQuery<CartSnapshot>({
+    queryKey: ["cart", "en-sg"],
+    queryFn: async () => EMPTY,
+    enabled: false,
+  });
+  const firstLine = cart.entries.flatMap((entry) =>
+    entry.kind === "line" ? [entry.line] : entry.group.lines,
+  )[0];
+
   return (
     <div>
       <p data-testid="is-open">{String(cart.isOpen)}</p>
       <p data-testid="item-count">{cart.itemCount}</p>
+      <p data-testid="confirmed-item-count">{confirmed.data?.itemCount ?? "none"}</p>
       <p data-testid="total">{cart.subtotal.amount}</p>
       <p data-testid="cart-error">{cart.cartError ?? "none"}</p>
       <ul data-testid="entries">
@@ -157,14 +168,30 @@ function Probe() {
       >
         add gift set
       </button>
+      <button
+        type="button"
+        onClick={() => {
+          if (firstLine) cart.setLineQuantity(firstLine.id, 2);
+        }}
+      >
+        set quantity
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          if (firstLine) cart.removeLine(firstLine.id);
+        }}
+      >
+        remove line
+      </button>
       <button type="button" onClick={() => void cart.checkout()}>checkout</button>
     </div>
   );
 }
 
-function renderProbe() {
+function renderProbe(initialEntries: CartEntry[] = []) {
   return render(
-    <CartProvider initialEntries={[]} routeLocale="en-sg">
+    <CartProvider initialEntries={initialEntries} routeLocale="en-sg">
       <Probe />
     </CartProvider>,
   );
@@ -198,6 +225,12 @@ describe("CartProvider", () => {
     }));
     cartApi.fetchCart.mockResolvedValue(EMPTY);
     cartApi.fetchCheckout.mockResolvedValue({ checkoutUrl: "https://example.test/checkouts/current" });
+    cartApi.removeLine.mockResolvedValue({ operationId: "remove-operation", cart: EMPTY, warnings: [] });
+    cartApi.updateQuantity.mockImplementation(async (input: { quantity: number }) => ({
+      operationId: "quantity-operation",
+      cart: caviarSnapshot(input.quantity),
+      warnings: [],
+    }));
   });
 
   it("opens the drawer and renders caviar optimistically before Shopify confirms", () => {
@@ -209,6 +242,26 @@ describe("CartProvider", () => {
     expect(screen.getByTestId("is-open").textContent).toBe("true");
     expect(screen.getByTestId("item-count").textContent).toBe("1");
     expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
+  });
+
+  it("keeps the Shopify-confirmed snapshot only in query cache while optimistic intent stays pending", async () => {
+    const add = deferred<{ operationId: string; cart: CartSnapshot; warnings: [] }>();
+    cartApi.addLine.mockReturnValue(add.promise);
+    renderProbe();
+
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
+
+    expect(screen.getByTestId("item-count").textContent).toBe("1");
+    expect(screen.getByTestId("confirmed-item-count").textContent).toBe("0");
+
+    await waitFor(() => expect(cartApi.addLine).toHaveBeenCalledTimes(1));
+    await act(async () => {
+      add.resolve({ operationId: "server-operation", cart: caviarSnapshot(1), warnings: [] });
+      await add.promise;
+    });
+
+    await waitFor(() => expect(screen.getByTestId("confirmed-item-count").textContent).toBe("1"));
+    expect(screen.getByTestId("item-count").textContent).toBe("1");
   });
 
   it("merges repeated caviar intent by merchandiseId in the optimistic view", () => {
@@ -269,6 +322,7 @@ describe("CartProvider", () => {
     });
 
     expect(screen.getByText("line:Amour:1")).toBeInTheDocument();
+    expect(screen.getByTestId("confirmed-item-count").textContent).toBe("1");
   });
 
   it("does not let a stale hydration rejection overwrite a completed mutation", async () => {
@@ -309,6 +363,31 @@ describe("CartProvider", () => {
     await waitFor(() => expect(cartApi.fetchCheckout).toHaveBeenCalledTimes(1));
   });
 
+  it("keeps update and remove writes serialized against the latest confirmed cache", async () => {
+    const update = deferred<{ operationId: string; cart: CartSnapshot; warnings: [] }>();
+    cartApi.updateQuantity.mockReturnValue(update.promise);
+    renderProbe(caviarSnapshot(1).entries);
+
+    fireEvent.click(screen.getByRole("button", { name: "set quantity" }));
+    fireEvent.click(screen.getByRole("button", { name: "remove line" }));
+
+    await waitFor(() => expect(cartApi.updateQuantity).toHaveBeenCalledTimes(1));
+    expect(cartApi.removeLine).not.toHaveBeenCalled();
+
+    await act(async () => {
+      update.resolve({ operationId: "quantity-operation", cart: caviarSnapshot(2), warnings: [] });
+      await update.promise;
+    });
+
+    await waitFor(() => expect(cartApi.removeLine).toHaveBeenCalledTimes(1));
+    expect(cartApi.removeLine).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lineId: "gid://shopify/CartLine/caviar",
+        locale: "en-sg",
+      }),
+    );
+  });
+
   it("shows mutationFailed after reconciliation proves an optimistic mutation was not applied", async () => {
     cartApi.addLine.mockRejectedValueOnce(new Error("network failed"));
     cartApi.fetchCart.mockResolvedValue(EMPTY);
@@ -318,6 +397,22 @@ describe("CartProvider", () => {
 
     await waitFor(() => expect(screen.getByTestId("cart-error").textContent).toBe("mutationFailed"));
     expect(screen.getByTestId("item-count").textContent).toBe("0");
+    expect(cartApi.fetchCart).toHaveBeenCalledTimes(1);
+    expect(cartApi.addLine).toHaveBeenCalledTimes(1);
+  });
+
+  it("accepts the reconciled Shopify snapshot when a failed response was already applied upstream", async () => {
+    cartApi.addLine.mockRejectedValueOnce(new Error("connection dropped after write"));
+    cartApi.fetchCart.mockResolvedValue(caviarSnapshot(1));
+    renderProbe();
+
+    fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
+
+    await waitFor(() => expect(cartApi.fetchCart).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(screen.getByTestId("confirmed-item-count").textContent).toBe("1"));
+    expect(screen.getByTestId("item-count").textContent).toBe("1");
+    expect(screen.getByTestId("cart-error").textContent).toBe("none");
+    expect(cartApi.addLine).toHaveBeenCalledTimes(1);
   });
 
   it("shows checkoutFailed and allows the buyer to retry when checkout fails", async () => {
