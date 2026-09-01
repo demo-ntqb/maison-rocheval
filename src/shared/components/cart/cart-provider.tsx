@@ -1,6 +1,13 @@
 "use client";
 
 import {
+  QueryClient,
+  QueryClientProvider,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
   createContext,
   useCallback,
   useContext,
@@ -13,6 +20,7 @@ import {
 import {
   addLine as addLineRequest,
   CartClientError,
+  type CartMutationResponse,
   fetchCart,
   fetchCheckout,
   removeLine as removeLineRequest,
@@ -76,14 +84,12 @@ type CartContextValue = {
   cartError: CartUiError;
 };
 
-const CartContext = createContext<CartContextValue | null>(null);
-
-type CartProviderState = {
-  confirmed: CartSnapshot;
-  pending: PendingCartOperation[];
-  status: "hydrating" | "ready" | "error";
-  cartError: CartUiError;
+type CartMutationTask = {
+  operationId: string;
+  request: () => Promise<CartMutationResponse>;
 };
+
+const CartContext = createContext<CartContextValue | null>(null);
 
 function createId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
@@ -154,37 +160,50 @@ export interface CartProviderProps {
   routeLocale: string;
 }
 
-export function CartProvider({
+function CartProviderContent({
   children,
   initialEntries,
   initialOpen = false,
   routeLocale: routeLocaleProp,
 }: CartProviderProps) {
   const routeLocale = routeLocaleProp as RouteLocale;
+  const queryClient = useQueryClient();
   const seeded = initialEntries !== undefined;
-  const initialConfirmed = seeded
-    ? snapshotFromEntries(routeLocale, initialEntries)
-    : createEmptySnapshot(routeLocale);
+  const emptyCart = useMemo(() => createEmptySnapshot(routeLocale), [routeLocale]);
+  const initialCart = useMemo(
+    () => (seeded ? snapshotFromEntries(routeLocale, initialEntries ?? []) : undefined),
+    [initialEntries, routeLocale, seeded],
+  );
+  const cartQueryKey = useMemo(() => ["cart", routeLocale] as const, [routeLocale]);
 
-  const [state, setState] = useState<CartProviderState>({
-    confirmed: initialConfirmed,
-    pending: [],
-    status: seeded ? "ready" : "hydrating",
-    cartError: null,
+  const cartQuery = useQuery<CartSnapshot>({
+    queryKey: cartQueryKey,
+    queryFn: () => fetchCart(routeLocale),
+    initialData: initialCart,
+    retry: false,
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
-  const stateRef = useRef(state);
+
+  const [pendingOperations, setPendingOperations] = useState<PendingCartOperation[]>([]);
+  const pendingOperationsRef = useRef<PendingCartOperation[]>([]);
+  const [cartError, setCartError] = useState<CartUiError>(null);
   const [isOpen, setOpen] = useState(initialOpen);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const checkoutPendingRef = useRef(false);
   const queueRef = useRef<Promise<void>>(Promise.resolve());
-  const snapshotVersionRef = useRef(0);
 
-  const updateState = useCallback((updater: (current: CartProviderState) => CartProviderState) => {
-    setState((current) => {
-      const next = updater(current);
-      stateRef.current = next;
-      return next;
-    });
+  const addPendingOperation = useCallback((operation: PendingCartOperation) => {
+    const next = [...pendingOperationsRef.current, operation];
+    pendingOperationsRef.current = next;
+    setPendingOperations(next);
+  }, []);
+
+  const removePendingOperation = useCallback((operationId: string) => {
+    const next = pendingOperationsRef.current.filter((operation) => operation.id !== operationId);
+    pendingOperationsRef.current = next;
+    setPendingOperations(next);
   }, []);
 
   const enqueue = useCallback((task: () => Promise<void>): Promise<void> => {
@@ -193,88 +212,105 @@ export function CartProvider({
     return next;
   }, []);
 
+  const publishConfirmedCart = useCallback(
+    (cart: CartSnapshot) => {
+      queryClient.setQueryData<CartSnapshot>(cartQueryKey, cart);
+      setCartError(stockWarning(cart) ? "itemUnavailable" : null);
+    },
+    [cartQueryKey, queryClient],
+  );
+
   useEffect(() => {
-    if (seeded) return;
-    let cancelled = false;
-    const snapshotVersion = snapshotVersionRef.current;
+    const cart = cartQuery.data;
+    if (!cart) {
+      if (cartQuery.isError && pendingOperationsRef.current.length === 0) {
+        setCartError("serviceUnavailable");
+      }
+      return;
+    }
 
-    void fetchCart(routeLocale)
-      .then((cart) => {
-        if (cancelled || snapshotVersion !== snapshotVersionRef.current) return;
-        updateState((current) => ({
-          ...current,
-          confirmed: cart,
-          status: "ready",
-          cartError: stockWarning(cart) ? "itemUnavailable" : null,
-        }));
-      })
-      .catch(() => {
-        if (cancelled || snapshotVersion !== snapshotVersionRef.current) return;
-        updateState((current) => ({
-          ...current,
-          status: "error",
-          cartError: "serviceUnavailable",
-        }));
-      });
+    if (stockWarning(cart)) {
+      setCartError("itemUnavailable");
+      return;
+    }
 
-    return () => {
-      cancelled = true;
-    };
-  }, [routeLocale, seeded, updateState]);
-
-  const visibleCart = useMemo(
-    () => replayCartOperations(state.confirmed, state.pending),
-    [state.confirmed, state.pending],
-  );
-
-  const addPending = useCallback(
-    (operation: PendingCartOperation) => {
-      snapshotVersionRef.current += 1;
-      updateState((current) => ({ ...current, pending: [...current.pending, operation] }));
-    },
-    [updateState],
-  );
-
-  const commitOperation = useCallback(
-    (operationId: string, cart: CartSnapshot) => {
-      updateState((current) => ({
-        ...current,
-        confirmed: cart,
-        pending: current.pending.filter((operation) => operation.id !== operationId),
-        status: "ready",
-        cartError: stockWarning(cart) ? "itemUnavailable" : null,
-      }));
-    },
-    [updateState],
-  );
+    setCartError((current) => (current === "serviceUnavailable" ? null : current));
+  }, [cartQuery.data, cartQuery.isError]);
 
   const reconcileAfterFailure = useCallback(
     async (operationId: string, failure: unknown) => {
-      const operation = stateRef.current.pending.find((candidate) => candidate.id === operationId);
+      const operation = pendingOperationsRef.current.find(
+        (candidate) => candidate.id === operationId,
+      );
+
       try {
-        const cart = await fetchCart(routeLocale);
+        await queryClient.cancelQueries({ queryKey: cartQueryKey, exact: true });
+        await queryClient.invalidateQueries({
+          queryKey: cartQueryKey,
+          exact: true,
+          refetchType: "none",
+        });
+        const cart = await queryClient.fetchQuery<CartSnapshot>({
+          queryKey: cartQueryKey,
+          queryFn: () => fetchCart(routeLocale),
+          retry: false,
+          staleTime: Infinity,
+        });
         const applied = operation ? isOperationApplied(operation, cart) : false;
-        updateState((current) => ({
-          ...current,
-          confirmed: cart,
-          pending: current.pending.filter((candidate) => candidate.id !== operationId),
-          status: applied ? "ready" : "error",
-          cartError: stockWarning(cart)
-            ? "itemUnavailable"
-            : applied
-              ? null
-              : mutationUiError(failure),
-        }));
+
+        removePendingOperation(operationId);
+        setCartError(
+          stockWarning(cart) ? "itemUnavailable" : applied ? null : mutationUiError(failure),
+        );
       } catch {
-        updateState((current) => ({
-          ...current,
-          pending: current.pending.filter((operation) => operation.id !== operationId),
-          status: "error",
-          cartError: "serviceUnavailable",
-        }));
+        removePendingOperation(operationId);
+        setCartError("serviceUnavailable");
       }
     },
-    [routeLocale, updateState],
+    [cartQueryKey, queryClient, removePendingOperation, routeLocale],
+  );
+
+  const { mutateAsync: mutateCart } = useMutation<
+    CartMutationResponse,
+    unknown,
+    CartMutationTask
+  >({
+    mutationFn: ({ request }) => request(),
+    retry: false,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: cartQueryKey, exact: true });
+    },
+    onSuccess: (result, task) => {
+      queryClient.setQueryData<CartSnapshot>(cartQueryKey, result.cart);
+      removePendingOperation(task.operationId);
+      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
+    },
+    onError: async (error, task) => {
+      await reconcileAfterFailure(task.operationId, error);
+    },
+  });
+
+  const runMutation = useCallback(
+    async (task: CartMutationTask) => {
+      try {
+        await mutateCart(task);
+      } catch {
+        // onError owns reconciliation and UI error state. Keep the queue fulfilled
+        // so the next explicit cart operation can run in order.
+      }
+    },
+    [mutateCart],
+  );
+
+  const confirmedCart = cartQuery.data ?? emptyCart;
+  const visibleCart = useMemo(
+    () => replayCartOperations(confirmedCart, pendingOperations),
+    [confirmedCart, pendingOperations],
+  );
+
+  const getConfirmedCart = useCallback(
+    () => queryClient.getQueryData<CartSnapshot>(cartQueryKey) ?? emptyCart,
+    [cartQueryKey, emptyCart, queryClient],
   );
 
   const addLine = useCallback(
@@ -298,31 +334,23 @@ export function CartProvider({
         optimistic: input.optimistic,
       };
 
-      addPending(operation);
+      addPendingOperation(operation);
       setOpen(true);
 
-      void enqueue(async () => {
-        try {
-          const result = await addLineRequest({
-            merchandiseId: input.merchandiseId,
-            quantity: input.quantity,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch (error) {
-          await reconcileAfterFailure(operationId, error);
-        }
-      });
+      void enqueue(() =>
+        runMutation({
+          operationId,
+          request: () =>
+            addLineRequest({
+              merchandiseId: input.merchandiseId,
+              quantity: input.quantity,
+              operationId,
+              locale: routeLocale,
+            }),
+        }),
+      );
     },
-    [
-      addPending,
-      commitOperation,
-      enqueue,
-      reconcileAfterFailure,
-      routeLocale,
-      visibleCart.entries,
-    ],
+    [addPendingOperation, enqueue, routeLocale, runMutation, visibleCart.entries],
   );
 
   const addGiftSetUnits = useCallback(
@@ -346,25 +374,24 @@ export function CartProvider({
         optimistic: input.optimistic,
       };
 
-      addPending(operation);
+      addPendingOperation(operation);
       setOpen(true);
 
-      void enqueue(async () => {
-        try {
-          const result = await addLineRequest({
-            merchandiseId: input.merchandiseId,
-            quantity,
-            unitIds,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch (error) {
-          await reconcileAfterFailure(operationId, error);
-        }
-      });
+      void enqueue(() =>
+        runMutation({
+          operationId,
+          request: () =>
+            addLineRequest({
+              merchandiseId: input.merchandiseId,
+              quantity,
+              unitIds,
+              operationId,
+              locale: routeLocale,
+            }),
+        }),
+      );
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+    [addPendingOperation, enqueue, routeLocale, runMutation, visibleCart.entries],
   );
 
   const setLineQuantity = useCallback(
@@ -383,10 +410,10 @@ export function CartProvider({
         merchandiseId: line.merchandiseId,
         quantity: target,
       };
-      addPending(operation);
+      addPendingOperation(operation);
 
       void enqueue(async () => {
-        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, {
+        const confirmedLine = resolveConfirmedLine(getConfirmedCart(), {
           lineId,
           merchandiseId: line.merchandiseId,
           unitId: null,
@@ -395,20 +422,28 @@ export function CartProvider({
           await reconcileAfterFailure(operationId, new Error("Confirmed cart line is unavailable"));
           return;
         }
-        try {
-          const result = await updateQuantityRequest({
-            lineId: confirmedLine.id,
-            quantity: target,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch (error) {
-          await reconcileAfterFailure(operationId, error);
-        }
+
+        await runMutation({
+          operationId,
+          request: () =>
+            updateQuantityRequest({
+              lineId: confirmedLine.id,
+              quantity: target,
+              operationId,
+              locale: routeLocale,
+            }),
+        });
       });
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+    [
+      addPendingOperation,
+      enqueue,
+      getConfirmedCart,
+      reconcileAfterFailure,
+      routeLocale,
+      runMutation,
+      visibleCart.entries,
+    ],
   );
 
   const removeLine = useCallback(
@@ -424,30 +459,35 @@ export function CartProvider({
         merchandiseId: line.merchandiseId,
         unitId: line.unitId,
       };
-      addPending(operation);
+      addPendingOperation(operation);
 
       void enqueue(async () => {
-        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, operation);
+        const confirmedLine = resolveConfirmedLine(getConfirmedCart(), operation);
         if (!confirmedLine) {
-          updateState((current) => ({
-            ...current,
-            pending: current.pending.filter((candidate) => candidate.id !== operationId),
-          }));
+          removePendingOperation(operationId);
           return;
         }
-        try {
-          const result = await removeLineRequest({
-            lineId: confirmedLine.id,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch (error) {
-          await reconcileAfterFailure(operationId, error);
-        }
+
+        await runMutation({
+          operationId,
+          request: () =>
+            removeLineRequest({
+              lineId: confirmedLine.id,
+              operationId,
+              locale: routeLocale,
+            }),
+        });
       });
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, updateState, visibleCart.entries],
+    [
+      addPendingOperation,
+      enqueue,
+      getConfirmedCart,
+      removePendingOperation,
+      routeLocale,
+      runMutation,
+      visibleCart.entries,
+    ],
   );
 
   const setGiftMessage = useCallback(
@@ -464,55 +504,58 @@ export function CartProvider({
         unitId: line.unitId,
         giftMessage: giftMessage ?? null,
       };
-      addPending(operation);
+      addPendingOperation(operation);
 
       void enqueue(async () => {
-        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, operation);
+        const confirmedLine = resolveConfirmedLine(getConfirmedCart(), operation);
         if (!confirmedLine) {
-          await reconcileAfterFailure(operationId, new Error("Confirmed gift-set unit is unavailable"));
+          await reconcileAfterFailure(
+            operationId,
+            new Error("Confirmed gift-set unit is unavailable"),
+          );
           return;
         }
-        try {
-          const result = await updateGiftMessageRequest({
-            lineId: confirmedLine.id,
-            giftMessage: giftMessage ?? null,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch (error) {
-          await reconcileAfterFailure(operationId, error);
-        }
+
+        await runMutation({
+          operationId,
+          request: () =>
+            updateGiftMessageRequest({
+              lineId: confirmedLine.id,
+              giftMessage: giftMessage ?? null,
+              operationId,
+              locale: routeLocale,
+            }),
+        });
       });
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+    [
+      addPendingOperation,
+      enqueue,
+      getConfirmedCart,
+      reconcileAfterFailure,
+      routeLocale,
+      runMutation,
+      visibleCart.entries,
+    ],
   );
 
   const updateRegion = useCallback(
     async (locale: RouteLocale) => {
-      snapshotVersionRef.current += 1;
       await enqueue(async () => {
+        await queryClient.cancelQueries({ queryKey: cartQueryKey, exact: true });
         const result = await updateRegionRequest(locale);
-        if (result.cart) {
-          updateState((current) => ({
-            ...current,
-            confirmed: result.cart as CartSnapshot,
-            cartError: stockWarning(result.cart as CartSnapshot) ? "itemUnavailable" : null,
-          }));
-        }
+        if (result.cart) publishConfirmedCart(result.cart as CartSnapshot);
       });
     },
-    [enqueue, updateState],
+    [cartQueryKey, enqueue, publishConfirmedCart, queryClient],
   );
 
   const checkout = useCallback(async () => {
     if (typeof window === "undefined" || checkoutPendingRef.current) return;
     checkoutPendingRef.current = true;
     setIsCheckingOut(true);
-    updateState((current) =>
-      current.cartError === "checkoutFailed" || current.cartError === "serviceUnavailable"
-        ? { ...current, cartError: null }
-        : current,
+    setCartError((current) =>
+      current === "checkoutFailed" || current === "serviceUnavailable" ? null : current,
     );
 
     try {
@@ -520,12 +563,12 @@ export function CartProvider({
       const { checkoutUrl } = await fetchCheckout(routeLocale);
       window.location.assign(checkoutUrl);
     } catch (error) {
-      updateState((current) => ({ ...current, cartError: checkoutUiError(error) }));
+      setCartError(checkoutUiError(error));
     } finally {
       checkoutPendingRef.current = false;
       setIsCheckingOut(false);
     }
-  }, [routeLocale, updateState]);
+  }, [routeLocale]);
 
   const value = useMemo<CartContextValue>(
     () => ({
@@ -544,18 +587,18 @@ export function CartProvider({
       setOpen,
       subtotal: visibleCart.subtotal,
       updateRegion,
-      cartError: state.cartError,
+      cartError,
     }),
     [
       addGiftSetUnits,
       addLine,
+      cartError,
       checkout,
       isCheckingOut,
       isOpen,
       removeLine,
       setGiftMessage,
       setLineQuantity,
-      state.cartError,
       updateRegion,
       visibleCart.entries,
       visibleCart.itemCount,
@@ -564,6 +607,23 @@ export function CartProvider({
   );
 
   return <CartContext value={value}>{children}</CartContext>;
+}
+
+export function CartProvider(props: CartProviderProps) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          mutations: { retry: false },
+        },
+      }),
+  );
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <CartProviderContent {...props} />
+    </QueryClientProvider>
+  );
 }
 
 export function useCart(): CartContextValue {
