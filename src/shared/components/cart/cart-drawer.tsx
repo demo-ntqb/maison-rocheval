@@ -33,6 +33,7 @@ export function CartDrawer() {
     setOpen,
     subtotal,
     cartError,
+    checkoutError,
   } = useCart();
 
   const [messageLine, setMessageLine] = useState<CartLine | null>(null);
@@ -46,12 +47,10 @@ export function CartDrawer() {
 
   return (
     <>
-      <Sheet
-        open={isDrawerVisible}
+      <Sheet open={isDrawerVisible}
         onOpenChange={(open) => {
           if (open || isDrawerVisible) setOpen(open);
-        }}
-      >
+        }}>
         <SheetContent
           side="right"
           showCloseButton={false}
@@ -116,6 +115,14 @@ export function CartDrawer() {
                   className={cn("w-full rounded-brand border border-red-200 bg-red-50 p-3 font-sans text-xs text-red-800")}
                 >
                   {t(cartError)}
+                </div>
+              ) : null}
+              {checkoutError ? (
+                <div
+                  aria-live="polite"
+                  className={cn("w-full rounded-brand border border-red-200 bg-red-50 p-3 font-sans text-xs text-red-800")}
+                >
+                  {checkoutError}
                 </div>
               ) : null}
               <div className="flex w-full items-center justify-between gap-4 py-1">

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { GIFT_MESSAGE_MAX_LINES } from "@/shared/constants/cart.constant";
+import { GIFT_MESSAGE_MAX_CHARS, GIFT_MESSAGE_MAX_LINES } from "@/shared/constants/cart.constant";
 import { addCartLineSchema, updateCartLineSchema } from "./cart.validation";
 
 describe("cart validation", () => {
@@ -50,6 +50,19 @@ describe("cart validation", () => {
         giftMessage: { kind: "personal", text },
         operationId: "op",
         locale: "fr-sg",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("rejects a personal gift message beyond the character limit", () => {
+    const text = "a".repeat(GIFT_MESSAGE_MAX_CHARS + 1);
+    expect(
+      updateCartLineSchema.safeParse({
+        action: "gift_message",
+        lineId: "gid://shopify/CartLine/1",
+        giftMessage: { kind: "personal", text },
+        operationId: "op",
+        locale: "en-sg",
       }).success,
     ).toBe(false);
   });

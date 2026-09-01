@@ -12,6 +12,16 @@ export type CartLineImage = {
   width: number | null;
 };
 
+export type ProductPurchaseMetadata = {
+  image?: CartLineImage | null;
+  title?: string;
+  weight?: string;
+  unitPrice?: CartMoney;
+  quantityAvailable?: number | null;
+};
+
+export type OptimisticProductData = ProductPurchaseMetadata;
+
 /** A gift card is either left blank or carries a hand-written note. */
 export type CartGiftMessage =
   | { kind: "blank" }

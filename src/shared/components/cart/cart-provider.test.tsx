@@ -211,21 +211,24 @@ describe("CartProvider with TanStack Query", () => {
     cartApi.fetchCheckout.mockResolvedValue({ checkoutUrl: "https://example.test/checkouts/current" });
   });
 
-  it("opens the drawer and updates cart once Shopify confirms", async () => {
+  it("opens the drawer and updates cart after server confirms", async () => {
     const add = deferred<{ operationId: string; cart: CartSnapshot; warnings: [] }>();
     cartApi.addLine.mockReturnValue(add.promise);
     renderProbe();
 
     fireEvent.click(screen.getByRole("button", { name: "add caviar" }));
 
-    // Drawer remains closed while mutation is pending
+    // Drawer stays closed while the mutation is pending
     expect(screen.getByTestId("is-open").textContent).toBe("false");
+    expect(screen.getByTestId("item-count").textContent).toBe("0");
 
+    // Server responds
     await act(async () => {
       add.resolve({ operationId: "server-operation", cart: caviarSnapshot(1), warnings: [] });
       await add.promise;
     });
 
+    // Drawer opens and item appears after server response
     await waitFor(() => {
       expect(screen.getByTestId("is-open").textContent).toBe("true");
       expect(screen.getByTestId("item-count").textContent).toBe("1");
@@ -233,20 +236,24 @@ describe("CartProvider with TanStack Query", () => {
     });
   });
 
-  it("creates group rows for physical gift units after confirmation", async () => {
+  it("creates group rows for physical gift units after server confirms", async () => {
     const add = deferred<{ operationId: string; cart: CartSnapshot; warnings: [] }>();
     cartApi.addLine.mockReturnValue(add.promise);
     renderProbe();
 
     fireEvent.click(screen.getByRole("button", { name: "add gift set" }));
 
+    // Drawer stays closed while the mutation is pending
     expect(screen.getByTestId("is-open").textContent).toBe("false");
+    expect(screen.getByTestId("item-count").textContent).toBe("0");
 
+    // Server responds
     await act(async () => {
       add.resolve({ operationId: "server-operation", cart: giftSnapshot(["u1", "u2"]), warnings: [] });
       await add.promise;
     });
 
+    // Drawer opens and group appears after server response
     await waitFor(() => {
       expect(screen.getByTestId("is-open").textContent).toBe("true");
       expect(screen.getByText("group:L'Initiation:2")).toBeInTheDocument();

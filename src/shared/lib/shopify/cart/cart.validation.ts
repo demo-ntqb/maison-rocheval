@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { CART_QUANTITY_MAX, GIFT_MESSAGE_MAX_LINES } from "@/shared/constants/cart.constant";
+import {
+  CART_QUANTITY_MAX,
+  GIFT_MESSAGE_MAX_CHARS,
+  GIFT_MESSAGE_MAX_LINES,
+} from "@/shared/constants/cart.constant";
 import { ROUTE_LOCALES } from "@/shared/constants/commerce-context.constant";
 
 const routeLocaleSchema = z.enum(ROUTE_LOCALES);
@@ -12,7 +16,10 @@ const quantitySchema = z.number().int().min(1).max(CART_QUANTITY_MAX);
 const giftMessageSchema = z
   .discriminatedUnion("kind", [
     z.object({ kind: z.literal("blank") }),
-    z.object({ kind: z.literal("personal"), text: z.string().min(1) }),
+    z.object({
+      kind: z.literal("personal"),
+      text: z.string().min(1).max(GIFT_MESSAGE_MAX_CHARS),
+    }),
   ])
   .superRefine((message, context) => {
     if (message.kind !== "personal") return;

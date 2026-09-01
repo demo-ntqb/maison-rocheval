@@ -7,7 +7,7 @@ import { IconSpinner, IconX } from "@/shared/components/icons";
 import { Button } from "@/shared/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/shared/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/shared/components/ui/radio-group";
-import { GIFT_MESSAGE_MAX_LINES } from "@/shared/constants/cart.constant";
+import { GIFT_MESSAGE_MAX_CHARS, GIFT_MESSAGE_MAX_LINES } from "@/shared/constants/cart.constant";
 import { cn } from "@/shared/lib/utils";
 import type { CartGiftMessage, CartLine } from "@/shared/types/cart.type";
 
@@ -15,9 +15,10 @@ const RADIO_ITEM =
   "size-5 border-black data-checked:border-black data-checked:bg-transparent [&_[data-slot=radio-group-indicator]]:size-5 [&_[data-slot=radio-group-indicator]>span]:size-[9px] [&_[data-slot=radio-group-indicator]>span]:bg-black";
 
 function clampLines(value: string): string {
-  const lines = value.split("\n");
+  const truncated = value.slice(0, GIFT_MESSAGE_MAX_CHARS);
+  const lines = truncated.split("\n");
   return lines.length <= GIFT_MESSAGE_MAX_LINES
-    ? value
+    ? truncated
     : lines.slice(0, GIFT_MESSAGE_MAX_LINES).join("\n");
 }
 
@@ -125,6 +126,7 @@ function CartMessageForm({
           <textarea
             id={`${fieldId}-text`}
             value={text}
+            maxLength={GIFT_MESSAGE_MAX_CHARS}
             disabled={!isPersonal || isSubmitting}
             onChange={(event) => setText(clampLines(event.target.value))}
             placeholder={t("placeholder")}

@@ -11,7 +11,7 @@ export interface CartTriggerProps {
   className?: string;
 }
 
-/** Header affordance that opens the bag drawer. */
+/** Header affordance that opens the bag drawer with animated count badge. */
 export function CartTrigger({ className }: CartTriggerProps) {
   const t = useTranslations("cart");
   const { itemCount, open } = useCart();
@@ -22,11 +22,20 @@ export function CartTrigger({ className }: CartTriggerProps) {
       onClick={open}
       aria-label={t("openBag", { count: itemCount })}
       className={cn(
-        "inline-flex size-12 cursor-pointer items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2",
+        "relative inline-flex size-12 cursor-pointer items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-offset-2",
         className,
       )}
     >
-      <Handbag aria-hidden="true" className="size-6" strokeWidth={1.5} />
+      <Handbag aria-hidden="true" className="size-6 transition-transform hover:scale-105" strokeWidth={1.5} />
+
+      {itemCount > 0 && (
+        <span
+          key={itemCount}
+          className="absolute top-2 right-2 flex size-4 items-center justify-center rounded-full bg-stone-900 text-[10px] font-medium text-white transition-all duration-300 animate-in zoom-in-75"
+        >
+          {itemCount > 99 ? "99+" : itemCount}
+        </span>
+      )}
     </button>
   );
 }

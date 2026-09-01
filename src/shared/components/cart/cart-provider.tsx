@@ -9,11 +9,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDebounceCallback } from "usehooks-ts";
 
 import {
   addLine as addLineRequest,
@@ -25,30 +22,30 @@ import {
   updateRegion as updateRegionRequest,
 } from "@/shared/lib/cart/cart-api";
 import { countGiftUnitsByVariant, flattenCartLines } from "@/shared/lib/cart/cart-entry";
-import { sumMoney } from "@/shared/lib/cart/cart-money";
-import type { OptimisticProductData } from "@/shared/lib/cart/cart-operation";
+import { multiplyMoney, sumMoney } from "@/shared/lib/cart/cart-money";
 import { getCommerceContextOrDefault } from "@/shared/lib/commerce-context";
 import type {
   CartEntry,
   CartGiftMessage,
   CartMoney,
   CartSnapshot,
+  OptimisticProductData,
 } from "@/shared/types/cart.type";
 import type { RouteLocale } from "@/shared/types/commerce-context.type";
 
 export type AddCartLineInput = {
   merchandiseId: string;
-  productId: string;
   quantity: number;
-  optimistic: OptimisticProductData;
+  productId?: string;
+  optimistic?: OptimisticProductData;
 };
 
 export type AddGiftSetInput = {
   merchandiseId: string;
-  productId: string;
   quantity: number;
-  group: { addHref?: string; title: string };
-  optimistic: OptimisticProductData;
+  productId?: string;
+  group?: { addHref?: string; title: string };
+  optimistic?: OptimisticProductData;
 };
 
 type CartContextValue = {
@@ -69,14 +66,13 @@ type CartContextValue = {
   subtotal: CartMoney;
   updateRegion: (locale: RouteLocale) => Promise<void>;
   cartError: "itemUnavailable" | null;
+  checkoutError: string | null;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-function createId(): string {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
-  return `operation-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-}
+const hasStockWarning = (cart: CartSnapshot) =>
+  cart.warnings.some((w) => w.code.toUpperCase().includes("STOCK"));
 
 function createEmptySnapshot(routeLocale: RouteLocale): CartSnapshot {
   const context = getCommerceContextOrDefault(routeLocale);
@@ -100,8 +96,24 @@ function snapshotFromEntries(routeLocale: RouteLocale, entries: CartEntry[]): Ca
   };
 }
 
-function stockWarning(cart: CartSnapshot): boolean {
-  return cart.warnings.some((warning) => warning.code.toUpperCase().includes("STOCK"));
+function applyQuantityLocally(current: CartSnapshot, lineId: string, quantity: number): CartSnapshot {
+  const entries = current.entries.map((entry): CartEntry => {
+    if (entry.kind === "line" && entry.line.id === lineId) {
+      return {
+        kind: "line",
+        line: { ...entry.line, quantity, subtotal: multiplyMoney(entry.line.unitPrice, quantity) },
+      };
+    }
+    return entry;
+  });
+
+  const lines = flattenCartLines(entries);
+  return {
+    ...current,
+    entries,
+    itemCount: lines.reduce((total, line) => total + line.quantity, 0),
+    subtotal: sumMoney(lines.map((line) => line.subtotal), current.subtotal.currencyCode),
+  };
 }
 
 export interface CartProviderProps {
@@ -111,26 +123,31 @@ export interface CartProviderProps {
   routeLocale: string;
 }
 
-function CartProviderInner({
+export function CartProvider({
   children,
   initialEntries,
   initialOpen = false,
-  routeLocale: routeLocaleProp,
+  routeLocale: rawLocale,
 }: CartProviderProps) {
-  const routeLocale = routeLocaleProp as RouteLocale;
+  const routeLocale = rawLocale as RouteLocale;
   const seeded = initialEntries !== undefined;
   const queryClient = useQueryClient();
 
   const [isOpen, setOpen] = useState(initialOpen);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [cartError, setCartError] = useState<"itemUnavailable" | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const checkoutPendingRef = useRef(false);
+  const mutationQueueRef = useRef<Promise<unknown>>(Promise.resolve());
+
+  const enqueueMutation = useCallback(<T,>(fn: () => Promise<T>): Promise<T> => {
+    const next = mutationQueueRef.current.then(fn, fn);
+    mutationQueueRef.current = next.catch(() => {});
+    return next;
+  }, []);
 
   const initialSnapshot = useMemo(
-    () =>
-      seeded
-        ? snapshotFromEntries(routeLocale, initialEntries)
-        : createEmptySnapshot(routeLocale),
+    () => (seeded ? snapshotFromEntries(routeLocale, initialEntries) : createEmptySnapshot(routeLocale)),
     [initialEntries, routeLocale, seeded],
   );
 
@@ -138,192 +155,146 @@ function CartProviderInner({
     queryKey: ["cart", routeLocale],
     queryFn: async () => {
       const fetched = await fetchCart(routeLocale);
-      if (stockWarning(fetched)) {
-        setCartError("itemUnavailable");
-      } else {
-        setCartError(null);
-      }
+      setCartError(hasStockWarning(fetched) ? "itemUnavailable" : null);
       return fetched;
     },
     initialData: seeded ? initialSnapshot : undefined,
-    staleTime: 60 * 1000,
+    staleTime: 60_000,
   });
+
+  const syncCart = useCallback(
+    (nextCart: CartSnapshot) => {
+      queryClient.setQueryData(["cart", routeLocale], nextCart);
+      setCartError(hasStockWarning(nextCart) ? "itemUnavailable" : null);
+    },
+    [queryClient, routeLocale],
+  );
+
+  const onMutationError = useCallback(() => {
+    setCartError("itemUnavailable");
+    queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
+  }, [queryClient, routeLocale]);
 
   const addLineMutation = useMutation({
     mutationFn: (input: { merchandiseId: string; quantity: number; operationId: string }) =>
-      addLineRequest({
-        kind: "caviar",
-        merchandiseId: input.merchandiseId,
-        quantity: input.quantity,
-        operationId: input.operationId,
-        locale: routeLocale,
-      }),
-    onSuccess: (result) => {
-      queryClient.setQueryData(["cart", routeLocale], result.cart);
-      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
-    },
-    onError: () => {
-      setCartError("itemUnavailable");
-      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
-    },
+      addLineRequest({ kind: "caviar", ...input, locale: routeLocale }),
+    onSuccess: (res) => syncCart(res.cart),
+    onError: onMutationError,
   });
 
   const addGiftSetMutation = useMutation({
     mutationFn: (input: { merchandiseId: string; quantity: number; unitIds: string[]; operationId: string }) =>
-      addLineRequest({
-        kind: "gift_set",
-        merchandiseId: input.merchandiseId,
-        quantity: input.quantity,
-        unitIds: input.unitIds,
-        operationId: input.operationId,
-        locale: routeLocale,
-      }),
-    onSuccess: (result) => {
-      queryClient.setQueryData(["cart", routeLocale], result.cart);
-      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
-    },
-    onError: () => {
-      setCartError("itemUnavailable");
-      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
-    },
+      addLineRequest({ kind: "gift_set", ...input, locale: routeLocale }),
+    onSuccess: (res) => syncCart(res.cart),
+    onError: onMutationError,
   });
 
   const updateQuantityMutation = useMutation({
     mutationFn: (input: { lineId: string; quantity: number; operationId: string }) =>
-      updateQuantityRequest({
-        lineId: input.lineId,
-        quantity: input.quantity,
-        operationId: input.operationId,
-        locale: routeLocale,
-      }),
-    onSuccess: (result) => {
-      queryClient.setQueryData(["cart", routeLocale], result.cart);
-      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
-    },
-    onError: () => {
-      setCartError("itemUnavailable");
-      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
-    },
+      updateQuantityRequest({ ...input, locale: routeLocale }),
+    onSuccess: (res) => syncCart(res.cart),
+    onError: onMutationError,
   });
+
+  const debouncedUpdateQuantity = useDebounceCallback(
+    (input: { lineId: string; quantity: number; operationId: string }) => {
+      updateQuantityMutation.mutate(input);
+    },
+    350,
+  );
 
   const removeLineMutation = useMutation({
     mutationFn: (input: { lineId: string; operationId: string }) =>
-      removeLineRequest({
-        lineId: input.lineId,
-        operationId: input.operationId,
-        locale: routeLocale,
-      }),
-    onSuccess: (result) => {
-      queryClient.setQueryData(["cart", routeLocale], result.cart);
-      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
-    },
-    onError: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
-    },
+      removeLineRequest({ ...input, locale: routeLocale }),
+    onSuccess: (res) => syncCart(res.cart),
+    onError: () => queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] }),
   });
 
   const updateGiftMessageMutation = useMutation({
     mutationFn: (input: { lineId: string; giftMessage: CartGiftMessage | null; operationId: string }) =>
-      updateGiftMessageRequest({
-        lineId: input.lineId,
-        giftMessage: input.giftMessage,
-        operationId: input.operationId,
-        locale: routeLocale,
-      }),
-    onSuccess: (result) => {
-      queryClient.setQueryData(["cart", routeLocale], result.cart);
-    },
-    onError: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
-    },
+      updateGiftMessageRequest({ ...input, locale: routeLocale }),
+    onSuccess: (res) => queryClient.setQueryData(["cart", routeLocale], res.cart),
+    onError: () => queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] }),
   });
 
-  const isMutating =
-    addLineMutation.isPending ||
-    addGiftSetMutation.isPending ||
-    updateQuantityMutation.isPending ||
-    removeLineMutation.isPending ||
-    updateGiftMessageMutation.isPending;
+  const isMutating = [
+    addLineMutation,
+    addGiftSetMutation,
+    updateQuantityMutation,
+    removeLineMutation,
+    updateGiftMessageMutation,
+  ].some((m) => m.isPending);
 
   const addLine = useCallback(
-    async (input: AddCartLineInput) => {
-      if (input.quantity < 1) return;
-      const operationId = createId();
-      await addLineMutation.mutateAsync({
-        merchandiseId: input.merchandiseId,
-        quantity: input.quantity,
-        operationId,
+    (input: AddCartLineInput) => {
+      if (input.quantity < 1) return Promise.resolve();
+      return enqueueMutation(async () => {
+        await addLineMutation.mutateAsync({
+          merchandiseId: input.merchandiseId,
+          quantity: input.quantity,
+          operationId: crypto.randomUUID(),
+        });
+        setOpen(true);
       });
-      setOpen(true);
     },
-    [addLineMutation],
+    [addLineMutation, enqueueMutation],
   );
 
   const addGiftSetUnits = useCallback(
-    async (input: AddGiftSetInput) => {
-      if (input.quantity < 1) return;
-      const existingVariantCount = countGiftUnitsByVariant(cart.entries, input.merchandiseId);
-      const available = input.optimistic.quantityAvailable ?? 99;
-      const quantity = Math.min(input.quantity, Math.max(0, available - existingVariantCount));
-      if (quantity < 1) return;
+    (input: AddGiftSetInput) => {
+      if (input.quantity < 1) return Promise.resolve();
+      return enqueueMutation(async () => {
+        const count = countGiftUnitsByVariant(cart.entries, input.merchandiseId);
+        const available = input.optimistic?.quantityAvailable ?? 99;
+        const quantity = Math.min(input.quantity, Math.max(0, available - count));
+        if (quantity < 1) return;
 
-      const operationId = createId();
-      const unitIds = Array.from({ length: quantity }, () => createId());
-      await addGiftSetMutation.mutateAsync({
-        merchandiseId: input.merchandiseId,
-        quantity,
-        unitIds,
-        operationId,
+        await addGiftSetMutation.mutateAsync({
+          merchandiseId: input.merchandiseId,
+          quantity,
+          unitIds: Array.from({ length: quantity }, () => crypto.randomUUID()),
+          operationId: crypto.randomUUID(),
+        });
+        setOpen(true);
       });
-      setOpen(true);
     },
-    [addGiftSetMutation, cart.entries],
+    [addGiftSetMutation, cart.entries, enqueueMutation],
   );
 
   const setLineQuantity = useCallback(
-    async (lineId: string, quantity: number) => {
+    (lineId: string, quantity: number) => {
       if (quantity < 1) return;
-      const lines = flattenCartLines(cart.entries);
-      const line = lines.find((candidate) => candidate.id === lineId);
+      const line = flattenCartLines(cart.entries).find((c) => c.id === lineId);
       if (!line || line.kind !== "caviar") return;
 
       const target = Math.min(quantity, line.quantityAvailable ?? 99);
-      const operationId = createId();
-      await updateQuantityMutation.mutateAsync({
-        lineId,
-        quantity: target,
-        operationId,
-      });
+      queryClient.setQueryData<CartSnapshot>(["cart", routeLocale], (old) =>
+        old ? applyQuantityLocally(old, lineId, target) : old,
+      );
+
+      debouncedUpdateQuantity({ lineId, quantity: target, operationId: crypto.randomUUID() });
     },
-    [cart.entries, updateQuantityMutation],
+    [cart.entries, debouncedUpdateQuantity, queryClient, routeLocale],
   );
 
   const removeLine = useCallback(
     async (lineId: string) => {
-      const lines = flattenCartLines(cart.entries);
-      const line = lines.find((candidate) => candidate.id === lineId);
-      if (!line) return;
-
-      const operationId = createId();
-      await removeLineMutation.mutateAsync({
-        lineId,
-        operationId,
-      });
+      if (!flattenCartLines(cart.entries).some((c) => c.id === lineId)) return;
+      debouncedUpdateQuantity.cancel();
+      await removeLineMutation.mutateAsync({ lineId, operationId: crypto.randomUUID() });
     },
-    [cart.entries, removeLineMutation],
+    [cart.entries, debouncedUpdateQuantity, removeLineMutation],
   );
 
   const setGiftMessage = useCallback(
     async (lineId: string, giftMessage: CartGiftMessage | null | undefined) => {
-      const lines = flattenCartLines(cart.entries);
-      const line = lines.find((candidate) => candidate.id === lineId);
+      const line = flattenCartLines(cart.entries).find((c) => c.id === lineId);
       if (!line || line.kind !== "gift_set") return;
 
-      const operationId = createId();
       await updateGiftMessageMutation.mutateAsync({
         lineId,
         giftMessage: giftMessage ?? null,
-        operationId,
+        operationId: crypto.randomUUID(),
       });
     },
     [cart.entries, updateGiftMessageMutation],
@@ -332,27 +303,28 @@ function CartProviderInner({
   const updateRegion = useCallback(
     async (locale: RouteLocale) => {
       const result = await updateRegionRequest(locale);
-      if (result.cart) {
-        queryClient.setQueryData(["cart", locale], result.cart);
-        setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
-      }
+      if (result.cart) syncCart(result.cart);
     },
-    [queryClient],
+    [syncCart],
   );
 
   const checkout = useCallback(async () => {
     if (typeof window === "undefined" || checkoutPendingRef.current) return;
+    debouncedUpdateQuantity.flush();
     checkoutPendingRef.current = true;
     setIsCheckingOut(true);
+    setCheckoutError(null);
 
     try {
       const { checkoutUrl } = await fetchCheckout(routeLocale);
       window.location.assign(checkoutUrl);
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : "Checkout failed");
     } finally {
       checkoutPendingRef.current = false;
       setIsCheckingOut(false);
     }
-  }, [routeLocale]);
+  }, [debouncedUpdateQuantity, routeLocale]);
 
   const value = useMemo<CartContextValue>(
     () => ({
@@ -373,6 +345,7 @@ function CartProviderInner({
       subtotal: cart.subtotal,
       updateRegion,
       cartError,
+      checkoutError,
     }),
     [
       addGiftSetUnits,
@@ -382,6 +355,7 @@ function CartProviderInner({
       cart.subtotal,
       cartError,
       checkout,
+      checkoutError,
       isCheckingOut,
       isMutating,
       isOpen,
@@ -393,10 +367,6 @@ function CartProviderInner({
   );
 
   return <CartContext value={value}>{children}</CartContext>;
-}
-
-export function CartProvider(props: CartProviderProps) {
-  return <CartProviderInner {...props} />;
 }
 
 export function useCart(): CartContextValue {
