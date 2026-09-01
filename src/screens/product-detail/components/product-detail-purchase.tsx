@@ -1,4 +1,4 @@
-import { IconShoppingCart } from "@/shared/components/icons/ic-shopping-cart";
+import { IconShoppingCart, IconSpinner } from "@/shared/components/icons";
 import { Button } from "@/shared/components/ui/button";
 import { ProductDetailStepper } from "./product-detail-stepper";
 
@@ -9,6 +9,7 @@ export interface ProductDetailPurchaseProps {
   deliveryNote: string;
   formattedPrice: string;
   increaseLabel: string;
+  isLoading?: boolean;
   onAddToCart: () => void;
   onQuantityChange: (quantity: number) => void;
   quantity: number;
@@ -24,6 +25,7 @@ export function ProductDetailPurchase({
   deliveryNote,
   formattedPrice,
   increaseLabel,
+  isLoading = false,
   onAddToCart,
   onQuantityChange,
   quantity,
@@ -53,12 +55,16 @@ export function ProductDetailPurchase({
 
           <Button
             type="button"
-            disabled={!available}
+            disabled={!available || isLoading}
             onClick={onAddToCart}
             className="h-12 w-full cursor-pointer gap-2 px-8 text-base lg:h-10 lg:flex-1 lg:gap-1 lg:px-5 lg:text-sm border-[0.5px] border-stone"
           >
-            <IconShoppingCart aria-hidden="true" className="size-6 shrink-0 lg:size-5" />
-            <span>{addToCartLabel}</span>
+            {isLoading ? (
+              <IconSpinner aria-hidden="true" className="size-6 shrink-0 lg:size-5 animate-spin" />
+            ) : (
+              <IconShoppingCart aria-hidden="true" className="size-6 shrink-0 lg:size-5" />
+            )}
+            <span>{available ? addToCartLabel : unavailableLabel}</span>
           </Button>
         </div>
 

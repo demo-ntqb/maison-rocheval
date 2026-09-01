@@ -3,7 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
-import { IconShoppingCart, IconX } from "@/shared/components/icons";
+import { IconShoppingCart, IconSpinner, IconX } from "@/shared/components/icons";
 import { Button } from "@/shared/components/ui/button";
 import { Sheet, SheetContent, SheetTitle } from "@/shared/components/ui/sheet";
 import { formatBrandPrice } from "@/shared/lib/money";
@@ -24,6 +24,7 @@ export function CartDrawer() {
     close,
     entries,
     isCheckingOut,
+    isMutating,
     isOpen,
     itemCount,
     removeLine,
@@ -36,8 +37,8 @@ export function CartDrawer() {
 
   const [messageLine, setMessageLine] = useState<CartLine | null>(null);
 
-  const handleSaveMessage = (lineId: string, giftMessage: CartGiftMessage) => {
-    setGiftMessage(lineId, giftMessage);
+  const handleSaveMessage = async (lineId: string, giftMessage: CartGiftMessage) => {
+    await setGiftMessage(lineId, giftMessage);
     setMessageLine(null);
   };
 
@@ -127,10 +128,11 @@ export function CartDrawer() {
               <Button
                 type="button"
                 onClick={() => void checkout()}
-                disabled={isCheckingOut || cartError === "itemUnavailable"}
-                className="h-12 w-full cursor-pointer bg-navy-dark px-8 text-base/[normal]"
+                disabled={isCheckingOut || isMutating || cartError === "itemUnavailable"}
+                className="h-12 w-full cursor-pointer gap-2 bg-navy-dark px-8 text-base/[normal]"
               >
-                {t("checkout")}
+                {isCheckingOut ? <IconSpinner aria-hidden="true" className="size-5 animate-spin text-white" /> : null}
+                <span>{t("checkout")}</span>
               </Button>
 
               <p className="flex items-center gap-2 font-sans text-sm/[normal] font-normal text-black/50">

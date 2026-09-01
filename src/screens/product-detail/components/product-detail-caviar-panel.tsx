@@ -44,24 +44,31 @@ export function ProductDetailCaviarPanel({ product }: ProductDetailCaviarPanelPr
     locale,
   );
 
-  const handleAddToCart = () => {
-    if (!activeVariant) {
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleAddToCart = async () => {
+    if (!activeVariant || isAdding) {
       return;
     }
 
-    cart.addLine({
-      merchandiseId: activeVariant.id,
-      productId: product.id,
-      quantity,
-      optimistic: {
-        image: product.image,
-        title: product.title,
-        unitPrice: activeVariant.price,
-        weight: activeVariant.optionValue,
-        quantityAvailable: activeVariant.quantityAvailable,
-      },
-    });
-    setQuantity(1);
+    try {
+      setIsAdding(true);
+      await cart.addLine({
+        merchandiseId: activeVariant.id,
+        productId: product.id,
+        quantity,
+        optimistic: {
+          image: product.image,
+          title: product.title,
+          unitPrice: activeVariant.price,
+          weight: activeVariant.optionValue,
+          quantityAvailable: activeVariant.quantityAvailable,
+        },
+      });
+      setQuantity(1);
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   const maxQuantity = activeVariant?.quantityAvailable ?? 99;
@@ -95,6 +102,7 @@ export function ProductDetailCaviarPanel({ product }: ProductDetailCaviarPanelPr
         deliveryNote={t("deliveryNote")}
         formattedPrice={formattedPrice}
         increaseLabel={t("increaseQty")}
+        isLoading={isAdding}
         onAddToCart={handleAddToCart}
         onQuantityChange={setQuantity}
         quantity={quantity}

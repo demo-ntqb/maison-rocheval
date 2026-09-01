@@ -51,28 +51,35 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
     locale,
   );
 
-  const handleAddToCart = () => {
-    if (!activeVariant) {
+  const [isAdding, setIsAdding] = useState(false);
+
+  const handleAddToCart = async () => {
+    if (!activeVariant || isAdding) {
       return;
     }
 
-    cart.addGiftSetUnits({
-      merchandiseId: activeVariant.id,
-      productId: product.id,
-      quantity,
-      group: {
-        addHref: ROUTES.PRODUCT_DETAIL(CatalogCollectionHandle.GIFT_SET, product.handle),
-        title: product.title,
-      },
-      optimistic: {
-        image: product.image,
-        title: product.title,
-        unitPrice: activeVariant.price,
-        weight: stripTitlePrefix(activeVariant.optionValue, product.title),
-        quantityAvailable: activeVariant.quantityAvailable,
-      },
-    });
-    setQuantity(1);
+    try {
+      setIsAdding(true);
+      await cart.addGiftSetUnits({
+        merchandiseId: activeVariant.id,
+        productId: product.id,
+        quantity,
+        group: {
+          addHref: ROUTES.PRODUCT_DETAIL(CatalogCollectionHandle.GIFT_SET, product.handle),
+          title: product.title,
+        },
+        optimistic: {
+          image: product.image,
+          title: product.title,
+          unitPrice: activeVariant.price,
+          weight: stripTitlePrefix(activeVariant.optionValue, product.title),
+          quantityAvailable: activeVariant.quantityAvailable,
+        },
+      });
+      setQuantity(1);
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   const maxQuantity = activeVariant?.quantityAvailable ?? 99;
@@ -104,6 +111,7 @@ export function ProductDetailGiftSetPanel({ product }: ProductDetailGiftSetPanel
         deliveryNote={t("deliveryNote")}
         formattedPrice={formattedPrice}
         increaseLabel={t("increaseQty")}
+        isLoading={isAdding}
         onAddToCart={handleAddToCart}
         onQuantityChange={setQuantity}
         quantity={quantity}

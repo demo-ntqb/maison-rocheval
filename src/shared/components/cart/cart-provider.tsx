@@ -4,11 +4,16 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
+  type ReactNode,
 } from "react";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import {
   addLine as addLineRequest,
@@ -21,14 +26,11 @@ import {
 } from "@/shared/lib/cart/cart-api";
 import { countGiftUnitsByVariant, flattenCartLines } from "@/shared/lib/cart/cart-entry";
 import { sumMoney } from "@/shared/lib/cart/cart-money";
-import type { OptimisticProductData, PendingCartOperation } from "@/shared/lib/cart/cart-operation";
-import { replayCartOperations } from "@/shared/lib/cart/cart-optimistic";
-import { isOperationApplied } from "@/shared/lib/cart/cart-reconciliation";
+import type { OptimisticProductData } from "@/shared/lib/cart/cart-operation";
 import { getCommerceContextOrDefault } from "@/shared/lib/commerce-context";
 import type {
   CartEntry,
   CartGiftMessage,
-  CartLine,
   CartMoney,
   CartSnapshot,
 } from "@/shared/types/cart.type";
@@ -50,18 +52,19 @@ export type AddGiftSetInput = {
 };
 
 type CartContextValue = {
-  addGiftSetUnits: (input: AddGiftSetInput) => void;
-  addLine: (input: AddCartLineInput) => void;
+  addGiftSetUnits: (input: AddGiftSetInput) => Promise<void> | void;
+  addLine: (input: AddCartLineInput) => Promise<void> | void;
   checkout: () => Promise<void>;
   close: () => void;
   entries: CartEntry[];
   isCheckingOut: boolean;
+  isMutating: boolean;
   isOpen: boolean;
   itemCount: number;
   open: () => void;
-  removeLine: (lineId: string) => void;
-  setGiftMessage: (lineId: string, giftMessage: CartGiftMessage | null | undefined) => void;
-  setLineQuantity: (lineId: string, quantity: number) => void;
+  removeLine: (lineId: string) => Promise<void> | void;
+  setGiftMessage: (lineId: string, giftMessage: CartGiftMessage | null | undefined) => Promise<void> | void;
+  setLineQuantity: (lineId: string, quantity: number) => Promise<void> | void;
   setOpen: (open: boolean) => void;
   subtotal: CartMoney;
   updateRegion: (locale: RouteLocale) => Promise<void>;
@@ -69,13 +72,6 @@ type CartContextValue = {
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
-
-type CartProviderState = {
-  confirmed: CartSnapshot;
-  pending: PendingCartOperation[];
-  status: "hydrating" | "ready" | "error";
-  cartError: "itemUnavailable" | null;
-};
 
 function createId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
@@ -108,31 +104,14 @@ function stockWarning(cart: CartSnapshot): boolean {
   return cart.warnings.some((warning) => warning.code.toUpperCase().includes("STOCK"));
 }
 
-function resolveConfirmedLine(
-  cart: CartSnapshot,
-  reference: { lineId: string; merchandiseId: string; unitId: string | null },
-): CartLine | undefined {
-  const lines = flattenCartLines(cart.entries);
-  return (
-    lines.find((line) => line.id === reference.lineId) ??
-    (reference.unitId ? lines.find((line) => line.unitId === reference.unitId) : undefined) ??
-    lines.find(
-      (line) =>
-        line.kind === "caviar" &&
-        reference.unitId === null &&
-        line.merchandiseId === reference.merchandiseId,
-    )
-  );
-}
-
 export interface CartProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
   initialEntries?: CartEntry[];
   initialOpen?: boolean;
   routeLocale: string;
 }
 
-export function CartProvider({
+function CartProviderInner({
   children,
   initialEntries,
   initialOpen = false,
@@ -140,340 +119,225 @@ export function CartProvider({
 }: CartProviderProps) {
   const routeLocale = routeLocaleProp as RouteLocale;
   const seeded = initialEntries !== undefined;
-  const initialConfirmed = seeded
-    ? snapshotFromEntries(routeLocale, initialEntries)
-    : createEmptySnapshot(routeLocale);
+  const queryClient = useQueryClient();
 
-  const [state, setState] = useState<CartProviderState>({
-    confirmed: initialConfirmed,
-    pending: [],
-    status: seeded ? "ready" : "hydrating",
-    cartError: null,
-  });
-  const stateRef = useRef(state);
   const [isOpen, setOpen] = useState(initialOpen);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [cartError, setCartError] = useState<"itemUnavailable" | null>(null);
   const checkoutPendingRef = useRef(false);
-  const queueRef = useRef<Promise<void>>(Promise.resolve());
-  const snapshotVersionRef = useRef(0);
 
-  const updateState = useCallback((updater: (current: CartProviderState) => CartProviderState) => {
-    setState((current) => {
-      const next = updater(current);
-      stateRef.current = next;
-      return next;
-    });
-  }, []);
-
-  const enqueue = useCallback((task: () => Promise<void>): Promise<void> => {
-    const next = queueRef.current.then(task, task);
-    queueRef.current = next.catch(() => undefined);
-    return next;
-  }, []);
-
-  useEffect(() => {
-    if (seeded) return;
-    let cancelled = false;
-    const snapshotVersion = snapshotVersionRef.current;
-
-    void fetchCart(routeLocale)
-      .then((cart) => {
-        if (cancelled || snapshotVersion !== snapshotVersionRef.current) return;
-        updateState((current) => ({
-          ...current,
-          confirmed: cart,
-          status: "ready",
-          cartError: stockWarning(cart) ? "itemUnavailable" : null,
-        }));
-      })
-      .catch(() => {
-        if (cancelled) return;
-        updateState((current) => ({ ...current, status: "error" }));
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [routeLocale, seeded, updateState]);
-
-  const visibleCart = useMemo(
-    () => replayCartOperations(state.confirmed, state.pending),
-    [state.confirmed, state.pending],
+  const initialSnapshot = useMemo(
+    () =>
+      seeded
+        ? snapshotFromEntries(routeLocale, initialEntries)
+        : createEmptySnapshot(routeLocale),
+    [initialEntries, routeLocale, seeded],
   );
 
-  const addPending = useCallback(
-    (operation: PendingCartOperation) => {
-      snapshotVersionRef.current += 1;
-      updateState((current) => ({ ...current, pending: [...current.pending, operation] }));
-    },
-    [updateState],
-  );
-
-  const commitOperation = useCallback(
-    (operationId: string, cart: CartSnapshot) => {
-      updateState((current) => ({
-        ...current,
-        confirmed: cart,
-        pending: current.pending.filter((operation) => operation.id !== operationId),
-        status: "ready",
-        cartError: stockWarning(cart) ? "itemUnavailable" : null,
-      }));
-    },
-    [updateState],
-  );
-
-  const reconcileAfterFailure = useCallback(
-    async (operationId: string) => {
-      const operation = stateRef.current.pending.find((candidate) => candidate.id === operationId);
-      try {
-        const cart = await fetchCart(routeLocale);
-        const applied = operation ? isOperationApplied(operation, cart) : false;
-        updateState((current) => ({
-          ...current,
-          confirmed: cart,
-          pending: current.pending.filter((candidate) => candidate.id !== operationId),
-          status: applied ? "ready" : "error",
-          cartError: stockWarning(cart) ? "itemUnavailable" : null,
-        }));
-      } catch {
-        updateState((current) => ({
-          ...current,
-          pending: current.pending.filter((operation) => operation.id !== operationId),
-          status: "error",
-        }));
+  const { data: cart = initialSnapshot } = useQuery({
+    queryKey: ["cart", routeLocale],
+    queryFn: async () => {
+      const fetched = await fetchCart(routeLocale);
+      if (stockWarning(fetched)) {
+        setCartError("itemUnavailable");
+      } else {
+        setCartError(null);
       }
+      return fetched;
     },
-    [routeLocale, updateState],
-  );
+    initialData: seeded ? initialSnapshot : undefined,
+    staleTime: 60 * 1000,
+  });
+
+  const addLineMutation = useMutation({
+    mutationFn: (input: { merchandiseId: string; quantity: number; operationId: string }) =>
+      addLineRequest({
+        kind: "caviar",
+        merchandiseId: input.merchandiseId,
+        quantity: input.quantity,
+        operationId: input.operationId,
+        locale: routeLocale,
+      }),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["cart", routeLocale], result.cart);
+      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
+    },
+    onError: () => {
+      setCartError("itemUnavailable");
+      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
+    },
+  });
+
+  const addGiftSetMutation = useMutation({
+    mutationFn: (input: { merchandiseId: string; quantity: number; unitIds: string[]; operationId: string }) =>
+      addLineRequest({
+        kind: "gift_set",
+        merchandiseId: input.merchandiseId,
+        quantity: input.quantity,
+        unitIds: input.unitIds,
+        operationId: input.operationId,
+        locale: routeLocale,
+      }),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["cart", routeLocale], result.cart);
+      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
+    },
+    onError: () => {
+      setCartError("itemUnavailable");
+      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
+    },
+  });
+
+  const updateQuantityMutation = useMutation({
+    mutationFn: (input: { lineId: string; quantity: number; operationId: string }) =>
+      updateQuantityRequest({
+        lineId: input.lineId,
+        quantity: input.quantity,
+        operationId: input.operationId,
+        locale: routeLocale,
+      }),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["cart", routeLocale], result.cart);
+      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
+    },
+    onError: () => {
+      setCartError("itemUnavailable");
+      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
+    },
+  });
+
+  const removeLineMutation = useMutation({
+    mutationFn: (input: { lineId: string; operationId: string }) =>
+      removeLineRequest({
+        lineId: input.lineId,
+        operationId: input.operationId,
+        locale: routeLocale,
+      }),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["cart", routeLocale], result.cart);
+      setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
+    },
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
+    },
+  });
+
+  const updateGiftMessageMutation = useMutation({
+    mutationFn: (input: { lineId: string; giftMessage: CartGiftMessage | null; operationId: string }) =>
+      updateGiftMessageRequest({
+        lineId: input.lineId,
+        giftMessage: input.giftMessage,
+        operationId: input.operationId,
+        locale: routeLocale,
+      }),
+    onSuccess: (result) => {
+      queryClient.setQueryData(["cart", routeLocale], result.cart);
+    },
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart", routeLocale] });
+    },
+  });
+
+  const isMutating =
+    addLineMutation.isPending ||
+    addGiftSetMutation.isPending ||
+    updateQuantityMutation.isPending ||
+    removeLineMutation.isPending ||
+    updateGiftMessageMutation.isPending;
 
   const addLine = useCallback(
-    (input: AddCartLineInput) => {
+    async (input: AddCartLineInput) => {
       if (input.quantity < 1) return;
-
-      const currentLine = flattenCartLines(visibleCart.entries).find(
-        (line) => line.kind === "caviar" && line.merchandiseId === input.merchandiseId,
-      );
-      const max = input.optimistic.quantityAvailable ?? currentLine?.quantityAvailable ?? 99;
-      const targetQuantity = Math.min((currentLine?.quantity ?? 0) + input.quantity, max);
       const operationId = createId();
-      const operation: PendingCartOperation = {
-        id: operationId,
-        type: "add_caviar",
-        createdAt: Date.now(),
+      await addLineMutation.mutateAsync({
         merchandiseId: input.merchandiseId,
-        productId: input.productId,
         quantity: input.quantity,
-        targetQuantity,
-        optimistic: input.optimistic,
-      };
-
-      addPending(operation);
-      setOpen(true);
-
-      void enqueue(async () => {
-        try {
-          const result = await addLineRequest({
-            kind: "caviar",
-            merchandiseId: input.merchandiseId,
-            quantity: input.quantity,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
-        }
+        operationId,
       });
+      setOpen(true);
     },
-    [
-      addPending,
-      commitOperation,
-      enqueue,
-      reconcileAfterFailure,
-      routeLocale,
-      visibleCart.entries,
-    ],
+    [addLineMutation],
   );
 
   const addGiftSetUnits = useCallback(
-    (input: AddGiftSetInput) => {
+    async (input: AddGiftSetInput) => {
       if (input.quantity < 1) return;
-      const existingVariantCount = countGiftUnitsByVariant(visibleCart.entries, input.merchandiseId);
+      const existingVariantCount = countGiftUnitsByVariant(cart.entries, input.merchandiseId);
       const available = input.optimistic.quantityAvailable ?? 99;
       const quantity = Math.min(input.quantity, Math.max(0, available - existingVariantCount));
       if (quantity < 1) return;
 
       const operationId = createId();
       const unitIds = Array.from({ length: quantity }, () => createId());
-      const operation: PendingCartOperation = {
-        id: operationId,
-        type: "add_gift",
-        createdAt: Date.now(),
+      await addGiftSetMutation.mutateAsync({
         merchandiseId: input.merchandiseId,
-        productId: input.productId,
-        units: unitIds.map((unitId) => ({ unitId })),
-        group: input.group,
-        optimistic: input.optimistic,
-      };
-
-      addPending(operation);
-      setOpen(true);
-
-      void enqueue(async () => {
-        try {
-          const result = await addLineRequest({
-            kind: "gift_set",
-            merchandiseId: input.merchandiseId,
-            quantity,
-            unitIds,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
-        }
+        quantity,
+        unitIds,
+        operationId,
       });
+      setOpen(true);
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+    [addGiftSetMutation, cart.entries],
   );
 
   const setLineQuantity = useCallback(
-    (lineId: string, quantity: number) => {
+    async (lineId: string, quantity: number) => {
       if (quantity < 1) return;
-      const line = flattenCartLines(visibleCart.entries).find((candidate) => candidate.id === lineId);
+      const lines = flattenCartLines(cart.entries);
+      const line = lines.find((candidate) => candidate.id === lineId);
       if (!line || line.kind !== "caviar") return;
 
       const target = Math.min(quantity, line.quantityAvailable ?? 99);
       const operationId = createId();
-      const operation: PendingCartOperation = {
-        id: operationId,
-        type: "set_quantity",
-        createdAt: Date.now(),
+      await updateQuantityMutation.mutateAsync({
         lineId,
-        merchandiseId: line.merchandiseId,
         quantity: target,
-      };
-      addPending(operation);
-
-      void enqueue(async () => {
-        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, {
-          lineId,
-          merchandiseId: line.merchandiseId,
-          unitId: null,
-        });
-        if (!confirmedLine) {
-          await reconcileAfterFailure(operationId);
-          return;
-        }
-        try {
-          const result = await updateQuantityRequest({
-            lineId: confirmedLine.id,
-            quantity: target,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
-        }
+        operationId,
       });
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+    [cart.entries, updateQuantityMutation],
   );
 
   const removeLine = useCallback(
-    (lineId: string) => {
-      const line = flattenCartLines(visibleCart.entries).find((candidate) => candidate.id === lineId);
+    async (lineId: string) => {
+      const lines = flattenCartLines(cart.entries);
+      const line = lines.find((candidate) => candidate.id === lineId);
       if (!line) return;
-      const operationId = createId();
-      const operation: PendingCartOperation = {
-        id: operationId,
-        type: "remove",
-        createdAt: Date.now(),
-        lineId,
-        merchandiseId: line.merchandiseId,
-        unitId: line.unitId,
-      };
-      addPending(operation);
 
-      void enqueue(async () => {
-        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, operation);
-        if (!confirmedLine) {
-          updateState((current) => ({
-            ...current,
-            pending: current.pending.filter((candidate) => candidate.id !== operationId),
-          }));
-          return;
-        }
-        try {
-          const result = await removeLineRequest({
-            lineId: confirmedLine.id,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
-        }
+      const operationId = createId();
+      await removeLineMutation.mutateAsync({
+        lineId,
+        operationId,
       });
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, updateState, visibleCart.entries],
+    [cart.entries, removeLineMutation],
   );
 
   const setGiftMessage = useCallback(
-    (lineId: string, giftMessage: CartGiftMessage | null | undefined) => {
-      const line = flattenCartLines(visibleCart.entries).find((candidate) => candidate.id === lineId);
+    async (lineId: string, giftMessage: CartGiftMessage | null | undefined) => {
+      const lines = flattenCartLines(cart.entries);
+      const line = lines.find((candidate) => candidate.id === lineId);
       if (!line || line.kind !== "gift_set") return;
-      const operationId = createId();
-      const operation: PendingCartOperation = {
-        id: operationId,
-        type: "gift_message",
-        createdAt: Date.now(),
-        lineId,
-        merchandiseId: line.merchandiseId,
-        unitId: line.unitId,
-        giftMessage: giftMessage ?? null,
-      };
-      addPending(operation);
 
-      void enqueue(async () => {
-        const confirmedLine = resolveConfirmedLine(stateRef.current.confirmed, operation);
-        if (!confirmedLine) {
-          await reconcileAfterFailure(operationId);
-          return;
-        }
-        try {
-          const result = await updateGiftMessageRequest({
-            lineId: confirmedLine.id,
-            giftMessage: giftMessage ?? null,
-            operationId,
-            locale: routeLocale,
-          });
-          commitOperation(operationId, result.cart);
-        } catch {
-          await reconcileAfterFailure(operationId);
-        }
+      const operationId = createId();
+      await updateGiftMessageMutation.mutateAsync({
+        lineId,
+        giftMessage: giftMessage ?? null,
+        operationId,
       });
     },
-    [addPending, commitOperation, enqueue, reconcileAfterFailure, routeLocale, visibleCart.entries],
+    [cart.entries, updateGiftMessageMutation],
   );
 
   const updateRegion = useCallback(
     async (locale: RouteLocale) => {
-      snapshotVersionRef.current += 1;
-      await enqueue(async () => {
-        const result = await updateRegionRequest(locale);
-        if (result.cart) {
-          updateState((current) => ({
-            ...current,
-            confirmed: result.cart as CartSnapshot,
-            cartError: stockWarning(result.cart as CartSnapshot) ? "itemUnavailable" : null,
-          }));
-        }
-      });
+      const result = await updateRegionRequest(locale);
+      if (result.cart) {
+        queryClient.setQueryData(["cart", locale], result.cart);
+        setCartError(stockWarning(result.cart) ? "itemUnavailable" : null);
+      }
     },
-    [enqueue, updateState],
+    [queryClient],
   );
 
   const checkout = useCallback(async () => {
@@ -482,7 +346,6 @@ export function CartProvider({
     setIsCheckingOut(true);
 
     try {
-      await queueRef.current;
       const { checkoutUrl } = await fetchCheckout(routeLocale);
       window.location.assign(checkoutUrl);
     } finally {
@@ -497,37 +360,43 @@ export function CartProvider({
       addLine,
       checkout,
       close: () => setOpen(false),
-      entries: visibleCart.entries,
+      entries: cart.entries,
       isCheckingOut,
+      isMutating,
       isOpen,
-      itemCount: visibleCart.itemCount,
+      itemCount: cart.itemCount,
       open: () => setOpen(true),
       removeLine,
       setGiftMessage,
       setLineQuantity,
       setOpen,
-      subtotal: visibleCart.subtotal,
+      subtotal: cart.subtotal,
       updateRegion,
-      cartError: state.cartError,
+      cartError,
     }),
     [
       addGiftSetUnits,
       addLine,
+      cart.entries,
+      cart.itemCount,
+      cart.subtotal,
+      cartError,
       checkout,
       isCheckingOut,
+      isMutating,
       isOpen,
       removeLine,
       setGiftMessage,
       setLineQuantity,
-      state.cartError,
       updateRegion,
-      visibleCart.entries,
-      visibleCart.itemCount,
-      visibleCart.subtotal,
     ],
   );
 
   return <CartContext value={value}>{children}</CartContext>;
+}
+
+export function CartProvider(props: CartProviderProps) {
+  return <CartProviderInner {...props} />;
 }
 
 export function useCart(): CartContextValue {

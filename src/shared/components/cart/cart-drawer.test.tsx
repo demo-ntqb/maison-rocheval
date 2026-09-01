@@ -1,7 +1,8 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import type { ComponentProps } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import type { CartEntry } from "@/shared/types/cart.type";
 import cartMessages from "../../../../messages/source/en/cart.json";
@@ -10,15 +11,17 @@ vi.mock("@/i18n/navigation", () => ({
   Link: ({ href, ...props }: ComponentProps<"a">) => <a href={String(href)} {...props} />,
 }));
 
-vi.mock("@/shared/lib/cart/cart-api", () => ({
-  addLine: vi.fn(() => new Promise(() => undefined)),
-  fetchCart: vi.fn(() => new Promise(() => undefined)),
-  fetchCheckout: vi.fn(() => new Promise(() => undefined)),
-  removeLine: vi.fn(() => new Promise(() => undefined)),
-  updateGiftMessage: vi.fn(() => new Promise(() => undefined)),
-  updateQuantity: vi.fn(() => new Promise(() => undefined)),
-  updateRegion: vi.fn(() => new Promise(() => undefined)),
+const cartApi = vi.hoisted(() => ({
+  addLine: vi.fn(),
+  fetchCart: vi.fn(),
+  fetchCheckout: vi.fn(),
+  removeLine: vi.fn(),
+  updateGiftMessage: vi.fn(),
+  updateQuantity: vi.fn(),
+  updateRegion: vi.fn(),
 }));
+
+vi.mock("@/shared/lib/cart/cart-api", () => cartApi);
 
 import { CartDrawer } from "./cart-drawer";
 import { CartProvider } from "./cart-provider";
@@ -97,17 +100,89 @@ const ENTRIES: CartEntry[] = [
   },
 ];
 
+function createTestQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+    },
+  });
+}
+
 function renderCart(entries: CartEntry[]) {
+  const queryClient = createTestQueryClient();
   return render(
-    <NextIntlClientProvider locale="en" messages={cartMessages}>
-      <CartProvider initialEntries={entries} initialOpen routeLocale="en-sg">
-        <CartDrawer />
-      </CartProvider>
-    </NextIntlClientProvider>,
+    <QueryClientProvider client={queryClient}>
+      <NextIntlClientProvider locale="en" messages={cartMessages}>
+        <CartProvider initialEntries={entries} initialOpen routeLocale="en-sg">
+          <CartDrawer />
+        </CartProvider>
+      </NextIntlClientProvider>
+    </QueryClientProvider>,
   );
 }
 
 describe("CartDrawer", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    const giftEntry = ENTRIES[0] as Extract<CartEntry, { kind: "group" }>;
+    cartApi.fetchCart.mockReturnValue(new Promise(() => undefined));
+    cartApi.removeLine.mockImplementation(async () => ({
+      operationId: "op-remove",
+      cart: {
+        entries: [
+          {
+            group: {
+              addHref: "/products/gift-set",
+              id: "gid://shopify/Product/gift-set-initiation",
+              lines: [giftEntry.group.lines[0]!],
+              title: "L’Initiation",
+            },
+            kind: "group",
+          },
+          ENTRIES[1]!,
+        ],
+        itemCount: 3,
+        subtotal: { amount: "300.00", currencyCode: "EUR" },
+        countryCode: "SG",
+        warnings: [],
+      },
+      warnings: [],
+    }));
+    cartApi.updateGiftMessage.mockImplementation(async () => ({
+      operationId: "op-msg",
+      cart: {
+        entries: [
+          {
+            group: {
+              addHref: "/products/gift-set",
+              id: "gid://shopify/Product/gift-set-initiation",
+              lines: [
+                {
+                  ...giftEntry.group.lines[0]!,
+                  giftMessage: {
+                    kind: "personal",
+                    sender: "",
+                    recipient: "",
+                    message: "Bonne fête",
+                  },
+                },
+                giftEntry.group.lines[1]!,
+              ],
+              title: "L’Initiation",
+            },
+            kind: "group",
+          },
+          ENTRIES[1]!,
+        ],
+        itemCount: 4,
+        subtotal: { amount: "400.00", currencyCode: "EUR" },
+        countryCode: "SG",
+        warnings: [],
+      },
+      warnings: [],
+    }));
+  });
+
   it("prints the physical-unit count, line totals and cart subtotal", () => {
     renderCart(ENTRIES);
 
@@ -124,13 +199,13 @@ describe("CartDrawer", () => {
     expect(screen.getByRole("button", { name: "Increase quantity of Amour" })).toBeInTheDocument();
   });
 
-  it("removes only the selected gift unit optimistically", () => {
+  it("removes selected gift unit upon confirmation", async () => {
     renderCart(ENTRIES);
 
     fireEvent.click(screen.getAllByRole("button", { name: "Remove L’Initiation" })[0]!);
 
+    expect(await screen.findByText("YOUR BAG (3)")).toBeInTheDocument();
     expect(screen.getByRole("region", { name: "L’Initiation" })).toBeInTheDocument();
-    expect(screen.getByText("YOUR BAG (3)")).toBeInTheDocument();
   });
 
   it("steps the drawer aside while the message editor is open", () => {
@@ -143,7 +218,7 @@ describe("CartDrawer", () => {
     expect(screen.getByText("YOUR BAG (4)")).toBeInTheDocument();
   });
 
-  it("saves a personal gift message back onto the same unit optimistically", () => {
+  it("saves a personal gift message back onto the unit after confirmation", async () => {
     renderCart(ENTRIES);
 
     fireEvent.click(screen.getAllByRole("button", { name: "Add message" })[0]!);
@@ -154,7 +229,7 @@ describe("CartDrawer", () => {
     });
     fireEvent.click(within(dialog).getByRole("button", { name: "Save" }));
 
-    expect(screen.getByRole("button", { name: "Message (1)" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Message (1)" })).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: "Add message" })).toHaveLength(1);
   });
 

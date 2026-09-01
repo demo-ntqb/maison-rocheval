@@ -3,6 +3,7 @@ import { Footer } from "@/shared/components/layout/footer";
 import { Header } from "@/shared/components/layout/header/header";
 import { RegionPreferenceGate } from "@/shared/components/layout/region-preference-gate";
 import { getDiscoveredMarkets } from "@/shared/lib/shopify/localization";
+import { QueryProvider } from "@/shared/lib/react-query/query-provider";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -27,11 +28,8 @@ export default async function LocaleLayout({
     >
       Skip to content
     </a>
-    {/* CartProvider wraps both blocks below — it's plain React context, not
-        i18n, so it can sit above either NextIntlClientProvider and still let
-        product pages (rendered via `children`, outside the `cart` messages
-        scope) call useCart() to add lines and open the drawer. */}
-    <CartProvider routeLocale={locale}>
+    <QueryProvider>
+      <CartProvider routeLocale={locale}>
       <TooltipProvider>
         <NextIntlClientProvider
           messages={{ cart: messages.cart, header: messages.header, regionDialog: messages.regionDialog }}
@@ -50,5 +48,6 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
       </TooltipProvider>
     </CartProvider>
+    </QueryProvider>
   </>;
 }
