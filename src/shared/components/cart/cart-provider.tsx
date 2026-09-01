@@ -11,7 +11,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -220,23 +219,6 @@ function CartProviderContent({
     [cartQueryKey, queryClient],
   );
 
-  useEffect(() => {
-    const cart = cartQuery.data;
-    if (!cart) {
-      if (cartQuery.isError && pendingOperationsRef.current.length === 0) {
-        setCartError("serviceUnavailable");
-      }
-      return;
-    }
-
-    if (stockWarning(cart)) {
-      setCartError("itemUnavailable");
-      return;
-    }
-
-    setCartError((current) => (current === "serviceUnavailable" ? null : current));
-  }, [cartQuery.data, cartQuery.isError]);
-
   const reconcileAfterFailure = useCallback(
     async (operationId: string, failure: unknown) => {
       const operation = pendingOperationsRef.current.find(
@@ -303,6 +285,13 @@ function CartProviderContent({
   );
 
   const confirmedCart = cartQuery.data ?? emptyCart;
+  const resolvedCartError: CartUiError =
+    cartError ??
+    (stockWarning(confirmedCart)
+      ? "itemUnavailable"
+      : cartQuery.isError && cartQuery.data === undefined && pendingOperations.length === 0
+        ? "serviceUnavailable"
+        : null);
   const visibleCart = useMemo(
     () => replayCartOperations(confirmedCart, pendingOperations),
     [confirmedCart, pendingOperations],
@@ -587,16 +576,16 @@ function CartProviderContent({
       setOpen,
       subtotal: visibleCart.subtotal,
       updateRegion,
-      cartError,
+      cartError: resolvedCartError,
     }),
     [
       addGiftSetUnits,
       addLine,
-      cartError,
       checkout,
       isCheckingOut,
       isOpen,
       removeLine,
+      resolvedCartError,
       setGiftMessage,
       setLineQuantity,
       updateRegion,
